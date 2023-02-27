@@ -6,7 +6,7 @@ import generateToken from "../utils/generateToken.js";
 //@route           POST /api/users/login
 //@access          Public
 
-const authUser = asyncHandler(async (req, res) => {
+const facultyLogin = asyncHandler(async (req, res) => {
     const { userNameFac, password } = req.body;
   
     const userFaculty = await Faculty.findOne({ userNameFac });
@@ -23,3 +23,5 @@ const authUser = asyncHandler(async (req, res) => {
         throw new Error("Invalid User Name or Password");
     }
   });
+
+  export { facultyLogin };

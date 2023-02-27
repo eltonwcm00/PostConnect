@@ -1,13 +1,20 @@
 //server.js
-
+import dotenv from "dotenv";
 import express from "express";
 import connectDB from "./db.js";
 
-const app = express();
+import facultyRoutes from "./routes/facultyRoutes.js";
+
+dotenv.config();
 
 connectDB();
 
+const app = express();
+
 app.get('/', (req, res) => res.send('The server is working '));
+
+app.use(express.json());
+app.use("/api/faculty", facultyRoutes);
 
 const port = process.env.PORT || 8082;
 
