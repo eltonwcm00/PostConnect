@@ -1,13 +1,15 @@
 //Connection file to mongo db
-
+import dotenv from 'dotenv';
 import mongoose from "mongoose";
+dotenv.config();
 
 const connectDB = async () => {
 
-  const CONNECTION_URL = 'mongodb+srv://elton:123@postconnect.vapzsrt.mongodb.net/?retryWrites=true&w=majority';
+const connectionURL = process.env.MONGO_URI;
   
   try {
-    const conn = await mongoose.connect(CONNECTION_URL, {
+    mongoose.set('strictQuery', true);
+    const conn = await mongoose.connect(connectionURL, {
       useUnifiedTopology: true,
       useNewUrlParser: true
     });
