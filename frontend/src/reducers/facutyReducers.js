@@ -10,7 +10,7 @@ export const facultyLoginReducer = (state = {}, action) => {
         case FACULTY_LOGIN_REQUEST:
           return { loading: true };
         case FACULTY_LOGIN_SUCCESS:
-          return { loading: false, userInfo: action.payload };
+          return { loading: false, facultyInfo: action.payload };
         case FACULTY_LOGIN_FAIL:
           return { loading: false, error: action.payload };
         case FACULTY_LOGOUT:

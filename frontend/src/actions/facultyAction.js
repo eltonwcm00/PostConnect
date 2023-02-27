@@ -35,6 +35,7 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
             ? error.response.data.message
             : error.message,
       });
+      // console.log('hi');
     }
   };
 

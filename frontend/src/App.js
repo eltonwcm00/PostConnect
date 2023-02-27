@@ -1,23 +1,16 @@
 import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import FacultyLogin from './screens/FacultyLogin/FacultyLogin';
+import LandingPage from './screens/FacultyLogin/LandingPage/LandingPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} exact></Route>
+        <Route path="/facultyLogin"  element={<FacultyLogin />}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
