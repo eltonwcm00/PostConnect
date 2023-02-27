@@ -19,9 +19,45 @@ const facultyLogin = asyncHandler(async (req, res) => {
         token: generateToken(userFaculty._id),
       });
     } else {
-      res.status(401);
+      res.status(408); // 401
         throw new Error("Invalid User Name or Password");
     }
   });
+
+//@description     Register new user
+//@route           POST /api/users/
+//@access          Public
+
+const facultyRegister = asyncHandler(async (req, res) => {
+  const { userNameFac, password} = req.body;
+
+  const userExists = await User.findOne({ userNameFac });
+
+  if (userExists) {
+    res.status(404);
+    throw new Error("User already exists");
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+    pic,
+  });
+
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      pic: user.pic,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("User not found");
+  }
+});
 
   export { facultyLogin };

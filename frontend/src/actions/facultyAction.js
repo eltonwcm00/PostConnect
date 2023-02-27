@@ -18,15 +18,14 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
       };
   
       const { data } = await axios.post(
-        "/api/faculty/facultyLogin",
+        "http://localhost:5000/api/faculty/facultyLogin",
         { userNameFac, password },
         config
       );
-  
+
       dispatch({ type: FACULTY_LOGIN_SUCCESS, payload: data });
   
       localStorage.setItem("facultyInfo", JSON.stringify(data));
-
     } catch (error) {
       dispatch({
         type: FACULTY_LOGIN_FAIL,
