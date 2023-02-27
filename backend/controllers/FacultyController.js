@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
-import Faculty from "../models/Faculty";
-import generateToken from "../utils/generateToken.js";
+import Faculty from "../models/Faculty.js";
+import generateToken from "../utils/generateFacultyToken.js";
 
 //@description     Auth the user
 //@route           POST /api/users/login
