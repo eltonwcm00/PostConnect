@@ -8,6 +8,7 @@ import generateToken from "../utils/generateFacultyToken.js";
 
 const facultyLogin = asyncHandler(async (req, res) => {
     const { userNameFac, password } = req.body;
+    let error = {}
   
     const userFaculty = await Faculty.findOne({ userNameFac });
   
@@ -18,46 +19,15 @@ const facultyLogin = asyncHandler(async (req, res) => {
         isFaculty: userFaculty.isFaculty,
         token: generateToken(userFaculty._id),
       });
-    } else {
-      res.status(408); // 401
+    } 
+    else if(!userFaculty || (!await Faculty.matchPassword(password))) {
+      error.userNameFac = "Invalid username or password, please try again!";
+      return res.status(401).json(error);
+    }
+    else {
+        res.status(408)
         throw new Error("Invalid User Name or Password");
     }
   });
-
-//@description     Register new user
-//@route           POST /api/users/
-//@access          Public
-
-const facultyRegister = asyncHandler(async (req, res) => {
-  const { userNameFac, password} = req.body;
-
-  const userExists = await User.findOne({ userNameFac });
-
-  if (userExists) {
-    res.status(404);
-    throw new Error("User already exists");
-  }
-
-  const user = await User.create({
-    name,
-    email,
-    password,
-    pic,
-  });
-
-  if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      pic: user.pic,
-      token: generateToken(user._id),
-    });
-  } else {
-    res.status(400);
-    throw new Error("User not found");
-  }
-});
 
   export { facultyLogin };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -8,9 +9,12 @@ import ErrorMessage from "../../components/ErrorMessage";
 import MainScreen from "../../components/MainScreen";
 import "./FacultyLogin.css";
 
-const FacultyLogin = ({ history }) => {
+const FacultyLogin = () => {
+
+    let navigate = useNavigate();
     const [userNameFac, setUserNameFac] = useState("");
     const [password, setPassword] = useState("");
+    // const [error, setError] = useState({})
 
     const dispatch = useDispatch();
 
@@ -19,9 +23,9 @@ const FacultyLogin = ({ history }) => {
 
     useEffect(() => {
         if (facultyInfo) {
-          history.push("/facultyLogin");
+          navigate("/facultyLogin");
         }
-      }, [history, facultyInfo]);
+      }, [navigate, facultyInfo]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -31,7 +35,7 @@ const FacultyLogin = ({ history }) => {
     return (
         <MainScreen title="LOGIN">
       <div className="loginContainer">
-        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+        {error && <ErrorMessage variant="danger">{error.userNameFac}</ErrorMessage>}
         {loading && <Loading />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="formBasicEmail">

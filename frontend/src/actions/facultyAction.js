@@ -30,11 +30,11 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
       dispatch({
         type: FACULTY_LOGIN_FAIL,
         payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+          error.response && error.response.data 
+            ? error.response.data
+            : error.message
+          
       });
-      // console.log('hi');
     }
   };
 
