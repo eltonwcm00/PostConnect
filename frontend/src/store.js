@@ -2,11 +2,12 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
-    facultyLoginReducer,
+    facultyLoginReducer, facultyRegisterReducer
 } from "./reducers/facutyReducers";
 
 const reducer = combineReducers({
     facultyLogin:facultyLoginReducer,
+    facultyRegister: facultyRegisterReducer,
 })
 
 const facultyInfoFromStorage = localStorage.getItem("facultyInfo")
@@ -17,6 +18,7 @@ const facultyInfoFromStorage = localStorage.getItem("facultyInfo")
 // initial state of userInfo from the login reducer is equivalent to userInfoFromStorage
 const initialState = {
     facultyLogin: { facultyInfo: facultyInfoFromStorage },
+    facultyRegister: { facultyInfo: facultyInfoFromStorage },
 };
 
 const middleware = [thunk];

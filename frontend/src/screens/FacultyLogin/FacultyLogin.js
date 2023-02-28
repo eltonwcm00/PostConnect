@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { facultyLogin } from "../../actions/facultyAction";
+import { facultyLogin,facultyRegister } from "../../actions/facultyAction";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
 import MainScreen from "../../components/MainScreen";
@@ -61,7 +61,7 @@ const FacultyLogin = () => {
           <Button variant="primary" type="submit">
             Submit
           </Button>
-        </Form>
+        </Form >
         <Row className="py-3">
           <Col>
             New Customer ? <Link to="/register">Register Here</Link>

@@ -1,53 +1,50 @@
 import React, { useState, useEffect } from "react";
+import {useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { facultyRegister } from "../../actions/facultyAction";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
-import { register } from "../../actions/userActions";
 import MainScreen from "../../components/MainScreen";
 import "./RegisterScreen.css";
 
-function RegisterScreen({ history }) {
+const FacultyRegister = () => {
 
-  const [userNameFac, setNameFac] = useState("");
- 
-  const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
-  
-  const dispatch = useDispatch();
+    let navigate = useNavigate();
+    const [userNameFac, setUserNameFac] = useState("");
+    const [password, setPassword] = useState("");
+    // const [error, setError] = useState({})
 
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (userInfo) {
-      history.push("/");
-    }
-  }, [history, userInfo]);
+    const facultyRegisterState = useSelector((state) => state.facultyRegister);
+    const { loading, error, facultyInfo } = facultyRegisterState;
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+    // useEffect(() => {
+    //     if (facultyInfo) {
+    //       navigate("/");
+    //     }
+    //   }, [navigate, facultyInfo]);
 
-    if (password !== confirmpassword) {
-      setMessage("Passwords do not match");
-    } else dispatch(register(name, email, password, pic));
-  };
+    const submitHandler = (e) => {
+      e.preventDefault();
+      dispatch(facultyRegister(userNameFac, password));
+    };
 
-  return (
-    <MainScreen title="REGISTER">
+    return (
+        <MainScreen title="LOGIN">
       <div className="loginContainer">
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-        {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
         {loading && <Loading />}
         <Form onSubmit={submitHandler}>
-          <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Username</Form.Label>
             <Form.Control
-              type="name"
+              type="text"
               value={userNameFac}
-              placeholder="Enter name"
-              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter Username"
+              onChange={(e) => setUserNameFac(e.target.value)}
             />
           </Form.Group>
 
@@ -61,28 +58,19 @@ function RegisterScreen({ history }) {
             />
           </Form.Group>
 
-          <Form.Group controlId="confirmPassword">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={confirmpassword}
-              placeholder="Confirm Password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </Form.Group>
-
           <Button variant="primary" type="submit">
             Register
           </Button>
-        </Form>
+        </Form >
         <Row className="py-3">
           <Col>
-            Have an Account ? <Link to="/login">Login</Link>
+            New Customer ? <Link to="/register">Register Here</Link>
           </Col>
         </Row>
       </div>
     </MainScreen>
-  );
+    );
 }
 
-export default RegisterScreen;
+export default FacultyRegister;
+
