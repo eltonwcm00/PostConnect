@@ -46,15 +46,9 @@ const facultyRegister = asyncHandler(async (req, res) => {
 //@access          Public
 const facultyLogin = asyncHandler(async (req, res) => {
     const { userNameFac, password } = req.body;
-    let error = {}
   
     const userFaculty = await Faculty.findOne({ userNameFac });
     const validPass = await bcrypt.compare(password, userFaculty.password);
-
-    // if(!userFaculty) {
-    //   error.userNameFac = "Invalid username or password, please try again!";
-    //   return res.json(error);
-    // }
   
     if (userFaculty && validPass) {
       res.status(201).json({

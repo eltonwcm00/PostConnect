@@ -1,0 +1,6 @@
+ // let error = {}
+
+  // if(!userFaculty) {
+    //   error.userNameFac = "Invalid username or password, please try again!";
+    //   return res.json(error);
+    // }
