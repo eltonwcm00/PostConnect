@@ -4,13 +4,12 @@ import generateToken from "../utils/generateFacultyToken.js";
 import bcrypt from "bcryptjs";
 
 const facultyRegister = asyncHandler(async (req, res) => {
+  
   const { userNameFac, password } = req.body;
-
   const userExists = await Faculty.findOne({ userNameFac });
 
   if (userExists) {
-    res.status(404);
-    throw new Error("User already exists");
+    res.status(401).json({message: "Username is existed!"});
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -28,11 +27,12 @@ const facultyRegister = asyncHandler(async (req, res) => {
       userNameFac: userFaculty.userNameFac,
       isFaculty: userFaculty.isFaculty,
       token: generateToken(userFaculty._id),
+      successMessage: "Register successfully!"
     });
     
   } else {
-      res.status(400);
-      throw new Error("User not found");
+      res.status(500);
+      throw new Error("Internal server error");
   }
 });
 
@@ -50,11 +50,12 @@ const facultyLogin = asyncHandler(async (req, res) => {
         userNameFac: userFaculty.userNameFac, 
         isFaculty: userFaculty.isFaculty,
         token: generateToken(userFaculty._id),
+        successMessage: "Logged in successfully!"
       });
     } 
+
     else {
-        res.status(400);
-        throw new Error("Invalid Username or Password");
+      res.status(401).json({message: "Username or Password is incorrect!"});
     }
   });
 

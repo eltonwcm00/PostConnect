@@ -45,7 +45,7 @@ const FacultyLogin = () => {
         <MainScreen title="LOGIN">
       <div className="loginContainer">
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-        {successMsg && <SuccessMessage variant="success">{"Login successfully"}</SuccessMessage>}
+        {successMsg && <SuccessMessage variant="success">{facultyInfo.successMessage}</SuccessMessage>}
         {loading && <Loading />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="formBasicEmail">

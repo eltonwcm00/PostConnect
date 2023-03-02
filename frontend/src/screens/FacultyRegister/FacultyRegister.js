@@ -46,7 +46,7 @@ const FacultyRegister = () => {
         <MainScreen title="Register">
       <div className="loginContainer">
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-        {successMsg && <SuccessMessage variant="success">{"Login successfully"}</SuccessMessage>}
+        {successMsg && <SuccessMessage variant="success">{"Register successfully!"}</SuccessMessage>}
         {loading && <Loading />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="formBasicEmail">

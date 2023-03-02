@@ -22,21 +22,21 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
   
       const { data } = await axios.post(
         "http://localhost:5000/api/faculty/facultyLogin",
-        { userNameFac, password },
+        { userNameFac, password},
         config
       );
 
       dispatch({ type: FACULTY_LOGIN_SUCCESS, payload: data });
   
+      //直接用facultyInfo打天下
       localStorage.setItem("facultyInfo", JSON.stringify(data));
     } catch (error) {
       dispatch({
         type: FACULTY_LOGIN_FAIL,
         payload:
           error.response 
-            ? error.response.data // no message
+            ? error.response.data.message
             : error.message,
-          // error.response.data,
       });
     }
   };
@@ -71,8 +71,8 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
       dispatch({
         type: FACULTY_REGISTER_FAIL,
         payload:
-          error.response && error.response.data 
-          ? error.response.data
+          error.response 
+          ? error.response.data.message
           : error.message,
       });
     }
