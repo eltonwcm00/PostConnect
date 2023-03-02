@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { facultyLogin,facultyRegister } from "../../actions/facultyAction";
+import { facultyLogin } from "../../actions/facultyAction";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
 import MainScreen from "../../components/MainScreen";
@@ -35,7 +35,7 @@ const FacultyLogin = () => {
     return (
         <MainScreen title="LOGIN">
       <div className="loginContainer">
-        {error && <ErrorMessage variant="danger">{error.userNameFac}</ErrorMessage>}
+        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {loading && <Loading />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="formBasicEmail">

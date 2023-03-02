@@ -21,11 +21,11 @@ const FacultyRegister = () => {
     const facultyRegisterState = useSelector((state) => state.facultyRegister);
     const { loading, error, facultyInfo } = facultyRegisterState;
 
-    // useEffect(() => {
-    //     if (facultyInfo) {
-    //       navigate("/");
-    //     }
-    //   }, [navigate, facultyInfo]);
+    useEffect(() => {
+        if (facultyInfo) {
+          navigate("/facultyRegister");
+        }
+      }, [navigate, facultyInfo]);
 
     const submitHandler = (e) => {
       e.preventDefault();
@@ -33,7 +33,7 @@ const FacultyRegister = () => {
     };
 
     return (
-        <MainScreen title="LOGIN">
+        <MainScreen title="Register">
       <div className="loginContainer">
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {loading && <Loading />}
@@ -64,7 +64,7 @@ const FacultyRegister = () => {
         </Form >
         <Row className="py-3">
           <Col>
-            New Customer ? <Link to="/register">Register Here</Link>
+            New Customer ? <Link to="/facultyRegister">Register Here</Link>
           </Col>
         </Row>
       </div>
