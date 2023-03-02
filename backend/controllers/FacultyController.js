@@ -3,9 +3,6 @@ import Faculty from "../models/Faculty.js";
 import generateToken from "../utils/generateFacultyToken.js";
 import bcrypt from "bcryptjs";
 
-//@description     Register new user
-//@route           POST /api/users/
-//@access          Public
 const facultyRegister = asyncHandler(async (req, res) => {
   const { userNameFac, password } = req.body;
 
@@ -26,8 +23,6 @@ const facultyRegister = asyncHandler(async (req, res) => {
 
   if (userFaculty) {
 
-    console.log('Register sucessfully')
-
     res.status(201).json({
       _id: userFaculty._id,
       userNameFac: userFaculty.userNameFac,
@@ -41,13 +36,12 @@ const facultyRegister = asyncHandler(async (req, res) => {
   }
 });
 
-//@description     Auth the user
-//@route           POST /api/users/login
-//@access          Public
 const facultyLogin = asyncHandler(async (req, res) => {
-    const { userNameFac, password } = req.body;
   
-    const userFaculty = await Faculty.findOne({ userNameFac });
+    // username: admin; password: 123
+    const { password } = req.body;
+  
+    const userFaculty = await Faculty.findOne({ userNameFac:'admin' });
     const validPass = await bcrypt.compare(password, userFaculty.password);
   
     if (userFaculty && validPass) {
@@ -60,7 +54,7 @@ const facultyLogin = asyncHandler(async (req, res) => {
     } 
     else {
         res.status(400);
-        throw new Error("Invalid User Name or Password");
+        throw new Error("Invalid Username or Password");
     }
   });
 

@@ -13,7 +13,7 @@ export const facultyLoginReducer = (state = {}, action) => {
         case FACULTY_LOGIN_REQUEST:
           return { loading: true };
         case FACULTY_LOGIN_SUCCESS:
-          return { loading: false, facultyInfo: action.payload };
+          return { loading: false, facultyInfo: action.payload, successMsg: true };
         case FACULTY_LOGIN_FAIL:
           return { loading: false, error: action.payload };
         case FACULTY_LOGOUT:
@@ -28,7 +28,7 @@ export const facultyRegisterReducer = (state = {}, action) => {
     case FACULTY_REGISTER_REQUEST:
       return { loading: true };
     case FACULTY_REGISTER_SUCCESS:
-      return { loading: false, facultyInfo: action.payload };
+      return { loading: false, facultyInfo: action.payload, successMsg: true };
     case FACULTY_REGISTER_FAIL:
       return { loading: false, error: action.payload };
     default:

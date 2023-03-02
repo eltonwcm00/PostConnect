@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { facultyLogin } from "../../actions/facultyAction";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
+import SuccessMessage from "../../components/SuccessMessage";
 import MainScreen from "../../components/MainScreen";
 import "./FacultyLogin.css";
 
@@ -14,18 +15,26 @@ const FacultyLogin = () => {
     let navigate = useNavigate();
     const [userNameFac, setUserNameFac] = useState("");
     const [password, setPassword] = useState("");
-    // const [error, setError] = useState({})
 
     const dispatch = useDispatch();
 
     const facultyLoginState = useSelector((state) => state.facultyLogin);
-    const { loading, error, facultyInfo } = facultyLoginState;
+    const { loading, error, facultyInfo, successMsg } = facultyLoginState;
 
     useEffect(() => {
         if (facultyInfo) {
           navigate("/facultyLogin");
         }
-      }, [navigate, facultyInfo]);
+    }, [navigate, facultyInfo]);
+
+    useEffect(() => {
+      if (successMsg) {
+        const timer = setTimeout(() => {
+          navigate("/");
+        }, 2000);
+        return () => clearTimeout(timer);
+      }
+    }, [navigate, successMsg])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -36,6 +45,7 @@ const FacultyLogin = () => {
         <MainScreen title="LOGIN">
       <div className="loginContainer">
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+        {successMsg && <SuccessMessage variant="success">{"Login successfully"}</SuccessMessage>}
         {loading && <Loading />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="formBasicEmail">

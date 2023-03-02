@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { facultyRegister } from "../../actions/facultyAction";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
+import SuccessMessage from "../../components/SuccessMessage";
 import MainScreen from "../../components/MainScreen";
 import "./RegisterScreen.css";
 
@@ -19,13 +20,22 @@ const FacultyRegister = () => {
     const dispatch = useDispatch();
 
     const facultyRegisterState = useSelector((state) => state.facultyRegister);
-    const { loading, error, facultyInfo } = facultyRegisterState;
+    const { loading, error, facultyInfo, successMsg } = facultyRegisterState;
 
     useEffect(() => {
         if (facultyInfo) {
           navigate("/facultyRegister");
         }
       }, [navigate, facultyInfo]);
+
+      useEffect(() => {
+        if (successMsg) {
+          const timer = setTimeout(() => {
+            navigate("/");
+          }, 2000);
+          return () => clearTimeout(timer);
+        }
+      }, [navigate, successMsg])
 
     const submitHandler = (e) => {
       e.preventDefault();
@@ -36,6 +46,7 @@ const FacultyRegister = () => {
         <MainScreen title="Register">
       <div className="loginContainer">
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+        {successMsg && <SuccessMessage variant="success">{"Login successfully"}</SuccessMessage>}
         {loading && <Loading />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="formBasicEmail">
