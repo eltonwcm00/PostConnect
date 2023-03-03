@@ -5,9 +5,10 @@ import {
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
+//router.use(protect);
 
 router.post("/facultyLogin", facultyLogin);
-router.route("/facultyRegister").post(facultyRegister);
+router.route("/facultyRegister").post(protect, facultyRegister);
 
 export default router;
 

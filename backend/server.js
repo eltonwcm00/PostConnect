@@ -11,6 +11,8 @@ dotenv.config();
 connectDB();
 
 const app = express();
+app.use(express.json());
+
 const corsOptions ={
     origin:'*', 
     credentials:true,            //access-control-allow-credentials:true
@@ -21,7 +23,6 @@ app.use(cors(corsOptions))
 
 app.get('/', (req, res) => res.send('The server is working '));
 
-app.use(express.json());
 app.use("/api/faculty", facultyRoutes);
 
 const port = process.env.PORT || 8082;

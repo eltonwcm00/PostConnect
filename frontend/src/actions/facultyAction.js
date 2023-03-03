@@ -46,13 +46,19 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
     dispatch({ type: FACULTY_LOGOUT });
   };
   
-  export const facultyRegister = (userNameFac, password) => async (dispatch) => {
+  export const facultyRegister = (userNameFac, password) => async (dispatch, getState) => {
     try {
       dispatch({ type: FACULTY_REGISTER_REQUEST });
+
+      const {
+        // userLogin: {userInfo} is the initial state from store.js
+        facultyLogin: { facultyInfo },
+      } = getState();
   
       const config = {
         headers: {
           "Content-type": "application/json",
+          Authorization: `Bearer ${facultyInfo.token}`,
         },
       };
   

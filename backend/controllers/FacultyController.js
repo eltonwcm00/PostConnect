@@ -25,7 +25,7 @@ const facultyRegister = asyncHandler(async (req, res) => {
     res.status(201).json({
       _id: userFaculty._id,
       userNameFac: userFaculty.userNameFac,
-      isFaculty: userFaculty.isFaculty,
+      isFaculty: true,
       token: generateToken(userFaculty._id),
       successMessage: "Register successfully!"
     });
@@ -48,7 +48,7 @@ const facultyLogin = asyncHandler(async (req, res) => {
       res.status(201).json({
         _id: userFaculty._id,
         userNameFac: userFaculty.userNameFac, 
-        isFaculty: userFaculty.isFaculty,
+        isFaculty: true,
         token: generateToken(userFaculty._id),
         successMessage: "Logged in successfully!"
       });

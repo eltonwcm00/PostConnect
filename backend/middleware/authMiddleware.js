@@ -9,12 +9,9 @@ const protect = asyncHandler(async (req, res, next) => {
     try {
       token = req.headers.authorization.split(" ")[1];
 
-      //decodes token id
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      
-      // req.userFaculty, userFaculty var is assigned once logged in
-      req.userFaculty = await Faculty.findById(decoded.id).select("-password");
+      const decoded = jwt.verify(token, process.env.JWT_SECRET); //decodes token id
 
+      req.userFaculty = await Faculty.findById(decoded.id); // req.userFaculty, userFaculty var is assigned once logged in
       next();
     } catch (error) {
       res.status(401);
