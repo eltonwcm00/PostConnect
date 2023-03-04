@@ -3,14 +3,14 @@ import {useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { facultyPanelRegistration} from "../../actions/facultyAction";
-import Loading from "../../components/Loading";
-import ErrorMessage from "../../components/ErrorMessage";
-import SuccessMessage from "../../components/SuccessMessage";
-import MainScreen from "../../components/MainScreen";
-import "./FacultyRegister.css";
+import { facultyPanelRegistration} from "../../../actions/facultyAction";
+import Loading from "../../../components/Loading";
+import ErrorMessage from "../../../components/ErrorMessage";
+import SuccessMessage from "../../../components/SuccessMessage";
+import MainScreen from "../../../components/MainScreen";
+import "./RegisterPanel.css";
 
-const FacultyRegister= () => {
+const RegisterPanel= () => {
 
     let navigate = useNavigate();
     const [userNamePanel, setUserNameFac] = useState("");
@@ -83,5 +83,5 @@ const FacultyRegister= () => {
     );
 }
 
-export default FacultyRegister;
+export default RegisterPanel;
 

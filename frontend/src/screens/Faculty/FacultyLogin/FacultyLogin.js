@@ -3,11 +3,11 @@ import {useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { facultyLogin } from "../../actions/facultyAction";
-import Loading from "../../components/Loading";
-import ErrorMessage from "../../components/ErrorMessage";
-import SuccessMessage from "../../components/SuccessMessage";
-import MainScreen from "../../components/MainScreen";
+import { facultyLogin } from "../../../actions/facultyAction";
+import Loading from "../../../components/Loading";
+import ErrorMessage from "../../../components/ErrorMessage";
+import SuccessMessage from "../../../components/SuccessMessage";
+import MainScreen from "../../../components/MainScreen";
 import "./FacultyLogin.css";
 
 const FacultyLogin = () => {

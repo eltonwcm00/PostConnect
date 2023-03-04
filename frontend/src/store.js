@@ -18,7 +18,6 @@ const facultyInfoFromStorage = localStorage.getItem("facultyInfo")
 // initial state of userInfo from the login reducer is equivalent to userInfoFromStorage
 const initialState = {
     facultyLogin: { facultyInfo: facultyInfoFromStorage },
-    facultyPanelRegistration: { facultyInfo: facultyInfoFromStorage },
 };
 
 const middleware = [thunk];

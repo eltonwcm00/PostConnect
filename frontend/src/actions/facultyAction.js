@@ -28,7 +28,6 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
 
       dispatch({ type: FACULTY_LOGIN_SUCCESS, payload: data });
   
-      //直接用facultyInfo打天下
       localStorage.setItem("facultyInfo", JSON.stringify(data));
     } catch (error) {
       dispatch({
@@ -51,7 +50,6 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
       dispatch({ type: FACULTY_REGISTER_PANEL_REQUEST });
 
         const {
-          // facultyPanelRegistration: { facultyInfo } is the initial state from store.js
           //facultyPanelRegistration: { facultyInfo },
           facultyLogin: { facultyInfo },
         } = getState();

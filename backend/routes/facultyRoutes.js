@@ -2,7 +2,7 @@ import express from "express";
 import {
     facultyLogin, facultyPanelRegistration,
 } from "../controllers/FacultyController.js";
-import { protectFaculty, protectPanel } from "../middleware/authMiddleware.js";
+import { protectFaculty,} from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 //router.use(protectFaculty);
