@@ -74,7 +74,7 @@ const FacultyLogin = () => {
         </Form >
         <Row className="py-3">
           <Col>
-            New Customer ? <Link to="/facultyRegister">Register Here</Link>
+            New Customer ? <Link to="/facultyPanelRegistration">Register Here</Link>
           </Col>
         </Row>
       </div>

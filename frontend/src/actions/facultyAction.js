@@ -3,9 +3,9 @@ import {
     FACULTY_LOGIN_REQUEST,
     FACULTY_LOGIN_SUCCESS,
     FACULTY_LOGOUT,
-    FACULTY_REGISTER_FAIL,
-    FACULTY_REGISTER_REQUEST,
-    FACULTY_REGISTER_SUCCESS,
+    FACULTY_REGISTER_PANEL_FAIL,
+    FACULTY_REGISTER_PANEL_REQUEST,
+    FACULTY_REGISTER_PANEL_SUCCESS,
 } from "../constants/facultyConstants";
 
 import axios from "axios";
@@ -46,14 +46,15 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
     dispatch({ type: FACULTY_LOGOUT });
   };
   
-  export const facultyRegister = (userNameFac, password) => async (dispatch, getState) => {
+  export const facultyPanelRegistration = (userNamePanel, password) => async (dispatch, getState) => {
     try {
-      dispatch({ type: FACULTY_REGISTER_REQUEST });
+      dispatch({ type: FACULTY_REGISTER_PANEL_REQUEST });
 
-      const {
-        // userLogin: {userInfo} is the initial state from store.js
-        facultyLogin: { facultyInfo },
-      } = getState();
+        const {
+          // facultyPanelRegistration: { facultyInfo } is the initial state from store.js
+          //facultyPanelRegistration: { facultyInfo },
+          facultyLogin: { facultyInfo },
+        } = getState();
   
       const config = {
         headers: {
@@ -63,19 +64,19 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
       };
   
       const { data } = await axios.post(
-        "http://localhost:5000/api/faculty/facultyRegister",
-        { userNameFac, password },
+        "http://localhost:5000/api/faculty/facultyPanelRegistration",
+        { userNamePanel, password },
         config
       );
   
-      dispatch({ type: FACULTY_REGISTER_SUCCESS, payload: data });
+      dispatch({ type: FACULTY_REGISTER_PANEL_SUCCESS, payload: data });
 
       dispatch({ type: FACULTY_LOGIN_SUCCESS, payload: data });
   
       localStorage.setItem("facultyInfo", JSON.stringify(data));
     } catch (error) {
       dispatch({
-        type: FACULTY_REGISTER_FAIL,
+        type: FACULTY_REGISTER_PANEL_FAIL,
         payload:
           error.response 
           ? error.response.data.message

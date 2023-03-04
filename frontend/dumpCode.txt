@@ -4,3 +4,36 @@
     //   error.userNameFac = "Invalid username or password, please try again!";
     //   return res.json(error);
     // }
+
+  const facultyfacultyPanelRegistration= asyncHandler(async (req, res) => {
+  
+  const { userNameFac, password } = req.body;
+  const userExists = await Faculty.findOne({ userNameFac });
+
+  if (userExists) {
+    res.status(401).json({message: "Username is existed!"});
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const userFaculty = await Faculty.create({
+    userNameFac,
+    password: hashedPassword,
+  });
+
+  if (userFaculty) {
+
+    res.status(201).json({
+      _id: userFaculty._id,
+      userNameFac: userFaculty.userNameFac,
+      isFaculty: true,
+      token: generateToken(userFaculty._id),
+      successMessage: "Register successfully!"
+    });
+    
+  } else {
+      res.status(500);
+      throw new Error("Internal server error");
+  }
+});

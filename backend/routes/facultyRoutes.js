@@ -1,14 +1,14 @@
 import express from "express";
 import {
-    facultyLogin, facultyRegister,
+    facultyLogin, facultyPanelRegistration,
 } from "../controllers/FacultyController.js";
-import { protect } from "../middleware/authMiddleware.js";
+import { protectFaculty, protectPanel } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
-//router.use(protect);
+//router.use(protectFaculty);
 
 router.post("/facultyLogin", facultyLogin);
-router.route("/facultyRegister").post(protect, facultyRegister);
+router.route("/facultyPanelRegistration").post(protectFaculty, facultyPanelRegistration);
 
 export default router;
 

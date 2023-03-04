@@ -3,28 +3,28 @@ import {useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { facultyRegister } from "../../actions/facultyAction";
+import { facultyPanelRegistration} from "../../actions/facultyAction";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
 import SuccessMessage from "../../components/SuccessMessage";
 import MainScreen from "../../components/MainScreen";
-import "./RegisterScreen.css";
+import "./FacultyRegister.css";
 
-const FacultyRegister = () => {
+const FacultyRegister= () => {
 
     let navigate = useNavigate();
-    const [userNameFac, setUserNameFac] = useState("");
+    const [userNamePanel, setUserNameFac] = useState("");
     const [password, setPassword] = useState("");
     // const [error, setError] = useState({})
 
     const dispatch = useDispatch();
 
-    const facultyRegisterState = useSelector((state) => state.facultyRegister);
-    const { loading, error, facultyInfo, successMsg } = facultyRegisterState;
+    const facultyPanelRegistrationState = useSelector((state) => state.facultyPanelRegistration);
+    const { loading, error, facultyInfo, successMsg } = facultyPanelRegistrationState;
 
     useEffect(() => {
         if (facultyInfo) {
-          navigate("/facultyRegister");
+          navigate("/facultyPanelRegistration");
         }
       }, [navigate, facultyInfo]);
 
@@ -39,7 +39,7 @@ const FacultyRegister = () => {
 
     const submitHandler = (e) => {
       e.preventDefault();
-      dispatch(facultyRegister(userNameFac, password));
+      dispatch(facultyPanelRegistration(userNamePanel, password));
     };
 
     return (
@@ -53,7 +53,7 @@ const FacultyRegister = () => {
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
-              value={userNameFac}
+              value={userNamePanel}
               placeholder="Enter Username"
               onChange={(e) => setUserNameFac(e.target.value)}
             />
@@ -75,7 +75,7 @@ const FacultyRegister = () => {
         </Form >
         <Row className="py-3">
           <Col>
-            New Customer ? <Link to="/facultyRegister">Register Here</Link>
+            New Customer ? <Link to="/facultyPanelRegistration">Register Here</Link>
           </Col>
         </Row>
       </div>

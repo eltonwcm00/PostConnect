@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} exact></Route>
         <Route path="/facultyLogin" element={<FacultyLogin />}/>
-        <Route path="/facultyRegister" element={<FacultyRegister />}/>
+        <Route path="/facultyPanelRegistration" element={<FacultyRegister />}/>
       </Routes>
     </BrowserRouter>
   );
