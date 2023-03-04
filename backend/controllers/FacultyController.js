@@ -21,29 +21,34 @@ const facultyLogin = asyncHandler(async (req, res) => {
         successMessage: "Logged in successfully!"
       });
     } 
-
     else {
       res.status(401).json({message: "Username or Password is incorrect!"});
     }
   });
 
   const facultyPanelRegistration = asyncHandler(async (req, res) => {
+
+    let hashedPassword, userPanel;
   
-    const { userNamePanel, password } = req.body;
+    const { userNamePanel, password, cfrmPassword } = req.body;
     const userExists = await Panel.findOne({ userNamePanel });
   
     if (userExists) {
       res.status(401).json({message: "Username is existed!"});
     }
   
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-  
-    const userPanel = await Panel.create({
-      userNamePanel,
-      password: hashedPassword,
-    });
-  
+    if (cfrmPassword == password) {
+      const salt = await bcrypt.genSalt(10);
+      hashedPassword = await bcrypt.hash(password, salt);
+      userPanel = await Panel.create({
+        userNamePanel,
+        password: hashedPassword,
+      });
+    }
+    else {
+      res.status(401).json({message: "Repeat password and password is not match"});
+    }
+
     if (userPanel) {
       res.status(201).json({
         _id: userPanel._id,
@@ -52,7 +57,6 @@ const facultyLogin = asyncHandler(async (req, res) => {
         token: generateToken(userPanel._id),
         successMessage: "Register successfully!"
       });
-      
     } else {
         res.status(500);
         throw new Error("Internal server error");

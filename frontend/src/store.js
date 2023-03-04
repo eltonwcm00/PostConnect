@@ -14,7 +14,6 @@ const facultyInfoFromStorage = localStorage.getItem("facultyInfo")
   ? JSON.parse(localStorage.getItem("facultyInfo"))
   : null;
 
-// get and set the jwt
 // initial state of userInfo from the login reducer is equivalent to userInfoFromStorage
 const initialState = {
     facultyLogin: { facultyInfo: facultyInfoFromStorage },

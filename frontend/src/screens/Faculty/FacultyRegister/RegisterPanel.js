@@ -15,7 +15,7 @@ const RegisterPanel= () => {
     let navigate = useNavigate();
     const [userNamePanel, setUserNameFac] = useState("");
     const [password, setPassword] = useState("");
-    // const [error, setError] = useState({})
+    const [cfrmPassword, setCfrmPassword] = useState("");
 
     const dispatch = useDispatch();
 
@@ -39,11 +39,11 @@ const RegisterPanel= () => {
 
     const submitHandler = (e) => {
       e.preventDefault();
-      dispatch(facultyPanelRegistration(userNamePanel, password));
+      dispatch(facultyPanelRegistration(userNamePanel, password, cfrmPassword));
     };
 
     return (
-        <MainScreen title="Register">
+        <MainScreen title="Panel Registration">
       <div className="loginContainer">
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {successMsg && <SuccessMessage variant="success">{"Register successfully!"}</SuccessMessage>}
@@ -66,6 +66,16 @@ const RegisterPanel= () => {
               value={password}
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Confrim Password</Form.Label>
+            <Form.Control
+              type="password"
+              value={cfrmPassword}
+              placeholder="Confirm Password"
+              onChange={(e) => setCfrmPassword(e.target.value)}
             />
           </Form.Group>
 

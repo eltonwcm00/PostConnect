@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import Faculty from "../models/Faculty.js";
-import Panel from "../models/Panel.js";
 import asyncHandler from "express-async-handler";
 
 const protectFaculty = asyncHandler(async (req, res, next) => {

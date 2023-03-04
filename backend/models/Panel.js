@@ -10,6 +10,10 @@ const PanelSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    // cfrmPassword: {
+    //   type: String,
+    //   required: true,
+    // },
     isPanel: {
         type: Boolean,
         required: true,
