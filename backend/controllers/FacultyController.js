@@ -63,5 +63,4 @@ const facultyLogin = asyncHandler(async (req, res) => {
     }
   });
   
-
   export { facultyLogin, facultyPanelRegistration};
