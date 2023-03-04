@@ -17,11 +17,11 @@ const SupervisorSchema = mongoose.Schema(
     },
     academicPos: {
         type: String,
-        required: true,
+        // required: true,
     },
     numSupervision: {
         type: Number,
-        required: true,
+        // required: true,
     }
   },
   {

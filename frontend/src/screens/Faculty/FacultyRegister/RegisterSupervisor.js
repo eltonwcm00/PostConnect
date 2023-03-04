@@ -3,28 +3,30 @@ import {useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { facultyPanelRegistration} from "../../../actions/facultyAction";
+import { facultySupervisorRegistration} from "../../../actions/facultyAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SuccessMessage from "../../../components/SuccessMessage";
 import MainScreen from "../../../components/MainScreen";
 import "./Register.css";
 
-const RegisterPanel= () => {
+const RegisterSupervisor= () => {
 
     let navigate = useNavigate();
-    const [usernamePanel, setUserNameFac] = useState("");
+    const [usernameSup, setUserNameSup] = useState("");
     const [password, setPassword] = useState("");
     const [cfrmPassword, setCfrmPassword] = useState("");
+    const [academicPos, setAcademicPos] = useState("");
+    const [numSupervision, setNumSupervision] = useState("");
 
     const dispatch = useDispatch();
 
-    const facultyPanelRegistrationState = useSelector((state) => state.facultyRegistration);
-    const { loading, error, facultyInfo, successMsg } = facultyPanelRegistrationState;
+    const facultySupervisorRegistrationState = useSelector((state) => state.facultyRegistration);
+    const { loading, error, facultyInfo, successMsg } = facultySupervisorRegistrationState;
 
     useEffect(() => {
         if (facultyInfo) {
-          navigate("/facultyPanelRegistration");
+          navigate("/facultySupervisorRegistration");
         }
       }, [navigate, facultyInfo]);
 
@@ -39,11 +41,11 @@ const RegisterPanel= () => {
 
     const submitHandler = (e) => {
       e.preventDefault();
-      dispatch(facultyPanelRegistration(usernamePanel, password, cfrmPassword));
+      dispatch(facultySupervisorRegistration(usernameSup, password, cfrmPassword, numSupervision, academicPos));
     };
 
     return (
-        <MainScreen title="Panel Registration">
+        <MainScreen title="Supervisor Registration">
       <div className="loginContainer">
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {successMsg && <SuccessMessage variant="success">{"Register successfully!"}</SuccessMessage>}
@@ -53,9 +55,9 @@ const RegisterPanel= () => {
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
-              value={usernamePanel}
+              value={usernameSup}
               placeholder="Enter Username"
-              onChange={(e) => setUserNameFac(e.target.value)}
+              onChange={(e) => setUserNameSup(e.target.value)}
             />
           </Form.Group>
 
@@ -79,13 +81,33 @@ const RegisterPanel= () => {
             />
           </Form.Group>
 
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Academic Position</Form.Label>
+            <Form.Control
+              type="text"
+              value={academicPos}
+              placeholder="Academic Position"
+              onChange={(e) => setAcademicPos(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Number of Supervision</Form.Label>
+            <Form.Control
+              type="text"
+              value={numSupervision}
+              placeholder="Number of Supervision"
+              onChange={(e) => setNumSupervision(e.target.value)}
+            />
+          </Form.Group>
+
           <Button variant="primary" type="submit">
             Register
           </Button>
         </Form >
         <Row className="py-3">
           <Col>
-            New Customer ? <Link to="/facultyPanelRegistration">Register Here</Link>
+            New Customer ? <Link to="/facultySupervisorRegistration">Register Here</Link>
           </Col>
         </Row>
       </div>
@@ -93,5 +115,5 @@ const RegisterPanel= () => {
     );
 }
 
-export default RegisterPanel;
+export default RegisterSupervisor;
 

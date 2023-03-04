@@ -2,12 +2,12 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
-    facultyLoginReducer, facultyPanelRegistrationReducer
+    facultyLoginReducer, facultyRegistrationReducer
 } from "./reducers/facutyReducers";
 
 const reducer = combineReducers({
     facultyLogin:facultyLoginReducer,
-    facultyPanelRegistration: facultyPanelRegistrationReducer,
+    facultyRegistration: facultyRegistrationReducer,
 })
 
 const facultyInfoFromStorage = localStorage.getItem("facultyInfo")

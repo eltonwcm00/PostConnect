@@ -67,26 +67,24 @@ const facultyLogin = asyncHandler(async (req, res) => {
   const facultySupervisorRegistration = asyncHandler(async (req, res) => {
 
     let hashedPassword, userSupervisor;
-    let passCheck=false, numSupervisionCheck=false, academicPosCheck=false;
   
     const { usernameSup, password, cfrmPassword, numSupervision, academicPos } = req.body;
-    const userExists = await Supervisor.findOne({ usernameSupervisor });
+    const userExists = await Supervisor.findOne({ usernameSup });
   
     if (userExists) {
       res.status(401).json({message: "Username is existed!"});
+    } 
+   
+    else if(academicPos.trim().length === 0) {
+      res.status(401).json({message: "Please fill in the academic position"});
     }
-  
-    if (cfrmPassword == password) { passCheck=true; }
-    else { res.status(401).json({message: "Repeat password and password is not match"}); }
-
-    if (academicPos !== " ") { academicPosCheck=true; }
-    else { res.status(401).json({message: "Please fill in the academic position"}); }
-
-    if (!isNaN(numSupervision)) { numSupervisionCheck=true; }
-    else { res.status(401).json({message: "Number of supervision must be in number format"}); }
-
-
-    if (passCheck && academicPosCheck && numSupervisionCheck) {
+    else if(cfrmPassword !== password) {
+      res.status(401).json({message: "Repeat password and password is not match"});
+    }
+    else if(isNaN(numSupervision)) {
+      res.status(401).json({message: "Number of supervision must be in number format"});
+    }
+    else {
       const salt = await bcrypt.genSalt(10);
       hashedPassword = await bcrypt.hash(password, salt);
       userSupervisor = await Supervisor.create({
@@ -96,15 +94,15 @@ const facultyLogin = asyncHandler(async (req, res) => {
         numSupervision,
       });
     }
-    
+
     if (userSupervisor) {
       res.status(201).json({
-        _id: userPanel._id,
+        _id: userSupervisor._id,
         usernamePanel: userSupervisor.usernameSup,
         academicPos: userSupervisor.academicPos,
         numSupervision: userSupervisor.numSupervision,
         isSupervisor: true,
-        token: generateToken(userPanel._id),
+        token: generateToken(userSupervisor._id),
         successMessage: "Register successfully!"
       });
     } else {
