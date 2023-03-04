@@ -8,12 +8,12 @@ import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SuccessMessage from "../../../components/SuccessMessage";
 import MainScreen from "../../../components/MainScreen";
-import "./RegisterPanel.css";
+import "./Register.css";
 
 const RegisterPanel= () => {
 
     let navigate = useNavigate();
-    const [userNamePanel, setUserNameFac] = useState("");
+    const [usernamePanel, setUserNameFac] = useState("");
     const [password, setPassword] = useState("");
     const [cfrmPassword, setCfrmPassword] = useState("");
 
@@ -39,7 +39,7 @@ const RegisterPanel= () => {
 
     const submitHandler = (e) => {
       e.preventDefault();
-      dispatch(facultyPanelRegistration(userNamePanel, password, cfrmPassword));
+      dispatch(facultyPanelRegistration(usernamePanel, password, cfrmPassword));
     };
 
     return (
@@ -53,7 +53,7 @@ const RegisterPanel= () => {
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
-              value={userNamePanel}
+              value={usernamePanel}
               placeholder="Enter Username"
               onChange={(e) => setUserNameFac(e.target.value)}
             />

@@ -45,7 +45,7 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
     dispatch({ type: FACULTY_LOGOUT });
   };
   
-  export const facultyPanelRegistration = (userNamePanel, password, cfrmPassword) => async (dispatch, getState) => {
+  export const facultyPanelRegistration = (usernamePanel, password, cfrmPassword) => async (dispatch, getState) => {
     try {
       dispatch({ type: FACULTY_REGISTER_PANEL_REQUEST });
 
@@ -62,7 +62,7 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
   
       const { data } = await axios.post(
         "http://localhost:5000/api/faculty/facultyPanelRegistration",
-        { userNamePanel, password, cfrmPassword },
+        { usernamePanel, password, cfrmPassword },
         config
       );
   
@@ -81,3 +81,5 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
       });
     }
   };
+
+  

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const PanelSchema = mongoose.Schema(
   {
-    userNamePanel: {
+    usernamePanel: {
       type: String,
       required: true,
     },
