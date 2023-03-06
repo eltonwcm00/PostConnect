@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from "react";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import {useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { facultySupervisorRegistration} from "../../../actions/facultyAction";
+import { facultyStudentRegistration} from "../../../actions/facultyAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SuccessMessage from "../../../components/SuccessMessage";
 import MainScreen from "../../../components/MainScreen";
 import "./Register.css";
 
-const RegisterSupervisor= () => {
-
+const RegisterStudent = () => {
     let navigate = useNavigate();
-    const [usernameSup, setUserNameSup] = useState("");
+
+    const [usernameStud, setUserNameStud] = useState("");
     const [password, setPassword] = useState("");
     const [cfrmPassword, setCfrmPassword] = useState("");
-    const [academicPos, setAcademicPos] = useState("");
-    const [numSupervision, setNumSupervision] = useState("");
+    const [dateJoin, setDateJoin] = useState(null);
+    const [degreeLvl, setDegreeLvl] = useState("");
 
     const dispatch = useDispatch();
 
@@ -26,7 +29,7 @@ const RegisterSupervisor= () => {
 
     useEffect(() => {
         if (facultyInfo) {
-          navigate("/facultySupervisorRegistration");
+          navigate("/facultyStudentRegistration");
         }
       }, [navigate, facultyInfo]);
 
@@ -41,11 +44,11 @@ const RegisterSupervisor= () => {
 
     const submitHandler = (e) => {
       e.preventDefault();
-      dispatch(facultySupervisorRegistration(usernameSup, password, cfrmPassword, numSupervision, academicPos));
+      dispatch(facultyStudentRegistration(usernameStud, password, cfrmPassword, dateJoin, degreeLvl));
     };
 
     return (
-        <MainScreen title="Supervisor Registration">
+    <MainScreen title="Student Registration">
       <div className="loginContainer">
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {successMsg && <SuccessMessage variant="success">{"Register successfully!"}</SuccessMessage>}
@@ -55,9 +58,9 @@ const RegisterSupervisor= () => {
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
-              value={usernameSup}
+              value={usernameStud}
               placeholder="Enter Username"
-              onChange={(e) => setUserNameSup(e.target.value)}
+              onChange={(e) => setUserNameStud(e.target.value)}
             />
           </Form.Group>
 
@@ -80,24 +83,24 @@ const RegisterSupervisor= () => {
               onChange={(e) => setCfrmPassword(e.target.value)}
             />
           </Form.Group>
-
-          <Form.Select size="lg" aria-label="Default select example" value={academicPos} onChange={(e) => setAcademicPos(e.target.value)}>
-            <Form.Label>Academic Position</Form.Label>
-              <option>Select an option</option>
-              <option value="lecturer">Lecturer</option>
-              <option value="Senior Lecturer">Senior Lecturer</option>
-              <option value="Principal Lecturer">Principal Lecturer</option>
-          </Form.Select>
           
           <Form.Group controlId="formBasicPassword">
-            <Form.Label>Number of Supervision</Form.Label>
-            <Form.Control
-              type="text"
-              value={numSupervision}
-              placeholder="Number of Supervision"
-              onChange={(e) => setNumSupervision(e.target.value)}
+            <Form.Label>Date Join</Form.Label>
+            <Calendar
+                value={dateJoin}
+                onChange={setDateJoin}
+                dateFormat="MMMM d, yyyy"
             />
           </Form.Group>
+
+          <Form.Select size="lg" aria-label="Default select example" value={degreeLvl} onChange={(e) => setDegreeLvl(e.target.value)}>
+            <Form.Label>Degree Level</Form.Label>
+              <option>Select an option</option>
+              <option value="Master Degree (Part-Time)">Master Degree (Part-Time)</option>
+              <option value="Master Degree (Full-Time)">Master Degree (Full-Time)</option>
+              <option value="Doctoral Degree (Part-Time)">Doctoral Degree (Part-Time)</option>
+              <option value="Doctoral Degree (Full-Time)">Doctoral Degree (Full-Time)</option>
+          </Form.Select>
 
           <Button variant="primary" type="submit">
             Register
@@ -113,5 +116,4 @@ const RegisterSupervisor= () => {
     );
 }
 
-export default RegisterSupervisor;
-
+export default RegisterStudent

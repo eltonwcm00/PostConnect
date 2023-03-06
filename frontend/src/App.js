@@ -1,8 +1,10 @@
 import './App.css';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FacultyLogin from './screens/Faculty/FacultyLogin/FacultyLogin';
 import RegisterPanel from './screens/Faculty/FacultyRegister/RegisterPanel';
 import RegisterSupervisor from './screens/Faculty/FacultyRegister/RegisterSupervisor';
+import RegisterStudent from './screens/Faculty/FacultyRegister/RegisterStudent';
 import LandingPage from './screens/LandingPage/LandingPage';
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
         <Route path="/facultyLogin" element={<FacultyLogin />}/>
         <Route path="/facultyPanelRegistration" element={<RegisterPanel />}/>
         <Route path="/facultySupervisorRegistration" element={<RegisterSupervisor />}/>
+        <Route path="/facultyStudentRegistration" element={<RegisterStudent />}/>
       </Routes>
     </BrowserRouter>
   );

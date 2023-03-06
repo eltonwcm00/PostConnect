@@ -1,9 +1,11 @@
 import asyncHandler from "express-async-handler";
-import Faculty from "../models/Faculty.js";
-import Panel from "../models/Panel.js";
 import generateToken from "../utils/generateFacultyToken.js";
 import bcrypt from "bcryptjs";
+import moment from "moment"
+import Faculty from "../models/Faculty.js";
+import Panel from "../models/Panel.js";
 import Supervisor from "../models/Supervisor.js";
+import Student from "../models/Student.js";
 
 const facultyLogin = asyncHandler(async (req, res) => {
   
@@ -63,7 +65,7 @@ const facultyLogin = asyncHandler(async (req, res) => {
         throw new Error("Internal server error");
     }
   });
-///////////////////////
+
   const facultySupervisorRegistration = asyncHandler(async (req, res) => {
 
     let hashedPassword, userSupervisor;
@@ -74,7 +76,6 @@ const facultyLogin = asyncHandler(async (req, res) => {
     if (userExists) {
       res.status(401).json({message: "Username is existed!"});
     } 
-   
     else if(academicPos.trim().length === 0) {
       res.status(401).json({message: "Please fill in the academic position"});
     }
@@ -111,4 +112,55 @@ const facultyLogin = asyncHandler(async (req, res) => {
     }
   });
 
-  export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration};
+  const facultyStudentRegistration = asyncHandler(async (req, res) => {
+
+    let hashedPassword, userStudent;
+  
+    const { usernameStud, password, cfrmPassword, degreeLvl } = req.body;
+    const { dateJoin } = req.body;
+
+    let dateJoin_ = moment(dateJoin);
+    let todayDate = moment();
+
+    const userExists = await Student.findOne({ usernameStud });
+  
+    if (userExists) {
+      res.status(401).json({message: "Username is existed!"});
+    }
+    else if(degreeLvl.trim().length === 0) {
+      res.status(401).json({message: "Please fill in the degree level"});
+    }
+    else if(cfrmPassword !== password) {
+      res.status(401).json({message: "Repeat password and password is not match"});
+    }
+    else if(dateJoin_ > todayDate) {
+      res.status(401).json({message: "Invalid: Joining date is greater than today's date"});
+    }
+    else {
+      const salt = await bcrypt.genSalt(10);
+      hashedPassword = await bcrypt.hash(password, salt);
+      userStudent = await Student.create({
+        usernameStud,
+        password: hashedPassword,
+        dateJoin,
+        degreeLvl,
+      });
+    }
+
+    if (userStudent) {
+      res.status(201).json({
+        _id: userStudent._id,
+        usernameStud: userStudent.usernameStud,
+        dateJoin: userStudent.dateJoin,
+        degreeLvl: userStudent.degreeLvl,
+        isStudent: true,
+        token: generateToken(userStudent._id),
+        successMessage: "Register successfully!"
+      });
+    } else {
+        res.status(500);
+        throw new Error("Internal server error");
+    }
+  });
+
+  export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration};
