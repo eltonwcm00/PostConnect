@@ -134,7 +134,7 @@ const facultyLogin = asyncHandler(async (req, res) => {
       res.status(401).json({message: "Repeat password and password is not match"});
     }
     else if(dateJoin_ > todayDate) {
-      res.status(401).json({message: "Invalid: Joining date is greater than today's date"});
+      res.status(401).json({message: "Invalid, joining date is greater than today's date"});
     }
     else {
       const salt = await bcrypt.genSalt(10);

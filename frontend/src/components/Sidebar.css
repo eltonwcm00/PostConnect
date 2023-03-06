@@ -1,0 +1,19 @@
+.pro-sidebar {
+    background-color: #071B63 !important;
+}
+
+.icon-suffix {
+    display: none;
+}
+
+.text-decoration-none {
+    display: block; 
+    margin-left: auto;
+    margin-right: auto;
+    width: 50% !important;
+}
+
+.header-name-container {
+    margin: 0 auto;
+    text-align: center;
+}
