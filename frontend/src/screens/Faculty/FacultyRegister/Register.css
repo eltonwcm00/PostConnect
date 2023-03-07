@@ -1,6 +1,9 @@
-.loginContainer {
+/* .loginContainer {
     display: flex;
     flex-direction: column;
     margin: 20px;
-  }
+  } */
   
+  .col-9 {
+    flex: auto !important;
+  }

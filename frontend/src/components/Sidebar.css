@@ -17,3 +17,11 @@
     margin: 0 auto;
     text-align: center;
 }
+
+span.item-content {
+    white-space: normal !important;
+    line-height: 1.2;
+    font-weight: 200;
+    font-family: 'Montserrat';
+    font-size: 13px;
+}

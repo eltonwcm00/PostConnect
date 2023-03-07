@@ -28,29 +28,38 @@ import {
   
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
-              <NavLink exact to="/" activeClassName="activeClicked">
-                <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
+              <NavLink exact to="/" activeClassName="activeClicked" className="sidebar-nav">
+                <CDBSidebarMenuItem icon="fa fa-plus" className="sidebar-icon-role">Role Registration</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/tables" activeClassName="activeClicked">
-                <CDBSidebarMenuItem icon="table">Tables</CDBSidebarMenuItem>
+              <NavLink exact to="/tables" activeClassName="activeClicked" className="sidebar-nav">
+                <CDBSidebarMenuItem icon="fa fa-user" className="sidebar-icon">User Profile</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/profile" activeClassName="activeClicked">
-                <CDBSidebarMenuItem icon="user">Profile page</CDBSidebarMenuItem>
+              <NavLink exact to="/profile" activeClassName="activeClicked" className="sidebar-nav">
+                <CDBSidebarMenuItem icon="fa fa-file-text">Research Proposal Defence Request Application</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/analytics" activeClassName="activeClicked">
-                <CDBSidebarMenuItem icon="chart-line">
-                  Analytics
+              <NavLink exact to="/analytics" activeClassName="activeClicked" className="sidebar-nav">
+                <CDBSidebarMenuItem icon="fa fa-file-text">
+                  Work Completion Defence Request Application
                 </CDBSidebarMenuItem>
               </NavLink>
-  
-              <NavLink
-                exact
-                to="/hero404"
-                target="_blank"
-                activeClassName="activeClicked"
-              >
-                <CDBSidebarMenuItem icon="exclamation-circle">
-                  404 page
+              <NavLink exact to="/hero404" target="_blank" activeClassName="activeClicked">
+                <CDBSidebarMenuItem icon="fa fa-users">
+                  Candidature Monitoring
+                </CDBSidebarMenuItem>
+              </NavLink>
+              <NavLink exact to="/hero404" activeClassName="activeClicked">
+                <CDBSidebarMenuItem icon="fa-regular fa-sitemap">
+                  Assign Number of Supervision
+                </CDBSidebarMenuItem>
+              </NavLink>
+              <NavLink exact to="/hero404" activeClassName="activeClicked">
+                <CDBSidebarMenuItem icon="fa-solid fa-chart-column">
+                  Student Data Report
+                </CDBSidebarMenuItem>
+              </NavLink>
+              <NavLink exact to="/hero404" activeClassName="activeClicked">
+                <CDBSidebarMenuItem icon="fa-light fa-right-from-bracket">
+                  Logout
                 </CDBSidebarMenuItem>
               </NavLink>
             </CDBSidebarMenu>
