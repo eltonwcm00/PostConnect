@@ -3,7 +3,6 @@ import './Sidebar.css';
 import {
     CDBSidebar,
     CDBSidebarContent,
-    CDBSidebarFooter,
     CDBSidebarHeader,
     CDBSidebarMenu,
     CDBSidebarMenuItem
@@ -14,7 +13,7 @@ import {
   const Sidebar = () => {
     return (
       <div
-        style={{ display: "flex", height: "100vh", overflow: "scroll initial" }}
+        style={{ display: "flex", height: "109vh", overflow: "scroll initial" }}
       >
         <CDBSidebar textColor="#fff" backgroundColor="#333">
           <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
@@ -64,16 +63,6 @@ import {
               </NavLink>
             </CDBSidebarMenu>
           </CDBSidebarContent>
-  
-          <CDBSidebarFooter style={{ textAlign: "center" }}>
-            <div
-              style={{
-                padding: "20px 5px"
-              }}
-            >
-              Sidebar Footer
-            </div>
-          </CDBSidebarFooter>
         </CDBSidebar>
       </div>
     );

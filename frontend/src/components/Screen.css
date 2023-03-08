@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@200&display=swap");
 
 .mainback {
   min-height: 93vh;
@@ -9,9 +8,10 @@
   width: 100%;
 }
 .heading {
-  font-size: 60px;
-  /* font-family: "Ubuntu", sans-serif; */
-  font-family: "Work Sans", sans-serif;
+  font-size: 40px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
+  color: #4C4C4C;
   padding: 5px 10px;
 }
 
