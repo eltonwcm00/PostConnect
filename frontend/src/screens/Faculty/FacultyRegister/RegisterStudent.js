@@ -117,8 +117,7 @@ const RegisterStudent = () => {
                   <option value="Doctoral Degree (Part-Time)">Doctoral Degree (Part-Time)</option>
                   <option value="Doctoral Degree (Full-Time)">Doctoral Degree (Full-Time)</option>
               </Form.Select>
-              
-
+            
               <Button className=" mt-4 float-right" variant="primary" type="submit">
                 Register
               </Button>
