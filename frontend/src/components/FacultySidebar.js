@@ -9,8 +9,13 @@ import {
   } from "cdbreact";
   import { NavLink } from "react-router-dom";
   import { Row, Col } from 'react-bootstrap';
+  import { useSelector } from "react-redux";
   
   const FacultySidebar = () => {
+
+    const facultyState = useSelector((state) => state.facultyLogin);
+    const { facultyInfo } = facultyState;
+
     return (
       <div
         style={{ display: "flex", height: "109vh", overflow: "scroll initial" }}
@@ -21,7 +26,7 @@ import {
                 <a href="/" className="text-decoration-none"style={{ color: "inherit" }}>
                     <img src="/image/school.png" alt="React Image" height={60} width={60}/>
                 </a>
-                <Col className="header-name-container" style={{ marginTop: '8px'}}>Hello, FAC001</Col>
+                <Col className="header-name-container" style={{ marginTop: '8px'}}>Hello, {facultyInfo.userNameFac}</Col>
             </Row>
           </CDBSidebarHeader>
   

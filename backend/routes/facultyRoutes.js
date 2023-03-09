@@ -1,6 +1,6 @@
 import express from "express";
 import {
-    facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration
+   facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration
 } from "../controllers/FacultyController.js";
 import { protectFaculty,} from "../middleware/authMiddleware.js";
 

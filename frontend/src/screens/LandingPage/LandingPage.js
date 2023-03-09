@@ -33,6 +33,7 @@ const LandingPage = () => {
         : "Please log in"
       }
       </Form>
+      {/* {facultyInfo.userNameFac} */}
     </div>
   )
 }
