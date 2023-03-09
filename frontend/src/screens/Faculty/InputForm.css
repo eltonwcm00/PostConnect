@@ -1,10 +1,4 @@
-/* .loginContainer {
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
-  } */
-  
-  .col-9 {
+ .col-9 {
     flex: auto !important;
   }
 
@@ -15,6 +9,7 @@
 
   .form {
     font-family: 'Montserrat', sans-serif;
+    margin-top: 30px;
   }
 
   .form .col-form-label {
@@ -25,7 +20,7 @@
   .form-title-desc-container {
     background-color: #071B63;
     padding: 18px 15px;
-    margin:  15px 11px;
+    margin:  15px 0px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     font-size: 20px;

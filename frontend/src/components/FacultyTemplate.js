@@ -7,7 +7,10 @@ const FacultyTemplate = ({ children }) => {
   let pageURL = 'http://localhost:3000/'
   let pageTitle;
 
-  if (window.location.href == pageURL+'facultyStudentRegistration'){
+  if (window.location.href == pageURL+'facultyLogin'){
+    pageTitle = "Faculty Login";
+  }
+  else if (window.location.href == pageURL+'facultyStudentRegistration'){
     pageTitle = "Student Registration";
   } 
   else if (window.location.href == pageURL+'facultyPanelRegistration') {
@@ -16,7 +19,10 @@ const FacultyTemplate = ({ children }) => {
   else if (window.location.href == pageURL+'facultySupervisorRegistration') {
     pageTitle = "Supervisor Registration";
   }
-
+  else {
+    pageTitle = null;
+  }
+  
   return (
     <div className="container-fluid" style={{display: "contents"}}>
         <div className="row ">

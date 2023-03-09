@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { facultyLogin } from "../../../actions/facultyAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SuccessMessage from "../../../components/SuccessMessage";
-import MainScreen from "../../../components/MainScreen";
-import "./FacultyLogin.css";
+import FacultyTemplate from "../../../components/FacultyTemplate";
+import "../InputForm.css";
 
 const FacultyLogin = () => {
 
@@ -42,43 +41,41 @@ const FacultyLogin = () => {
       };
 
     return (
-        <MainScreen title="LOGIN">
-      <div className="loginContainer">
+      <FacultyTemplate>
+        <div className="form-title-desc-container">Details Of The Faculty</div>
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {successMsg && <SuccessMessage variant="success">{facultyInfo.successMessage}</SuccessMessage>}
         {loading && <Loading />}
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              value={userNameFac}
-              placeholder="Enter Username"
-              onChange={(e) => setUserNameFac(e.target.value)}
-            />
+        <Form className="form" onSubmit={submitHandler}>
+          <Form.Group as={Row} className="mb-4" controlId="formBasicEmail">
+            <Form.Label column sm={2}>Username</Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                type="text"
+                value={userNameFac}
+                placeholder="Enter Username"
+                onChange={(e) => setUserNameFac(e.target.value)}
+              />
+            </Col>
           </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
+            <Form.Label column sm={2}>Password</Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                type="password"
+                value={password}
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Col>
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button className=" mt-4 float-right" variant="primary" type="submit">
             Submit
           </Button>
         </Form >
-        <Row className="py-3">
-          <Col>
-            New Customer ? <Link to="/facultyPanelRegistration">Register Here</Link>
-          </Col>
-        </Row>
-      </div>
-    </MainScreen>
+      </FacultyTemplate>
     );
 }
 

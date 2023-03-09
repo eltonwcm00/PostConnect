@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { facultySupervisorRegistration} from "../../../actions/facultyAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SuccessMessage from "../../../components/SuccessMessage";
 import FacultyTemplate from "../../../components/FacultyTemplate";
-import "./Register.css";
+import "../InputForm.css";
 
 const RegisterSupervisor= () => {
 
