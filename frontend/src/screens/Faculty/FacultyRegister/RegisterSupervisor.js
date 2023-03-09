@@ -7,7 +7,7 @@ import { facultySupervisorRegistration} from "../../../actions/facultyAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SuccessMessage from "../../../components/SuccessMessage";
-import MainScreen from "../../../components/MainScreen";
+import FacultyTemplate from "../../../components/FacultyTemplate";
 import "./Register.css";
 
 const RegisterSupervisor= () => {
@@ -45,71 +45,72 @@ const RegisterSupervisor= () => {
     };
 
     return (
-        <MainScreen title="Supervisor Registration">
-      <div className="loginContainer">
-        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-        {successMsg && <SuccessMessage variant="success">{"Register successfully!"}</SuccessMessage>}
-        {loading && <Loading />}
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              value={usernameSup}
-              placeholder="Enter Username"
-              onChange={(e) => setUserNameSup(e.target.value)}
-            />
-          </Form.Group>
+      <FacultyTemplate>
+        <div className="form-title-desc-container">Details Of The Supervisor</div>
+          {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+          {successMsg && <SuccessMessage variant="success">{"Register successfully!"}</SuccessMessage>}
+          {loading && <Loading />}
+          <Form className="form" onSubmit={submitHandler}>
+            <Form.Group as={Row} className="mb-4" controlId="formBasicEmail">
+              <Form.Label column sm={2}>Username</Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                  type="text"
+                  value={usernameSup}
+                  placeholder="Enter Username"
+                  onChange={(e) => setUserNameSup(e.target.value)}
+                  />
+                </Col>
+            </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Form.Group>
+            <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
+                <Form.Label column sm={2}>Password</Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    type="password"
+                    value={password}
+                    placeholder="Password"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Col>
+              </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Confrim Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={cfrmPassword}
-              placeholder="Confirm Password"
-              onChange={(e) => setCfrmPassword(e.target.value)}
-            />
-          </Form.Group>
+              <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
+                <Form.Label column sm={2}>Confrim Password</Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    type="password"
+                    value={cfrmPassword}
+                    placeholder="Confirm Password"
+                    onChange={(e) => setCfrmPassword(e.target.value)}
+                  />
+                </Col>
+              </Form.Group>
 
-          <Form.Select size="lg" aria-label="Default select example" value={academicPos} onChange={(e) => setAcademicPos(e.target.value)}>
-            <Form.Label>Academic Position</Form.Label>
-              <option>Select an option</option>
-              <option value="lecturer">Lecturer</option>
-              <option value="Senior Lecturer">Senior Lecturer</option>
-              <option value="Principal Lecturer">Principal Lecturer</option>
-          </Form.Select>
-          
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Number of Supervision</Form.Label>
-            <Form.Control
-              type="text"
-              value={numSupervision}
-              placeholder="Number of Supervision"
-              onChange={(e) => setNumSupervision(e.target.value)}
-            />
-          </Form.Group>
+            <Form.Select className="mb-4" column sm aria-label="Default select example" value={academicPos} onChange={(e) => setAcademicPos(e.target.value)}>
+                <option>Select the academic position</option>
+                <option value="lecturer">Lecturer</option>
+                <option value="Senior Lecturer">Senior Lecturer</option>
+                <option value="Principal Lecturer">Principal Lecturer</option>
+            </Form.Select>
+            
+            <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
+              <Form.Label column sm={2}>Number of Supervision</Form.Label>
+              <Col sm={10}>
+                <Form.Control
+                  type="text"
+                  value={numSupervision}
+                  placeholder="Number of Supervision"
+                  onChange={(e) => setNumSupervision(e.target.value)}
+                />
+              </Col>
+            </Form.Group>
 
-          <Button variant="primary" type="submit">
-            Register
-          </Button>
-        </Form >
-        <Row className="py-3">
-          <Col>
-            New Customer ? <Link to="/facultySupervisorRegistration">Register Here</Link>
-          </Col>
-        </Row>
-      </div>
-    </MainScreen>
+            <Button className=" mt-4 float-right" variant="primary" type="submit">
+              Register
+            </Button>
+          </Form >
+      </FacultyTemplate>
     );
 }
 

@@ -1,10 +1,10 @@
 import React from "react";
-import Sidebar from "../../../components/Sidebar";
+import FacultySidebar from "../../../components/FacultySidebar";
 
 const FacultyHomepage = () => {
   return (
     <div>
-       <Sidebar />
+       <FacultySidebar />
     </div>  
   )
 }

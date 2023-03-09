@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import {useNavigate} from "react-router-dom";
@@ -10,9 +9,8 @@ import { facultyStudentRegistration} from "../../../actions/facultyAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SuccessMessage from "../../../components/SuccessMessage";
-import MainScreen from "../../../components/MainScreen";
+import FacultyTemplate from "../../../components/FacultyTemplate";
 import "./Register.css";
-import Sidebar from "../../../components/Sidebar";
 
 const RegisterStudent = () => {
     let navigate = useNavigate();
@@ -49,17 +47,9 @@ const RegisterStudent = () => {
     };
 
     return (
-      
-      <div className="container-fluid" style={{display: "contents"}}>
-        <div className="row ">
-          <div className="col">
-            <Sidebar />
-          </div>
-          <div className="col-9">
-            <MainScreen title="Student Registration">
-            <div className="form-title-desc-container">Details Of The Student</div>
-            <div className="loginContainer">
-            {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+        <FacultyTemplate>
+          <div className="form-title-desc-container">Details Of The Student </div>
+           {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             {successMsg && <SuccessMessage variant="success">{"Register successfully!"}</SuccessMessage>}
             {loading && <Loading />}
             <Form className="form" onSubmit={submitHandler}>
@@ -111,7 +101,7 @@ const RegisterStudent = () => {
               </Form.Group>
 
               <Form.Select column sm aria-label="Default select example" value={degreeLvl} onChange={(e) => setDegreeLvl(e.target.value)}>
-                  <option>Choose A Degree Level</option>
+                  <option>Choose a degree level</option>
                   <option value="Master Degree (Part-Time)">Master Degree (Part-Time)</option>
                   <option value="Master Degree (Full-Time)">Master Degree (Full-Time)</option>
                   <option value="Doctoral Degree (Part-Time)">Doctoral Degree (Part-Time)</option>
@@ -122,11 +112,7 @@ const RegisterStudent = () => {
                 Register
               </Button>
             </Form >
-            </div>
-          </MainScreen>
-          </div>
-        </div>
-      </div>
+        </FacultyTemplate>
     );
 }
 

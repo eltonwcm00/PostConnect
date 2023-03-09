@@ -1,5 +1,5 @@
 import React from 'react'
-import './Sidebar.css';
+import './FacultySidebar.css';
 import {
     CDBSidebar,
     CDBSidebarContent,
@@ -10,7 +10,7 @@ import {
   import { NavLink } from "react-router-dom";
   import { Row, Col } from 'react-bootstrap';
   
-  const Sidebar = () => {
+  const FacultySidebar = () => {
     return (
       <div
         style={{ display: "flex", height: "109vh", overflow: "scroll initial" }}
@@ -68,4 +68,4 @@ import {
     );
   };
 
-export default Sidebar
+export default FacultySidebar
