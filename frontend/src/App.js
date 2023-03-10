@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import FacultyLogin from './screens/Faculty/FacultyLogin/FacultyLogin';
 import RegisterHomepage from './screens/Faculty/FacultyRegister/RegisterHomepage';
 import RegisterPanel from './screens/Faculty/FacultyRegister/RegisterPanel';
@@ -9,12 +10,15 @@ import RegisterStudent from './screens/Faculty/FacultyRegister/RegisterStudent';
 import LandingPage from './screens/LandingPage/LandingPage';
 import FacultyHomepage from './screens/Faculty/FacultyHomepage/FacultyHomepage';
 
+import StudentLogin from './screens/Student/StudentLogin/StudentLogin';
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} exact></Route>
         <Route path="/facultyLogin" element={<FacultyLogin />}/>
+        <Route path="/studentLogin" element={<StudentLogin />}/>
         <Route path="/facultyHomepage" element={<FacultyHomepage />}/>
         <Route path="/facultyRegister" element={<RegisterHomepage />}/>
         <Route path="/facultyPanelRegistration" element={<RegisterPanel />}/>

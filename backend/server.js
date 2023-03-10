@@ -4,6 +4,7 @@ import connectDB from "./db.js";
 import cors from "cors";
 
 import facultyRoutes from "./routes/facultyRoutes.js";
+import studentRoutes from "./routes/studentRoutes.js";
 
 dotenv.config();
 
@@ -23,6 +24,8 @@ app.use(cors(corsOptions))
 app.get('/', (req, res) => res.send('The server is working '));
 
 app.use("/api/faculty", facultyRoutes);
+app.use("/api/student", studentRoutes);
+
 
 const port = process.env.PORT || 8082;
 
