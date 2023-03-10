@@ -2,51 +2,40 @@ import React from "react";
 import { useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Button, Container, Row, Col } from 'react-bootstrap';
-import './LandingPage.css';
+import '../../LandingPage/LandingPage.css';
 
-const LandingPage = () => {
+const RegisterHomepage = () => {
 
-  let navigate = useNavigate();
-  const [radioValue, setRadioValue] = useState("");
-
-  const accSelection = (e) => {
-    setRadioValue(e.target.value);
-  };
-
-  const procSelection = (e) => {
-    console.log(radioValue);
-
-    switch(radioValue) {
-      case 'faculty': 
-        navigate("/facultyLogin"); 
-        break;
-      case 'student': 
-        navigate("/studentLogin"); //***change to spefic login path after, the comp has created
-        break;
-      case 'supervisor': 
-        navigate("/supervisorLogin");
-        break;
-      case 'panel': 
-        navigate("/panelLogin");
-        break;
-      default:
-        console.log('err');
-    }
-  };
+    let navigate = useNavigate();
+    const [radioValue, setRadioValue] = useState("");
+  
+    const accSelection = (e) => {
+      setRadioValue(e.target.value);
+    };
+  
+    const procSelection = (e) => {
+      console.log(radioValue);
+  
+      switch(radioValue) {
+        case 'student': 
+          navigate("/facultyStudentRegistration"); //***change to spefic login path after, the comp has created
+          break;
+        case 'supervisor': 
+          navigate("/facultySupervisorRegistration");
+          break;
+        case 'panel': 
+          navigate("/facultyPanelRegistration");
+          break;
+        default:
+          console.log('err');
+      }
+    };
 
   return (
-    <div style={{ display: "flex", height: "100vh", backgroundColor: '#071B63'}}>
+    <div style={{ display: "flex", height: "100vh", backgroundColor: '#022c43'}}>
       <Container>
-        <h3 className="main-title">Choose Account Type</h3>
+        <h3 className="main-title">Choose Account Type to Register</h3>
           <Row className="justify-content-md-center">
-            <Col className="user-container" xl={2}>
-              <Row>
-                <input type="radio" id="vehicle1" name="vehicle1" value="faculty" onChange={accSelection}/>
-                <img src="/image/school.png" alt="React Image"/>
-              </Row>
-              <Col>Faculty</Col>
-            </Col>
-
             <Col className="user-container" xl={2}>
               <Row>
                 <input type="radio" id="vehicle1" name="vehicle1" value="student" onChange={accSelection}/>
@@ -78,7 +67,7 @@ const LandingPage = () => {
           </Row>
       </Container>
     </div>
-  );
+  )
 }
 
-export default LandingPage
+export default RegisterHomepage

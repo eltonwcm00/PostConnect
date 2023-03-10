@@ -54,11 +54,12 @@ input[type="radio"]:checked:after{
 }
 
 .proceed-btn {
-    width: 8em;
-    border: none;
-    border-radius: 0;
+    width: 11em !important;
+    border: none !important;
+    border-radius: 0 !important;
     text-transform: capitalize;
-    background-color: #CEDDEF;
-    color: black;
+    background-color: #CEDDEF !important;
+    color: black !important;
     font-weight: 600;
 }
+

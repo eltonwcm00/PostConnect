@@ -31,16 +31,16 @@ import { facultyLogout } from '../actions/facultyAction';
         <CDBSidebar textColor="#fff" backgroundColor="#333">
           <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
             <Row xs={1} md={1}>
-                <a href="/" className="text-decoration-none"style={{ color: "inherit" }}>
+                <a href="/facultyHomepage" className="text-decoration-none"style={{ color: "inherit" }}>
                     <img src="/image/school.png" alt="React Image" height={60} width={60}/>
                 </a>
-                <Col className="header-name-container" style={{ marginTop: '8px'}}>{facultyInfo ? 'Hello' + facultyInfo.userNameFac : null}</Col>
+                <Col className="header-name-container" style={{ marginTop: '8px'}}>{facultyInfo ? 'Hello, ' + facultyInfo.userNameFac : null}</Col>
             </Row>
           </CDBSidebarHeader>
   
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
-              <NavLink exact to="/" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="/facultyRegister" activeClassName="activeClicked" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-plus" className="sidebar-icon-role">Role Registration</CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="/#" activeClassName="activeClicked" className="sidebar-nav">
