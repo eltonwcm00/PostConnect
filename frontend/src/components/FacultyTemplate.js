@@ -7,16 +7,16 @@ const FacultyTemplate = ({ children }) => {
   let pageURL = 'http://localhost:3000/'
   let pageTitle;
 
-  if (window.location.href == pageURL+'facultyLogin'){
+  if (window.location.href === pageURL+'facultyLogin'){
     pageTitle = "Faculty Login";
   }
-  else if (window.location.href == pageURL+'facultyStudentRegistration'){
+  else if (window.location.href === pageURL+'facultyStudentRegistration'){
     pageTitle = "Student Registration";
   } 
-  else if (window.location.href == pageURL+'facultyPanelRegistration') {
+  else if (window.location.href === pageURL+'facultyPanelRegistration') {
     pageTitle = "Panel Registration";
   }
-  else if (window.location.href == pageURL+'facultySupervisorRegistration') {
+  else if (window.location.href === pageURL+'facultySupervisorRegistration') {
     pageTitle = "Supervisor Registration";
   }
   else {
