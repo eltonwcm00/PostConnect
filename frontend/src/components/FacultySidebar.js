@@ -59,7 +59,7 @@ import { facultyLogout } from '../actions/facultyAction';
                   Candidature Monitoring
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/#" activeClassName="activeClicked">
+              <NavLink exact to="/facultyAssignNumSupervisor" activeClassName="activeClicked">
                 <CDBSidebarMenuItem icon="fa-regular fa-sitemap">
                   Assign Number of Supervision
                 </CDBSidebarMenuItem>

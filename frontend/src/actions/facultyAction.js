@@ -6,6 +6,9 @@ import {
     FACULTY_REGISTER_FAIL,
     FACULTY_REGISTER_REQUEST,
     FACULTY_REGISTER_SUCCESS,
+    FACULTY_SUPERVISOR_LIST_REQUEST,
+    FACULTY_SUPERVISOR_LIST_SUCCESS,
+    FACULTY_SUPERVISOR_LIST_FAIL,
 } from "../constants/facultyConstants";
 
 import axios from "axios";
@@ -157,7 +160,41 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
   };
   
   export const facultyReadAssignSupervision = () => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: FACULTY_SUPERVISOR_LIST_REQUEST,
+      });
+  
+      const {
+        // userLogin: {userInfo} is the initial state from store.js
+        facultyLogin: { facultyInfo  },
+      } = getState();
+      
+      // Authorization = it is a private route
+      const config = {
+        headers: {
+          Authorization: `Bearer ${facultyInfo.token}`,
+        },
+      };
+  
+      const { data } = await axios.get("http://localhost:5000/api/faculty/facultyReadAssignSupervision", config);
 
+      
+  
+      dispatch({
+        type: FACULTY_SUPERVISOR_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+     
+      dispatch({
+        type: FACULTY_SUPERVISOR_LIST_FAIL,
+        payload:
+          error.response 
+          ? error.response.data.message
+          : error.message,
+      });
+    }
   };
 
 

@@ -7,6 +7,7 @@ import RegisterHomepage from './screens/Faculty/FacultyRegister/RegisterHomepage
 import RegisterPanel from './screens/Faculty/FacultyRegister/RegisterPanel';
 import RegisterSupervisor from './screens/Faculty/FacultyRegister/RegisterSupervisor';
 import RegisterStudent from './screens/Faculty/FacultyRegister/RegisterStudent';
+import FacultyAssignNumSupervisor from './screens/Faculty/FacultyAssignNumSupervisor/FacultyAssignNumSupervisor';
 import LandingPage from './screens/LandingPage/LandingPage';
 import FacultyHomepage from './screens/Faculty/FacultyHomepage/FacultyHomepage';
 
@@ -38,6 +39,8 @@ function App() {
         <Route path="/facultyPanelRegistration" element={<RegisterPanel />}/>
         <Route path="/facultySupervisorRegistration" element={<RegisterSupervisor />}/>
         <Route path="/facultyStudentRegistration" element={<RegisterStudent />}/>
+        <Route path="/facultyAssignNumSupervisor" element={<FacultyAssignNumSupervisor />}/>
+        
       </Routes>
     </BrowserRouter>
   );

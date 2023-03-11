@@ -3,7 +3,9 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import {
-  facultyLoginReducer, facultyRegistrationReducer
+  facultyLoginReducer, 
+  facultyRegistrationReducer,
+  facultyReadAssignSupervisionReducer,
 } from "./reducers/facutyReducers";
 
 import { 
@@ -24,6 +26,7 @@ const reducer = combineReducers({
     studentLogin: studentLoginReducer,
     supervisorLogin: supervisorLoginReducer,
     panelLogin: panelLoginReducer,
+    facultyReadAssignSupervision: facultyReadAssignSupervisionReducer,
 })
 
 const facultyInfoFromStorage = localStorage.getItem("facultyInfo")
