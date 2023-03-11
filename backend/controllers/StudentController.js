@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import generateToken from "../utils/generateFacultyToken.js";
+import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcryptjs";
 import Student from "../models/Student.js";
 
@@ -17,7 +17,6 @@ const studentLogin = asyncHandler(async (req, res) => {
         token: generateToken(userStudent._id),
         successMessage: "Logged in successfully!"
       });
-      
     } 
     else {
       res.status(401).json({message: "Username or Password is incorrect!"});

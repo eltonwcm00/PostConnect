@@ -12,6 +12,8 @@ import FacultyHomepage from './screens/Faculty/FacultyHomepage/FacultyHomepage';
 
 import StudentLogin from './screens/Student/StudentLogin/StudentLogin';
 
+import SupervisorLogin from './screens/Supervisor/SupervisorLogin/SupervisorLogin';
+
 function App() {
   return (
     <BrowserRouter>
@@ -19,6 +21,7 @@ function App() {
         <Route path="/" element={<LandingPage />} exact></Route>
         <Route path="/facultyLogin" element={<FacultyLogin />}/>
         <Route path="/studentLogin" element={<StudentLogin />}/>
+        <Route path="/supervisorLogin" element={<SupervisorLogin />}/>
         <Route path="/facultyHomepage" element={<FacultyHomepage />}/>
         <Route path="/facultyRegister" element={<RegisterHomepage />}/>
         <Route path="/facultyPanelRegistration" element={<RegisterPanel />}/>

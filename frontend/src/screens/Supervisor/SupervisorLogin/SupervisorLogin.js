@@ -2,33 +2,33 @@ import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { studentLogin } from "../../../actions/studentAction";
+import { supervisorLogin } from "../../../actions/supervisorAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SuccessMessage from "../../../components/SuccessMessage";
-import "./StudentLogin.css";
+import "./SupervisorLogin.css";
 
-const StudentLogin = () => {
+const SupervisorLogin = () => {
   
     let navigate = useNavigate();
-    const [usernameStud, setUsernameStud] = useState("");
+    const [usernameSup, setUsernameSup] = useState("");
     const [password, setPassword] = useState("");
 
     const dispatch = useDispatch();
 
-    const studentLoginState = useSelector((state) => state.studentLogin);
-    const { loading, error, studentInfo, successMsg } = studentLoginState;
+    const supervisorLoginState = useSelector((state) => state.supervisorLogin);
+    const { loading, error, supervisorInfo, successMsg } = supervisorLoginState;
 
     useEffect(() => {
-        if (studentInfo) {
-          navigate("/studentLogin");
+        if (supervisorInfo) {
+          navigate("/supervisorLogin");
         }
-    }, [navigate, studentInfo]);
+    }, [navigate, supervisorInfo]);
 
     useEffect(() => {
       if (successMsg) {
         const timer = setTimeout(() => {
-          navigate("/studentHomepage");
+          navigate("/supervisorHomepage");
         }, 2000);
         return () => clearTimeout(timer);
       }
@@ -36,7 +36,7 @@ const StudentLogin = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(studentLogin(usernameStud, password));
+        dispatch(supervisorLogin(usernameSup, password));
       };
   
   return (
@@ -45,17 +45,17 @@ const StudentLogin = () => {
        <div className="register-form-title-desc-container">Login</div>
          <center><img src="/image/postconnect.png" alt="PostConnect Logo"/></center>
          {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-         {successMsg && <SuccessMessage variant="success">{studentInfo.successMessage}</SuccessMessage>}
+         {successMsg && <SuccessMessage variant="success">{supervisorInfo.successMessage}</SuccessMessage>}
          {loading && <Loading />}
-         <Form className="register-stud-form" onSubmit={submitHandler}>
+         <Form className="register-sup-form" onSubmit={submitHandler}>
            <Form.Group as={Row} className="mb-4" controlId="formBasicEmail">
              <Form.Label className="col-register-form-label" column sm={2}>Username</Form.Label>
              <Col sm={10}>
                <Form.Control
                  type="text"
-                 value={usernameStud}
+                 value={usernameSup}
                  placeholder="Enter the username"
-                 onChange={(e) => setUsernameStud(e.target.value)}
+                 onChange={(e) => setUsernameSup(e.target.value)}
                />
              </Col>
            </Form.Group>
@@ -81,4 +81,4 @@ const StudentLogin = () => {
   )
 }
 
-export default StudentLogin
+export default SupervisorLogin

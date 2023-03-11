@@ -1,10 +1,10 @@
-.register-stud-form {
+.register-sup-form {
     font-family: 'Montserrat', sans-serif;
     margin-top: 30px;
     font-size: 15px;
   }
   
-  .register-stud-form .col-register-form-label {
+  .register-sup-form .col-register-form-label {
     color: white;
     font-weight: lighter;
   }
@@ -18,17 +18,17 @@
     color: white;
   }
   
-  .register-stud-form .mb-4 {
+  .register-sup-form .mb-4 {
       background-color: #113f67;
   }
   
-  .register-stud-form input[type="text"]::placeholder, .register-stud-form input[type="password"]::placeholder{
+  .register-sup-form input[type="text"]::placeholder, .register-sup-form input[type="password"]::placeholder{
       color: white;
       font-size: 13px;
   }
   
-  .register-stud-form input[type="text"], .register-stud-form input[type="password"], 
-  .register-stud-form input[type="text"]:focus, .register-stud-form input[type="password"]:focus {
+  .register-sup-form input[type="text"], .register-sup-form input[type="password"], 
+  .register-sup-form input[type="text"]:focus, .register-sup-form input[type="password"]:focus {
       background-color: transparent;
       border: none;
       color: white;

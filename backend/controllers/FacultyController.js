@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import generateToken from "../utils/generateFacultyToken.js";
+import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcryptjs";
 import moment from "moment"
 import Faculty from "../models/Faculty.js";
