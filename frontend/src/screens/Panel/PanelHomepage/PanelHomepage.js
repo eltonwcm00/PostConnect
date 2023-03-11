@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux"
+import PanelSidebar from "../../../components/PanelSidebar";
 
 const PanelHomepage = () => {
   
@@ -17,7 +18,7 @@ const PanelHomepage = () => {
 
   return (
     <div>
-      Hi, i am a panel
+      <PanelSidebar />
     </div>
   )
 }

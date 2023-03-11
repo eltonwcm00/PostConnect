@@ -1,8 +1,8 @@
 import React from 'react'
 import MainScreen from './MainScreen'
-import StudentSidebar from './StudentSidebar'
+import PanelSidebar from './PanelSidebar'
 
-const StudentTemplate = ({ children }) => {
+const PanelTemplate = ({ children }) => {
 
   let pageURL = 'http://localhost:3000/'
   let pageTitle;
@@ -27,7 +27,7 @@ const StudentTemplate = ({ children }) => {
     <div className="container-fluid" style={{display: "contents"}}>
         <div className="row ">
           <div className="col">
-            <StudentSidebar />
+            <PanelSidebar />
           </div>
           <div className="col-9">
             <MainScreen title={pageTitle}>
@@ -39,4 +39,4 @@ const StudentTemplate = ({ children }) => {
   )
 }
 
-export default StudentTemplate;
+export default PanelTemplate;
