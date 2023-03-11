@@ -21,7 +21,7 @@ const RegisterPanel= () => {
     const facultyPanelRegistrationState = useSelector((state) => state.facultyRegistration);
     const { loading, error, facultyInfo, successMsg } = facultyPanelRegistrationState;
 
-    useEffect(() => {
+      useEffect(() => {
         if (facultyInfo) {
           navigate("/facultyPanelRegistration");
         }
@@ -30,7 +30,7 @@ const RegisterPanel= () => {
       useEffect(() => {
         if (successMsg) {
           const timer = setTimeout(() => {
-            navigate("/");
+            navigate("/facultyHomepage");
           }, 2000);
           return () => clearTimeout(timer);
         }

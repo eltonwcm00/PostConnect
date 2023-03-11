@@ -1,5 +1,6 @@
-import React from "react";
+import React , { useEffect } from "react";
 import { useState} from "react";
+import { useSelector } from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {Button, Container, Row, Col } from 'react-bootstrap';
 import '../../LandingPage/LandingPage.css';
@@ -7,8 +8,18 @@ import '../../LandingPage/LandingPage.css';
 const RegisterHomepage = () => {
 
     let navigate = useNavigate();
+    
     const [radioValue, setRadioValue] = useState("");
-  
+
+    const facultyLoginState = useSelector((state) => state.facultyLogin);
+    const { facultyInfo } = facultyLoginState;
+
+    useEffect(() => {
+        if (!facultyInfo) {
+          navigate("/");
+        }
+    }, [navigate, facultyInfo]);
+
     const accSelection = (e) => {
       setRadioValue(e.target.value);
     };
