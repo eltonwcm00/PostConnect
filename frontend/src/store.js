@@ -14,11 +14,16 @@ import {
   supervisorLoginReducer
 } from "./reducers/supervisorReducers";
 
+import {
+  panelLoginReducer
+} from "./reducers/panelReducers";
+
 const reducer = combineReducers({
     facultyLogin: facultyLoginReducer,
     facultyRegistration: facultyRegistrationReducer,
     studentLogin: studentLoginReducer,
     supervisorLogin: supervisorLoginReducer,
+    panelLogin: panelLoginReducer,
 })
 
 const facultyInfoFromStorage = localStorage.getItem("facultyInfo")
@@ -33,11 +38,16 @@ const supervisorInfoFromStorage = localStorage.getItem("supervisorInfo")
 ? JSON.parse(localStorage.getItem("supervisorInfo"))
 : null;
 
+const panelInfoFromStorage = localStorage.getItem("panelInfo")
+? JSON.parse(localStorage.getItem("panelInfo"))
+: null;
+
 // initial state of userInfo from the login reducer is equivalent to userInfoFromStorage
 const initialState = {
     facultyLogin: { facultyInfo: facultyInfoFromStorage },
     studentLogin: { studentInfo: studentInfoFromStorage },
     supervisorLogin: { supervisorInfo: supervisorInfoFromStorage },
+    panelLogin: { panelInfo: panelInfoFromStorage},
 };
 
 const middleware = [thunk];

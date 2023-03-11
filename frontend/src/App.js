@@ -11,8 +11,13 @@ import LandingPage from './screens/LandingPage/LandingPage';
 import FacultyHomepage from './screens/Faculty/FacultyHomepage/FacultyHomepage';
 
 import StudentLogin from './screens/Student/StudentLogin/StudentLogin';
+import StudentHomepage from './screens/Student/StudentHompage/StudentHomepage';
 
 import SupervisorLogin from './screens/Supervisor/SupervisorLogin/SupervisorLogin';
+import SupervisorHomepage from './screens/Supervisor/SupervisorHomepage/SupervisorHomepage';
+
+import PanelLogin from './screens/Panel/PanelLogin/PanelLogin';
+import PanelHomepage from './screens/Panel/PanelHomepage/PanelHomepage';
 
 function App() {
   return (
@@ -22,7 +27,13 @@ function App() {
         <Route path="/facultyLogin" element={<FacultyLogin />}/>
         <Route path="/studentLogin" element={<StudentLogin />}/>
         <Route path="/supervisorLogin" element={<SupervisorLogin />}/>
+        <Route path="/panelLogin" element={<PanelLogin />}/>
+
         <Route path="/facultyHomepage" element={<FacultyHomepage />}/>
+        <Route path="/studentHomepage" element={<StudentHomepage />}/>
+        <Route path="/supervisorHomepage" element={<SupervisorHomepage />}/>
+        <Route path="/panelHomepage" element={<PanelHomepage />}/>
+
         <Route path="/facultyRegister" element={<RegisterHomepage />}/>
         <Route path="/facultyPanelRegistration" element={<RegisterPanel />}/>
         <Route path="/facultySupervisorRegistration" element={<RegisterSupervisor />}/>

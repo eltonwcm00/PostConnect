@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import Faculty from "../models/Faculty.js";
 import Student from "../models/Student.js";
 import Supervisor from "../models/Supervisor.js";
+import Panel from "../models/Panel.js";
 
 const protectFaculty = asyncHandler(async (req, res, next) => {
   let token;
@@ -73,4 +74,27 @@ const protectSupervisor = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { protectFaculty, protectStudent, protectSupervisor };
+const protectPanel = asyncHandler(async (req, res, next) => {
+  let token;
+
+  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    try {
+      token = req.headers.authorization.split(" ")[1];
+
+      const decoded = jwt.verify(token, process.env.JWT_SECRET); //decodes token id
+
+      req.userPanel = await Panel.findById(decoded.id); 
+      next();
+    } catch (error) {
+      res.status(401);
+      throw new Error("Not authorized, token failed");
+    }
+  }
+
+  if (!token) {
+    res.status(401);
+    throw new Error("Not authorized, no token");
+  }
+});
+
+export { protectFaculty, protectStudent, protectSupervisor, protectPanel };

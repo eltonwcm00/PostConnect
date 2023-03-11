@@ -6,6 +6,7 @@ import cors from "cors";
 import facultyRoutes from "./routes/facultyRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
 import supervisorRoutes from "./routes/supervisorRoutes.js";
+import panelRoutes from "./routes/panelRoutes.js"
 
 dotenv.config();
 
@@ -27,7 +28,7 @@ app.get('/', (req, res) => res.send('The server is working '));
 app.use("/api/faculty", facultyRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/supervisor", supervisorRoutes);
-
+app.use("/api/panel", panelRoutes);
 
 const port = process.env.PORT || 8082;
 
