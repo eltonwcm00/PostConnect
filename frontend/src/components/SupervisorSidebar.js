@@ -34,34 +34,24 @@ import { supervisorLogout } from '../actions/supervisorAction';
                 <a href="/supervisorHomepage" className="text-decoration-none"style={{ color: "inherit" }}>
                     <img src="/image/teacher.png" alt="Supervisor Profile Image" height={60} width={60}/>
                 </a>
-                <Col className="header-name-container" style={{ marginTop: '8px'}}>{supervisorInfo  ? 'Hello, ' + supervisorInfo .userNameFac : null}</Col>
+                <Col className="header-name-container" style={{ marginTop: '8px'}}>{supervisorInfo  ? 'Hello, ' + supervisorInfo.usernameSup : null}</Col>
             </Row>
           </CDBSidebarHeader>
   
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
-              <NavLink exact to="/facultyRegister" activeClassName="activeClicked" className="sidebar-nav">
-                <CDBSidebarMenuItem icon="fa fa-plus" className="sidebar-icon-role">Role Registration</CDBSidebarMenuItem>
-              </NavLink>
               <NavLink exact to="/#" activeClassName="activeClicked" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-user" className="sidebar-icon">User Profile</CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="/#" activeClassName="activeClicked" className="sidebar-nav">
-                <CDBSidebarMenuItem icon="fa fa-file-text">Research Proposal Defence Request Application</CDBSidebarMenuItem>
+                <CDBSidebarMenuItem icon="fa-solid fa-plus">Choose Student to Supervise</CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="/#" activeClassName="activeClicked" className="sidebar-nav">
-                <CDBSidebarMenuItem icon="fa fa-file-text">
-                  Work Completion Defence Request Application
-                </CDBSidebarMenuItem>
+                <CDBSidebarMenuItem icon="fa-solid fa-magnifying-glass"> View Research Proposal Defence Result </CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="/#" target="_blank" activeClassName="activeClicked">
-                <CDBSidebarMenuItem icon="fa fa-users">
-                  Candidature Monitoring
-                </CDBSidebarMenuItem>
-              </NavLink>
-              <NavLink exact to="/#" activeClassName="activeClicked">
-                <CDBSidebarMenuItem icon="fa-regular fa-sitemap">
-                  Assign Number of Supervision
+                <CDBSidebarMenuItem icon="fa-solid fa-magnifying-glass">
+                View Work Completion Defence Result
                 </CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="/#" activeClassName="activeClicked">

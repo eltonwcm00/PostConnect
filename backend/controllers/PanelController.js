@@ -12,7 +12,7 @@ const panelLogin = asyncHandler(async (req, res) => {
     if (userPanel && validPass) {
       res.status(201).json({
         _id: userPanel._id,
-        usernameStud: userPanel.usernamePanel, 
+        usernamePanel: userPanel.usernamePanel, 
         isPanel: true,
         token: generateToken(userPanel._id),
         successMessage: "Logged in successfully!"
