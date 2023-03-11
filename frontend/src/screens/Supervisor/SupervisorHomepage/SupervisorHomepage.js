@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import SupervisorSidebar from "../../../components/SupervisorSidebar";
 import {useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -17,7 +18,7 @@ const SupervisorHomepage = () => {
 
   return (
     <div>
-      Hi, i am a supervisor
+      <SupervisorSidebar />
     </div>
   )
 }

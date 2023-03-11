@@ -11,17 +11,17 @@ import {
 import { NavLink } from "react-router-dom";
 import { Row, Col } from 'react-bootstrap';
 import { useSelector, useDispatch } from "react-redux";
-import { facultyLogout } from '../actions/facultyAction';
+import { supervisorLogout } from '../actions/supervisorAction';
   
-  const FacultySidebar = () => {
+  const SupervisorSidebar = () => {
 
-    const facultyState = useSelector((state) => state.facultyLogin);
-    const { facultyInfo } = facultyState;
+    const supervisorState = useSelector((state) => state.supervisorLogin);
+    const { supervisorInfo } = supervisorState;
 
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-      dispatch(facultyLogout());
+      dispatch(supervisorLogout());
     }
 
     return (
@@ -31,10 +31,10 @@ import { facultyLogout } from '../actions/facultyAction';
         <CDBSidebar textColor="#fff" backgroundColor="#333">
           <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
             <Row xs={1} md={1}>
-                <a href="/facultyHomepage" className="text-decoration-none"style={{ color: "inherit" }}>
-                    <img src="/image/school.png" alt="React Image" height={60} width={60}/>
+                <a href="/supervisorHomepage" className="text-decoration-none"style={{ color: "inherit" }}>
+                    <img src="/image/teacher.png" alt="Supervisor Profile Image" height={60} width={60}/>
                 </a>
-                <Col className="header-name-container" style={{ marginTop: '8px'}}>{facultyInfo ? 'Hello, ' + facultyInfo.userNameFac : null}</Col>
+                <Col className="header-name-container" style={{ marginTop: '8px'}}>{supervisorInfo  ? 'Hello, ' + supervisorInfo .userNameFac : null}</Col>
             </Row>
           </CDBSidebarHeader>
   
@@ -70,7 +70,7 @@ import { facultyLogout } from '../actions/facultyAction';
                 </CDBSidebarMenuItem>
               </NavLink>
               <CDBSidebarMenuItem icon="fa-light fa-right-from-bracket">
-                {facultyInfo && <CDBBtn onClick={handleLogout} color="primary" style={{backgroundColor: 'transparent', 
+                {supervisorInfo && <CDBBtn onClick={handleLogout} color="primary" style={{backgroundColor: 'transparent', 
                   fontWeight: 'normal',
                   marginLeft: -10,
                   color: '#c4c4c4',
@@ -78,7 +78,7 @@ import { facultyLogout } from '../actions/facultyAction';
                 }}>
                   Logout
                 </CDBBtn>}
-                {!facultyInfo && <NavLink exact to="/facultyLogin" activeClassName="activeClicked">Login</NavLink>}
+                {!supervisorInfo && <NavLink exact to="/supervisorLogin" activeClassName="activeClicked">Login</NavLink>}
               </CDBSidebarMenuItem>
             </CDBSidebarMenu>
           </CDBSidebarContent>
@@ -87,4 +87,4 @@ import { facultyLogout } from '../actions/facultyAction';
     );
   };
 
-export default FacultySidebar
+  export default SupervisorSidebar
