@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import StudentSidebar from "../../../components/StudentSidebar";
 import {useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -17,7 +18,7 @@ const StudentHomepage = () => {
 
   return (
     <div>
-      Hi, i am a student
+      <StudentSidebar />
     </div>
   )
 }
