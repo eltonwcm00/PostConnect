@@ -15,6 +15,11 @@ const PanelSchema = mongoose.Schema(
         required: true,
         default: false,
     },
+    facultyUser: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Faculty",
+    },
   },
   {
     timestamps: true,

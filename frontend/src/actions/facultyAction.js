@@ -155,4 +155,10 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
       });
     }
   };
+  
+  export const facultyReadAssignSupervision = () => async (dispatch, getState) => {
+
+  };
+
+
 

@@ -34,7 +34,7 @@ const RegisterStudent = () => {
       useEffect(() => {
         if (successMsg) {
           const timer = setTimeout(() => {
-            navigate("/");
+            navigate("/facultyHomepage");
           }, 2000);
           return () => clearTimeout(timer);
         }

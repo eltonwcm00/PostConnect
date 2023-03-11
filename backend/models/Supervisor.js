@@ -22,7 +22,12 @@ const SupervisorSchema = mongoose.Schema(
     numSupervision: {
         type: Number,
         // required: true,
-    }
+    },
+    facultyUser: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Faculty",
+    },
   },
   {
     timestamps: true,

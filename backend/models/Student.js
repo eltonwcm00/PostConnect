@@ -25,7 +25,12 @@ const StudentSchema = mongoose.Schema(
     academicStatus: {
         type: String,
         default: "Active",
-    }
+    },
+    facultyUser: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Faculty",
+    },
   },
   {
     timestamps: true,
