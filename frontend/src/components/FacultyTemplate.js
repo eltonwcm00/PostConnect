@@ -19,6 +19,9 @@ const FacultyTemplate = ({ children }) => {
   else if (window.location.href === pageURL+'facultySupervisorRegistration') {
     pageTitle = "Supervisor Registration";
   }
+  else if (window.location.href === pageURL+'facultyAssignNumSupervisor') {
+    pageTitle = "Assign Number of Supervision";
+  }
   else {
     pageTitle = null;
   }

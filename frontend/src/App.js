@@ -7,7 +7,7 @@ import RegisterHomepage from './screens/Faculty/FacultyRegister/RegisterHomepage
 import RegisterPanel from './screens/Faculty/FacultyRegister/RegisterPanel';
 import RegisterSupervisor from './screens/Faculty/FacultyRegister/RegisterSupervisor';
 import RegisterStudent from './screens/Faculty/FacultyRegister/RegisterStudent';
-import FacultyAssignNumSupervisor from './screens/Faculty/FacultyAssignNumSupervisor/FacultyAssignNumSupervisor';
+import FacultyAssignNumSupervisor from './screens/Faculty/FacultyAssignNumSupervisor/FacultyAssignNumSup';
 import LandingPage from './screens/LandingPage/LandingPage';
 import FacultyHomepage from './screens/Faculty/FacultyHomepage/FacultyHomepage';
 

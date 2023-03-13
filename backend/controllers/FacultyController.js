@@ -170,29 +170,17 @@ const facultyLogin = asyncHandler(async (req, res) => {
    }
  });
 
-
- // to be continued
  const facultyReadAssignSupervision = asyncHandler(async (req, res) => {
-    
+  
   const fetchSupervisorList = await Supervisor.find({facultyUser: req.userFaculty._id});
-  //const fetchSupervisorList = await Supervisor.find({});
 
   if(fetchSupervisorList) {
     res.json(fetchSupervisorList);
+  } 
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
   }
-
-  // if (fetchSupervisorList) {
-  //   res.status(201).json({
-  //     _id: fetchSupervisorList._id,
-  //     usernameStud: fetchSupervisorList.usernameSup,
-  //     academicPos: fetchSupervisorList.academicPos,
-  //     numSupervision: fetchSupervisorList.numSupervision,
-  //     // correct: "Valid",
-  //   });
-  // } else {
-  //     res.status(500);
-  //     throw new Error("Internal server error");
-  // }
  })
 
 export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, facultyReadAssignSupervision};
