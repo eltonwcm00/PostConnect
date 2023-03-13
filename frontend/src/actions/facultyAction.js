@@ -178,8 +178,6 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
       };
   
       const { data } = await axios.get("http://localhost:5000/api/faculty/facultyReadAssignSupervision", config);
-
-      
   
       dispatch({
         type: FACULTY_SUPERVISOR_LIST_SUCCESS,

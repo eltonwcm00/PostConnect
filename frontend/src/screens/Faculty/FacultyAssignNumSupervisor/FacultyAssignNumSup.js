@@ -54,7 +54,7 @@ const FacultyAssignNumSupervisor = () => {
                       <td> {list.usernameSup} </td>
                       <td> {list.academicPos} </td>
                       <td> {list.numSupervision} </td>
-                      <td className='table-details-button'><Button href={`/note/${list._id}`}>Details</Button></td>
+                      <td className='table-details-button'><Button href={`http://localhost:3000/facultyAssignNumSupervisor/${list._id}`}>Details</Button></td>
                     </tr>
                   )
                 )

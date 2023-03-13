@@ -181,6 +181,19 @@ const facultyLogin = asyncHandler(async (req, res) => {
     res.status(500);
     throw new Error("Internal server error");
   }
- })
+ });
 
-export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, facultyReadAssignSupervision};
+ const facultyReadAssignSupervisionByID = asyncHandler(async (req, res) => {
+  
+  const fetchSupervisorID = await Supervisor.findById(req.params.id);
+
+  if (fetchSupervisorID) {
+    res.json(fetchSupervisorID);
+  } 
+  else {
+    res.status(404).json({ message: "Supervisor is not found" });
+  }
+ });
+
+export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
+         facultyReadAssignSupervision, facultyReadAssignSupervisionByID};
