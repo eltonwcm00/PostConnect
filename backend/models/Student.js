@@ -17,7 +17,6 @@ const StudentSchema = mongoose.Schema(
     },
     dateJoin: {
         type: Date,
-        // required: true,
     },
     degreeLvl: {
         type: String,

@@ -93,7 +93,7 @@ const RegisterSupervisor= () => {
                 <option value="Principal Lecturer">Principal Lecturer</option>
             </Form.Select>
             
-            <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
+            {/* <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
               <Form.Label column sm={2}>Number of Supervision</Form.Label>
               <Col sm={10}>
                 <Form.Control
@@ -103,7 +103,7 @@ const RegisterSupervisor= () => {
                   onChange={(e) => setNumSupervision(e.target.value)}
                 />
               </Col>
-            </Form.Group>
+            </Form.Group> */}
 
             <Button className=" mt-4 float-right" variant="primary" type="submit">
               Register

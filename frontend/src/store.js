@@ -6,6 +6,7 @@ import {
   facultyLoginReducer, 
   facultyRegistrationReducer,
   facultyReadAssignSupervisionReducer,
+  facultyUpdateAssignSupervisionReducer
 } from "./reducers/facutyReducers";
 
 import { 
@@ -27,6 +28,7 @@ const reducer = combineReducers({
     supervisorLogin: supervisorLoginReducer,
     panelLogin: panelLoginReducer,
     facultyReadAssignSupervision: facultyReadAssignSupervisionReducer,
+    facultyUpdateAssignSupervision: facultyUpdateAssignSupervisionReducer,
 })
 
 const facultyInfoFromStorage = localStorage.getItem("facultyInfo")

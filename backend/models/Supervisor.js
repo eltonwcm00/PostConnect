@@ -17,11 +17,9 @@ const SupervisorSchema = mongoose.Schema(
     },
     academicPos: {
         type: String,
-        // required: true,
     },
     numSupervision: {
         type: Number,
-        // required: true,
     },
     facultyUser: {
       type: mongoose.Schema.Types.ObjectId,

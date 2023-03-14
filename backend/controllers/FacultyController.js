@@ -30,170 +30,189 @@ const facultyLogin = asyncHandler(async (req, res) => {
     }
   });
 
- const facultyPanelRegistration = asyncHandler(async (req, res) => {
+const facultyPanelRegistration = asyncHandler(async (req, res) => {
 
-   let hashedPassword, userPanel;
- 
-   const { usernamePanel, password, cfrmPassword } = req.body;
-   const userExists = await Panel.findOne({ usernamePanel });
- 
-   if (userExists) {
-     res.status(401).json({message: "Username is existed!"});
-   }
- 
-   if (cfrmPassword == password) {
-     const salt = await bcrypt.genSalt(10);
-     hashedPassword = await bcrypt.hash(password, salt);
-     userPanel = await Panel.create({
-       usernamePanel,
-       password: hashedPassword,
-       facultyUser: req.userFaculty._id,
-     });
-   }
-   else {
-     res.status(401).json({message: "Repeat password and password is not match"});
-   }
+  let hashedPassword, userPanel;
 
-   if (userPanel) {
-     res.status(201).json({
-       _id: userPanel._id,
-       facultyUser: userPanel.facultyUser,
-       usernamePanel: userPanel.usernamePanel,
-       isPanel: true,
-       token: generateToken(userPanel._id),
-       successMessage: "Register successfully!"
-     });
-   } else {
-       res.status(500);
-       throw new Error("Internal server error");
-   }
- });
+  const { usernamePanel, password, cfrmPassword } = req.body;
+  const userExists = await Panel.findOne({ usernamePanel });
 
- const facultySupervisorRegistration = asyncHandler(async (req, res) => {
+  if (userExists) {
+    res.status(401).json({message: "Username is existed!"});
+  }
 
-   let hashedPassword, userSupervisor;
+  if (cfrmPassword == password) {
+    const salt = await bcrypt.genSalt(10);
+    hashedPassword = await bcrypt.hash(password, salt);
+    userPanel = await Panel.create({
+      usernamePanel,
+      password: hashedPassword,
+      facultyUser: req.userFaculty._id,
+    });
+  }
+  else {
+    res.status(401).json({message: "Repeat password and password is not match"});
+  }
+
+  if (userPanel) {
+    res.status(201).json({
+      _id: userPanel._id,
+      facultyUser: userPanel.facultyUser,
+      usernamePanel: userPanel.usernamePanel,
+      isPanel: true,
+      token: generateToken(userPanel._id),
+      successMessage: "Register successfully!"
+    });
+  } else {
+      res.status(500);
+      throw new Error("Internal server error");
+  }
+});
+
+const facultySupervisorRegistration = asyncHandler(async (req, res) => {
+
+  let hashedPassword, userSupervisor;
+
+  const { usernameSup, password, cfrmPassword, numSupervision, academicPos } = req.body;
+  const userExists = await Supervisor.findOne({ usernameSup });
+
+  if (userExists) {
+    res.status(401).json({message: "Username is existed!"});
+  } 
+  else if(academicPos.trim().length === 0) {
+    res.status(401).json({message: "Please fill in the academic position"});
+  }
+  else if(cfrmPassword !== password) {
+    res.status(401).json({message: "Repeat password and password is not match"});
+  }
+  else if(isNaN(numSupervision)) {
+    res.status(401).json({message: "Number of supervision must be in number format"});
+  }
+  else {
+    const salt = await bcrypt.genSalt(10);
+    hashedPassword = await bcrypt.hash(password, salt);
+    userSupervisor = await Supervisor.create({
+      usernameSup,
+      password: hashedPassword,
+      academicPos,
+      numSupervision,
+      facultyUser: req.userFaculty._id,
+    });
+  }
+
+  if (userSupervisor) {
+    res.status(201).json({
+      _id: userSupervisor._id,
+      facultyUser: userSupervisor.facultyUser,
+      usernamePanel: userSupervisor.usernameSup,
+      academicPos: userSupervisor.academicPos,
+      numSupervision: userSupervisor.numSupervision,
+      isSupervisor: true,
+      token: generateToken(userSupervisor._id),
+      successMessage: "Register successfully!"
+    });
+  } else {
+      res.status(500);
+      throw new Error("Internal server error");
+  }
+});
+
+const facultyStudentRegistration = asyncHandler(async (req, res) => {
+
+  let hashedPassword, userStudent;
+
+  const { usernameStud, password, cfrmPassword, degreeLvl } = req.body;
+  const { dateJoin } = req.body;
+
+  let dateJoin_ = moment(dateJoin);
+  let todayDate = moment();
+
+  const userExists = await Student.findOne({ usernameStud });
+
+  if (userExists) {
+    res.status(401).json({message: "Username is existed!"});
+  }
+  else if(degreeLvl.trim().length === 0) {
+    res.status(401).json({message: "Please fill in the degree level"});
+  }
+  else if(cfrmPassword !== password) {
+    res.status(401).json({message: "Repeat password and password is not match"});
+  }
+  else if(dateJoin_ > todayDate) {
+    res.status(401).json({message: "Invalid, joining date is greater than today's date"});
+  }
+  else {
+    const salt = await bcrypt.genSalt(10);
+    hashedPassword = await bcrypt.hash(password, salt);
+    userStudent = await Student.create({
+      usernameStud,
+      password: hashedPassword,
+      dateJoin,
+      degreeLvl,
+      facultyUser: req.userFaculty._id, // link faculty model to student model
+    });
+  }
+
+  if (userStudent) {
+    res.status(201).json({
+      _id: userStudent._id,
+      facultyUser: userStudent.facultyUser, // link faculty model to student model
+      usernameStud: userStudent.usernameStud,
+      dateJoin: userStudent.dateJoin,
+      degreeLvl: userStudent.degreeLvl,
+      isStudent: true,
+      token: generateToken(userStudent._id),
+      successMessage: "Register successfully!"
+    });
+  } else {
+      res.status(500);
+      throw new Error("Internal server error");
+  }
+});
+
+const facultyReadAssignSupervision = asyncHandler(async (req, res) => {
  
-   const { usernameSup, password, cfrmPassword, numSupervision, academicPos } = req.body;
-   const userExists = await Supervisor.findOne({ usernameSup });
+ const fetchSupervisorList = await Supervisor.find({facultyUser: req.userFaculty._id});
+
+ if(fetchSupervisorList) {
+   res.json(fetchSupervisorList);
+ } 
+ else {
+   res.status(500);
+   throw new Error("Internal server error");
+ }
+});
+
+const facultyReadAssignSupervisionByID = asyncHandler(async (req, res) => {
  
-   if (userExists) {
-     res.status(401).json({message: "Username is existed!"});
+   const fetchSupervisorID = await Supervisor.findById(req.params.id);
+
+   if (fetchSupervisorID) {
+     res.json(fetchSupervisorID);
    } 
-   else if(academicPos.trim().length === 0) {
-     res.status(401).json({message: "Please fill in the academic position"});
-   }
-   else if(cfrmPassword !== password) {
-     res.status(401).json({message: "Repeat password and password is not match"});
-   }
-   else if(isNaN(numSupervision)) {
-     res.status(401).json({message: "Number of supervision must be in number format"});
-   }
    else {
-     const salt = await bcrypt.genSalt(10);
-     hashedPassword = await bcrypt.hash(password, salt);
-     userSupervisor = await Supervisor.create({
-       usernameSup,
-       password: hashedPassword,
-       academicPos,
-       numSupervision,
-       facultyUser: req.userFaculty._id,
-     });
+     res.status(404).json({ message: "Supervisor is not found" });
    }
+});
 
-   if (userSupervisor) {
-     res.status(201).json({
-       _id: userSupervisor._id,
-       facultyUser: userSupervisor.facultyUser,
-       usernamePanel: userSupervisor.usernameSup,
-       academicPos: userSupervisor.academicPos,
-       numSupervision: userSupervisor.numSupervision,
-       isSupervisor: true,
-       token: generateToken(userSupervisor._id),
-       successMessage: "Register successfully!"
-     });
-   } else {
-       res.status(500);
-       throw new Error("Internal server error");
-   }
- });
+const facultyUpdateAssignSupervisionByID = asyncHandler(async (req, res) => {
 
- const facultyStudentRegistration = asyncHandler(async (req, res) => {
+    const { numSupervision } = req.body;
 
-   let hashedPassword, userStudent;
- 
-   const { usernameStud, password, cfrmPassword, degreeLvl } = req.body;
-   const { dateJoin } = req.body;
+    const fetchSupervisorID = await Supervisor.findById(req.params.id);
 
-   let dateJoin_ = moment(dateJoin);
-   let todayDate = moment();
-
-   const userExists = await Student.findOne({ usernameStud });
- 
-   if (userExists) {
-     res.status(401).json({message: "Username is existed!"});
-   }
-   else if(degreeLvl.trim().length === 0) {
-     res.status(401).json({message: "Please fill in the degree level"});
-   }
-   else if(cfrmPassword !== password) {
-     res.status(401).json({message: "Repeat password and password is not match"});
-   }
-   else if(dateJoin_ > todayDate) {
-     res.status(401).json({message: "Invalid, joining date is greater than today's date"});
-   }
+    if (fetchSupervisorID) {
+      if (isNaN(numSupervision)) {
+        res.status(401).json({message: "Number of supervision must be in number format"});
+      }
+      fetchSupervisorID.numSupervision = numSupervision;
+      const updatedNumSupervision = await fetchSupervisorID.save();
+      res.json(updatedNumSupervision);
+   } 
    else {
-     const salt = await bcrypt.genSalt(10);
-     hashedPassword = await bcrypt.hash(password, salt);
-     userStudent = await Student.create({
-       usernameStud,
-       password: hashedPassword,
-       dateJoin,
-       degreeLvl,
-       facultyUser: req.userFaculty._id, // link faculty model to student model
-     });
-   }
-
-   if (userStudent) {
-     res.status(201).json({
-       _id: userStudent._id,
-       facultyUser: userStudent.facultyUser, // link faculty model to student model
-       usernameStud: userStudent.usernameStud,
-       dateJoin: userStudent.dateJoin,
-       degreeLvl: userStudent.degreeLvl,
-       isStudent: true,
-       token: generateToken(userStudent._id),
-       successMessage: "Register successfully!"
-     });
-   } else {
-       res.status(500);
-       throw new Error("Internal server error");
-   }
- });
-
- const facultyReadAssignSupervision = asyncHandler(async (req, res) => {
-  
-  const fetchSupervisorList = await Supervisor.find({facultyUser: req.userFaculty._id});
-
-  if(fetchSupervisorList) {
-    res.json(fetchSupervisorList);
-  } 
-  else {
-    res.status(500);
-    throw new Error("Internal server error");
+    res.status(404).json({ message: "Something went wrong, update failed" });
   }
- });
-
- const facultyReadAssignSupervisionByID = asyncHandler(async (req, res) => {
-  
-  const fetchSupervisorID = await Supervisor.findById(req.params.id);
-
-  if (fetchSupervisorID) {
-    res.json(fetchSupervisorID);
-  } 
-  else {
-    res.status(404).json({ message: "Supervisor is not found" });
-  }
- });
+})
 
 export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
-         facultyReadAssignSupervision, facultyReadAssignSupervisionByID};
+         facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID};

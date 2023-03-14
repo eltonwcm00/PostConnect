@@ -9,6 +9,9 @@ import {
     FACULTY_SUPERVISOR_LIST_REQUEST,
     FACULTY_SUPERVISOR_LIST_SUCCESS,
     FACULTY_SUPERVISOR_LIST_FAIL,
+    FACULTY_UPDATE_NO_SUPERVISION_REQUEST,
+    FACULTY_UPDATE_NO_SUPERVISION_SUCCESS,
+    FACULTY_UPDATE_NO_SUPERVISION_FAIL,
 } from "../constants/facultyConstants";
 
 export const facultyLoginReducer = (state = {}, action) => {
@@ -47,6 +50,19 @@ export const facultyReadAssignSupervisionReducer = (state = { fetchSupervisorLis
       return { loading: false, fetchSupervisorList: action.payload };
     case FACULTY_SUPERVISOR_LIST_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const facultyUpdateAssignSupervisionReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FACULTY_UPDATE_NO_SUPERVISION_REQUEST:
+      return { loading: true };
+    case FACULTY_UPDATE_NO_SUPERVISION_SUCCESS:
+      return { loading: false, successMsg: true };
+    case FACULTY_UPDATE_NO_SUPERVISION_FAIL:
+      return { loading: false, error: action.payload};
     default:
       return state;
   }
