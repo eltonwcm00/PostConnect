@@ -43,7 +43,7 @@ import { supervisorLogout } from '../actions/supervisorAction';
               <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-user" className="sidebar-icon">User Profile</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="/supervisorReadChooseStudent" activeClassName="activeClicked" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa-solid fa-plus">Choose Student to Supervise</CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">

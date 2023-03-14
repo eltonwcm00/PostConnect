@@ -1,0 +1,19 @@
+.form-title-desc-container {
+    background-color: #071B63;
+    padding: 18px 15px;
+    margin:  15px 0px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-size: 20px;
+    font-weight: bolder;
+    font-family: 'Montserrat', sans-serif;
+    color: #FFFFFF;
+  }
+
+.table-desc {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.table-details-button .btn {
+  text-transform: capitalize;
+}
