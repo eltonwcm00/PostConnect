@@ -3,7 +3,6 @@ import {useNavigate, useParams} from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
 import moment from 'moment';
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { supervisorReadChooseStudent, supervisorUpdateChooseStudent } from "../../../actions/supervisorAction";
 import Loading from "../../../components/Loading";
@@ -23,8 +22,11 @@ const SupervisorChooseStud = () => {
     const supervisorLogin = useSelector((state) => state.supervisorLogin);
     const { supervisorInfo } = supervisorLogin;
 
-    const studentList = useSelector((state) => state.supervisorReadChooseStudent);
-    const { loading, error, fetchStudentList } = studentList;
+    const studentListRead = useSelector((state) => state.supervisorReadChooseStudent);
+    const { loading, error, fetchStudentList } = studentListRead;
+    
+    const studentListUpdate = useSelector((state) => state.supervisorUpdateChooseStudent);
+    const {successMsg, fetchStudent } = studentListUpdate;
 
     useEffect(() => {
         dispatch(supervisorReadChooseStudent());
@@ -33,11 +35,10 @@ const SupervisorChooseStud = () => {
         }
     }, [dispatch, navigate, supervisorInfo,]);
 
-
     const selectStudent = (id) => {
         if (window.confirm("Are you sure?")) {
             dispatch(supervisorUpdateChooseStudent(id));
-          }
+        }
     }
 
   return (
@@ -46,7 +47,9 @@ const SupervisorChooseStud = () => {
         <div className="form-title-desc-container">List of The Supervisors</div>
         {console.log(fetchStudentList)}
         {loading && <Loading />}
+        {successMsg && <SuccessMessage variant="success">{fetchStudent.successMessage}</SuccessMessage>}
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+        {}
           <CDBContainer>
             <CDBTable borderless>
               <CDBTableHeader>

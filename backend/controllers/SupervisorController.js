@@ -58,7 +58,10 @@ const supervisorUpdateChooseStudentByID = asyncHandler(async (req, res) => {
   if (currentSupervisor && fetchStudentID) {
     fetchStudentID.supervisorUser = currentSupervisor;
     const selectedSupervisor = await fetchStudentID.save();
-    res.json(selectedSupervisor);
+    res.json({
+        _id: selectedSupervisor,
+        successMessage: `You have chosen '${fetchStudentID.usernameStud}' to be under your supervision`,
+    });
   } 
   else {
     res.status(500);
