@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
+import localStorage from 'localStorage';
 
 import {
   facultyLoginReducer, 
@@ -15,7 +16,8 @@ import {
 
 import {
   supervisorLoginReducer,
-  supervisorReadChooseStudentReducer
+  supervisorReadChooseStudentReducer,
+  supervisorUpdateChooseStudentReducer,
 } from "./reducers/supervisorReducers";
 
 import {
@@ -32,6 +34,7 @@ const reducer = combineReducers({
     facultyUpdateAssignSupervision: facultyUpdateAssignSupervisionReducer,
 
     supervisorReadChooseStudent: supervisorReadChooseStudentReducer,
+    supervisorUpdateChooseStudent: supervisorUpdateChooseStudentReducer,
 })
 
 const facultyInfoFromStorage = localStorage.getItem("facultyInfo")

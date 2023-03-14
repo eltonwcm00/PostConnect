@@ -1,19 +1,23 @@
 import React, { useEffect } from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
+import moment from 'moment';
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { supervisorReadChooseStudent } from "../../../actions/supervisorAction";
+import { supervisorReadChooseStudent, supervisorUpdateChooseStudent } from "../../../actions/supervisorAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
+import SuccessMessage from "../../../components/SuccessMessage";
 import SupervisorTemplate from "../../../components/SupervisorTemplate";
 import "./SupervisorChooseStud.css";
 
 const SupervisorChooseStud = () => {
 
     const dispatch = useDispatch();
-    let navigate = useNavigate();
+    const { id } = useParams();
 
+    let navigate = useNavigate();
     let index = 1; 
 
     const supervisorLogin = useSelector((state) => state.supervisorLogin);
@@ -27,7 +31,14 @@ const SupervisorChooseStud = () => {
         if (!supervisorInfo) {
           navigate("/");
         }
-      }, [dispatch, navigate, supervisorInfo,]);
+    }, [dispatch, navigate, supervisorInfo,]);
+
+
+    const selectStudent = (id) => {
+        if (window.confirm("Are you sure?")) {
+            dispatch(supervisorUpdateChooseStudent(id));
+          }
+    }
 
   return (
     <>
@@ -35,6 +46,7 @@ const SupervisorChooseStud = () => {
         <div className="form-title-desc-container">List of The Supervisors</div>
         {console.log(fetchStudentList)}
         {loading && <Loading />}
+        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
           <CDBContainer>
             <CDBTable borderless>
               <CDBTableHeader>
@@ -53,18 +65,17 @@ const SupervisorChooseStud = () => {
                     <tr className='table-desc' key={list._id}>
                       <td> {index++} </td>
                       <td> {list.usernameStud} </td>
-                      <td> {list.dateJoin} </td>
+                      <td> {moment(list.dateJoin).format('MMMM d, YYYY')} </td>
                       <td> {list.degreeLvl} </td>
                       <td> {list.academicStatus} </td>
-                      <td className='table-details-button'><Button>Choose</Button></td>
-                    </tr>
+                      <td className='table-details-button'><Button onClick={() => selectStudent(list._id)}>Choose</Button></td>
+                    </tr>           
                   )
-                )
+                )   
               }
             </CDBTableBody>
             </CDBTable>
           </CDBContainer>
-        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       </SupervisorTemplate>
     </>
   )

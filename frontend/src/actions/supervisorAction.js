@@ -6,6 +6,9 @@ import {
     SUPERVISOR_STUDENT_LIST_REQUEST,
     SUPERVISOR_STUDENT_LIST_SUCCESS,
     SUPERVISOR_STUDENT_LIST_FAIL,
+    SUPERVISOR_CHOOSE_STUDENT_REQUEST,
+    SUPERVISOR_CHOOSE_STUDENT_SUCCESS,
+    SUPERVISOR_CHOOSE_STUDENT_FAIL,
 } from "../constants/supervisorConstants";
 
 import axios from "axios";
@@ -78,3 +81,37 @@ export const supervisorReadChooseStudent = () => async (dispatch, getState) => {
     });
   }
 };
+
+export const supervisorUpdateChooseStudent = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SUPERVISOR_CHOOSE_STUDENT_REQUEST,
+    });
+
+    const {
+      supervisorLogin: { supervisorInfo  },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${supervisorInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/supervisor/supervisorReadChooseStudent/${id}`,{id},config);
+
+    dispatch({
+      type: SUPERVISOR_CHOOSE_STUDENT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: SUPERVISOR_CHOOSE_STUDENT_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+}

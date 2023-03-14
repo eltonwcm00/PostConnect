@@ -226,7 +226,7 @@ const facultyUpdateAssignSupervisionByID = asyncHandler(async (req, res) => {
       res.status(500);
       throw new Error("Internal server error");
   }
-})
+});
 
 export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID};
