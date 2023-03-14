@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import NumericInput from 'react-numeric-input';
 import {useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { facultyUpdateAssignSupervision } from "../../../actions/facultyAction";
@@ -116,12 +117,14 @@ const FacultyAssignNumSupID = () => {
                             </Form.Group>
                             <Form.Group className="mb-4"controlId="title">
                                 <Form.Label>Number of Supervision</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Name"
-                                    value={numSupervision}
-                                    onChange={(e) => setNumSupervision(e.target.value)}
-                                />
+                                    <NumericInput 
+                                        className="form-control" 
+                                        min={ 0 } 
+                                        max={ 10 } 
+                                        mobile
+                                        value={numSupervision}
+                                        onChange={setNumSupervision} 
+                                    />
                             </Form.Group>
                             <Button className=" mt-4 float-right" variant="primary" type="submit">
                                 Submit
