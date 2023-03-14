@@ -197,7 +197,9 @@ const facultyReadAssignSupervisionByID = asyncHandler(async (req, res) => {
 
 const facultyUpdateAssignSupervisionByID = asyncHandler(async (req, res) => {
 
-    const { numSupervision } = req.body;
+    const exceedWarning = "Exceed the allowed number of max. supervision: ";
+    
+    const { numSupervision, academicPos } = req.body;
 
     const fetchSupervisorID = await Supervisor.findById(req.params.id);
 
@@ -205,12 +207,24 @@ const facultyUpdateAssignSupervisionByID = asyncHandler(async (req, res) => {
       if (isNaN(numSupervision)) {
         res.status(401).json({message: "Number of supervision must be in number format"});
       }
+      else {
+        if (academicPos === 'Principal Lecturer' && numSupervision > 6) {
+          res.status(401).json({message: exceedWarning + "6"});
+        }
+        else if (academicPos === 'Senior Lecturer' && numSupervision > 5) {
+          res.status(401).json({message: exceedWarning + "5"});
+        }
+        else if (academicPos === 'Lecturer' && numSupervision > 3) {
+          res.status(401).json({message: exceedWarning + "3"});
+        }
+      }
       fetchSupervisorID.numSupervision = numSupervision;
       const updatedNumSupervision = await fetchSupervisorID.save();
       res.json(updatedNumSupervision);
    } 
    else {
-    res.status(404).json({ message: "Something went wrong, update failed" });
+      res.status(500);
+      throw new Error("Internal server error");
   }
 })
 

@@ -55,7 +55,7 @@ const FacultyAssignNumSupID = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(facultyUpdateAssignSupervision(id, numSupervision));
+        dispatch(facultyUpdateAssignSupervision(id, numSupervision, academicPos));
     };
 
     return (
@@ -69,7 +69,7 @@ const FacultyAssignNumSupID = () => {
                         <Table className="table-borderless" style={{fontFamily: 'Montserrat'}}>
                             <thead>
                                 <tr>
-                                    <th><i class="fa-solid fa-triangle-exclamation" style={{color: 'red', textTransform: 'uppercase'}}> Note </i></th>
+                                    <th><i className="fa-solid fa-triangle-exclamation" style={{color: 'red', textTransform: 'uppercase'}}> Note </i></th>
                                 </tr>
                                 <tr>
                                     <th>Position</th>

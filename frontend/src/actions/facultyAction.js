@@ -196,7 +196,7 @@ export const facultyReadAssignSupervision = () => async (dispatch, getState) => 
   }
 };
 
-export const facultyUpdateAssignSupervision = (id, numSupervision) => async (dispatch, getState) => {
+export const facultyUpdateAssignSupervision = (id, numSupervision, academicPos) => async (dispatch, getState) => {
   try {
     dispatch({
       type: FACULTY_UPDATE_NO_SUPERVISION_REQUEST,
@@ -214,7 +214,7 @@ export const facultyUpdateAssignSupervision = (id, numSupervision) => async (dis
     };
 
     const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadAssignSupervision/${id}`,
-                                      {numSupervision}, config);
+                                      {numSupervision, academicPos}, config);
 
     dispatch({
       type: FACULTY_UPDATE_NO_SUPERVISION_SUCCESS,

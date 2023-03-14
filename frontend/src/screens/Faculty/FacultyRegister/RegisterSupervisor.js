@@ -88,22 +88,10 @@ const RegisterSupervisor= () => {
 
             <Form.Select className="mb-4" column sm aria-label="Default select example" value={academicPos} onChange={(e) => setAcademicPos(e.target.value)}>
                 <option>Select the academic position</option>
-                <option value="lecturer">Lecturer</option>
+                <option value="Lecturer">Lecturer</option>
                 <option value="Senior Lecturer">Senior Lecturer</option>
                 <option value="Principal Lecturer">Principal Lecturer</option>
             </Form.Select>
-            
-            {/* <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
-              <Form.Label column sm={2}>Number of Supervision</Form.Label>
-              <Col sm={10}>
-                <Form.Control
-                  type="text"
-                  value={numSupervision}
-                  placeholder="Number of Supervision"
-                  onChange={(e) => setNumSupervision(e.target.value)}
-                />
-              </Col>
-            </Form.Group> */}
 
             <Button className=" mt-4 float-right" variant="primary" type="submit">
               Register
