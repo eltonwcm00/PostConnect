@@ -8,7 +8,29 @@
 
 .form {
   font-family: 'Montserrat', sans-serif;
-  margin-top: 30px;
+  margin-top: 0px !important;
+  padding: 30px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 30%);
+}
+
+.input-request {
+  border: none;
+  border-radius: 0;
+  background-color: #D9D9D9;
+}
+
+.submit-btn {
+  width: 8em;
+  border: none !important;
+  border-radius: 0 !important;
+  text-transform: capitalize;
+  background-color: #CEDDEF !important;
+  color: black !important;
+  font-weight: 600;
+  padding: 11px;
+  margin-left: 65vmax;
 }
 
 .form .col-form-label {
@@ -19,7 +41,8 @@
 .form-title-desc-container {
   background-color: #071B63;
   padding: 18px 15px;
-  margin:  15px 0px;
+  margin-top: 15px;
+  margin-bottom: 0 !important;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   font-size: 20px;

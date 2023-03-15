@@ -52,57 +52,61 @@ const StudentRPDRequest = () => {
             {loading && <Loading />}
 
             <Form className="form" onSubmit={submitHandler}>
-              <Form.Group as={Row} className="mb-4" controlId="formBasicEmail">
-                <Form.Label column sm={2}>Full Name*</Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    type="text"
-                    value={fullName}
-                    placeholder="Your fullname"
-                    onChange={(e) => setfullName(e.target.value)}
-                  />
-                </Col>
-              </Form.Group>
+                <Form.Group as={Row} className="mb-5" controlId="formBasicEmail">
+                    <Form.Label column sm={2}>Full Name*</Form.Label>
+                    <Col sm={10} mb={3}>
+                    <Form.Control
+                        type="text"
+                        value={fullName}
+                        placeholder="Your fullname"
+                        onChange={(e) => setfullName(e.target.value)}
+                        className="py-4 input-request"
+                    />
+                    </Col>
+                </Form.Group>
 
-              <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
-                <Form.Label column sm={2}>Mini Thesis Title*</Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    type="text"
-                    value={miniThesisTitle}
-                    placeholder="Your mini thesis title"
-                    onChange={(e) => setminiThesisTitle(e.target.value)}
-                  />
-                </Col>
-              </Form.Group>
+                <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
+                    <Form.Label column sm={2}>Mini Thesis Title*</Form.Label>
+                    <Col sm={10}>
+                    <Form.Control
+                        type="text"
+                        value={miniThesisTitle}
+                        placeholder="Your mini thesis title"
+                        onChange={(e) => setminiThesisTitle(e.target.value)}
+                        className="py-4 input-request"
+                    />
+                    </Col>
+                </Form.Group>
 
-              <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
-                <Form.Label column sm={2}>Supervisor Name*</Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    type="text"
-                    value={supervisorName}
-                    placeholder="Your supervisor name"
-                    onChange={(e) => setsupervisorName(e.target.value)}
-                  />
-                </Col>
-              </Form.Group>
-              
-              <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
-                <Form.Label column sm={2}>Mini Thesis PDF</Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                      type="text"
-                      value={miniThesisPDF}
-                      placeholder="Your mini thesis file"
-                      onChange={(e) => setminiThesisPDF(e.target.value)}
-                  />
-                </Col>
-              </Form.Group>
+                <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
+                    <Form.Label column sm={2}>Supervisor Name*</Form.Label>
+                    <Col sm={10}>
+                    <Form.Control
+                        type="text"
+                        value={supervisorName}
+                        placeholder="Your supervisor name"
+                        onChange={(e) => setsupervisorName(e.target.value)}
+                        className="py-4 input-request" 
+                    />
+                    </Col>
+                </Form.Group>
+                
+                <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
+                    <Form.Label column sm={2}>Mini Thesis PDF</Form.Label>
+                    <Col sm={10}>
+                    <Form.Control
+                        type="text"
+                        value={miniThesisPDF}
+                        placeholder="Your mini thesis file"
+                        onChange={(e) => setminiThesisPDF(e.target.value)}
+                        className="py-4 input-request"
+                    />
+                    </Col>
+                </Form.Group>
 
-              <Button className=" mt-4 float-right" variant="primary" type="submit">
-                Submit 
-              </Button>
+                    <Button className=" mt-4 submit-btn" variant="primary" type="submit">
+                        Submit 
+                    </Button>
             </Form>
         </StudentTemplate> 
     );
