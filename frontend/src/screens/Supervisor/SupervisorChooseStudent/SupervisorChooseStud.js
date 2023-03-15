@@ -17,8 +17,8 @@ const SupervisorChooseStud = () => {
 
     let navigate = useNavigate();
     let index = 1; 
+
     let [chooseCount, setChooseCount] = useState(0);
-   // let maxSup = 0;
 
     const supervisorLogin = useSelector((state) => state.supervisorLogin);
     const { supervisorInfo } = supervisorLogin;
@@ -27,7 +27,7 @@ const SupervisorChooseStud = () => {
     const { loading, error, fetchStudentList } = studentListRead;
     
     const studentListUpdate = useSelector((state) => state.supervisorUpdateChooseStudent);
-    const {successMsg, fetchStudent, error2, counter } = studentListUpdate;
+    const { successMsg, fetchStudent, error2 } = studentListUpdate;
 
     useEffect(() => {
         dispatch(supervisorReadChooseStudent());
@@ -56,7 +56,7 @@ const SupervisorChooseStud = () => {
   return (
     <>
       <SupervisorTemplate>
-        <div className="form-title-desc-container">List of The Student</div>
+        <div className="form-title-desc-container">List of The Student Ready To Be Supervised</div>
         {console.log(fetchStudentList)}
         {loading && <Loading />}
         {successMsg && <SuccessMessage variant="success">{fetchStudent.successMessage}</SuccessMessage>}
@@ -77,7 +77,8 @@ const SupervisorChooseStud = () => {
               </CDBTableHeader>
               <CDBTableBody>
               {
-                fetchStudentList && fetchStudentList.map((list) => (
+                // visibleStudent &&
+                fetchStudentList && fetchStudentList.filter(x => x.supervisorUser == null).map((list) => (
                     <tr className='table-desc' key={list._id}>
                       <td> {index++} </td>
                       <td> {list.usernameStud} </td>
@@ -87,7 +88,7 @@ const SupervisorChooseStud = () => {
                       <td className='table-details-button'><Button onClick={() => selectStudent(list._id, chooseCount)}>Choose</Button></td>
                     </tr>           
                 )   
-               )   
+               ) 
               }
             </CDBTableBody>
             </CDBTable>

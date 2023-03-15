@@ -22,9 +22,6 @@ const SupervisorSchema = mongoose.Schema(
         type: Number,
         default: 0,
     },
-    numAssignedSupervision : {
-        type: Number,
-    },
     facultyUser: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

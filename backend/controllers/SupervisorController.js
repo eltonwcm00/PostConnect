@@ -77,7 +77,7 @@ const supervisorUpdateChooseStudentByID = asyncHandler(async (req, res) => {
     }
   }
   else {
-    res.status(401).json({ message: "Reach maximum number of allowed student supervision" });
+    res.status(401).json({ message: `Reached the limit of your student supervision's attempts: ${req.userSupervisor.numSupervision}` });
   }
 });
 
