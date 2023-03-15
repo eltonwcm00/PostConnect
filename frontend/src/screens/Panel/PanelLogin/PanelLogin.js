@@ -20,6 +20,13 @@ const PanelLogin = () => {
     const { loading, error, panelInfo, successMsg } = panelLoginState;
 
     useEffect(() => {
+      localStorage.removeItem('facultyInfo');
+      localStorage.removeItem('studentInfo');
+      localStorage.removeItem('supervisorInfo');
+      localStorage.removeItem('panelInfo');
+    }, []);
+
+    useEffect(() => {
         if (panelInfo) {
           navigate("/panelLogin");
         }

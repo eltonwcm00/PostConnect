@@ -20,6 +20,13 @@ const FacultyLogin = () => {
     const { loading, error, facultyInfo, successMsg } = facultyLoginState;
 
     useEffect(() => {
+      localStorage.removeItem('facultyInfo');
+      localStorage.removeItem('studentInfo');
+      localStorage.removeItem('supervisorInfo');
+      localStorage.removeItem('panelInfo');
+    }, []);
+
+    useEffect(() => {
         if (facultyInfo) {
           navigate("/facultyLogin");
         }

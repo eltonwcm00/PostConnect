@@ -20,6 +20,13 @@ const SupervisorLogin = () => {
     const { loading, error, supervisorInfo, successMsg } = supervisorLoginState;
 
     useEffect(() => {
+      localStorage.removeItem('facultyInfo');
+      localStorage.removeItem('studentInfo');
+      localStorage.removeItem('supervisorInfo');
+      localStorage.removeItem('panelInfo');
+    }, []);
+
+    useEffect(() => {
         if (supervisorInfo) {
           navigate("/supervisorLogin");
         }

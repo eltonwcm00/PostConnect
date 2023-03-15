@@ -14,7 +14,6 @@ import "./SupervisorChooseStud.css";
 const SupervisorChooseStud = () => {
 
     const dispatch = useDispatch();
-    const { id } = useParams();
 
     let navigate = useNavigate();
     let index = 1; 
@@ -41,10 +40,19 @@ const SupervisorChooseStud = () => {
         }
     }
 
+    useEffect(() => {
+        if (successMsg) {
+          const timer = setTimeout(() => {
+            navigate('/supervisorReadChooseStudent');
+          }, 2000);
+          return () => clearTimeout(timer);
+        }
+      }, [navigate, successMsg])
+
   return (
     <>
       <SupervisorTemplate>
-        <div className="form-title-desc-container">List of The Supervisors</div>
+        <div className="form-title-desc-container">List of The Student</div>
         {console.log(fetchStudentList)}
         {loading && <Loading />}
         {successMsg && <SuccessMessage variant="success">{fetchStudent.successMessage}</SuccessMessage>}

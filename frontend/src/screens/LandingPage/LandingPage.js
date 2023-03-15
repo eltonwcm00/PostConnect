@@ -1,5 +1,5 @@
 import React from "react";
-import { useState} from "react";
+import { useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {Button, Container, Row, Col } from 'react-bootstrap';
 import './LandingPage.css';
@@ -8,6 +8,13 @@ const LandingPage = () => {
 
   let navigate = useNavigate();
   const [radioValue, setRadioValue] = useState("");
+
+  useEffect(() => {
+    localStorage.removeItem('facultyInfo');
+    localStorage.removeItem('studentInfo');
+    localStorage.removeItem('supervisorInfo');
+    localStorage.removeItem('panelInfo');
+  }, []);
 
   const accSelection = (e) => {
     setRadioValue(e.target.value);

@@ -1,8 +1,9 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import LandingPage from './screens/LandingPage/LandingPage';
+import Error404 from './screens/Error404/Error404';
 
 import FacultyLogin from './screens/Faculty/FacultyLogin/FacultyLogin';
 import FacultyHomepage from './screens/Faculty/FacultyHomepage/FacultyHomepage';
@@ -28,24 +29,26 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} exact></Route>
-        <Route path="/facultyLogin" element={<FacultyLogin />}/>
-        <Route path="/studentLogin" element={<StudentLogin />}/>
-        <Route path="/supervisorLogin" element={<SupervisorLogin />}/>
-        <Route path="/panelLogin" element={<PanelLogin />}/>
+        <Route exact path="/facultyLogin" element={<FacultyLogin />}/>
+        <Route exact path="/studentLogin" element={<StudentLogin />}/>
+        <Route exact path="/supervisorLogin" element={<SupervisorLogin />}/>
+        <Route exact path="/panelLogin" element={<PanelLogin />}/>
 
-        <Route path="/facultyHomepage" element={<FacultyHomepage />}/>
-        <Route path="/studentHomepage" element={<StudentHomepage />}/>
-        <Route path="/supervisorHomepage" element={<SupervisorHomepage />}/>
-        <Route path="/panelHomepage" element={<PanelHomepage />}/>
+        <Route exact path="/facultyHomepage" element={<FacultyHomepage />}/>
+        <Route exact path="/studentHomepage" element={<StudentHomepage />}/>
+        <Route exact path="/supervisorHomepage" element={<SupervisorHomepage />}/>
+        <Route exact path="/panelHomepage" element={<PanelHomepage />}/>
 
-        <Route path="/facultyRegister" element={<RegisterHomepage />}/>
-        <Route path="/facultyPanelRegistration" element={<RegisterPanel />}/>
-        <Route path="/facultySupervisorRegistration" element={<RegisterSupervisor />}/>
-        <Route path="/facultyStudentRegistration" element={<RegisterStudent />}/>
-        <Route path="/facultyAssignNumSupervisor" element={<FacultyAssignNumSupervisor />}/>
-        <Route path="/facultyAssignNumSupervisor/:id" element={<FacultyAssignNumSupID />}/>
+        <Route exact path="/facultyRegister" element={<RegisterHomepage />}/>
+        <Route exact path="/facultyPanelRegistration" element={<RegisterPanel />}/>
+        <Route exact path="/facultySupervisorRegistration" element={<RegisterSupervisor />}/>
+        <Route exact path="/facultyStudentRegistration" element={<RegisterStudent />}/>
+        <Route exact path="/facultyAssignNumSupervisor" element={<FacultyAssignNumSupervisor />}/>
+        <Route exact path="/facultyAssignNumSupervisor/:id" element={<FacultyAssignNumSupID />}/>
 
-        <Route path="/supervisorReadChooseStudent" element={<SupervisorChooseStud />}/>
+        <Route exact path="/supervisorReadChooseStudent" element={<SupervisorChooseStud />}/>
+        
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
   );
