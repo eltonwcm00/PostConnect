@@ -1,7 +1,6 @@
 import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcryptjs";
-import localStorage from 'localStorage'
 import Supervisor from "../models/Supervisor.js";
 import Student from "../models/Student.js";
 
@@ -27,8 +26,12 @@ const supervisorLogin = asyncHandler(async (req, res) => {
 
 const supervisorReadChooseStudent = asyncHandler(async (req, res) => {
 
+  const isAssignSupervision = req.userSupervisor.numSupervision;
   const fetchStudentList = await Student.find();
 
+  if(isAssignSupervision === null) {
+    res.status(401).json({ message: "Unable to show the list, please contact faculty for then assignment of number of student supervision" });
+  }
   if (fetchStudentList) {
     res.json(fetchStudentList);
   }
@@ -52,20 +55,29 @@ const supervisorReadChooseStudentByID = asyncHandler(async (req, res) => {
 
 const supervisorUpdateChooseStudentByID = asyncHandler(async (req, res) => {
 
+  const { numAssignedSupervision } = req.body;
+
   const currentSupervisor = req.userSupervisor._id;
   const fetchStudentID = await Student.findById(req.params.id);
 
-  if (currentSupervisor && fetchStudentID) {
-    fetchStudentID.supervisorUser = currentSupervisor;
-    const selectedSupervisor = await fetchStudentID.save();
-    res.json({
-        _id: selectedSupervisor,
-        successMessage: `You have chosen '${fetchStudentID.usernameStud}' to be under your supervision`,
-    });
-  } 
+  if (numAssignedSupervision < req.userSupervisor.numSupervision) {
+    if (currentSupervisor && fetchStudentID) {
+      fetchStudentID.supervisorUser = currentSupervisor;
+      const selectedStudent = await fetchStudentID.save();
+  
+      res.json({
+          _id: selectedStudent,
+          successMessage: `You have chosen '${fetchStudentID.usernameStud}' to be under your supervision`,
+          chooseCount: numAssignedSupervision,
+      });
+    } 
+    else {
+      res.status(500);
+      throw new Error("Internal server error");
+    }
+  }
   else {
-    res.status(500);
-    throw new Error("Internal server error");
+    res.status(401).json({ message: "Reach maximum number of allowed student supervision" });
   }
 });
 

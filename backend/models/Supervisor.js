@@ -20,6 +20,10 @@ const SupervisorSchema = mongoose.Schema(
     },
     numSupervision: {
         type: Number,
+        default: 0,
+    },
+    numAssignedSupervision : {
+        type: Number,
     },
     facultyUser: {
       type: mongoose.Schema.Types.ObjectId,

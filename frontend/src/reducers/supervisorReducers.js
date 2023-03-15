@@ -44,9 +44,9 @@ export const supervisorUpdateChooseStudentReducer = (state = {}, action) => {
     case SUPERVISOR_CHOOSE_STUDENT_REQUEST:
       return { loading: true };
     case SUPERVISOR_CHOOSE_STUDENT_SUCCESS:
-      return { loading: false, fetchStudent: action.payload, successMsg: true };
+      return { loading: false, fetchStudent: action.payload, successMsg: true, counter:0 };
     case SUPERVISOR_CHOOSE_STUDENT_FAIL:
-      return { loading: false, error: action.payload};
+      return { loading: false, error2: action.payload};
     default:
       return state;
   }

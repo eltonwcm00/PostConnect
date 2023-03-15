@@ -23,7 +23,6 @@ const facultyLogin = asyncHandler(async (req, res) => {
         token: generateToken(userFaculty._id),
         successMessage: "Logged in successfully!"
       });
-      
     } 
     else {
       res.status(401).json({message: "Username or Password is incorrect!"});

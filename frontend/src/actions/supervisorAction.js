@@ -82,7 +82,7 @@ export const supervisorReadChooseStudent = () => async (dispatch, getState) => {
   }
 };
 
-export const supervisorUpdateChooseStudent = (id) => async (dispatch, getState) => {
+export const supervisorUpdateChooseStudent = (id, numAssignedSupervision) => async (dispatch, getState) => {
   try {
     dispatch({
       type: SUPERVISOR_CHOOSE_STUDENT_REQUEST,
@@ -98,7 +98,7 @@ export const supervisorUpdateChooseStudent = (id) => async (dispatch, getState) 
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/supervisor/supervisorReadChooseStudent/${id}`,{id},config);
+    const { data } = await axios.put(`http://localhost:5000/api/supervisor/supervisorReadChooseStudent/${id}`,{id, numAssignedSupervision},config);
 
     dispatch({
       type: SUPERVISOR_CHOOSE_STUDENT_SUCCESS,

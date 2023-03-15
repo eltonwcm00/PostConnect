@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
@@ -17,6 +17,8 @@ const SupervisorChooseStud = () => {
 
     let navigate = useNavigate();
     let index = 1; 
+    let [chooseCount, setChooseCount] = useState(0);
+   // let maxSup = 0;
 
     const supervisorLogin = useSelector((state) => state.supervisorLogin);
     const { supervisorInfo } = supervisorLogin;
@@ -25,7 +27,7 @@ const SupervisorChooseStud = () => {
     const { loading, error, fetchStudentList } = studentListRead;
     
     const studentListUpdate = useSelector((state) => state.supervisorUpdateChooseStudent);
-    const {successMsg, fetchStudent } = studentListUpdate;
+    const {successMsg, fetchStudent, error2, counter } = studentListUpdate;
 
     useEffect(() => {
         dispatch(supervisorReadChooseStudent());
@@ -34,9 +36,11 @@ const SupervisorChooseStud = () => {
         }
     }, [dispatch, navigate, supervisorInfo,]);
 
-    const selectStudent = (id) => {
+    const selectStudent = (id, numAssignedSupervision) => {
         if (window.confirm("Are you sure?")) {
-            dispatch(supervisorUpdateChooseStudent(id));
+            setChooseCount(chooseCount + 1);
+            console.log(chooseCount);
+            dispatch(supervisorUpdateChooseStudent(id, numAssignedSupervision));
         }
     }
 
@@ -57,6 +61,7 @@ const SupervisorChooseStud = () => {
         {loading && <Loading />}
         {successMsg && <SuccessMessage variant="success">{fetchStudent.successMessage}</SuccessMessage>}
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+        {error2 && <ErrorMessage variant="danger">{error2}</ErrorMessage>}
         {}
           <CDBContainer>
             <CDBTable borderless>
@@ -79,10 +84,10 @@ const SupervisorChooseStud = () => {
                       <td> {moment(list.dateJoin).format('MMMM d, YYYY')} </td>
                       <td> {list.degreeLvl} </td>
                       <td> {list.academicStatus} </td>
-                      <td className='table-details-button'><Button onClick={() => selectStudent(list._id)}>Choose</Button></td>
+                      <td className='table-details-button'><Button onClick={() => selectStudent(list._id, chooseCount)}>Choose</Button></td>
                     </tr>           
-                  )
                 )   
+               )   
               }
             </CDBTableBody>
             </CDBTable>
