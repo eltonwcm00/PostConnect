@@ -77,7 +77,6 @@ const SupervisorChooseStud = () => {
               </CDBTableHeader>
               <CDBTableBody>
               {
-                // visibleStudent &&
                 fetchStudentList && fetchStudentList.filter(x => x.supervisorUser == null).map((list) => (
                     <tr className='table-desc' key={list._id}>
                       <td> {index++} </td>

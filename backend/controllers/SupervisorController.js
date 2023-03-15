@@ -59,17 +59,23 @@ const supervisorUpdateChooseStudentByID = asyncHandler(async (req, res) => {
 
   const currentSupervisor = req.userSupervisor._id;
   const fetchStudentID = await Student.findById(req.params.id);
+  const fetchSupervisorID = await Supervisor.findById(currentSupervisor);
 
-  if (numAssignedSupervision < req.userSupervisor.numSupervision) {
-    if (currentSupervisor && fetchStudentID) {
-      fetchStudentID.supervisorUser = currentSupervisor;
-      const selectedStudent = await fetchStudentID.save();
-  
-      res.json({
-          _id: selectedStudent,
-          successMessage: `You have chosen '${fetchStudentID.usernameStud}' to be under your supervision`,
-          chooseCount: numAssignedSupervision,
-      });
+  if (numAssignedSupervision < req.userSupervisor.numSupervision && 
+      fetchSupervisorID.numSupervision > fetchSupervisorID.numAssignedSupervision) {
+    
+      if (currentSupervisor && fetchStudentID) {
+
+        fetchStudentID.supervisorUser = currentSupervisor;
+        fetchSupervisorID.numAssignedSupervision = fetchSupervisorID.numAssignedSupervision + 1;
+        
+        const selectedStudent = await fetchStudentID.save();
+        await fetchSupervisorID.save();
+        res.json({
+            _id: selectedStudent,
+            successMessage: `You have chosen '${fetchStudentID.usernameStud}' to be under your supervision`,
+            chooseCount: numAssignedSupervision,
+        });
     } 
     else {
       res.status(500);
