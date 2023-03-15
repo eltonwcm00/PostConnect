@@ -16,6 +16,7 @@ import FacultyAssignNumSupID from './screens/Faculty/FacultyAssignNumSupervisor/
 
 import StudentLogin from './screens/Student/StudentLogin/StudentLogin';
 import StudentHomepage from './screens/Student/StudentHompage/StudentHomepage';
+import StudentRPDRequest from './screens/Student/StudentRPDRequest/StudentRPDRequest';
 
 import SupervisorLogin from './screens/Supervisor/SupervisorLogin/SupervisorLogin';
 import SupervisorHomepage from './screens/Supervisor/SupervisorHomepage/SupervisorHomepage';
@@ -48,6 +49,8 @@ function App() {
 
         <Route exact path="/supervisorReadChooseStudent" element={<SupervisorChooseStud />}/>
         
+        <Route exact path="/studentRequestRPD" element={<StudentRPDRequest />}/>
+
         <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>

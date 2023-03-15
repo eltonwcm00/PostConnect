@@ -48,7 +48,7 @@ const RegisterStudent = () => {
     return (
         <FacultyTemplate>
           <div className="form-title-desc-container">Details Of The Student </div>
-           {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+            {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             {successMsg && <SuccessMessage variant="success">{"Register successfully!"}</SuccessMessage>}
             {loading && <Loading />}
             <Form className="form" onSubmit={submitHandler}>

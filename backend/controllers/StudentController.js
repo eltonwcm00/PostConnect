@@ -23,4 +23,24 @@ const studentLogin = asyncHandler(async (req, res) => {
     }
 });
 
-export {studentLogin};
+const studentRequestRPD = asyncHandler(async (req, res) => {
+
+  const { fullName, miniThesisTitle, supervisorName, miniThesisPDF } = req.body;
+  
+  const currentStudent = req.userStudent;
+
+  if(currentStudent) {
+    res.status(201).json({
+      _id: currentStudent._id,
+      username: currentStudent.usernameStud,
+      successMessage: "User is validated!"
+    })
+  }
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+
+});
+
+export {studentLogin, studentRequestRPD};

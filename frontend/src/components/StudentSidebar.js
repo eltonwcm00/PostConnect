@@ -43,7 +43,7 @@ import { studentLogout } from '../actions/studentAction';
               <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-user" className="sidebar-icon">User Profile</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="/studentRequestRPD" activeClassName="activeClicked" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-file-text">Request For Research Proposal Defence</CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">

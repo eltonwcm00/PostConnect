@@ -49,7 +49,7 @@ import { supervisorLogout } from '../actions/supervisorAction';
               <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa-solid fa-magnifying-glass"> View Research Proposal Defence Result </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#" target="_blank" activeClassName="activeClicked">
+              <NavLink exact to="#" activeClassName="activeClicked">
                 <CDBSidebarMenuItem icon="fa-solid fa-magnifying-glass">
                 View Work Completion Defence Result
                 </CDBSidebarMenuItem>
