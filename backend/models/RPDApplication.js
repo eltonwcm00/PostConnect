@@ -11,29 +11,32 @@ const RPDApplicationSchema = mongoose.Schema(
       required: true,
     },
     miniThesisPDF: {
-        type: String,
+      type: String,
+      // required: true,
     },
     miniThesisTitle: {
-        type: String,
+      type: String,
+      required: true,
     },
     dateApplyRPD: {
-        type: Date,
+      type: Date,
+      required: true,
     },
     dateScheduleRPD: {
-        type: Date,
-        required: true,
+      type: Date,
+        // required: true,
     },
     applicationStatus: {
-        type: Boolean,
-        required: true,
+      type: Boolean,
+        // required: true,
     },
     studentUser: { //insert only when supervisor choose a specific student
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
     },
     facultyUser: { //insert only when supervisor choose a specific student
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Faculty",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Faculty",
     }
   },
   {

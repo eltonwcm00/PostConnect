@@ -42,7 +42,6 @@ const StudentRPDRequest = () => {
         e.preventDefault();
         dispatch(studentRPDRequest(fullName, miniThesisTitle, supervisorName, miniThesisPDF));
     };
-  
 
     return (
         <StudentTemplate>
@@ -50,8 +49,7 @@ const StudentRPDRequest = () => {
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             {successMsg && <SuccessMessage variant="success">{studentInfo.successMessage}</SuccessMessage>}
             {loading && <Loading />}
-
-            <Form className="form" onSubmit={submitHandler}>
+            <Form className="form" onSubmit={submitHandler} enctype="multipart/form-data">
                 <Form.Group as={Row} className="mb-5" controlId="formBasicEmail">
                     <Form.Label column sm={2}>Full Name*</Form.Label>
                     <Col sm={10} mb={3}>
@@ -95,7 +93,7 @@ const StudentRPDRequest = () => {
                     <Form.Label column sm={2}>Mini Thesis PDF</Form.Label>
                     <Col sm={10}>
                     <Form.Control
-                        type="text"
+                        type="file"
                         value={miniThesisPDF}
                         placeholder="Your mini thesis file"
                         onChange={(e) => setminiThesisPDF(e.target.value)}
@@ -104,9 +102,9 @@ const StudentRPDRequest = () => {
                     </Col>
                 </Form.Group>
 
-                    <Button className=" mt-4 submit-btn" variant="primary" type="submit">
-                        Submit 
-                    </Button>
+                <Button className=" mt-4 submit-btn" variant="primary" type="submit">
+                    Submit 
+                </Button>
             </Form>
         </StudentTemplate> 
     );

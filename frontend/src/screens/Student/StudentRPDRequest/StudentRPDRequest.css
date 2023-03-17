@@ -21,6 +21,22 @@
   background-color: #D9D9D9;
 }
 
+input[type=file]::file-selector-button {
+  border: none !important;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 20%);
+  padding: 12px !important;
+}
+
+input[type=file] {
+  padding-top: 6.5px !important;
+  padding-left: 13px;
+  height: 49px;
+}
+
+
 .submit-btn {
   width: 8em;
   border: none !important;

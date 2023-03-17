@@ -1,7 +1,9 @@
 import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcryptjs";
+import moment from "moment";
 import Student from "../models/Student.js";
+import RPDApplication from "../models/RPDApplication.js";
 
 const studentLogin = asyncHandler(async (req, res) => {
     const { usernameStud, password } = req.body;
@@ -26,19 +28,47 @@ const studentLogin = asyncHandler(async (req, res) => {
 const studentRequestRPD = asyncHandler(async (req, res) => {
 
   const { fullName, miniThesisTitle, supervisorName, miniThesisPDF } = req.body;
-  
   const currentStudent = req.userStudent;
 
-  if(currentStudent) {
-    res.status(201).json({
-      _id: currentStudent._id,
-      username: currentStudent.usernameStud,
-      successMessage: "User is validated!"
-    })
+  let appliedRPD;
+
+  const hasApplied = await RPDApplication.findOne({ studentUser: currentStudent });
+
+  if (hasApplied) {
+    res.status(401).json({message: "You have applied the application previously"});
+  }
+  else if (currentStudent) {
+    
+    if(fullName.trim().length === 0) { res.status(401).json({message: "Please fill in your full name"});}
+    else if(miniThesisTitle.trim().length === 0) {res.status(401).json({message: "Please fill in your mini thesis title"});}
+    else if(supervisorName.trim().length === 0) { res.status(401).json({message: "Please fill your supervisor name"});}
+    else if (miniThesisPDF.trim().length === 0) { res.status(401).json({message: "Please upload your mini thesis .pdf file"});}
+
+    appliedRPD = await RPDApplication.create({
+      fullName,
+      miniThesisTitle,
+      supervisorName,
+      miniThesisPDF,
+      dateApplyRPD: moment(),
+      studentUser: currentStudent,
+    });
   }
   else {
     res.status(500);
     throw new Error("Internal server error");
+  }
+  
+  if (appliedRPD) {
+    res.status(201).json({
+      _id: appliedRPD._id,
+      fullName: appliedRPD.fullName,
+      miniThesisTitle: appliedRPD.miniThesisTitle,
+      supervisorName: appliedRPD.supervisorName,
+      miniThesisPDF: appliedRPD.miniThesisPDF,
+      dateApplyRPD: appliedRPD.dateApplyRPD,
+      studentUser: appliedRPD.studentUser,
+      successMessage: "The RPD request application is submitted",
+    })
   }
 
 });
