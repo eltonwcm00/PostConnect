@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 import express from "express";
 import connectDB from "./db.js";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from 'url';
 
 import facultyRoutes from "./routes/facultyRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
@@ -15,6 +17,9 @@ connectDB();
 const app = express();
 app.use(express.json());
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(`${__dirname}/public`));
 
 const corsOptions ={
     origin:'*', 

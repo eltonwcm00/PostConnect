@@ -42,12 +42,13 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
     if(fullName.trim().length === 0) { res.status(401).json({message: "Please fill in your full name"});}
     else if(miniThesisTitle.trim().length === 0) {res.status(401).json({message: "Please fill in your mini thesis title"});}
     else if(supervisorName.trim().length === 0) { res.status(401).json({message: "Please fill your supervisor name"});}
-    else if (miniThesisPDF.trim().length === 0) { res.status(401).json({message: "Please upload your mini thesis .pdf file"});}
+   else if (miniThesisPDF.trim().length === 0) { res.status(401).json({message: "Please upload your mini thesis .pdf file"});}
 
     appliedRPD = await RPDApplication.create({
       fullName,
       miniThesisTitle,
       supervisorName,
+      // miniThesisPDF: req.file, //req.file.filename
       miniThesisPDF,
       dateApplyRPD: moment(),
       studentUser: currentStudent,
@@ -55,6 +56,7 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
   }
   else {
     res.status(500);
+    console.log(req.file.path);
     throw new Error("Internal server error");
   }
   

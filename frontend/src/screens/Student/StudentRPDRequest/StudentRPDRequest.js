@@ -41,6 +41,7 @@ const StudentRPDRequest = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(studentRPDRequest(fullName, miniThesisTitle, supervisorName, miniThesisPDF));
+        console.log(miniThesisPDF)
     };
 
     return (
@@ -72,6 +73,8 @@ const StudentRPDRequest = () => {
                         placeholder="Your mini thesis title"
                         onChange={(e) => setminiThesisTitle(e.target.value)}
                         className="py-4 input-request"
+                        id="myFile" 
+                        name="myFile"
                     />
                     </Col>
                 </Form.Group>
@@ -95,6 +98,7 @@ const StudentRPDRequest = () => {
                     <Form.Control
                         type="file"
                         value={miniThesisPDF}
+                        name="myFile"
                         placeholder="Your mini thesis file"
                         onChange={(e) => setminiThesisPDF(e.target.value)}
                         className="py-4 input-request"
