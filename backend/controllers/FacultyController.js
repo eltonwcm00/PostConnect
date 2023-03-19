@@ -6,6 +6,8 @@ import Faculty from "../models/Faculty.js";
 import Panel from "../models/Panel.js";
 import Supervisor from "../models/Supervisor.js";
 import Student from "../models/Student.js";
+import RPDApplication from "../models/RPDApplication.js";
+import RPD from "../models/RPD.js";
 
 const facultyLogin = asyncHandler(async (req, res) => {
   
@@ -227,5 +229,20 @@ const facultyUpdateAssignSupervisionByID = asyncHandler(async (req, res) => {
   }
 });
 
+const facultyReadEvaluateRPDApplication = asyncHandler(async (req, res) => {
+  const RPDApplicationList = await RPDApplication.find({});
+
+  if(RPDApplicationList) {
+    res.json(RPDApplicationList);
+  } 
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+});
+
+
+
 export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
-         facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID};
+         facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
+         facultyReadEvaluateRPDApplication };

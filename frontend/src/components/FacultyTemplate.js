@@ -25,6 +25,9 @@ const FacultyTemplate = ({ children }) => {
   else if (window.location.href === pageURL+'facultyAssignNumSupervisor' || window.location.href === pageURL+`facultyAssignNumSupervisor/${id}`) {
     pageTitle = "Assign Number of Supervision";
   }
+  else if (window.location.href === pageURL+'facultyEvaluateRPDApplication') {
+    pageTitle = "Research Proposal Defence Request Application";
+  }
   else {
     pageTitle = null;
   }

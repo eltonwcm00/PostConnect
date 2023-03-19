@@ -52,6 +52,7 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
       miniThesisPDF,
       dateApplyRPD: moment(),
       studentUser: currentStudent,
+      applicationStatus: false,
     });
   }
   else {
@@ -68,6 +69,7 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
       supervisorName: appliedRPD.supervisorName,
       miniThesisPDF: appliedRPD.miniThesisPDF,
       dateApplyRPD: appliedRPD.dateApplyRPD,
+      applicationStatus: appliedRPD.applicationStatus,
       studentUser: appliedRPD.studentUser,
       successMessage: "The RPD request application is submitted",
     })

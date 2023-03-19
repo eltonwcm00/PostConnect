@@ -12,6 +12,9 @@ import {
     FACULTY_UPDATE_NO_SUPERVISION_REQUEST,
     FACULTY_UPDATE_NO_SUPERVISION_SUCCESS,
     FACULTY_UPDATE_NO_SUPERVISION_FAIL,
+    FACULTY_APPLICATION_LIST_REQUEST,
+    FACULTY_APPLICATION_LIST_SUCCESS,
+    FACULTY_APPLICATION_LIST_FAIL,
 } from "../constants/facultyConstants";
 
 export const facultyLoginReducer = (state = {}, action) => {
@@ -63,6 +66,19 @@ export const facultyUpdateAssignSupervisionReducer = (state = {}, action) => {
       return { loading: false, successMsg: true };
     case FACULTY_UPDATE_NO_SUPERVISION_FAIL:
       return { loading: false, error: action.payload};
+    default:
+      return state;
+  }
+};
+
+export const facultyReadApplicationReducer = (state = { fetchApplicationList: [] }, action) => {
+  switch (action.type) {
+    case FACULTY_APPLICATION_LIST_REQUEST:
+      return { loading: true };
+    case FACULTY_APPLICATION_LIST_SUCCESS:
+      return { loading: false, fetchApplicationList: action.payload };
+    case FACULTY_APPLICATION_LIST_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

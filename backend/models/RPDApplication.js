@@ -34,7 +34,7 @@ const RPDApplicationSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
     },
-    facultyUser: { //insert only when supervisor choose a specific student
+    facultyUser: { 
       type: mongoose.Schema.Types.ObjectId,
       ref: "Faculty",
     }

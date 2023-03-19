@@ -12,6 +12,9 @@ import {
     FACULTY_UPDATE_NO_SUPERVISION_REQUEST,
     FACULTY_UPDATE_NO_SUPERVISION_SUCCESS,
     FACULTY_UPDATE_NO_SUPERVISION_FAIL,
+    FACULTY_APPLICATION_LIST_REQUEST,
+    FACULTY_APPLICATION_LIST_SUCCESS,
+    FACULTY_APPLICATION_LIST_FAIL,
 } from "../constants/facultyConstants";
 
 import axios from "axios";
@@ -231,6 +234,40 @@ export const facultyUpdateAssignSupervision = (id, numSupervision, academicPos) 
     });
   }
 }
+
+export const facultyReadEvaluateRPDApplication = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FACULTY_APPLICATION_LIST_REQUEST,
+    });
+
+    const {
+      facultyLogin: { facultyInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${facultyInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("http://localhost:5000/api/faculty/facultyReadEvaluateRPDApplication", config);
+
+    dispatch({
+      type: FACULTY_APPLICATION_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: FACULTY_APPLICATION_LIST_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
 
 
 

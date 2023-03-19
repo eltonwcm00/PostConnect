@@ -1,7 +1,8 @@
 import express from "express";
 import {
    facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
-   facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID
+   facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
+   facultyReadEvaluateRPDApplication,
 } from "../controllers/FacultyController.js";
 import { protectFaculty,} from "../middleware/authMiddleware.js";
 
@@ -17,6 +18,7 @@ router.route("/facultyReadAssignSupervision").get(protectFaculty, facultyReadAss
 router.route("/facultyReadAssignSupervision/:id").get(facultyReadAssignSupervisionByID)
                                                  .put(protectFaculty, facultyUpdateAssignSupervisionByID);
 
+router.route("/facultyReadEvaluateRPDApplication").get(protectFaculty,facultyReadEvaluateRPDApplication);
 
 export default router;
 
