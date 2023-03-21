@@ -241,8 +241,19 @@ const facultyReadEvaluateRPDApplication = asyncHandler(async (req, res) => {
   }
 });
 
+const facultyReadEvaluateRPDApplicationByID = asyncHandler(async (req, res) => {
+ 
+  const fetchRPDApplicationID = await RPDApplication.findById(req.params.id);
+
+  if (fetchRPDApplicationID) {
+    res.json(fetchRPDApplicationID);
+  } 
+  else {
+    res.status(404).json({ message: "RPD Application is not found" });
+  }
+});
 
 
 export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
-         facultyReadEvaluateRPDApplication };
+         facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID };

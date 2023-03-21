@@ -33,8 +33,12 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
   let appliedRPD;
 
   const hasApplied = await RPDApplication.findOne({ studentUser: currentStudent });
+  const hasSupervisor = req.userStudent.supervisorUser;
 
-  if (hasApplied) {
+  if(!hasSupervisor) {
+    res.status(401).json({message: "Access denied! you have not been assigned to any supervisor, please refer to faculty"});
+  }
+  else if (hasApplied) {
     res.status(401).json({message: "You have applied the application previously"});
   }
   else if (currentStudent) {
@@ -42,7 +46,7 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
     if(fullName.trim().length === 0) { res.status(401).json({message: "Please fill in your full name"});}
     else if(miniThesisTitle.trim().length === 0) {res.status(401).json({message: "Please fill in your mini thesis title"});}
     else if(supervisorName.trim().length === 0) { res.status(401).json({message: "Please fill your supervisor name"});}
-   else if (miniThesisPDF.trim().length === 0) { res.status(401).json({message: "Please upload your mini thesis .pdf file"});}
+    else if (miniThesisPDF.trim().length === 0) { res.status(401).json({message: "Please upload your mini thesis .pdf file"});}
 
     appliedRPD = await RPDApplication.create({
       fullName,

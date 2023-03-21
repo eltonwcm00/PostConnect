@@ -1,0 +1,52 @@
+.tab, .tab button  {
+    font-family: 'Montserrat', sans-serif;
+    color: white !important;
+    font-weight: bold;
+    background-color: #071b63;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+thead .table-desc {
+    background-color: #071b63;
+    color: white;
+}
+
+.table-desc > td {
+    border-right: 1px solid black;
+}
+
+.table-desc > td:last-of-type {
+    border: none;
+}
+
+.table-desc-th, .table-header {
+    padding: 15px !important;
+} 
+
+.list-container {
+    box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 30%);
+}
+
+
+button#fill-tab-example-tab-pending, button#fill-tab-example-tab-processed, .table-header {
+    background-color: #071b63;
+    border: none;
+}
+
+button#fill-tab-example-tab-pending:focus, button#fill-tab-example-tab-processed:focus {
+    background-color: #83ADFF;
+    border: none;
+}
+
+.table-details-button {
+  width: 8em;
+  border: none !important;
+  border-radius: 0 !important;
+  text-transform: capitalize;
+  background-color: #CEDDEF !important;
+  color: black !important;
+  font-weight: 600;
+  padding: 11px;
+  /* margin-left: 65vmax; */
+}

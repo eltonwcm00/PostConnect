@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import moment from 'moment';
-import { Button } from "react-bootstrap";
-import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
+import { Button, Tab, Tabs } from "react-bootstrap";
+import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import { useDispatch, useSelector } from "react-redux";
 import { facultyReadEvaluateRPDApplication } from "../../../actions/facultyAction";
 import Loading from "../../../components/Loading";
@@ -33,33 +33,40 @@ const FacultyEvaluateRPDApplication = () => {
       <FacultyTemplate>
         {console.log(RPDApplicationList)}
         {loading && <Loading />}
-          <CDBContainer>
-            <CDBTable borderless>
-              <CDBTableHeader>
-                <tr className='table-desc'>
-                  <th>Date</th>
-                  <th>Full Name</th>
-                  <th>Mini Thesis Title</th>
-                  <th>Status</th>
-                  <th>Evaluate</th>
-                </tr>
-              </CDBTableHeader>
-              <CDBTableBody>
-              {
-                fetchApplicationList && fetchApplicationList.map((list) => (
-                    <tr className='table-desc' key={list._id}>
-                      <td> {moment(list.dateApplyRPD).format('l')} </td>
-                      <td> {list.fullName} </td>
-                      <td> {list.miniThesisTitle} </td>
-                      <td> {!list.applicationStatus ? "Pending" : "Process" } </td>
-                      <td className='table-details-button'><Button href={`http://localhost:3000/facultyAssignNumSupervisor/${list._id}`}>Evaluate</Button></td>
-                    </tr>
-                  )
-                )
-              }
-            </CDBTableBody>
-            </CDBTable>
-          </CDBContainer>
+        <Tabs defaultActiveKey="pending" id="fill-tab-example" className="mb-3 tab mt-4" justify transition={false}>
+          <Tab eventKey="pending" title="Pending">
+            <CDBContainer style={{padding: '0px', textAlign: "center"}} className="list-container">
+              <CDBTable borderless>
+                <CDBTableHeader className="d-flex p-2 table-header">
+                  <tr className='table-desc'>
+                    <th className="table-desc-th">Date</th>
+                    <th className="table-desc-th">Full Name</th>
+                    <th className="table-desc-th">Mini Thesis Title</th>
+                    <th className="table-desc-th">Status</th>
+                    <th className="table-desc-th">Evaluate</th>
+                  </tr>
+                </CDBTableHeader>
+                <CDBTableBody>
+                  {
+                    fetchApplicationList && fetchApplicationList.map((list) => (
+                        <tr className='table-desc' key={list._id}>
+                          <td> {moment(list.dateApplyRPD).format('l')} </td>
+                          <td> {list.fullName} </td>
+                          <td> {list.miniThesisTitle} </td>
+                          <td> {!list.applicationStatus ? "Pending" : "Process" } </td>
+                          <td><Button className='table-details-button' href={`http://localhost:3000/facultyAssignNumSupervisor/${list._id}`}>Details</Button></td>
+                        </tr>
+                      )
+                    )
+                  }
+                </CDBTableBody>
+              </CDBTable>
+            </CDBContainer>
+          </Tab>
+          <Tab eventKey="processed" title="Processed">
+              Test
+          </Tab>
+        </Tabs>
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       </FacultyTemplate>
     </>
