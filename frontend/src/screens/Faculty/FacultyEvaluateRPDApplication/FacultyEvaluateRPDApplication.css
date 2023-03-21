@@ -19,10 +19,10 @@ thead .table-desc {
 .table-desc > td:last-of-type {
     border: none;
 }
-
+/* 
 .table-desc-th, .table-header {
     padding: 15px !important;
-} 
+}  */
 
 .list-container {
     box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 30%);

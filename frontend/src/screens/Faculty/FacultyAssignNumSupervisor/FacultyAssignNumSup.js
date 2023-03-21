@@ -35,7 +35,7 @@ const FacultyAssignNumSupervisor = () => {
         <div className="form-title-desc-container">List of The Supervisors</div>
         {console.log(fetchSupervisorList)}
         {loading && <Loading />}
-          <CDBContainer>
+          <CDBContainer style={{padding: '0px', textAlign: "center", marginTop: "15px"}} className="list-container">
             <CDBTable borderless>
               <CDBTableHeader>
                 <tr className='table-desc'>
@@ -54,7 +54,7 @@ const FacultyAssignNumSupervisor = () => {
                       <td> {list.usernameSup} </td>
                       <td> {list.academicPos} </td>
                       <td> {list.numSupervision} </td>
-                      <td className='table-details-button'><Button href={`http://localhost:3000/facultyAssignNumSupervisor/${list._id}`}>Details</Button></td>
+                      <td><Button className='table-details-button' href={`http://localhost:3000/facultyAssignNumSupervisor/${list._id}`}>Details</Button></td>
                     </tr>
                   )
                 )
