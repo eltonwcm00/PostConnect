@@ -14,7 +14,8 @@ const studentLogin = asyncHandler(async (req, res) => {
     if (userStudent && validPass) {
       res.status(201).json({
         _id: userStudent._id,
-        usernameStud: userStudent.usernameStud, 
+        usernameStud: userStudent.usernameStud,       
+        dateJoined: userStudent.dateJoin,
         isStudent: true,
         token: generateToken(userStudent._id),
         successMessage: "Logged in successfully!"

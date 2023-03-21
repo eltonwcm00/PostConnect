@@ -54,7 +54,7 @@ const FacultyEvaluateRPDApplication = () => {
                           <td> {list.fullName} </td>
                           <td> {list.miniThesisTitle} </td>
                           <td> {!list.applicationStatus ? "Pending" : "Process" } </td>
-                          <td><Button className='table-details-button' href={`http://localhost:3000/facultyAssignNumSupervisor/${list._id}`}>Details</Button></td>
+                          <td><Button className='table-details-button' href={`http://localhost:3000/facultyEvaluateRPDApplication/${list._id}`}>Details</Button></td>
                         </tr>
                       )
                     )
