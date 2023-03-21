@@ -37,7 +37,7 @@ const RPDApplicationSchema = mongoose.Schema(
     facultyUser: { 
       type: mongoose.Schema.Types.ObjectId,
       ref: "Faculty",
-    }
+    },
   },
   {
     timestamps: true,
