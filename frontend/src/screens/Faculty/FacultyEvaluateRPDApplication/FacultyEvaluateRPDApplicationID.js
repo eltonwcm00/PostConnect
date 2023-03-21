@@ -27,8 +27,6 @@ const FacultyEvaluateRPDApplicationID = () => {
     const [usernameStud, setUsernameStud] = useState();
     const [supervisorUser, setUsernameSup] = useState();
 
-
-
     const { id } = useParams();
     // const dispatch =  useDispatch();
 
@@ -65,12 +63,12 @@ const FacultyEvaluateRPDApplicationID = () => {
             <div className="form-title-desc-container">Details of The Request Application</div>
                 <div className="row" style={{marginTop: '40px'}}>
                     <div className="col-6 instruction-box" style={{borderRadius: '5px', height: '25em'}}>
-                        <Table className="table-borderless" style={{fontFamily: 'Montserrat'}}>
+                        <Table className="table-borderless mt-4" style={{fontFamily: 'Montserrat'}}>
                             <thead>
                                 <tr>
                                     <th><i className="fa-solid fa-triangle-exclamation" style={{color: 'red', textTransform: 'uppercase', whiteSpace: "nowrap"}}> Smart Checklist </i></th>
                                 </tr>
-                                <tr>
+                                <tr style={{fontStyle: 'italic', backgroundColor: '#f0f0f0', color: '#4C4C4C'}}>
                                     <th>{}</th>
                                     <th>Student's Application</th>
                                     <th>Student's Info</th>
