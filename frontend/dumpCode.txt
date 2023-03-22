@@ -1,39 +1,20 @@
- // let error = {}
-
-  // if(!userFaculty) {
-    //   error.userNameFac = "Invalid username or password, please try again!";
-    //   return res.json(error);
-    // }
-
-  const facultyfacultyPanelRegistration= asyncHandler(async (req, res) => {
+  ----------FacultyController.js--------------
   
-  const { userNameFac, password } = req.body;
-  const userExists = await Faculty.findOne({ userNameFac });
+  // const fetchRPDApplicationStudentData2ID = await RPDApplication.findById(req.params.id)
+  //                                                .populate({
+  //                                                   path:'studentUser',
+  //                                                   populate: {
+  //                                                     path: 'supervisorUser',   
+  //                                                   }
+  //                                                 });
+  
 
-  if (userExists) {
-    res.status(401).json({message: "Username is existed!"});
-  }
+  // const fetchRPDApplicationStudentData2ID = await Supervisor.findOne(req.body.supervisorUser);
 
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
 
-  const userFaculty = await Faculty.create({
-    userNameFac,
-    password: hashedPassword,
-  });
-
-  if (userFaculty) {
-
-    res.status(201).json({
-      _id: userFaculty._id,
-      userNameFac: userFaculty.userNameFac,
-      isFaculty: true,
-      token: generateToken(userFaculty._id),
-      successMessage: "Register successfully!"
-    });
-    
-  } else {
-      res.status(500);
-      throw new Error("Internal server error");
-  }
-});
+  // if (fetchRPDApplicationStudentData2ID) {
+  //   res.json({supName: fetchRPDApplicationStudentData2ID});
+  // }
+  // else {
+  //   res.status(404).json({ message: "Error in supervisor .db ref." });
+  // }

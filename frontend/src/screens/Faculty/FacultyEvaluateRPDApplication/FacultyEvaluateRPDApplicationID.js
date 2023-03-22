@@ -25,6 +25,7 @@ const FacultyEvaluateRPDApplicationID = () => {
 
     const [dateJoined, setDateJoined] = useState();
     const [usernameStud, setUsernameStud] = useState();
+    const [degreeLvl, setDegreeLvl] = useState();
     const [supervisorUser, setUsernameSup] = useState();
 
     const { id } = useParams();
@@ -48,49 +49,64 @@ const FacultyEvaluateRPDApplicationID = () => {
             setSupervisorName(data.supervisorName); 
             setAcademicStatus(data.applicationStatus);
             setMiniThesisTitle(data.miniThesisTitle);
-            setDateApplyRPD(moment(data.dateApplyRPD).format('l'));
+            setDateApplyRPD(moment(data.dateApplyRPD).format('DD.MM.YYYY HH:mm'));
 
-            setDateJoined(moment(data.studentUser.dateJoin).format('l'));
+            setDateJoined(moment(data.studentUser.dateJoin).format('DD.MM.YYYY HH:mm'));
             setUsernameStud(data.studentUser.usernameStud); 
-            setUsernameSup(data.studentUser.supervisorUser);
-
+            setDegreeLvl(data.studentUser.degreeLvl); 
+            setUsernameSup(data.studentUser.supervisorUser); 
         };
         fetching();
     }, [id]);
+
 
     return (
         <FacultyTemplate>
             <div className="form-title-desc-container">Details of The Request Application</div>
                 <div className="row" style={{marginTop: '40px'}}>
-                    <div className="col-6 instruction-box" style={{borderRadius: '5px', height: '25em'}}>
+                    <div className="col-6 instruction-box" style={{borderRadius: '5px', height: '30em'}}>
                         <Table className="table-borderless mt-4" style={{fontFamily: 'Montserrat'}}>
                             <thead>
                                 <tr>
                                     <th><i className="fa-solid fa-triangle-exclamation" style={{color: 'red', textTransform: 'uppercase', whiteSpace: "nowrap"}}> Smart Checklist </i></th>
                                 </tr>
-                                <tr style={{fontStyle: 'italic', backgroundColor: '#f0f0f0', color: '#4C4C4C'}}>
+                                <tr style={{ backgroundColor: '#f0f0f0', color: '#4C4C4C'}}>
                                     <th>{}</th>
                                     <th>Student's Application</th>
                                     <th>Student's Info</th>
-                                    <th>Validation</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>{}</td>
+                                    <td>{}</td>
+                                    <td>{}</td>
+                                    <td>{}</td>
+                                </tr>
+                                <tr>
                                     <td>Student Name</td>
                                     <td>{fullName}</td>
                                     <td>{usernameStud}</td>
-                                    <td>{fullName !== usernameStud ? "Fail" : "Pass"}</td>
+                                    <td>{fullName !== usernameStud ? "Mismatch" : "Match"}</td>
                                 </tr>
                                 <tr>
                                     <td style={{whiteSpace: "nowrap"}}>Supervisor Name</td>
                                     <td>{supervisorName}</td>
                                     <td>{supervisorUser}</td>
-                                    <td>{supervisorName !== supervisorUser ? "Fail" : "Pass"}</td>
+                                    <td>{supervisorName !== supervisorUser ? "Mismatch" : "Match"}</td>
+                                </tr>
+                                <tr>
+                                    <td>Degree Lvl</td>
+                                    <td>{}</td>
+                                    <td>{degreeLvl}</td>
+                                    <td>Active</td>
                                 </tr>
                                 <tr>
                                     <td>Mini Thesis Title</td>
                                     <td>{miniThesisTitle}</td>
+                                    <td>{}</td>
+                                    <td>{!miniThesisTitle ? "Inactive" : "Active"}</td>
                                 </tr>
                                  <tr>
                                     <td style={{whiteSpace: "nowrap"}}>Date Joined</td>
@@ -100,7 +116,8 @@ const FacultyEvaluateRPDApplicationID = () => {
                                 <tr>
                                     <td>Application Date</td>
                                     <td colspan="2">{dateApplyRPD}</td>
-                                    <td>{dateJoined < dateApplyRPD ? "Pass" : "Fail"}</td>
+                                    <td>{moment(dateApplyRPD, 'DD.MM.YYYY HH:mm') < moment(dateJoined,'DD.MM.YYYY HH:mm').add(183, 'days') ? "On-time" : "Late"}</td>
+                                    {console.log(dateApplyRPD+","+moment(dateJoined).add(183, 'days').format('l'))}
                                 </tr>
                             </tbody>
                         </Table>

@@ -244,24 +244,34 @@ const facultyReadEvaluateRPDApplication = asyncHandler(async (req, res) => {
 const facultyReadEvaluateRPDApplicationByID = asyncHandler(async (req, res) => {
  
   const fetchRPDApplicationID = await RPDApplication.findById(req.params.id);
+
   const fetchRPDApplicationStudentDataID = await RPDApplication.findById(req.params.id)
                                                   .populate('studentUser');
-  // const fetchRPDApplicationStudentData2ID = await RPDApplication.findById(req.params.id)
-  //                                                 .populate('studentUser', 'supervisorUser').populate({populate: {path: 'usernameSup'}});
+
+  const fetchRPDApplicationStudentData2ID = await RPDApplication.findById(req.params.id)
+                                                    .populate({
+                                                      path: 'studentUser',
+                                                      model: 'Student',
+                                                      populate: {
+                                                        path: 'supervisorUser',
+                                                        model: 'Supervisor',
+                                                      },
+                                                  })
+
   if (fetchRPDApplicationStudentDataID) {
     res.json(fetchRPDApplicationStudentDataID);
   }
   else {
-    res.status(404).json({ message: "Error in student/supervisor .db ref." });
+    res.status(404).json({ message: "Error in student .db ref." });
   }
 
-  // if (fetchRPDApplicationStudentData2ID) {
-  //   res.json(fetchRPDApplicationStudentData2ID);
-  // }
-  // else {
-  //   res.status(404).json({ message: "Error in student/supervisor .db ref." });
-  // }
-
+  if (fetchRPDApplicationStudentData2ID) {
+    res.json(fetchRPDApplicationStudentData2ID);
+  }
+  else {
+    res.status(404).json({ message: "Error in student .db ref." });
+  }
+  
   if (fetchRPDApplicationID) {
     res.json(fetchRPDApplicationID);
   } 

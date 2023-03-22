@@ -30,7 +30,7 @@ const StudentSchema = mongoose.Schema(
       required: true,
       ref: "Faculty",
     },
-    supervisorUser: { //insert only when supervisor choose a specific student
+    supervisorUser: { 
       type: mongoose.Schema.Types.ObjectId,
       ref: "Supervisor",
     }
