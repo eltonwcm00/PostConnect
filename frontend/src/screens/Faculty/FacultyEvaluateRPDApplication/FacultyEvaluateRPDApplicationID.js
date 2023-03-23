@@ -17,7 +17,7 @@ const FacultyEvaluateRPDApplicationID = () => {
 
     let navigate = useNavigate();
     let msgStudent, msgSupervisor, msgDegree, msgThesis, msgDate;
-    let invalid = false;
+    let invalid = false, months, days;
 
     const [fullName, setFullName] = useState();
     const [supervisorName, setSupervisorName] = useState();
@@ -78,7 +78,6 @@ const FacultyEvaluateRPDApplicationID = () => {
         msgStudent = <><span className="valid-msg">Valid: </span> 
             Student's name from the request form is match with the student's name</>
     }
-
     if(supervisorName !== supervisorUser) {
         msgSupervisor = <><span className="invalid-msg">Invalid: </span>
             Student's supervisor from the request form is not match with the student's supervisor</>
@@ -87,7 +86,6 @@ const FacultyEvaluateRPDApplicationID = () => {
         msgSupervisor = <><span className="valid-msg">Valid: </span>
             Student's supervisor from the request form is match with the student's supervisor</>
     }
-
     if(!miniThesisTitle) {
         msgThesis = <><span className="invalid-msg">Invalid: </span>
            Mini Thesis is not found</>;
@@ -96,21 +94,38 @@ const FacultyEvaluateRPDApplicationID = () => {
         msgThesis = <><span className="valid-msg">Valid: </span>
             Mini Thesis is found</>;
     }
-
     msgDegree = <><span className="valid-msg">Valid: </span>
         Degree level is valid</>;
 
-    if(moment(dateApplyRPD, 'l') < moment(dateJoined,'l').add(183, 'days')) {
+    switch(degreeLvl) {
+        case 'Master Degree (Part-Time)':
+            days = 274; months = 9;
+            break;
+        case 'Master Degree (Full-Time)':
+            days = 183; months = 6;
+            break;
+        case 'Doctoral Degree (Part-Time)':
+            days = 365; months = 12;
+            break;
+        case 'Doctoral Degree (Full-Time)':
+            days = 274; months = 9;
+            break;
+        default:
+            days = null; months = null;
+            break;
+    }
+    
+    if(moment(dateApplyRPD, 'l') < moment(dateJoined,'l').add(days, 'days')) {
         msgDate = <><span className="valid-msg">Valid: </span>
-        Application date is not more than 1/2 year from the student joining-date</>;
+           {`Application date is not more than ${months} months from the student joining-date`}</>;
     } else {
         msgDate = <><span className="invalid-msg">Invalid: </span>
-            Application date is more than 1/2 year from the student joining-date</>;
+            {`Application date is more than ${months} months from the student joining-date`}</>;
         invalid = true;
     }
 
     const selectStudent = () => {
-        if (window.confirm("According to the analysis result, one or more fields of the application are invalid. Are you sure to approve?")) {
+        if (window.confirm("WARNING: According to the analysis result, one or more fields of the application are invalid. Are you sure to approve?")) {
             console.log("sure");
         }
     }
@@ -181,10 +196,10 @@ const FacultyEvaluateRPDApplicationID = () => {
                                     <td>Application Date</td>
                                     <td colspan="2">{dateApplyRPD}</td>
                                     <td>
-                                        {moment(dateApplyRPD, 'l') < moment(dateJoined,'l').add(183, 'days') 
+                                        {moment(dateApplyRPD, 'l') < moment(dateJoined,'l').add(days, 'days') 
                                             && <i className="fa-solid fa-check" onClick={handleShowe} style={{ cursor: 'pointer' }}></i>
                                         }
-                                        {moment(dateApplyRPD, 'l') > moment(dateJoined,'l').add(183, 'days') 
+                                        {moment(dateApplyRPD, 'l') > moment(dateJoined,'l').add(days, 'days') 
                                             && <i className="fa-solid fa-exclamation" onClick={handleShowe} style={{ cursor: 'pointer', color: 'red' }}></i>
                                         }
                                     </td>
@@ -273,6 +288,7 @@ const FacultyEvaluateRPDApplicationID = () => {
                     </div>
                     <div className="col">
                         <Form className="form" style={{marginTop: 0, height: '57em'}}>
+                            <i class="fa-solid fa-file mb-3" style={{whiteSpace: "nowrap", color: "#046dba"}}> Student Request Form </i>
                             <Form.Group as={Row} className="mb-5" controlId="title">
                                 <Form.Label column sm={2}>Full Name</Form.Label>
                                 <Col sm={10}>
