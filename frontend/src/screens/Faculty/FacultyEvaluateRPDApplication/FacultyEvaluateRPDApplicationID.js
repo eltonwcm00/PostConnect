@@ -11,10 +11,12 @@ import ErrorMessage from "../../../components/ErrorMessage";
 import SuccessMessage from "../../../components/SuccessMessage";
 import FacultyTemplate from "../../../components/FacultyTemplate";
 import "../InputForm.css";
+import "./FacultyEvaluateRPDApplication.css"
 
 const FacultyEvaluateRPDApplicationID = () => {
 
     let navigate = useNavigate();
+    let msgStudent, msgSupervisor, msgDegree, msgThesis, msgDate;
 
     const [fullName, setFullName] = useState();
     const [supervisorName, setSupervisorName] = useState();
@@ -57,15 +59,50 @@ const FacultyEvaluateRPDApplicationID = () => {
             setSupervisorName(data.supervisorName); 
             setAcademicStatus(data.applicationStatus);
             setMiniThesisTitle(data.miniThesisTitle);
-            setDateApplyRPD(moment(data.dateApplyRPD).format('DD.MM.YYYY HH:mm'));
+            setDateApplyRPD(moment(data.dateApplyRPD).format('l'));
 
-            setDateJoined(moment(data.studentUser.dateJoin).format('DD.MM.YYYY HH:mm'));
+            setDateJoined(moment(data.studentUser.dateJoin).format('l'));
             setUsernameStud(data.studentUser.usernameStud); 
             setDegreeLvl(data.studentUser.degreeLvl); 
             setUsernameSup(data.studentUser.supervisorUser); 
         };
         fetching();
     }, [id]);
+
+    if(fullName !== usernameStud) {
+        msgStudent = <><span className="invalid-msg">Invalid: </span> 
+            Student's name from the request form is not match with the student's name</>
+    } else {
+        msgStudent = <><span className="valid-msg">Valid: </span> 
+            Student's name from the request form is match with the student's name</>
+    }
+
+    if(supervisorName !== supervisorUser) {
+        msgSupervisor = <><span className="invalid-msg">Invalid: </span>
+            Student's supervisor from the request form is not match with the student's supervisor</>
+    } else {
+        msgSupervisor = <><span className="valid-msg">Valid: </span>
+            Student's supervisor from the request form is match with the student's supervisor</>
+    }
+
+    if(!miniThesisTitle) {
+        msgThesis = <><span className="invalid-msg">Invalid: </span>
+           Mini Thesis is not found</>;
+    } else {
+        msgThesis = <><span className="valid-msg">Valid: </span>
+            Mini Thesis is found</>;
+    }
+
+    msgDegree = <><span className="valid-msg">Valid: </span>
+        Degree level is valid</>;
+
+    if(moment(dateApplyRPD, 'l') < moment(dateJoined,'l').add(183, 'days')) {
+        msgDate = <><span className="valid-msg">Valid: </span>
+        Application date is not more than half-year from the student joining-date</>;
+    } else {
+        msgDate = <><span className="invalid-msg">Invalid: </span>
+            Application date is more than half-year from the student joining-date</>;
+    }
 
     return (
         <FacultyTemplate>
@@ -75,9 +112,9 @@ const FacultyEvaluateRPDApplicationID = () => {
                         <Table className="table-borderless mt-4" style={{fontFamily: 'Montserrat'}}>
                             <thead>
                                 <tr>
-                                    <th><i className="fa-solid fa-triangle-exclamation" style={{color: 'red', textTransform: 'uppercase', whiteSpace: "nowrap"}}> Smart Checklist </i></th>
+                                    <th><i className="fa-solid fa-triangle-exclamation" style={{color: 'red', whiteSpace: "nowrap"}}> Analysis </i></th>
                                 </tr>
-                                <tr style={{ backgroundColor: '#f0f0f0', color: '#4C4C4C'}}>
+                                <tr style={{ backgroundColor: 'whitesmoke', color: '#4C4C4C', fontSize: '14px'}}>
                                     <th>{}</th>
                                     <th>Student's Application</th>
                                     <th>Student's Info</th>
@@ -96,8 +133,8 @@ const FacultyEvaluateRPDApplicationID = () => {
                                     <td>{fullName}</td>
                                     <td>{usernameStud}</td>
                                     <td>
-                                        {fullName !== usernameStud && <i className="fa-solid fa-xmark" data-toggle="modal-student" data-target="#exampleModal" onClick={handleShow} style={{ cursor: 'pointer' }}></i>}
-                                        {fullName === usernameStud && <i className="fa-solid fa-check" data-toggle="modal-student" data-target="#exampleModal" onClick={handleShow} style={{ cursor: 'pointer' }}></i>}
+                                        {fullName !== usernameStud && <i className="fa-solid fa-xmark" onClick={handleShow} style={{ cursor: 'pointer', color: 'red'}}></i>}
+                                        {fullName === usernameStud && <i className="fa-solid fa-check" onClick={handleShow} style={{ cursor: 'pointer' }}></i>}
                                     </td>
                                 </tr>
                                 <tr>
@@ -105,23 +142,23 @@ const FacultyEvaluateRPDApplicationID = () => {
                                     <td>{supervisorName}</td>
                                     <td>{supervisorUser}</td>
                                     <td>
-                                        {supervisorName !== supervisorUser && <i className="fa-solid fa-xmark" data-toggle="modal-supervisor" data-target="#exampleModal" onClick={handleShowb} style={{ cursor: 'pointer' }}></i>}
-                                        {supervisorName === supervisorUser && <i className="fa-solid fa-check" data-toggle="modal-supervisor" data-target="#exampleModal" onClick={handleShowb} style={{ cursor: 'pointer' }}></i>}
+                                        {supervisorName !== supervisorUser && <i className="fa-solid fa-xmark" onClick={handleShowb} style={{ cursor: 'pointer', color: 'red' }}></i>}
+                                        {supervisorName === supervisorUser && <i className="fa-solid fa-check" onClick={handleShowb} style={{ cursor: 'pointer' }}></i>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Degree Lvl</td>
                                     <td>{}</td>
                                     <td>{degreeLvl}</td>
-                                    <td>{degreeLvl && <i class="fa-solid fa-check" data-toggle="modal-degree-level" data-target="#exampleModal" onClick={handleShowd} style={{ cursor: 'pointer' }}></i>}</td>
+                                    <td>{degreeLvl && <i class="fa-solid fa-check" onClick={handleShowd} style={{ cursor: 'pointer' }}></i>}</td>
                                 </tr>
                                 <tr>
                                     <td>Mini Thesis Title</td>
                                     <td>{miniThesisTitle}</td>
                                     <td>{}</td>
                                     <td>
-                                        {!miniThesisTitle && <i className="fa-solid fa-xmark" data-toggle="modal-thesis-title" data-target="#exampleModal" onClick={handleShowc} style={{ cursor: 'pointer' }}></i>}
-                                        { miniThesisTitle && <i className="fa-solid fa-check" data-toggle="modal-thesis-title" data-target="#exampleModal" onClick={handleShowc} style={{ cursor: 'pointer' }}></i>}
+                                        {!miniThesisTitle && <i className="fa-solid fa-xmark" onClick={handleShowc} style={{ cursor: 'pointer', color: 'red' }}></i>}
+                                        { miniThesisTitle && <i className="fa-solid fa-check" onClick={handleShowc} style={{ cursor: 'pointer' }}></i>}
                                     </td>
                                 </tr>
                                  <tr>
@@ -133,80 +170,93 @@ const FacultyEvaluateRPDApplicationID = () => {
                                     <td>Application Date</td>
                                     <td colspan="2">{dateApplyRPD}</td>
                                     <td>
-                                        {moment(dateApplyRPD, 'DD.MM.YYYY HH:mm') < moment(dateJoined,'DD.MM.YYYY HH:mm').add(183, 'days') 
-                                            && <i className="fa-solid fa-check" data-toggle="modal-application-date" data-target="#exampleModal" onClick={handleShowe} style={{ cursor: 'pointer' }}></i>
+                                        {moment(dateApplyRPD, 'l') < moment(dateJoined,'l').add(183, 'days') 
+                                            && <i className="fa-solid fa-check" onClick={handleShowe} style={{ cursor: 'pointer' }}></i>
                                         }
-                                        {moment(dateApplyRPD, 'DD.MM.YYYY HH:mm') > moment(dateJoined,'DD.MM.YYYY HH:mm').add(183, 'days') 
-                                            && <i className="fa-solid fa-exclamation" data-toggle="modal-application-date" data-target="#exampleModal" onClick={handleShowe} style={{ cursor: 'pointer' }}></i>
+                                        {moment(dateApplyRPD, 'l') > moment(dateJoined,'l').add(183, 'days') 
+                                            && <i className="fa-solid fa-exclamation" onClick={handleShowe} style={{ cursor: 'pointer', color: 'red' }}></i>
                                         }
                                     </td>
                                     {console.log(dateApplyRPD+","+moment(dateJoined).add(183, 'days').format('l'))}
                                 </tr>
                             </tbody>
                         </Table>
-                        <Modal show={show} onHide={handleClose}>
-                            <Modal.Header data-dismiss="modal-student" closeButton>
-                            <Modal.Title>Status: Student Name</Modal.Title>
+
+                        <Table className="table-borderless mt-5" style={{fontFamily: 'Montserrat'}}>
+                            <thead>
+                                <tr>
+                                    <th><i class="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Result </i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{}</td>
+                                    <td>{}</td>
+                                    <td>{}</td>
+                                    <td>{}</td>
+                                </tr>
+                                <tr>
+                                    <td><><span>{msgStudent}</span></></td>
+                                </tr>
+                                <tr>
+                                    <td>{msgSupervisor}</td>
+                                </tr>
+                                <tr>
+                                    <td>{msgThesis}</td>
+                                </tr>
+                                <tr>
+                                    <td>{msgDegree}</td>
+                                </tr>
+                                <tr>
+                                    <td>{msgDate}</td>
+                                </tr>
+                            </tbody>
+                        </Table>    
+
+
+                        <Modal show={show} onHide={handleClose} dialogClassName="modal-90w">
+                            <Modal.Header closeButton>
+                                <Modal.Title>Status: Student Name</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                            {fullName === usernameStud ? "VALID: Student's name from the request form is MATCH with the student's name"
-                                : "INVALID: Student's name from the request form is NOT MATCH with the student's name"}
+                                {msgStudent}
                             </Modal.Body>
-                            <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>Close Modal</Button>
-                            </Modal.Footer>
                         </Modal>
 
-                        <Modal show={showb} onHide={handleCloseb}>
-                            <Modal.Header data-dismiss="modal-supervisor" closeButton>
-                            <Modal.Title>Status: Supervisor Name</Modal.Title>
+                        <Modal show={showb} onHide={handleCloseb} dialogClassName="modal-90w">
+                            <Modal.Header closeButton>
+                                <Modal.Title>Status: Supervisor Name</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                {supervisorName === supervisorUser ? "VALID: Student's supervisor from the request form is MATCH with the student's supervisor"
-                                    : "INVALID: Student's supervisor from the request form is NOT MATCH with the student's supervisor"}
+                                {msgSupervisor}
                             </Modal.Body>
-                            <Modal.Footer>
-                            <Button variant="secondary" onClick={handleCloseb}>Close Modal</Button>
-                            </Modal.Footer>
                         </Modal>
 
-                        <Modal show={showc} onHide={handleClosec}>
-                            <Modal.Header data-dismiss="modal-thesis-title" closeButton>
-                            <Modal.Title>Status: Mini Thesis Title</Modal.Title>
+                        <Modal show={showc} onHide={handleClosec} dialogClassName="modal-90w">
+                            <Modal.Header closeButton>
+                                <Modal.Title>Status: Mini Thesis Title</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                {miniThesisTitle ? "VALID: Mini Thesis title is found"
-                                    : "INVALID: Mini Thesis title is not found"}
+                                {msgThesis}
                             </Modal.Body>
-                            <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClosec}>Close Modal</Button>
-                            </Modal.Footer>
                         </Modal>
 
-                        <Modal show={showd} onHide={handleClosed}>
-                            <Modal.Header data-dismiss="modal-degree-level" closeButton>
-                            <Modal.Title>Status: Degree Level</Modal.Title>
+                        <Modal show={showd} onHide={handleClosed} dialogClassName="modal-90w">
+                            <Modal.Header closeButton>
+                                <Modal.Title>Status: Degree Level</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                {"VALID: Degree level is valid"}
+                                {msgDegree}
                             </Modal.Body>
-                            <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClosed}>Close Modal</Button>
-                            </Modal.Footer>
                         </Modal>
 
-                        <Modal show={showe} onHide={handleClosee}>
-                            <Modal.Header data-dismiss="modal-application-date" closeButton>
+                        <Modal show={showe} onHide={handleClosee} dialogClassName="modal-90w">
+                            <Modal.Header closeButton>
                             <Modal.Title>Status: RPD Application</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                {moment(dateApplyRPD, 'DD.MM.YYYY HH:mm') < moment(dateJoined,'DD.MM.YYYY HH:mm').add(183, 'days')
-                                    ? "VALID: Application date is no more than half-year from the student joining-date"
-                                    : "INVALID: Application date is more than half-year from the student joining-date"}
+                                {msgDate}
                             </Modal.Body>
-                            <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClosee}>Close Modal</Button>
-                            </Modal.Footer>
                         </Modal>
                         
                     </div>
@@ -274,7 +324,7 @@ const FacultyEvaluateRPDApplicationID = () => {
                             </Form.Group>
 
                             <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
-                                <Form.Label column sm={2}>Date Join</Form.Label>
+                                <Form.Label column sm={2}>Schedule Date</Form.Label>
                                 <Calendar
                                     value={dateScheduleRPD}
                                     onChange={setDateScheduleRPD}

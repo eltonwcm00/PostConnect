@@ -12,13 +12,14 @@
   }
 
   .instruction-box td:not(:first-child){
-   font-size: 15px;
+   font-size: 14px;
   }
 
   .instruction-box td:first-child {
     font-weight: bold;
     color: #4C4C4C;
-    background-color: rgb(240, 240, 240);
+    background-color: whitesmoke;
+    font-size: 14px;
   }
 
   .text-center {

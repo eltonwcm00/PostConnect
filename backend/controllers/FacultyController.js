@@ -269,7 +269,7 @@ const facultyReadEvaluateRPDApplicationByID = asyncHandler(async (req, res) => {
     res.json(fetchRPDApplicationStudentData2ID);
   }
   else {
-    res.status(404).json({ message: "Error in student .db ref." });
+    res.status(404).json({ message: "Error in supervisor .db ref." });
   }
   
   if (fetchRPDApplicationID) {
