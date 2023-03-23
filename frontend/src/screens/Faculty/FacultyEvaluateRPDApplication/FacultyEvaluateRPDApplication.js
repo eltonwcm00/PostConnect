@@ -48,12 +48,12 @@ const FacultyEvaluateRPDApplication = () => {
                 </CDBTableHeader>
                 <CDBTableBody>
                   {
-                    fetchApplicationList && fetchApplicationList.map((list) => (
+                    fetchApplicationList && fetchApplicationList.filter(x => x.applicationStatus != false).map((list) => (
                         <tr className='table-desc' key={list._id}>
                           <td> {moment(list.dateApplyRPD).format('l')} </td>
                           <td> {list.fullName} </td>
                           <td> {list.miniThesisTitle} </td>
-                          <td> {!list.applicationStatus ? "Pending" : "Process" } </td>
+                          <td> {!list.applicationStatus ? "Pending" : "Processed" } </td>
                           <td><Button className='table-details-button' href={`http://localhost:3000/facultyEvaluateRPDApplication/${list._id}`}>Details</Button></td>
                         </tr>
                       )
@@ -64,7 +64,33 @@ const FacultyEvaluateRPDApplication = () => {
             </CDBContainer>
           </Tab>
           <Tab eventKey="processed" title="Processed">
-              Test
+            <CDBContainer style={{padding: '0px', textAlign: "center"}} className="list-container">
+              <CDBTable borderless>
+                <CDBTableHeader className="d-flex p-2 table-header">
+                  <tr className='table-desc'>
+                    <th className="table-desc-th">Processed Date</th>
+                    <th className="table-desc-th">Full Name</th>
+                    <th className="table-desc-th">Mini Thesis Title</th>
+                    <th className="table-desc-th">Status</th>
+                    <th className="table-desc-th">Details</th>
+                  </tr>
+                </CDBTableHeader>
+                <CDBTableBody>
+                  {
+                    fetchApplicationList && fetchApplicationList.filter(x => x.applicationStatus == false).map((list) => (
+                        <tr className='table-desc' key={list._id}>
+                          <td> {moment(list.updatedAt).format('l')} </td>
+                          <td> {list.fullName} </td>
+                          <td> {list.miniThesisTitle} </td>
+                          <td> {list.applicationStatus ? "Pending" : "Processed" } </td>
+                          <td><Button className='table-details-button' href={`http://localhost:3000/facultyEvaluateRPDApplication/${list._id}`}>Details</Button></td>
+                        </tr>
+                      )
+                    )
+                  }
+                </CDBTableBody>
+              </CDBTable>
+            </CDBContainer>
           </Tab>
         </Tabs>
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}

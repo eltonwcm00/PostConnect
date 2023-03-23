@@ -31,6 +31,7 @@ const FacultyEvaluateRPDApplicationID = () => {
     const [usernameStud, setUsernameStud] = useState();
     const [degreeLvl, setDegreeLvl] = useState();
     const [supervisorUser, setUsernameSup] = useState();
+    const [applicationStatus, setApplicationStatus] = useState();
 
     // Bootstrap Modal
     const [show, setShow] = useState(false); const handleShow = () => setShow(true); const handleClose = () => setShow(false);
@@ -65,6 +66,7 @@ const FacultyEvaluateRPDApplicationID = () => {
             setAcademicStatus(data.applicationStatus);
             setMiniThesisTitle(data.miniThesisTitle);
             setDateApplyRPD(moment(data.dateApplyRPD).format('l'));
+            setApplicationStatus(data.applicationStatus);
 
             setDateJoined(moment(data.studentUser.dateJoin).format('l'));
             setUsernameStud(data.studentUser.usernameStud); 
@@ -384,24 +386,24 @@ const FacultyEvaluateRPDApplicationID = () => {
                             </Form.Group>
                             <Form.Group className="float-right">
                                 <Row>
-                                    {invalid && <Col className="col-5"><small style={{color: 'red'}}>*Unable to approve the application due to one or more INVALID information is existed</small></Col>}
-                                    {invalid && <Col>
+                                    {(invalid && applicationStatus != false) && <Col className="col-5"><small style={{color: 'red'}}>*Unable to approve the application due to one or more INVALID information is existed</small></Col>}
+                                    {(invalid && applicationStatus != false) && <Col>
                                         <Button className="table-details-button mt-4 mr-4" variant="primary" disabled>
                                             Approve
                                         </Button> </Col>
                                     }
-                                    {invalid && <Col>
+                                    {(invalid && applicationStatus != false) && <Col>
                                         <Button className="table-details-button mt-4" variant="primary" onClick={() => rejectApplication()} >
                                             Reject
                                         </Button></Col>
                                     }
-                                    {!invalid && <Col className="col-5"><small style={{color: 'red'}}>*Unable to reject the application due to all information is VALID</small></Col>}
-                                    {!invalid && <Col> 
+                                    {(!invalid && applicationStatus != false) && <Col className="col-5"><small style={{color: 'red'}}>*Unable to reject the application due to all information is VALID</small></Col>}
+                                    {(!invalid && applicationStatus != false) && <Col> 
                                         <Button className="table-details-button mt-4" variant="primary" onClick={() => approveApplication()}>
                                             Approve
                                         </Button></Col>
                                     }
-                                    {!invalid && <Col>
+                                    {(!invalid && applicationStatus != false) && <Col>
                                         <Button className="table-details-button mt-4" variant="primary" disabled>
                                             Reject
                                         </Button></Col>

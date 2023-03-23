@@ -19,14 +19,18 @@ thead .table-desc {
 .list-container {
     box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 30%);
 }
-button#fill-tab-example-tab-pending, button#fill-tab-example-tab-processed, .table-header {
+/* button#fill-tab-example-tab-pending, button#fill-tab-example-tab-processed, .table-header {
     background-color: #071b63;
     border: none;
-}
-button#fill-tab-example-tab-pending:focus, button#fill-tab-example-tab-processed:focus {
-    background-color: #83ADFF;
+} */
+/* button#fill-tab-example-tab-pending:focus, button#fill-tab-example-tab-processed:focus{
+    background-color: #83ADFF !important;
     border: none;
+} */
+.nav-tabs .nav-link.active {
+    background-color: #83ADFF !important;
 }
+
 .table-details-button {
   width: 8em;
   border: none !important;
