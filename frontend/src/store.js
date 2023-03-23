@@ -9,6 +9,7 @@ import {
   facultyReadAssignSupervisionReducer,
   facultyUpdateAssignSupervisionReducer,
   facultyReadApplicationReducer,
+  facultyUpdateApplicationReducer,
 } from "./reducers/facutyReducers";
 
 import { 
@@ -33,6 +34,7 @@ const reducer = combineReducers({
     facultyReadAssignSupervision: facultyReadAssignSupervisionReducer,
     facultyUpdateAssignSupervision: facultyUpdateAssignSupervisionReducer,
     facultyReadApplication: facultyReadApplicationReducer,
+    facultyUpdateApplication: facultyUpdateApplicationReducer,
 
     supervisorLogin: supervisorLoginReducer,
     supervisorReadChooseStudent: supervisorReadChooseStudentReducer,

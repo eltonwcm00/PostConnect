@@ -273,14 +273,27 @@ const facultyReadEvaluateRPDApplicationByID = asyncHandler(async (req, res) => {
   }
   
   if (fetchRPDApplicationID) {
-    res.json(fetchRPDApplicationID);
+    res.status(201).json(fetchRPDApplicationID);
   } 
   else {
     res.status(404).json({ message: "RPD Application is not found" });
   }
 });
 
+const facultyRejectEvaluateRPDApplicationByID = asyncHandler(async (req, res) => {
+
+  const fetchRPDApplicationID = await RPDApplication.findById(req.params.id);
+  
+  if (fetchRPDApplicationID) {
+    fetchRPDApplicationID.applicationStatus = false;
+    const rejectRPDApplicationID = await fetchRPDApplicationID.save();
+    res.status(201).json(rejectRPDApplicationID);
+  } 
+  else {
+    res.status(404).json({ message: "Internal server error" });
+  }
+});
 
 export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
-         facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID };
+         facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID };

@@ -15,6 +15,9 @@ import {
     FACULTY_APPLICATION_LIST_REQUEST,
     FACULTY_APPLICATION_LIST_SUCCESS,
     FACULTY_APPLICATION_LIST_FAIL,
+    FACULTY_UPDATE_APPLICATION_REQUEST,
+    FACULTY_UPDATE_APPLICATION_SUCCESS,
+    FACULTY_UPDATE_APPLICATION_FAIL,
 } from "../constants/facultyConstants";
 
 import axios from "axios";
@@ -269,6 +272,40 @@ export const facultyReadEvaluateRPDApplication = () => async (dispatch, getState
   }
 };
 
+export const facultyUpdateApplication = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FACULTY_UPDATE_APPLICATION_REQUEST,
+    });
+
+    const {
+      facultyLogin: { facultyInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${facultyInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadEvaluateRPDApplication/${id}`, {}, config);
+
+    dispatch({
+      type: FACULTY_UPDATE_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type:FACULTY_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+}
 
 
 

@@ -15,6 +15,9 @@ import {
     FACULTY_APPLICATION_LIST_REQUEST,
     FACULTY_APPLICATION_LIST_SUCCESS,
     FACULTY_APPLICATION_LIST_FAIL,
+    FACULTY_UPDATE_APPLICATION_REQUEST,
+    FACULTY_UPDATE_APPLICATION_SUCCESS,
+    FACULTY_UPDATE_APPLICATION_FAIL,
 } from "../constants/facultyConstants";
 
 export const facultyLoginReducer = (state = {}, action) => {
@@ -79,6 +82,19 @@ export const facultyReadApplicationReducer = (state = { fetchApplicationList: []
       return { loading: false, fetchApplicationList: action.payload };
     case FACULTY_APPLICATION_LIST_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const facultyUpdateApplicationReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FACULTY_UPDATE_APPLICATION_REQUEST:
+      return { loading: true };
+    case FACULTY_UPDATE_APPLICATION_SUCCESS:
+      return { loading: false, successMsg: true };
+    case FACULTY_UPDATE_APPLICATION_FAIL:
+      return { loading: false, error: action.payload};
     default:
       return state;
   }

@@ -3,6 +3,7 @@ import axios from "axios";
 import moment from 'moment';
 import {useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
+import { facultyUpdateApplication } from "../../../actions/facultyAction";
 import { Form, Table, Button, Row, Col, Modal } from "react-bootstrap";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -40,10 +41,13 @@ const FacultyEvaluateRPDApplicationID = () => {
     
 
     const { id } = useParams();
-    // const dispatch =  useDispatch();
+    const dispatch =  useDispatch();
 
     const facultyLoginState = useSelector((state) => state.facultyLogin);
     const { facultyInfo } = facultyLoginState;
+
+    const RPDEvaluateState = useSelector((state) => state.facultyUpdateApplication);
+    const { loading, error, successMsg } = RPDEvaluateState;
 
     useEffect(() => {
         if (!facultyInfo) {
@@ -69,6 +73,29 @@ const FacultyEvaluateRPDApplicationID = () => {
         };
         fetching();
     }, [id]);
+
+    useEffect(() => {
+        if (successMsg) {
+          const timer = setTimeout(() => {
+            navigate("/facultyEvaluateRPDApplication");
+          }, 2000);
+          return () => clearTimeout(timer);
+        }
+    }, [navigate, successMsg])
+
+
+    const approveApplication = () => {
+        if (window.confirm("Are you sure to approve?")) {
+            console.log("approve");
+        }
+    }
+
+    const rejectApplication = () => {
+        if (window.confirm("Are you sure to reject?")) {
+            console.log("reject");
+            dispatch(facultyUpdateApplication(id));
+        }
+    }
 
     if(fullName !== usernameStud) {
         msgStudent = <><span className="invalid-msg">Invalid: </span> 
@@ -124,21 +151,12 @@ const FacultyEvaluateRPDApplicationID = () => {
         invalid = true;
     }
 
-    const approveApplication = () => {
-        if (window.confirm("Are you sure to approve?")) {
-            console.log("approve");
-        }
-    }
-
-    const rejectApplication = () => {
-        if (window.confirm("Are you sure to reject?")) {
-            console.log("reject");
-        }
-    }
-
     return (
         <FacultyTemplate>
             <div className="form-title-desc-container">Details of The Request Application</div>
+            {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+            {successMsg && <SuccessMessage variant="success">{"The application has been rejected"}</SuccessMessage>}
+            {loading && <Loading />}
                 <div className="row" style={{marginTop: '40px'}}>
                     <div className="col-6 instruction-box" style={{borderRadius: '5px', height: 'fit-content'}}>
                         <Table className="table-borderless mt-4" style={{fontFamily: 'Montserrat'}}>
@@ -319,7 +337,7 @@ const FacultyEvaluateRPDApplicationID = () => {
                                     />
                                 </Col>
                             </Form.Group>
-                            <Form.Group as={Row} className="mb-4"controlId="title">
+                            {/* <Form.Group as={Row} className="mb-4"controlId="title">
                                 <Form.Label column sm={2}>Academic Status</Form.Label>
                                 <Col sm={10}>
                                     <Form.Control
@@ -330,7 +348,7 @@ const FacultyEvaluateRPDApplicationID = () => {
                                         onChange={(e) => setAcademicStatus(e.target.value)}
                                     />
                                 </Col>
-                            </Form.Group>
+                            </Form.Group> */}
                             <Form.Group as={Row} className="mb-4"controlId="title">
                                 <Form.Label column sm={2}>Mini Thesis Title</Form.Label>
                                 <Col sm={10}>
@@ -366,7 +384,7 @@ const FacultyEvaluateRPDApplicationID = () => {
                             </Form.Group>
                             <Form.Group className="float-right">
                                 <Row>
-                                    {invalid && <Col className="col-5"><small style={{color: 'red'}}>*Unable to approve the application due to one or more INVALID information</small></Col>}
+                                    {invalid && <Col className="col-5"><small style={{color: 'red'}}>*Unable to approve the application due to one or more INVALID information is existed</small></Col>}
                                     {invalid && <Col>
                                         <Button className="table-details-button mt-4 mr-4" variant="primary" disabled>
                                             Approve
