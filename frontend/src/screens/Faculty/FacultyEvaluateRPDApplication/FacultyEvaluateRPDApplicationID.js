@@ -124,9 +124,15 @@ const FacultyEvaluateRPDApplicationID = () => {
         invalid = true;
     }
 
-    const selectStudent = () => {
-        if (window.confirm("WARNING: According to the analysis result, one or more fields of the application are invalid. Are you sure to approve?")) {
-            console.log("sure");
+    const approveApplication = () => {
+        if (window.confirm("Are you sure to approve?")) {
+            console.log("approve");
+        }
+    }
+
+    const rejectApplication = () => {
+        if (window.confirm("Are you sure to reject?")) {
+            console.log("reject");
         }
     }
 
@@ -287,7 +293,7 @@ const FacultyEvaluateRPDApplicationID = () => {
                         
                     </div>
                     <div className="col">
-                        <Form className="form" style={{marginTop: 0, height: '57em'}}>
+                        <Form className="form" style={{marginTop: 0, height: '59em'}}>
                             <i class="fa-solid fa-file mb-3" style={{whiteSpace: "nowrap", color: "#046dba"}}> Student Request Form </i>
                             <Form.Group as={Row} className="mb-5" controlId="title">
                                 <Form.Label column sm={2}>Full Name</Form.Label>
@@ -359,15 +365,30 @@ const FacultyEvaluateRPDApplicationID = () => {
                                 />
                             </Form.Group>
                             <Form.Group className="float-right">
-                                    {invalid && <Button className="table-details-button mt-4 mr-4" variant="primary" onClick={() => selectStudent()}>
-                                        Approve
-                                    </Button>}
-                                    {!invalid && <Button className="table-details-button mt-4" variant="primary" type="submit">
-                                        Approve
-                                    </Button>}
-                                    <Button className="table-details-button mt-4" variant="primary" type="submit">
-                                        Reject
-                                    </Button>
+                                <Row>
+                                    {invalid && <Col className="col-5"><small style={{color: 'red'}}>*Unable to approve the application due to one or more INVALID information</small></Col>}
+                                    {invalid && <Col>
+                                        <Button className="table-details-button mt-4 mr-4" variant="primary" disabled>
+                                            Approve
+                                        </Button> </Col>
+                                    }
+                                    {invalid && <Col>
+                                        <Button className="table-details-button mt-4" variant="primary" onClick={() => rejectApplication()} >
+                                            Reject
+                                        </Button></Col>
+                                    }
+                                    {!invalid && <Col className="col-5"><small style={{color: 'red'}}>*Unable to reject the application due to all information is VALID</small></Col>}
+                                    {!invalid && <Col> 
+                                        <Button className="table-details-button mt-4" variant="primary" onClick={() => approveApplication()}>
+                                            Approve
+                                        </Button></Col>
+                                    }
+                                    {!invalid && <Col>
+                                        <Button className="table-details-button mt-4" variant="primary" disabled>
+                                            Reject
+                                        </Button></Col>
+                                    }
+                                </Row>
                             </Form.Group>
                         </Form>
                     </div>
