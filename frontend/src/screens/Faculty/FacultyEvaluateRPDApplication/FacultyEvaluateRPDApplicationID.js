@@ -17,6 +17,7 @@ const FacultyEvaluateRPDApplicationID = () => {
 
     let navigate = useNavigate();
     let msgStudent, msgSupervisor, msgDegree, msgThesis, msgDate;
+    let invalid = false;
 
     const [fullName, setFullName] = useState();
     const [supervisorName, setSupervisorName] = useState();
@@ -72,6 +73,7 @@ const FacultyEvaluateRPDApplicationID = () => {
     if(fullName !== usernameStud) {
         msgStudent = <><span className="invalid-msg">Invalid: </span> 
             Student's name from the request form is not match with the student's name</>
+        invalid = true;
     } else {
         msgStudent = <><span className="valid-msg">Valid: </span> 
             Student's name from the request form is match with the student's name</>
@@ -80,6 +82,7 @@ const FacultyEvaluateRPDApplicationID = () => {
     if(supervisorName !== supervisorUser) {
         msgSupervisor = <><span className="invalid-msg">Invalid: </span>
             Student's supervisor from the request form is not match with the student's supervisor</>
+        invalid = true;
     } else {
         msgSupervisor = <><span className="valid-msg">Valid: </span>
             Student's supervisor from the request form is match with the student's supervisor</>
@@ -88,6 +91,7 @@ const FacultyEvaluateRPDApplicationID = () => {
     if(!miniThesisTitle) {
         msgThesis = <><span className="invalid-msg">Invalid: </span>
            Mini Thesis is not found</>;
+        invalid = true;
     } else {
         msgThesis = <><span className="valid-msg">Valid: </span>
             Mini Thesis is found</>;
@@ -98,10 +102,17 @@ const FacultyEvaluateRPDApplicationID = () => {
 
     if(moment(dateApplyRPD, 'l') < moment(dateJoined,'l').add(183, 'days')) {
         msgDate = <><span className="valid-msg">Valid: </span>
-        Application date is not more than half-year from the student joining-date</>;
+        Application date is not more than 1/2 year from the student joining-date</>;
     } else {
         msgDate = <><span className="invalid-msg">Invalid: </span>
-            Application date is more than half-year from the student joining-date</>;
+            Application date is more than 1/2 year from the student joining-date</>;
+        invalid = true;
+    }
+
+    const selectStudent = () => {
+        if (window.confirm("According to the analysis result, one or more fields of the application are invalid. Are you sure to approve?")) {
+            console.log("sure");
+        }
     }
 
     return (
@@ -261,7 +272,7 @@ const FacultyEvaluateRPDApplicationID = () => {
                         
                     </div>
                     <div className="col">
-                        <Form className="form" style={{marginTop: 0}}>
+                        <Form className="form" style={{marginTop: 0, height: '57em'}}>
                             <Form.Group as={Row} className="mb-5" controlId="title">
                                 <Form.Label column sm={2}>Full Name</Form.Label>
                                 <Col sm={10}>
@@ -331,9 +342,17 @@ const FacultyEvaluateRPDApplicationID = () => {
                                     dateFormat="MMMM d, yyyy"
                                 />
                             </Form.Group>
-                            <Button className=" mt-4 float-right" variant="primary" type="submit">
-                                Submit
-                            </Button>
+                            <Form.Group className="float-right">
+                                    {invalid && <Button className="table-details-button mt-4 mr-4" variant="primary" onClick={() => selectStudent()}>
+                                        Approve
+                                    </Button>}
+                                    {!invalid && <Button className="table-details-button mt-4" variant="primary" type="submit">
+                                        Approve
+                                    </Button>}
+                                    <Button className="table-details-button mt-4" variant="primary" type="submit">
+                                        Reject
+                                    </Button>
+                            </Form.Group>
                         </Form>
                     </div>
                 </div>
