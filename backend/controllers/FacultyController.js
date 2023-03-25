@@ -262,21 +262,21 @@ const facultyReadEvaluateRPDApplicationByID = asyncHandler(async (req, res) => {
     res.json(fetchRPDApplicationStudentDataID);
   }
   else {
-    res.status(404).json({ message: "Error in student .db ref." });
+    res.status(401).json({ message: "Error in student .db ref." });
   }
 
   if (fetchRPDApplicationStudentData2ID) {
     res.json(fetchRPDApplicationStudentData2ID);
   }
   else {
-    res.status(404).json({ message: "Error in supervisor .db ref." });
+    res.status(401).json({ message: "Error in supervisor .db ref." });
   }
   
   if (fetchRPDApplicationID) {
     res.status(201).json(fetchRPDApplicationID);
   } 
   else {
-    res.status(404).json({ message: "RPD Application is not found" });
+    res.status(401).json({ message: "RPD Application is not found" });
   }
 });
 
@@ -290,10 +290,66 @@ const facultyRejectEvaluateRPDApplicationByID = asyncHandler(async (req, res) =>
     res.status(201).json(rejectRPDApplicationID);
   } 
   else {
+    res.status(401).json({ message: "Internal server error" });
+  }
+});
+
+const facultyApproveEvaluateRPDApplicationByID = asyncHandler(async (req, res) => {
+
+  let insertRPD;
+  const { dateScheduleRPD } = req.body;
+
+  const fetchRPDApplicationID = await RPDApplication.findById(req.params.id);
+  
+  if (fetchRPDApplicationID) {
+    fetchRPDApplicationID.applicationStatus = true;
+    const approveRPDApplicationID = await fetchRPDApplicationID.save();
+    
+    if (approveRPDApplicationID) {
+      const readTrueApplicationStatus = await RPDApplication.findOne({_id: req.params.id, applicationStatus: true});
+        if (!dateScheduleRPD) {
+          res.status(401).json({ message: "Please pick a date to schedule the student's RPD" });
+        } 
+        else if (moment(dateScheduleRPD) > moment()) {
+          res.status(401).json({message: "Invalid, schedule date is greater than today's date"});
+        } 
+        else {
+          if (readTrueApplicationStatus) {
+            insertRPD = await RPD.create({
+              rpdApplication: readTrueApplicationStatus._id,
+              fullname: readTrueApplicationStatus.fullName,
+              miniThesisTitle: readTrueApplicationStatus.miniThesisTitle,
+              dateScheduleRPD,
+            })
+          } 
+          else {
+            res.status(401).json({ message: "Error in reading the application with true status" });
+          }
+        }
+
+        if(insertRPD) {
+          res.status(201).json({ 
+            _id: insertRPD._id,
+            fullName: insertRPD.fullName,
+            miniThesisTitle: insertRPD.miniThesisTitle,
+            dateScheduleRPD: insertRPD.dateScheduleRPD,
+            rpdApplicationRef: insertRPD.rpdApplication,
+            message: "The application is approved." 
+          });
+        } else {
+          res.status(401).json({ message: "Unable to approve the application" });
+        }
+    }
+    else {
+      res.status(404).json({ message: "Unable to update status of the request application to true" });
+    }
+  } 
+  else {
     res.status(404).json({ message: "Internal server error" });
   }
 });
 
 export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
-         facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID };
+         facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
+         facultyApproveEvaluateRPDApplicationByID };

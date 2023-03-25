@@ -2,16 +2,32 @@ import mongoose from "mongoose";
 
 const RPDSchema = mongoose.Schema(
   {
-    grade: {
+    fullname: {
+      type: String,
+      // required: true,
+    },
+    miniThesisTitle: {
       type: String,
       required: true,
     },
-    retryAttempt: {
+    dateScheduleRPD: {
+      type: Date,
+      // required: true,
+    },
+    grade: {
+      type: String,
+      // required: true,
+    },
+    retryAttempt: { //cannot exceed 3 retries
       type: Number,
     },
     status: {
       type: Boolean,
-      default: true,
+      // default: true,
+    },
+    rpdApplication: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "RPDApplication",
     }
   },
   {

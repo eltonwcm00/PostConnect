@@ -17,6 +17,7 @@ import {
     FACULTY_APPLICATION_LIST_FAIL,
     FACULTY_UPDATE_APPLICATION_REQUEST,
     FACULTY_UPDATE_APPLICATION_SUCCESS,
+    FACULTY_APPROVE_APPLICATION_SUCCESS,
     FACULTY_UPDATE_APPLICATION_FAIL,
 } from "../constants/facultyConstants";
 
@@ -93,9 +94,13 @@ export const facultyUpdateApplicationReducer = (state = {}, action) => {
       return { loading: true };
     case FACULTY_UPDATE_APPLICATION_SUCCESS:
       return { loading: false, successMsg: true };
+    case FACULTY_APPROVE_APPLICATION_SUCCESS:
+      return { loading: false, successApproveMsg: true };
     case FACULTY_UPDATE_APPLICATION_FAIL:
       return { loading: false, error: action.payload};
     default:
       return state;
   }
 };
+
+

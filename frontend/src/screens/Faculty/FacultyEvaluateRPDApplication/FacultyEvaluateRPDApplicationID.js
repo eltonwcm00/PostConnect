@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from 'moment';
 import {useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { facultyUpdateApplication } from "../../../actions/facultyAction";
+import { facultyUpdateApplication, facultyApproveApplication } from "../../../actions/facultyAction";
 import { Form, Table, Button, Row, Col, Modal } from "react-bootstrap";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -48,7 +48,7 @@ const FacultyEvaluateRPDApplicationID = () => {
     const { facultyInfo } = facultyLoginState;
 
     const RPDEvaluateState = useSelector((state) => state.facultyUpdateApplication);
-    const { loading, error, successMsg } = RPDEvaluateState;
+    const { loading, error, successMsg, successApproveMsg } = RPDEvaluateState;
 
     useEffect(() => {
         if (!facultyInfo) {
@@ -89,6 +89,7 @@ const FacultyEvaluateRPDApplicationID = () => {
     const approveApplication = () => {
         if (window.confirm("Are you sure to approve?")) {
             console.log("approve");
+            dispatch(facultyApproveApplication(id, dateScheduleRPD))
         }
     }
 
@@ -158,6 +159,7 @@ const FacultyEvaluateRPDApplicationID = () => {
             <div className="form-title-desc-container">Details of The Request Application</div>
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             {successMsg && <SuccessMessage variant="success">{"The application has been rejected"}</SuccessMessage>}
+            {successApproveMsg && <SuccessMessage variant="success">{"The application has been approve"}</SuccessMessage>}
             {loading && <Loading />}
                 <div className="row" style={{marginTop: '40px'}}>
                     <div className="col-6 instruction-box" style={{borderRadius: '5px', height: 'fit-content'}}>
@@ -386,24 +388,24 @@ const FacultyEvaluateRPDApplicationID = () => {
                             </Form.Group>
                             <Form.Group className="float-right">
                                 <Row>
-                                    {(invalid && applicationStatus != false) && <Col className="col-5"><small style={{color: 'red'}}>*Unable to approve the application due to one or more INVALID information is existed</small></Col>}
-                                    {(invalid && applicationStatus != false) && <Col>
+                                    {(invalid && (applicationStatus != false && applicationStatus != true)) && <Col className="col-5"><small style={{color: 'red'}}>*Unable to approve the application due to one or more INVALID information is existed</small></Col>}
+                                    {(invalid && (applicationStatus != false && applicationStatus != true)) && <Col>
                                         <Button className="table-details-button mt-4 mr-4" variant="primary" disabled>
                                             Approve
                                         </Button> </Col>
                                     }
-                                    {(invalid && applicationStatus != false) && <Col>
+                                    {(invalid && (applicationStatus != false && applicationStatus != true)) && <Col>
                                         <Button className="table-details-button mt-4" variant="primary" onClick={() => rejectApplication()} >
                                             Reject
                                         </Button></Col>
                                     }
-                                    {(!invalid && applicationStatus != false) && <Col className="col-5"><small style={{color: 'red'}}>*Unable to reject the application due to all information is VALID</small></Col>}
-                                    {(!invalid && applicationStatus != false) && <Col> 
+                                    {(!invalid && (applicationStatus != false && applicationStatus != true)) && <Col className="col-5"><small style={{color: 'red'}}>*Unable to reject the application due to all information is VALID</small></Col>}
+                                    {(!invalid && (applicationStatus != false && applicationStatus != true)) && <Col> 
                                         <Button className="table-details-button mt-4" variant="primary" onClick={() => approveApplication()}>
                                             Approve
                                         </Button></Col>
                                     }
-                                    {(!invalid && applicationStatus != false) && <Col>
+                                    {(!invalid && (applicationStatus != false && applicationStatus != true)) && <Col>
                                         <Button className="table-details-button mt-4" variant="primary" disabled>
                                             Reject
                                         </Button></Col>

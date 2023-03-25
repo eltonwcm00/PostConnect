@@ -48,7 +48,7 @@ const FacultyEvaluateRPDApplication = () => {
                 </CDBTableHeader>
                 <CDBTableBody>
                   {
-                    fetchApplicationList && fetchApplicationList.filter(x => x.applicationStatus != false).map((list) => (
+                    fetchApplicationList && fetchApplicationList.filter(x => (x.applicationStatus != false && x.applicationStatus != true)).map((list) => (
                         <tr className='table-desc' key={list._id}>
                           <td> {moment(list.dateApplyRPD).format('l')} </td>
                           <td> {list.fullName} </td>
@@ -72,17 +72,19 @@ const FacultyEvaluateRPDApplication = () => {
                     <th className="table-desc-th">Full Name</th>
                     <th className="table-desc-th">Mini Thesis Title</th>
                     <th className="table-desc-th">Status</th>
+                    <th className="table-desc-th">Evaluation</th>
                     <th className="table-desc-th">Details</th>
                   </tr>
                 </CDBTableHeader>
                 <CDBTableBody>
                   {
-                    fetchApplicationList && fetchApplicationList.filter(x => x.applicationStatus == false).map((list) => (
+                    fetchApplicationList && fetchApplicationList.filter(x => (x.applicationStatus == false || x.applicationStatus == true)).map((list) => (
                         <tr className='table-desc' key={list._id}>
                           <td> {moment(list.updatedAt).format('l')} </td>
                           <td> {list.fullName} </td>
                           <td> {list.miniThesisTitle} </td>
-                          <td> {list.applicationStatus ? "Pending" : "Processed" } </td>
+                          <td> {"Processed"} </td>
+                          <td> {list.applicationStatus ? "Approved" : "Rejected"} </td>
                           <td><Button className='table-details-button' href={`http://localhost:3000/facultyEvaluateRPDApplication/${list._id}`}>Details</Button></td>
                         </tr>
                       )
