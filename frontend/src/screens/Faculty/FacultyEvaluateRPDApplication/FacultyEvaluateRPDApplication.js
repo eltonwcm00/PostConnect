@@ -39,7 +39,7 @@ const FacultyEvaluateRPDApplication = () => {
               <CDBTable borderless>
                 <CDBTableHeader className="d-flex p-2 table-header">
                   <tr className='table-desc'>
-                    <th className="table-desc-th">Date</th>
+                    <th className="table-desc-th">Request Date</th>
                     <th className="table-desc-th">Full Name</th>
                     <th className="table-desc-th">Mini Thesis Title</th>
                     <th className="table-desc-th">Status</th>

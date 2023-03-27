@@ -7,6 +7,8 @@ import {
     STUDENT_RPD_REQUEST,
     STUDENT_RPD_SUCCESS,
     STUDENT_RPD_FAIL,
+
+    STUDENT_APPLICATION,
 } from "../constants/studentConstants";
 
 export const studentLoginReducer = (state = {}, action) => {
@@ -32,6 +34,15 @@ export const studentRPDRequestReducer = (state = {}, action) => {
         return { loading: false, studentInfo: action.payload, successMsg: true };
       case STUDENT_RPD_FAIL:
         return { loading: false, error: action.payload };
+      default:
+        return state;
+    }
+};
+
+export const studentApplicationStatusReducer = (state = {}, action) => {
+  switch (action.type) {
+      case  STUDENT_APPLICATION:
+        return { applicationStatusMsg: true, currentStudentInfo: action.payload };
       default:
         return state;
     }

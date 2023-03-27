@@ -34,12 +34,13 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
   let appliedRPD;
 
   const hasApplied = await RPDApplication.findOne({ studentUser: currentStudent });
+
   const hasSupervisor = req.userStudent.supervisorUser;
 
-  if(!hasSupervisor) {
+  if (!hasSupervisor) {
     res.status(401).json({message: "Access denied! you have not been assigned to any supervisor, please refer to faculty"});
   }
-  else if (hasApplied) {
+  else if (hasApplied) { 
     res.status(401).json({message: "You have applied the application previously"});
   }
   else if (currentStudent) {
@@ -82,4 +83,18 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
 
 });
 
-export {studentLogin, studentRequestRPD};
+const studentViewRPDApplication = asyncHandler(async (req, res) => {
+
+  const currentStudent = req.userStudent;
+  
+  const applicationStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: { $ne: null }}) 
+
+  if(applicationStatus.applicationStatus = false) {
+    res.status(201).json({applicationStatusMsg: "Sorry, your RPD application is rejected, please refer to your supervisor"});
+  }
+  else {
+    res.status(201).json({applicationStatusMsg: "Congratulation! Your RPD application is approved, kindly wait for the result to be evaluated"});
+  }
+});
+
+export {studentLogin, studentRequestRPD, studentViewRPDApplication};

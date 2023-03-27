@@ -1,16 +1,22 @@
 import React, { useEffect } from "react";
-import StudentSidebar from "../../../components/StudentSidebar";
+import StudentTemplate from "../../../components/StudentTemplate";
 import {useNavigate} from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { studentApplicationStatus } from "../../../actions/studentAction";
 
 const StudentHomepage = () => {
 
   let navigate = useNavigate();
+  const dispatch = useDispatch();
     
   const studentLoginState = useSelector((state) => state.studentLogin);
   const { studentInfo } = studentLoginState;
+  const studentApplicationStatusState = useSelector((state) => state.studentApplicationStatus);
+  const { currentStudentInfo, applicationStatusMsg } = studentApplicationStatusState;
 
   useEffect(() => {
+    dispatch(studentApplicationStatus());
+
       if (!studentInfo) {
         navigate("/");
       }
@@ -18,7 +24,9 @@ const StudentHomepage = () => {
 
   return (
     <div>
-      <StudentSidebar />
+      <StudentTemplate>
+        {applicationStatusMsg && <>{currentStudentInfo.applicationStatusMsg}</>}
+      </StudentTemplate>
     </div>
   )
 }

@@ -7,6 +7,8 @@ import {
     STUDENT_RPD_REQUEST,
     STUDENT_RPD_SUCCESS,
     STUDENT_RPD_FAIL,
+
+    STUDENT_APPLICATION,
 } from "../constants/studentConstants";
 
 import axios from "axios";
@@ -41,41 +43,64 @@ export const studentLogin = (usernameStud, password) => async (dispatch) => {
     }
   }; 
 
-  export const studentLogout = () => async (dispatch) => {
-    localStorage.removeItem("studentInfo");
-    dispatch({ type: STUDENT_LOGOUT });
-  };
+export const studentLogout = () => async (dispatch) => {
+  localStorage.removeItem("studentInfo");
+  dispatch({ type: STUDENT_LOGOUT });
+};
 
-  export const studentRPDRequest = (fullName, miniThesisTitle, supervisorName, miniThesisPDF) => async (dispatch, getState) => {
-    try {
-      dispatch({ type: STUDENT_RPD_REQUEST });
+export const studentRPDRequest = (fullName, miniThesisTitle, supervisorName, miniThesisPDF) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: STUDENT_RPD_REQUEST });
 
-      const {
-        studentLogin: { studentInfo  },
-      } = getState();
-      
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${studentInfo.token}`,
-        },
-      };
+    const {
+      studentLogin: { studentInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${studentInfo.token}`,
+      },
+    };
 
-      const { data } = await axios.post(
-        "http://localhost:5000/api/student/studentRequestRPD",
-        { fullName, miniThesisTitle, supervisorName, miniThesisPDF},
-        config
-      );
+    const { data } = await axios.post(
+      "http://localhost:5000/api/student/studentRequestRPD",
+      { fullName, miniThesisTitle, supervisorName, miniThesisPDF},
+      config
+    );
 
-      dispatch({ type: STUDENT_RPD_SUCCESS, payload: data });
-  
-    } catch (error) {
-      dispatch({
-        type: STUDENT_RPD_FAIL,
-        payload:
-          error.response 
-            ? error.response.data.message
-            : error.message,
-      });
-    }
-  }; 
+    dispatch({ type: STUDENT_RPD_SUCCESS, payload: data });
+
+  } catch (error) {
+    dispatch({
+      type: STUDENT_RPD_FAIL,
+      payload:
+        error.response 
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+}; 
+
+export const studentApplicationStatus = () => async (dispatch, getState) => {
+  try {
+    const {
+      studentLogin: { studentInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${studentInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/student/studentRPDApplicationStatus", config
+    );
+    dispatch({ type: STUDENT_APPLICATION, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+
+};
