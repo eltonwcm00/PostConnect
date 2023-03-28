@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import moment from 'moment';
 import {useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux"
-import PanelSidebar from "../../../components/PanelSidebar";
+import PanelTemplate from "../../../components/PanelTemplate";
+import ViewPDF from "../../../components/ViewPDF";
 
 const PanelHomepage = () => {
   
@@ -17,9 +19,10 @@ const PanelHomepage = () => {
   }, [navigate, panelInfo]);
 
   return (
-    <div>
-      <PanelSidebar />
-    </div>
+    <PanelTemplate>
+      <h2 className="sub-heading">{moment().format(' Do MMMM ')}</h2>
+      <ViewPDF />
+    </PanelTemplate>
   )
 }
 

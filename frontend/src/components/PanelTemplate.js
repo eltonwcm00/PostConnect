@@ -7,7 +7,10 @@ const PanelTemplate = ({ children }) => {
   let pageURL = 'http://localhost:3000/'
   let pageTitle;
 
-  if (window.location.href === pageURL+'#'){
+  if (window.location.href === pageURL+'panelHomepage'){
+    pageTitle = "Panel's Homepage";
+  }
+  else if (window.location.href === pageURL+'#'){
     pageTitle = "#";
   }
   else if (window.location.href === pageURL+'#'){

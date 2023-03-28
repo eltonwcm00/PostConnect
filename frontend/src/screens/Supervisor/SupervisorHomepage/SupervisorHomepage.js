@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import SupervisorSidebar from "../../../components/SupervisorSidebar";
+import moment from 'moment';
+import SupervisorTemplate from "../../../components/SupervisorTemplate";
 import {useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -17,9 +18,9 @@ const SupervisorHomepage = () => {
   }, [navigate, supervisorInfo]);
 
   return (
-    <div>
-      <SupervisorSidebar />
-    </div>
+    <SupervisorTemplate>
+      <h2 className="sub-heading">{moment().format(' Do MMMM ')}</h2>
+    </SupervisorTemplate>
   )
 }
 

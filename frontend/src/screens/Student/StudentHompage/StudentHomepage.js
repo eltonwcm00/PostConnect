@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import moment from 'moment';
 import StudentTemplate from "../../../components/StudentTemplate";
 import { Toast, ToastContainer } from 'react-bootstrap';
-import moment from 'moment';
 import {useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { studentApplicationStatus } from "../../../actions/studentAction";
@@ -31,14 +31,15 @@ const StudentHomepage = () => {
   return (
     <div>
       <StudentTemplate>
+        <h2 className="sub-heading">{moment().format(' Do MMMM ')}</h2>
         <ToastContainer className="p-5" position={rpdToastPosition}>
-          <Toast onClose={toggleShowB} show={showToast} bg={'dark'} animation={true} delay={5000} autohide>
+          <Toast onClose={toggleShowB} show={showToast} animation={true} delay={5000} autohide>
             <Toast.Header>
               <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
               <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
               <small>{moment().fromNow()}</small>
             </Toast.Header>
-            <Toast.Body className={'text-white'}>{applicationStatusMsg && <>{currentStudentInfo.applicationStatusMsg}</>}</Toast.Body>
+            <Toast.Body>{applicationStatusMsg && <>{currentStudentInfo.applicationStatusMsg}</>}</Toast.Body>
           </Toast>
         </ToastContainer>
       </StudentTemplate>

@@ -7,7 +7,10 @@ const StudentTemplate = ({ children }) => {
   let pageURL = 'http://localhost:3000/'
   let pageTitle;
 
-  if (window.location.href === pageURL+'studentRequestRPD'){
+  if (window.location.href === pageURL+'studentHomepage'){
+    pageTitle = "Student's Homepage";
+  }
+  else if (window.location.href === pageURL+'studentRequestRPD'){
     pageTitle = "Request For Research Proposal Defence";
   }
   else if (window.location.href === pageURL+'#'){

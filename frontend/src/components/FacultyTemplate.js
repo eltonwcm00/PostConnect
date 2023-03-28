@@ -10,7 +10,10 @@ const FacultyTemplate = ({ children }) => {
 
   const { id } = useParams();
 
-  if (window.location.href === pageURL+'facultyLogin'){
+  if (window.location.href === pageURL+'facultyHomepage'){
+    pageTitle = "Faculty's Homepage";
+  }
+  else if (window.location.href === pageURL+'facultyLogin'){
     pageTitle = "Faculty Login";
   }
   else if (window.location.href === pageURL+'facultyStudentRegistration'){
