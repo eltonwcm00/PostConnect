@@ -80,20 +80,28 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
       successMessage: "The RPD request application is submitted",
     })
   }
-
 });
 
 const studentViewRPDApplication = asyncHandler(async (req, res) => {
 
   const currentStudent = req.userStudent;
   
-  const applicationStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: { $ne: null }}) 
+  const appliedForRPD = await RPDApplication.findOne({ studentUser: currentStudent}); 
+  const applicationStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: false});
 
-  if(applicationStatus.applicationStatus = false) {
-    res.status(201).json({applicationStatusMsg: "Sorry, your RPD application is rejected, please refer to your supervisor"});
+  if (appliedForRPD) { 
+    
+    if (applicationStatus) {
+      res.status(201).json({applicationStatusMsg: `Sorry, your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('l')} 
+                            is rejected, please refer to your supervisor`});
+    }
+    else {
+      res.status(201).json({applicationStatusMsg: `Congratulation! Your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('l')} 
+                            is approved, kindly wait for the result to be evaluated`});
+    }
   }
   else {
-    res.status(201).json({applicationStatusMsg: "Congratulation! Your RPD application is approved, kindly wait for the result to be evaluated"});
+    res.status(201).json({applicationStatusMsg: "You have not yet apply for the RPD"});
   }
 });
 
