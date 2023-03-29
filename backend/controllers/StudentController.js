@@ -156,4 +156,20 @@ const studentSubmitMeetingLog = asyncHandler(async (req, res) => {
   }
 });
 
-export {studentLogin, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog};
+const studentViewMeetingLog = asyncHandler(async (req, res) => {
+
+  const currentStudent = req.userStudent;
+  
+  const submitedMeetingLog = await MeetingLog.findOne({ studentUser: currentStudent}); 
+
+  if (submitedMeetingLog) { 
+      res.status(201).json({meetingLogStatusMsg: `Your meeting log has been submitted! Kindly submit the next meeting logs
+         in 2 weeks later, on date ${moment(submitedMeetingLog.dateLog).add(14, 'days').format('MMMM Do YYYY')}`});
+  }
+  else {
+     res.status(201).json({meetingLogStatusMsg: `You have not yet submit the meeting log! Kindly submit within 14 days
+        from your registration date. Last day to submit is on ${moment(currentStudent.dateJoin).add(14, 'days').format('MMMM Do YYYY')}`});
+  }
+});
+
+export {studentLogin, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog, studentViewMeetingLog};

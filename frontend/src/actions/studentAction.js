@@ -137,3 +137,25 @@ export const studentSubmitMeetingLog = (contentLog) => async (dispatch, getState
     });
   }
 }; 
+
+export const studentMeetingLogStatus = () => async (dispatch, getState) => {
+  try {
+    const {
+      studentLogin: { studentInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${studentInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/student/studentMeetingLogStatus", config
+    );
+    dispatch({ type: STUDENT_APPLICATION, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -42,8 +42,11 @@ export const studentCWRequestReducer = (state = {}, action) => {
 export const studentApplicationStatusReducer = (state = {}, action) => {
   switch (action.type) {
       case  STUDENT_APPLICATION:
-        return { applicationStatusMsg: true, currentStudentInfo: action.payload };
+        return { applicationStatusMsg: true,
+                 meetingLogStatusMsg: true,
+                 currentStudentInfo: action.payload };
       default:
         return state;
     }
 };
+
