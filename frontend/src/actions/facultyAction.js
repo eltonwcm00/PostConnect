@@ -22,6 +22,9 @@ import {
     FACULTY_STUDENT_LIST_REQUEST,
     FACULTY_STUDENT_LIST_SUCCESS,
     FACULTY_STUDENT_LIST_FAIL,
+    FACULTY_CHOOSE_STUDENT_REQUEST,
+    FACULTY_CHOOSE_STUDENT_SUCCESS,
+    FACULTY_CHOOSE_STUDENT_FAIL,
 } from "../constants/facultyConstants";
 
 import axios from "axios";
@@ -268,6 +271,40 @@ export const facultyReadChooseStudent = () => async (dispatch, getState) => {
    
     dispatch({
       type: FACULTY_STUDENT_LIST_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+export const facultyUpdateChooseStudent = (id, numAssignedSupervision, supervisorList) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FACULTY_CHOOSE_STUDENT_REQUEST,
+    });
+
+    const {
+      facultyLogin: { facultyInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${facultyInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadChooseStudent/${id}`,{id, numAssignedSupervision, supervisorList},config);
+
+    dispatch({
+      type: FACULTY_CHOOSE_STUDENT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: FACULTY_CHOOSE_STUDENT_FAIL,
       payload:
         error.response 
         ? error.response.data.message

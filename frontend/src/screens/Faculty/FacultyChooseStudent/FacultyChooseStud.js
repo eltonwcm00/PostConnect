@@ -4,7 +4,7 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
 import moment from 'moment';
 import { useDispatch, useSelector } from "react-redux";
-import { facultyReadChooseStudent,facultyReadAssignSupervision } from "../../../actions/facultyAction";
+import { facultyReadChooseStudent,facultyReadAssignSupervision,facultyUpdateChooseStudent } from "../../../actions/facultyAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SuccessMessage from "../../../components/SuccessMessage";
@@ -14,8 +14,11 @@ import "./FacultyChooseStud.css";
 const FacultyChooseStud = () => {
   
   const dispatch = useDispatch();
+
   let navigate = useNavigate();
   let index = 1; 
+
+  let [chooseCount, setChooseCount] = useState(0);
 
   const [supervisorList, setSupervisorList] = useState("");
 
@@ -27,6 +30,9 @@ const FacultyChooseStud = () => {
 
   const supervisorListRead = useSelector((state) => state.facultyReadAssignSupervision);
   const { fetchSupervisorList } = supervisorListRead;
+
+  const studentListUpdate = useSelector((state) => state.facultyUpdateChooseStudent);
+    const { successMsg, fetchStudent, error2 } = studentListUpdate;
 
   useEffect(() => {
     dispatch(facultyReadChooseStudent());
@@ -46,6 +52,14 @@ const FacultyChooseStud = () => {
     // dispatch(facultyPanelRegistration(usernamePanel, password, cfrmPassword));
     if (window.confirm("Are you sure?")) { 
       console.log(supervisorList);
+    }
+  };
+
+  const selectStudent = (id, numAssignedSupervision, supervisorList) => {
+    if (window.confirm("Are you sure?")) {
+        setChooseCount(chooseCount + 1);
+        console.log(chooseCount);
+        dispatch(facultyUpdateChooseStudent(id, numAssignedSupervision, supervisorList));
     }
   };
 
@@ -76,6 +90,8 @@ const FacultyChooseStud = () => {
         {console.log(fetchStudentList)}
         {loading && <Loading />}
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+        {successMsg && <SuccessMessage variant="success">{fetchStudent.successMessage}</SuccessMessage>}
+        {error2 && <ErrorMessage variant="danger">{error2}</ErrorMessage>}
       
         <CDBContainer style={{padding: '0px', textAlign: "center", marginTop: "15px"}} className="list-container">
             <CDBTable borderless>
@@ -98,7 +114,7 @@ const FacultyChooseStud = () => {
                       <td> {moment(list.dateJoin).format('MMMM d, YYYY')} </td>
                       <td> {list.degreeLvl} </td>
                       <td> {list.academicStatus} </td>
-                      <td className='table-details-button'><Button>Choose</Button></td>
+                      <td className='table-details-button'><Button onClick={() => selectStudent(list._id, chooseCount, supervisorList)}>Choose</Button></td>
                     </tr>           
                 )   
                ) 

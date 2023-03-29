@@ -254,6 +254,41 @@ const facultyReadChooseStudentByID = asyncHandler(async (req, res) => {
   }
 });
 
+const facultyUpdateChooseStudentByID = asyncHandler(async (req, res) => {
+
+  const { numAssignedSupervision, supervisorList } = req.body;
+
+  const currentSupervisor = supervisorList;
+  const fetchStudentID = await Student.findById(req.params.id);
+  const fetchSupervisorID = await Supervisor.findById(currentSupervisor);
+
+  if (numAssignedSupervision < fetchSupervisorID.numSupervision && 
+      fetchSupervisorID.numSupervision > fetchSupervisorID.numAssignedSupervision) {
+    
+      if (currentSupervisor && fetchStudentID) {
+
+        fetchStudentID.supervisorUser = currentSupervisor;
+        fetchSupervisorID.numAssignedSupervision = fetchSupervisorID.numAssignedSupervision + 1;
+        
+        const selectedStudent = await fetchStudentID.save();
+        await fetchSupervisorID.save();
+        res.json({
+            _id: selectedStudent,
+            successMessage: `You have chosen '${fetchStudentID.usernameStud}' to be under your supervision`,
+            chooseCount: numAssignedSupervision,
+        });
+    } 
+    else {
+      res.status(500);
+      throw new Error("Internal server error");
+    }
+  }
+  else {
+    res.status(401).json({ message: `Reached the limit of your student supervision's attempts: ${fetchSupervisorID.numSupervision}` });
+  }
+});
+
+
 const facultyReadEvaluateRPDApplication = asyncHandler(async (req, res) => {
   const RPDApplicationList = await RPDApplication.find({});
 
@@ -377,4 +412,5 @@ const facultyApproveEvaluateRPDApplicationByID = asyncHandler(async (req, res) =
 export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
          facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
-         facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID };
+         facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID, 
+         facultyUpdateChooseStudentByID };

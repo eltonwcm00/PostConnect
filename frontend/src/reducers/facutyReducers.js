@@ -22,6 +22,9 @@ import {
     FACULTY_STUDENT_LIST_REQUEST,
     FACULTY_STUDENT_LIST_SUCCESS,
     FACULTY_STUDENT_LIST_FAIL,
+    FACULTY_CHOOSE_STUDENT_REQUEST,
+    FACULTY_CHOOSE_STUDENT_SUCCESS,
+    FACULTY_CHOOSE_STUDENT_FAIL,
 } from "../constants/facultyConstants";
 
 export const facultyLoginReducer = (state = {}, action) => {
@@ -86,6 +89,19 @@ export const facultyReadChooseStudentReducer = (state = { fetchStudentList: [] }
       return { loading: false, fetchStudentList: action.payload };
     case FACULTY_STUDENT_LIST_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const facultyUpdateChooseStudentReducer = (state = {}, action) => { 
+  switch (action.type) {
+    case FACULTY_CHOOSE_STUDENT_REQUEST:
+      return { loading: true };
+    case FACULTY_CHOOSE_STUDENT_SUCCESS:
+      return { loading: false, fetchStudent: action.payload, successMsg: true, };
+    case FACULTY_CHOOSE_STUDENT_FAIL:
+      return { loading: false, error2: action.payload};
     default:
       return state;
   }
