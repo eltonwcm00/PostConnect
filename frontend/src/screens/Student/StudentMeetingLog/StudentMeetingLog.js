@@ -31,7 +31,7 @@ const StudentMeetingLog = () => {
         if (successMsg) {
           const timer = setTimeout(() => {
             navigate("/studentHomepage");
-          }, 2000);
+          }, 5000);
           return () => clearTimeout(timer);
         }
     }, [navigate, successMsg])

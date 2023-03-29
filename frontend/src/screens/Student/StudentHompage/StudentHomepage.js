@@ -26,14 +26,14 @@ const StudentHomepage = () => {
       if (!studentInfo) {
         navigate("/");
       }
-  }, [navigate, studentInfo, currentStudentInfo]);
+  }, [navigate, studentInfo]);
 
   return (
     <div>
       <StudentTemplate>
         <h2 className="sub-heading">{moment().format(' Do MMMM ')}</h2>
         <ToastContainer className="p-5" position={rpdToastPosition}>
-          <Toast onClose={toggleShowB} show={showToast} animation={true} delay={5000} autohide>
+          <Toast onClose={toggleShowB} show={showToast} animation={true}>
             <Toast.Header>
               <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
               <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>

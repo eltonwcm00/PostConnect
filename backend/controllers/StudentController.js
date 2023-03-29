@@ -92,16 +92,30 @@ const studentViewRPDApplication = asyncHandler(async (req, res) => {
   if (appliedForRPD) { 
     
     if (applicationStatus) {
-      res.status(201).json({applicationStatusMsg: `Sorry, your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('l')} 
+      res.status(201).json({applicationStatusMsg: `Sorry, your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 
                             is rejected, please refer to your supervisor`});
     }
     else {
-      res.status(201).json({applicationStatusMsg: `Congratulation! Your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('l')} 
-                            is approved, kindly wait for the result to be evaluated`});
+      res.status(201).json({applicationStatusMsg: `Congratulation! Your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 
+                            is approved, the RPD will be happened roughly after 2 weeks`});
     }
   }
   else {
-    res.status(201).json({applicationStatusMsg: "You have not yet apply for the RPD"});
+    let days = 0;
+    if (currentStudent.degreeLvl === 'Doctoral Degree (Part-Time)') { 
+      days = 365;
+    }
+    else if (currentStudent.degreeLvl === 'Doctoral Degree (Full-Time)') {
+      days = 274;
+    }
+    else if (currentStudent.degreeLvl === 'Master Degree (Part-Time)') {
+      days = 274;
+    }
+    else if (currentStudent.degreeLvl === 'Master Degree (Full-Time)') {
+      days = 183;
+    }
+    res.status(201).json({applicationStatusMsg: `You have not yet apply for the RPD, the due date to apply is on, 
+      ${moment(currentStudent.dateJoin).add(days, 'days').format('MMMM Do YYYY')}`});
   }
 });
 
@@ -113,6 +127,7 @@ const studentSubmitMeetingLog = asyncHandler(async (req, res) => {
 
   const { contentLog } = req.body;
 
+  const studentSupervisor = await Student.findById(currentStudent).populate('supervisorUser')
   const recentExist = await MeetingLog.findOne({ studentUser: currentStudent, dateLog: today});
 
   if (recentExist) {
@@ -126,6 +141,7 @@ const studentSubmitMeetingLog = asyncHandler(async (req, res) => {
       contentLog,
       dateLog: moment().format('l'),
       studentUser: currentStudent,
+      studentSupervisor: studentSupervisor.supervisorUser,
     })
   }
 
@@ -134,6 +150,7 @@ const studentSubmitMeetingLog = asyncHandler(async (req, res) => {
       contentLog: submitLog.contentLog,
       dateLog: submitLog.dateLog,
       studentUser: submitLog.studentUser,
+      studentSupervisor: studentSupervisor.supervisorUser,
       sucessMessage: "You have successfully submited the meeting log",
     })
   }

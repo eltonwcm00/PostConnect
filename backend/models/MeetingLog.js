@@ -13,6 +13,10 @@ const MeetingLogSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
     },
+    studentSupervisor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+    },
   },
   {
     timestamps: true,
