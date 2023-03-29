@@ -4,9 +4,9 @@ import {
     STUDENT_LOGIN_SUCCESS,
     STUDENT_LOGOUT,
 
-    STUDENT_RPD_REQUEST,
-    STUDENT_RPD_SUCCESS,
-    STUDENT_RPD_FAIL,
+    STUDENT_CW_REQUEST,
+    STUDENT_CW_SUCCESS,
+    STUDENT_CW_FAIL,
 
     STUDENT_APPLICATION,
 } from "../constants/studentConstants";
@@ -50,7 +50,7 @@ export const studentLogout = () => async (dispatch) => {
 
 export const studentRPDRequest = (fullName, miniThesisTitle, supervisorName, miniThesisPDF) => async (dispatch, getState) => {
   try {
-    dispatch({ type: STUDENT_RPD_REQUEST });
+    dispatch({ type: STUDENT_CW_REQUEST });
 
     const {
       studentLogin: { studentInfo },
@@ -69,11 +69,11 @@ export const studentRPDRequest = (fullName, miniThesisTitle, supervisorName, min
       config
     );
 
-    dispatch({ type: STUDENT_RPD_SUCCESS, payload: data });
+    dispatch({ type: STUDENT_CW_SUCCESS, payload: data });
 
   } catch (error) {
     dispatch({
-      type: STUDENT_RPD_FAIL,
+      type: STUDENT_CW_FAIL,
       payload:
         error.response 
           ? error.response.data.message
@@ -102,5 +102,38 @@ export const studentApplicationStatus = () => async (dispatch, getState) => {
   } catch (error) {
     console.log(error);
   }
-
 };
+
+export const studentSubmitMeetingLog = (contentLog) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: STUDENT_CW_REQUEST });
+
+    const {
+      studentLogin: { studentInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${studentInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      "http://localhost:5000/api/student/studentSubmitMeetingLog",
+      { contentLog },
+      config
+    );
+
+    dispatch({ type: STUDENT_CW_SUCCESS, payload: data });
+
+  } catch (error) {
+    dispatch({
+      type: STUDENT_CW_FAIL,
+      payload:
+        error.response 
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+}; 

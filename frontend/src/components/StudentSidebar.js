@@ -49,9 +49,14 @@ import { studentLogout } from '../actions/studentAction';
               <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-file-text"> Request For Work Completion Defence </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#" target="_blank" activeClassName="activeClicked">
+              <NavLink exact to="#"  activeClassName="activeClicked">
                 <CDBSidebarMenuItem icon="fa-sharp fa-regular fa-file-invoice">
                     Submit Progress Report
+                </CDBSidebarMenuItem>
+              </NavLink>
+              <NavLink exact to="/studentSubmitMeetingLog" activeClassName="activeClicked">
+                <CDBSidebarMenuItem icon="fa-sharp fa-regular fa-file-invoice">
+                    Submit Meeting Log
                 </CDBSidebarMenuItem>
               </NavLink>
               <CDBSidebarMenuItem icon="fa-light fa-right-from-bracket">

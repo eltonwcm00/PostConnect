@@ -20,6 +20,7 @@ import FacultyChooseStud from './screens/Faculty/FacultyChooseStudent/FacultyCho
 import StudentLogin from './screens/Student/StudentLogin/StudentLogin';
 import StudentHomepage from './screens/Student/StudentHompage/StudentHomepage';
 import StudentRPDRequest from './screens/Student/StudentRPDRequest/StudentRPDRequest';
+import StudentMeetingLog from './screens/Student/StudentMeetingLog/StudentMeetingLog';
 
 import SupervisorLogin from './screens/Supervisor/SupervisorLogin/SupervisorLogin';
 import SupervisorHomepage from './screens/Supervisor/SupervisorHomepage/SupervisorHomepage';
@@ -53,6 +54,7 @@ function App() {
         <Route exact path="/facultyReadChooseStudent" element={<FacultyChooseStud />}/>
         
         <Route exact path="/studentRequestRPD" element={<StudentRPDRequest />}/>
+        <Route exact path="/studentSubmitMeetingLog" element={<StudentMeetingLog />}/>
 
         <Route path="*" element={<Error404 />} />
       </Routes>

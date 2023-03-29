@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import moment from "moment";
 import Student from "../models/Student.js";
 import RPDApplication from "../models/RPDApplication.js";
+import MeetingLog from "../models/MeetingLog.js";
 
 const studentLogin = asyncHandler(async (req, res) => {
     const { usernameStud, password } = req.body;
@@ -104,4 +105,38 @@ const studentViewRPDApplication = asyncHandler(async (req, res) => {
   }
 });
 
-export {studentLogin, studentRequestRPD, studentViewRPDApplication};
+const studentSubmitMeetingLog = asyncHandler(async (req, res) => {
+  
+  let submitLog;
+  const currentStudent = req.userStudent;
+  const today = moment().format('l');
+
+  const { contentLog } = req.body;
+
+  const recentExist = await MeetingLog.findOne({ studentUser: currentStudent, dateLog: today});
+
+  if (recentExist) {
+    res.status(401).json({message: "You have already submitted the meeting log for today, please try again on tomorrow"});
+  }
+  else if (contentLog.trim().length === 0) {
+    res.status(401).json({message: "Please fill in the meeting log content"});
+  }
+  else {
+    submitLog = await MeetingLog.create({
+      contentLog,
+      dateLog: moment().format('l'),
+      studentUser: currentStudent,
+    })
+  }
+
+  if(submitLog) {
+    res.status(201).json({
+      contentLog: submitLog.contentLog,
+      dateLog: submitLog.dateLog,
+      studentUser: submitLog.studentUser,
+      sucessMessage: "You have successfully submited the meeting log",
+    })
+  }
+});
+
+export {studentLogin, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog};

@@ -20,8 +20,8 @@ const StudentRPDRequest = () => {
 
     const dispatch = useDispatch();
 
-    const studentRPDRequestState = useSelector((state) => state.studentRPDRequest);
-    const { loading, error, studentInfo, successMsg } = studentRPDRequestState;
+    const studentCWRequestState = useSelector((state) => state.studentCWRequest);
+    const { loading, error, studentInfo, successMsg } = studentCWRequestState;
 
     useEffect(() => {
         if (studentInfo) {
