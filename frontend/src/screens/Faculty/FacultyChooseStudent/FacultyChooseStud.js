@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Col, Row } from "react-bootstrap";
 import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
 import moment from 'moment';
 import { useDispatch, useSelector } from "react-redux";
-import { facultyReadChooseStudent } from "../../../actions/facultyAction";
+import { facultyReadChooseStudent,facultyReadAssignSupervision } from "../../../actions/facultyAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SuccessMessage from "../../../components/SuccessMessage";
@@ -25,27 +25,52 @@ const FacultyChooseStud = () => {
   const studentListRead = useSelector((state) => state.facultyReadChooseStudent);
   const { loading, error, fetchStudentList } = studentListRead;
 
+  const supervisorListRead = useSelector((state) => state.facultyReadAssignSupervision);
+  const { fetchSupervisorList } = supervisorListRead;
+
   useEffect(() => {
     dispatch(facultyReadChooseStudent());
     if (!facultyInfo) {
       navigate("/");
     }
   }, [dispatch, navigate, facultyInfo,]);
-  
-  const submitHandler = () => {
+  useEffect(() => {
+    dispatch(facultyReadAssignSupervision());
+    if (!facultyInfo) {
+      navigate("/");
+    }
+  }, [dispatch, navigate, facultyInfo,]);
 
-  }
+  const submitHandler = (e) => {
+    e.preventDefault();
+    // dispatch(facultyPanelRegistration(usernamePanel, password, cfrmPassword));
+    if (window.confirm("Are you sure?")) { 
+      console.log(supervisorList);
+    }
+  };
 
   return (
     <FacultyTemplate>
-      <Form className="form" onSubmit={submitHandler}>
-          <Form.Select column sm aria-label="Default select example" value={supervisorList} onChange={(e) => setSupervisorList(e.target.value)}>
-                    <option>Which supervisor would like to be assigned with student supervision</option>
-                    <option value="Master Degree (Part-Time)">Master Degree (Part-Time)</option>
-                    <option value="Master Degree (Full-Time)">Master Degree (Full-Time)</option>
-                    <option value="Doctoral Degree (Part-Time)">Doctoral Degree (Part-Time)</option>
-                    <option value="Doctoral Degree (Full-Time)">Doctoral Degree (Full-Time)</option>
-          </Form.Select>
+      <div className="form-title-desc-container">List of Supervisor</div>
+      <Form onSubmit={submitHandler}>
+        <Row className="justify-content-md-center">
+          <Col md="8">
+            <Form.Select column sm aria-label="Default select example" 
+              className="mt-5 mb-5" value={supervisorList} onChange={(e) => setSupervisorList(e.target.value)}>
+              {
+                fetchSupervisorList && fetchSupervisorList.map((list) => (
+                    <option key={list._id} value={`${list._id}`}>{list.usernameSup}</option>           
+                  )   
+                )
+              }       
+            </Form.Select>
+          </Col>
+          <Col>
+            <Button className=" mt-5" variant="primary" type="submit">
+              Select
+            </Button>
+          </Col>
+        </Row>
         </Form>
         <div className="form-title-desc-container">List of The Student Ready To Be Supervised</div>
         {console.log(fetchStudentList)}
