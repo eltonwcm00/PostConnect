@@ -26,28 +26,3 @@ export const supervisorLoginReducer = (state = {}, action) => {
       }
 };
 
-export const supervisorReadChooseStudentReducer = (state = { fetchStudentList: [] }, action) => {
-  switch (action.type) {
-    case SUPERVISOR_STUDENT_LIST_REQUEST:
-      return { loading: true };
-    case SUPERVISOR_STUDENT_LIST_SUCCESS:
-      return { loading: false, fetchStudentList: action.payload };
-    case SUPERVISOR_STUDENT_LIST_FAIL:
-      return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
-
-export const supervisorUpdateChooseStudentReducer = (state = {}, action) => { 
-  switch (action.type) {
-    case SUPERVISOR_CHOOSE_STUDENT_REQUEST:
-      return { loading: true };
-    case SUPERVISOR_CHOOSE_STUDENT_SUCCESS:
-      return { loading: false, fetchStudent: action.payload, successMsg: true, };
-    case SUPERVISOR_CHOOSE_STUDENT_FAIL:
-      return { loading: false, error2: action.payload};
-    default:
-      return state;
-  }
-};

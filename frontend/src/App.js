@@ -23,7 +23,6 @@ import StudentRPDRequest from './screens/Student/StudentRPDRequest/StudentRPDReq
 
 import SupervisorLogin from './screens/Supervisor/SupervisorLogin/SupervisorLogin';
 import SupervisorHomepage from './screens/Supervisor/SupervisorHomepage/SupervisorHomepage';
-import SupervisorChooseStud from './screens/Supervisor/SupervisorChooseStudent/SupervisorChooseStud';
 
 import PanelLogin from './screens/Panel/PanelLogin/PanelLogin';
 import PanelHomepage from './screens/Panel/PanelHomepage/PanelHomepage';
@@ -52,8 +51,6 @@ function App() {
         <Route exact path="/facultyEvaluateRPDApplication" element={<FacultyEvaluateRPDApplication />}/>
         <Route exact path="/facultyEvaluateRPDApplication/:id" element={<FacultyEvaluateRPDApplicationID />}/>
         <Route exact path="/facultyReadChooseStudent" element={<FacultyChooseStud />}/>
-
-        <Route exact path="/supervisorReadChooseStudent" element={<SupervisorChooseStud />}/>
         
         <Route exact path="/studentRequestRPD" element={<StudentRPDRequest />}/>
 

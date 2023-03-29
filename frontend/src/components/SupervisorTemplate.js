@@ -10,9 +10,6 @@ const SupervisorTemplate = ({ children }) => {
   if (window.location.href === pageURL+'supervisorHomepage'){
     pageTitle = "Supervisor's Homepage";
   }
-  else if (window.location.href === pageURL+'supervisorReadChooseStudent'){
-    pageTitle = "Choose Student to Supervise";
-  }
   else if (window.location.href === pageURL+'#'){
     pageTitle = "#";
   } 

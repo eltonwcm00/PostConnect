@@ -114,7 +114,7 @@ const FacultyChooseStud = () => {
                       <td> {moment(list.dateJoin).format('MMMM d, YYYY')} </td>
                       <td> {list.degreeLvl} </td>
                       <td> {list.academicStatus} </td>
-                      <td className='table-details-button'><Button onClick={() => selectStudent(list._id, chooseCount, supervisorList)}>Choose</Button></td>
+                      <td className='table-details-button'><Button onClick={() => selectStudent(list._id, chooseCount, supervisorList)}>Assign</Button></td>
                     </tr>           
                 )   
                ) 
