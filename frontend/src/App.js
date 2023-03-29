@@ -15,6 +15,7 @@ import FacultyAssignNumSupervisor from './screens/Faculty/FacultyAssignNumSuperv
 import FacultyAssignNumSupID from './screens/Faculty/FacultyAssignNumSupervisor/FacultyAssignNumSupID';
 import FacultyEvaluateRPDApplication from './screens/Faculty/FacultyEvaluateRPDApplication/FacultyEvaluateRPDApplication';
 import FacultyEvaluateRPDApplicationID from './screens/Faculty/FacultyEvaluateRPDApplication/FacultyEvaluateRPDApplicationID';
+import FacultyChooseStud from './screens/Faculty/FacultyChooseStudent/FacultyChooseStud';
 
 import StudentLogin from './screens/Student/StudentLogin/StudentLogin';
 import StudentHomepage from './screens/Student/StudentHompage/StudentHomepage';
@@ -50,6 +51,7 @@ function App() {
         <Route exact path="/facultyAssignNumSupervisor/:id" element={<FacultyAssignNumSupID />}/>
         <Route exact path="/facultyEvaluateRPDApplication" element={<FacultyEvaluateRPDApplication />}/>
         <Route exact path="/facultyEvaluateRPDApplication/:id" element={<FacultyEvaluateRPDApplicationID />}/>
+        <Route exact path="/facultyReadChooseStudent" element={<FacultyChooseStud />}/>
 
         <Route exact path="/supervisorReadChooseStudent" element={<SupervisorChooseStud />}/>
         

@@ -64,6 +64,11 @@ import { facultyLogout } from '../actions/facultyAction';
                   Assign Number of Supervision
                 </CDBSidebarMenuItem>
               </NavLink>
+              <NavLink exact to="/facultyReadChooseStudent" activeClassName="activeClicked">
+                <CDBSidebarMenuItem icon="fa-solid fa-arrow-pointer">
+                  Choose Student to Supervise
+                </CDBSidebarMenuItem>
+              </NavLink>
               <NavLink exact to="/#" activeClassName="activeClicked">
                 <CDBSidebarMenuItem icon="fa-solid fa-chart-column">
                   Student Data Report

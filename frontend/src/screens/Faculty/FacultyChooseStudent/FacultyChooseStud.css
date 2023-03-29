@@ -1,0 +1,36 @@
+.form-title-desc-container {
+    background-color: #071B63;
+    padding: 18px 15px;
+    margin:  15px 0px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-size: 20px;
+    font-weight: bolder;
+    font-family: 'Montserrat', sans-serif;
+    color: #FFFFFF;
+  }
+
+.table-desc {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.table-details-button .btn {
+  text-transform: capitalize;
+}
+
+.list-container {
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 30%);
+}
+
+thead .table-desc {
+  background-color: #071b63;
+  color: white;
+}
+
+.table-desc > td {
+  border-right: 1px solid black;
+}
+
+.table-desc > td:last-of-type {
+  border: none;
+}

@@ -229,6 +229,31 @@ const facultyUpdateAssignSupervisionByID = asyncHandler(async (req, res) => {
   }
 });
 
+const facultyReadChooseStudent = asyncHandler(async (req, res) => {
+
+  const fetchStudentList = await Student.find();
+
+  if (fetchStudentList) {
+    res.json(fetchStudentList);
+  }
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+});
+
+const facultyReadChooseStudentByID = asyncHandler(async (req, res) => {
+ 
+  const fetchStudentID = await Student.findById(req.params.id);
+
+  if (fetchStudentID) {
+    res.json(fetchStudentID);
+  } 
+  else {
+    res.status(404).json({ message: "Student is not found" });
+  }
+});
+
 const facultyReadEvaluateRPDApplication = asyncHandler(async (req, res) => {
   const RPDApplicationList = await RPDApplication.find({});
 
@@ -352,4 +377,4 @@ const facultyApproveEvaluateRPDApplicationByID = asyncHandler(async (req, res) =
 export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
          facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
-         facultyApproveEvaluateRPDApplicationByID };
+         facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID };
