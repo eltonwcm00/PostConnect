@@ -58,7 +58,6 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
       miniThesisPDF,
       dateApplyRPD: moment(),
       studentUser: currentStudent,
-      applicationStatus: false,
     });
   }
   else {

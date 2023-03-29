@@ -65,12 +65,12 @@ const FacultyChooseStud = () => {
 
   return (
     <FacultyTemplate>
-      <div className="form-title-desc-container">List of Supervisor</div>
+      <div className="form-title-desc-container">Assign To Supervisor</div>
       <Form onSubmit={submitHandler}>
         <Row className="justify-content-md-center">
           <Col md="8">
             <Form.Select column sm aria-label="Default select example" 
-              className="mt-5 mb-5" value={supervisorList} onChange={(e) => setSupervisorList(e.target.value)}>
+              className="mt-3 mb-4" value={supervisorList} onChange={(e) => setSupervisorList(e.target.value)}>
               {
                 fetchSupervisorList && fetchSupervisorList.map((list) => (
                     <option key={list._id} value={`${list._id}`}>{list.usernameSup}</option>           
@@ -80,7 +80,7 @@ const FacultyChooseStud = () => {
             </Form.Select>
           </Col>
           <Col>
-            <Button className=" mt-5" variant="primary" type="submit">
+            <Button className=" mt-3" variant="primary" type="submit">
               Select
             </Button>
           </Col>
