@@ -27,6 +27,19 @@ const studentLogin = asyncHandler(async (req, res) => {
     }
 });
 
+const studentViewDataRequestRPD = asyncHandler(async (req, res) => {
+  
+  // const currentStudInfo = await Student.findOne({_id: req.userStudent }); //findByID(req.params.id)
+
+  // if (currentStudInfo) {
+  //   res.status(201).json({id: currentStudInfo._id, usernameStud: currentStudInfo.usernameStud, supervisorStud: currentStudInfo.
+  //     supervisorUser})
+  // }
+  // else {
+  //   res.status(401).json({message: "Yout student details are not found, please refer to faculty"});
+  // }
+})
+
 const studentRequestRPD = asyncHandler(async (req, res) => {
 
   const { fullName, miniThesisTitle, supervisorName, miniThesisPDF } = req.body;
@@ -53,10 +66,11 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
 
     appliedRPD = await RPDApplication.create({
       fullName,
+      //fullName: currentStudent.usernameStud,
       miniThesisTitle,
       supervisorName,
-      // miniThesisPDF: req.file, //req.file.filename
-      miniThesisPDF,
+      //supervisorName: hasSupervisor,
+      miniThesisPDF, // miniThesisPDF: req.file, //req.file.filename
       dateApplyRPD: moment(),
       studentUser: currentStudent,
     });
@@ -172,4 +186,4 @@ const studentViewMeetingLog = asyncHandler(async (req, res) => {
   }
 });
 
-export {studentLogin, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog, studentViewMeetingLog};
+export {studentLogin, studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog, studentViewMeetingLog};

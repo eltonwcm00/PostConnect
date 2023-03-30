@@ -20,6 +20,7 @@ const FacultyEvaluateRPDApplicationID = () => {
     let msgStudent, msgSupervisor, msgDegree, msgThesis, msgDate;
     let invalid = false, months, days;
 
+    // request form
     const [fullName, setFullName] = useState();
     const [supervisorName, setSupervisorName] = useState();
     const [academicStatus, setAcademicStatus] = useState();
@@ -27,6 +28,7 @@ const FacultyEvaluateRPDApplicationID = () => {
     const [dateApplyRPD, setDateApplyRPD] = useState();
     const [dateScheduleRPD, setDateScheduleRPD] = useState();
 
+    // analysis
     const [dateJoined, setDateJoined] = useState();
     const [usernameStud, setUsernameStud] = useState();
     const [degreeLvl, setDegreeLvl] = useState();
@@ -72,6 +74,8 @@ const FacultyEvaluateRPDApplicationID = () => {
             setUsernameStud(data.studentUser.usernameStud); 
             setDegreeLvl(data.studentUser.degreeLvl); 
             setUsernameSup(data.studentUser.supervisorUser); 
+
+            console.log(data);
         };
         fetching();
     }, [id]);
@@ -341,18 +345,6 @@ const FacultyEvaluateRPDApplicationID = () => {
                                     />
                                 </Col>
                             </Form.Group>
-                            {/* <Form.Group as={Row} className="mb-4"controlId="title">
-                                <Form.Label column sm={2}>Academic Status</Form.Label>
-                                <Col sm={10}>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="null"
-                                        value={academicStatus}
-                                        disabled
-                                        onChange={(e) => setAcademicStatus(e.target.value)}
-                                    />
-                                </Col>
-                            </Form.Group> */}
                             <Form.Group as={Row} className="mb-4"controlId="title">
                                 <Form.Label column sm={2}>Mini Thesis Title</Form.Label>
                                 <Col sm={10}>
@@ -378,14 +370,14 @@ const FacultyEvaluateRPDApplicationID = () => {
                                 </Col>
                             </Form.Group>
 
-                            <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
+                            {(!invalid && (applicationStatus != false && applicationStatus != true)) && <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
                                 <Form.Label column sm={2}>Schedule Date</Form.Label>
                                 <Calendar
                                     value={dateScheduleRPD}
                                     onChange={setDateScheduleRPD}
                                     dateFormat="MMMM d, yyyy"
                                 />
-                            </Form.Group>
+                            </Form.Group>}
                             <Form.Group className="float-right">
                                 <Row>
                                     {(invalid && (applicationStatus != false && applicationStatus != true)) && <Col className="col-5"><small style={{color: 'red'}}>*Unable to approve the application due to one or more INVALID information is existed</small></Col>}

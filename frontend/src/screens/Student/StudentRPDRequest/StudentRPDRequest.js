@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {useNavigate} from "react-router-dom";
+import axios from 'axios';
+import {useParams, useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { studentRPDRequest } from "../../../actions/studentAction";
@@ -12,10 +13,12 @@ import "./StudentRPDRequest.css";
 const StudentRPDRequest = () => {
 
     let navigate = useNavigate();
+    const { id } = useParams();
 
-    const [fullName, setfullName] = useState("");
+    const [studId, setstudId] = useState()
+    const [fullName, setfullName] = useState();
     const [miniThesisTitle, setminiThesisTitle] = useState("");
-    const [supervisorName, setsupervisorName] = useState("");
+    const [supervisorName, setsupervisorName] = useState();
     const [miniThesisPDF, setminiThesisPDF] = useState("");
 
     const dispatch = useDispatch();
@@ -44,6 +47,20 @@ const StudentRPDRequest = () => {
         console.log(miniThesisPDF)
     };
 
+    // useEffect(() => {
+    //     const fetching = async () => {
+        
+    //         const { data } = await axios.get(`http://localhost:5000/api/student/studentViewDataRequestRPD/`);
+
+    //         setstudId(data.id);
+    //         setfullName(data.usernameStud);
+    //         setsupervisorName(data.supervisorStud); 
+
+    //         console.log(data);
+    //     };
+    //     fetching();
+    // }, []);
+
     return (
         <StudentTemplate>
             <div className="form-title-desc-container">Request Form</div>
@@ -65,6 +82,20 @@ const StudentRPDRequest = () => {
                 </Form.Group>
 
                 <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
+                    <Form.Label column sm={2}>Supervisor Name*</Form.Label>
+                    <Col sm={10}>
+                    <Form.Control
+                        type="text"
+                        // value={supervisorName}
+                        value={supervisorName}
+                        placeholder="Your supervisor name"
+                        onChange={(e) => setsupervisorName(e.target.value)}
+                        className="py-4 input-request"
+                    />
+                    </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
                     <Form.Label column sm={2}>Mini Thesis Title*</Form.Label>
                     <Col sm={10}>
                     <Form.Control
@@ -75,19 +106,6 @@ const StudentRPDRequest = () => {
                         className="py-4 input-request"
                         id="myFile" 
                         name="myFile"
-                    />
-                    </Col>
-                </Form.Group>
-
-                <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
-                    <Form.Label column sm={2}>Supervisor Name*</Form.Label>
-                    <Col sm={10}>
-                    <Form.Control
-                        type="text"
-                        value={supervisorName}
-                        placeholder="Your supervisor name"
-                        onChange={(e) => setsupervisorName(e.target.value)}
-                        className="py-4 input-request" 
                     />
                     </Col>
                 </Form.Group>
@@ -105,7 +123,7 @@ const StudentRPDRequest = () => {
                     />
                     </Col>
                 </Form.Group>
-
+                {/* <Button className='table-details-button' href={`http://localhost:5000/api/student/studentViewDataRequestRPD/${studId}`}>Generate</Button> */}
                 <Button className=" mt-4 submit-btn" variant="primary" type="submit">
                     Submit 
                 </Button>

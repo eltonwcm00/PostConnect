@@ -52,7 +52,7 @@ const StudentHomepage = () => {
         <Toast onClose={toggleShowA} show={showToast} animation={true}>
           <Toast.Header>
             <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-            <strong className="me-auto">{`Hi, ${studentInfo.usernameStud}`}</strong>
+            <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
             <small>{moment().fromNow()}</small>
           </Toast.Header>
           <Toast.Body>{applicationStatusMsg && <>{currentApplicationInfo.applicationStatusMsg}</>}</Toast.Body>
@@ -60,7 +60,7 @@ const StudentHomepage = () => {
         <Toast onClose={toggleShowB} show={showToastB} animation={true}>
           <Toast.Header>
           <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-            <strong className="me-auto">{`Hi, ${studentInfo.usernameStud}`}</strong>
+            <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
             <small>{moment().fromNow()}</small>
           </Toast.Header>
           <Toast.Body>{meetingLogStatusMsg && <>{currentMeetingInfo.meetingLogStatusMsg}</>}</Toast.Body>
