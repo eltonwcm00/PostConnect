@@ -4,6 +4,10 @@ import {
     STUDENT_LOGIN_SUCCESS,
     STUDENT_LOGOUT,
 
+    STUDENT_CW_READ_REQUEST,
+    STUDENT_CW_READ_SUCCESS,
+    STUDENT_CW_READ_FAIL,
+
     STUDENT_CW_REQUEST,
     STUDENT_CW_SUCCESS,
     STUDENT_CW_FAIL,
@@ -47,6 +51,36 @@ export const studentLogin = (usernameStud, password) => async (dispatch) => {
 export const studentLogout = () => async (dispatch) => {
   localStorage.removeItem("studentInfo");
   dispatch({ type: STUDENT_LOGOUT });
+};
+
+export const studentRPDReadRequest = () => async (dispatch, getState) => {
+  try {
+    dispatch({type: STUDENT_CW_READ_REQUEST});
+
+    const {
+      studentLogin: { studentInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${studentInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/student/studentViewDataRequestRPD", config
+    );
+    dispatch({ type: STUDENT_CW_READ_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: STUDENT_CW_READ_FAIL,
+      payload:
+        error.response 
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
 
 export const studentRPDRequest = (fullName, miniThesisTitle, supervisorName, miniThesisPDF) => async (dispatch, getState) => {

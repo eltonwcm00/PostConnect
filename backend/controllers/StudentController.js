@@ -28,16 +28,19 @@ const studentLogin = asyncHandler(async (req, res) => {
 });
 
 const studentViewDataRequestRPD = asyncHandler(async (req, res) => {
-  
-  // const currentStudInfo = await Student.findOne({_id: req.userStudent }); //findByID(req.params.id)
 
-  // if (currentStudInfo) {
-  //   res.status(201).json({id: currentStudInfo._id, usernameStud: currentStudInfo.usernameStud, supervisorStud: currentStudInfo.
-  //     supervisorUser})
-  // }
-  // else {
-  //   res.status(401).json({message: "Yout student details are not found, please refer to faculty"});
-  // }
+  let currentStudInfo;
+
+  const currentStudent = req.userStudent;
+  
+  currentStudInfo = await Student.find({ _id: currentStudent}); //findByID(req.params.id)
+
+  if (currentStudInfo) {
+    res.status(201).json(currentStudInfo)
+  }
+  else {
+    res.status(401).json({message: "Yout student details are not found, please refer to faculty"});
+  }
 })
 
 const studentRequestRPD = asyncHandler(async (req, res) => {
@@ -59,17 +62,17 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
   }
   else if (currentStudent) {
     
-    if(fullName.trim().length === 0) { res.status(401).json({message: "Please fill in your full name"});}
-    else if(miniThesisTitle.trim().length === 0) {res.status(401).json({message: "Please fill in your mini thesis title"});}
-    else if(supervisorName.trim().length === 0) { res.status(401).json({message: "Please fill your supervisor name"});}
+    // if(fullName.trim().length === 0) { res.status(401).json({message: "Please fill in your full name"});}
+    if(miniThesisTitle.trim().length === 0) {res.status(401).json({message: "Please fill in your mini thesis title"});}
+    // else if(supervisorName.trim().length === 0) { res.status(401).json({message: "Please fill your supervisor name"});}
     else if (miniThesisPDF.trim().length === 0) { res.status(401).json({message: "Please upload your mini thesis .pdf file"});}
 
     appliedRPD = await RPDApplication.create({
-      fullName,
-      //fullName: currentStudent.usernameStud,
+      //fullName,
+      fullName: currentStudent.usernameStud,
       miniThesisTitle,
       supervisorName,
-      //supervisorName: hasSupervisor,
+      supervisorName: hasSupervisor,
       miniThesisPDF, // miniThesisPDF: req.file, //req.file.filename
       dateApplyRPD: moment(),
       studentUser: currentStudent,

@@ -4,6 +4,10 @@ import {
     STUDENT_LOGIN_SUCCESS,
     STUDENT_LOGOUT,
 
+    STUDENT_CW_READ_REQUEST,
+    STUDENT_CW_READ_SUCCESS,
+    STUDENT_CW_READ_FAIL,
+
     STUDENT_CW_REQUEST,
     STUDENT_CW_SUCCESS,
     STUDENT_CW_FAIL,
@@ -25,6 +29,19 @@ export const studentLoginReducer = (state = {}, action) => {
         default:
           return state;
       }
+};
+
+export const studentCWReadRequestReducer = (state = { studentCW: [] }, action) => {
+  switch (action.type) {
+    case STUDENT_CW_READ_REQUEST:
+      return { loadingStudentCW: true };
+    case STUDENT_CW_READ_SUCCESS:
+      return { loadingStudentCW: false, studentCW: action.payload };
+    case STUDENT_CW_READ_FAIL:
+      return { loadingStudentCW: false, errorStudentCW: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const studentCWRequestReducer = (state = {}, action) => {

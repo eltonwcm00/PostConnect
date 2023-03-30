@@ -7,7 +7,7 @@ import { upload } from "../middleware/multer.js"
 const router = express.Router();
 
 router.post("/studentLogin", studentLogin);
-router.route("/studentViewDataRequestRPD").get(studentViewDataRequestRPD);
+router.route("/studentViewDataRequestRPD").get(protectStudent, studentViewDataRequestRPD);
 router.route("/studentRequestRPD").post(protectStudent, upload.single('myFile'), studentRequestRPD);
 router.route("/studentSubmitMeetingLog").post(protectStudent, studentSubmitMeetingLog);
 router.route("/studentRPDApplicationStatus").get(protectStudent, studentViewRPDApplication);

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
 import {useParams, useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { studentRPDRequest } from "../../../actions/studentAction";
+import { studentRPDReadRequest, studentRPDRequest } from "../../../actions/studentAction";
 import Loading from "../../../components/Loading";
 import SuccessMessage from "../../../components/SuccessMessage";
 import ErrorMessage from "../../../components/ErrorMessage";
@@ -13,9 +12,7 @@ import "./StudentRPDRequest.css";
 const StudentRPDRequest = () => {
 
     let navigate = useNavigate();
-    const { id } = useParams();
 
-    const [studId, setstudId] = useState()
     const [fullName, setfullName] = useState();
     const [miniThesisTitle, setminiThesisTitle] = useState("");
     const [supervisorName, setsupervisorName] = useState();
@@ -23,6 +20,8 @@ const StudentRPDRequest = () => {
 
     const dispatch = useDispatch();
 
+    const studentCWReadRequestState = useSelector((state) => state.studentCWReadRequest);
+    const {loadingStudentCW, studentCW, errorStudentCW } = studentCWReadRequestState;
     const studentCWRequestState = useSelector((state) => state.studentCWRequest);
     const { loading, error, studentInfo, successMsg } = studentCWRequestState;
 
@@ -47,54 +46,54 @@ const StudentRPDRequest = () => {
         console.log(miniThesisPDF)
     };
 
-    // useEffect(() => {
-    //     const fetching = async () => {
-        
-    //         const { data } = await axios.get(`http://localhost:5000/api/student/studentViewDataRequestRPD/`);
-
-    //         setstudId(data.id);
-    //         setfullName(data.usernameStud);
-    //         setsupervisorName(data.supervisorStud); 
-
-    //         console.log(data);
-    //     };
-    //     fetching();
-    // }, []);
+    useEffect(() => {
+       dispatch(studentRPDReadRequest());
+    }, []);
 
     return (
         <StudentTemplate>
             <div className="form-title-desc-container">Request Form</div>
+            {console.log(studentCW)}
+            {loadingStudentCW && <Loading /> }
+            {errorStudentCW && <ErrorMessage variant="danger">{errorStudentCW}</ErrorMessage>}
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             {successMsg && <SuccessMessage variant="success">{studentInfo.successMessage}</SuccessMessage>}
             {loading && <Loading />}
             <Form className="form" onSubmit={submitHandler} enctype="multipart/form-data">
-                <Form.Group as={Row} className="mb-5" controlId="formBasicEmail">
-                    <Form.Label column sm={2}>Full Name*</Form.Label>
-                    <Col sm={10} mb={3}>
-                    <Form.Control
-                        type="text"
-                        value={fullName}
-                        placeholder="Your fullname"
-                        onChange={(e) => setfullName(e.target.value)}
-                        className="py-4 input-request"
-                    />
-                    </Col>
-                </Form.Group>
+                {
+                    studentCW && studentCW.map((sCW) => (
+                        <div>
+                            <Form.Group as={Row} className="mb-5" controlId="formBasicEmail">
+                            <Form.Label column sm={2}>Full Name*</Form.Label>
+                            <Col sm={10} mb={3}>
+                            <Form.Control
+                                type="text"
+                                value={sCW.usernameStud}
+                                placeholder="Your fullname"
+                                onChange={(e) => setfullName(e.target.value)}
+                                className="py-4 input-request"
+                                disabled
+                            />
+                            </Col>
+                        </Form.Group>
 
-                <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
-                    <Form.Label column sm={2}>Supervisor Name*</Form.Label>
-                    <Col sm={10}>
-                    <Form.Control
-                        type="text"
-                        // value={supervisorName}
-                        value={supervisorName}
-                        placeholder="Your supervisor name"
-                        onChange={(e) => setsupervisorName(e.target.value)}
-                        className="py-4 input-request"
-                    />
-                    </Col>
-                </Form.Group>
-
+                        <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
+                            <Form.Label column sm={2}>Supervisor Name*</Form.Label>
+                            <Col sm={10}>
+                            <Form.Control
+                                type="text"
+                                // value={supervisorName}
+                                value={sCW.supervisorUser}
+                                placeholder="Your supervisor name"
+                                onChange={(e) => setsupervisorName(e.target.value)}
+                                className="py-4 input-request"
+                                disabled
+                            />
+                            </Col>
+                            </Form.Group>
+                        </div>
+                    ))
+                }
                 <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
                     <Form.Label column sm={2}>Mini Thesis Title*</Form.Label>
                     <Col sm={10}>
@@ -123,11 +122,11 @@ const StudentRPDRequest = () => {
                     />
                     </Col>
                 </Form.Group>
-                {/* <Button className='table-details-button' href={`http://localhost:5000/api/student/studentViewDataRequestRPD/${studId}`}>Generate</Button> */}
+
                 <Button className=" mt-4 submit-btn" variant="primary" type="submit">
                     Submit 
                 </Button>
-            </Form>
+            </Form>      
         </StudentTemplate> 
     );
 }
