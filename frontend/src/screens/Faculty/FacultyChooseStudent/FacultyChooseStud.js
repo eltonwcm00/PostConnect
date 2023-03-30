@@ -92,7 +92,6 @@ const FacultyChooseStud = () => {
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {successMsg && <SuccessMessage variant="success">{fetchStudent.successMessage}</SuccessMessage>}
         {error2 && <ErrorMessage variant="danger">{error2}</ErrorMessage>}
-      
         <CDBContainer style={{padding: '0px', textAlign: "center", marginTop: "15px"}} className="list-container">
             <CDBTable borderless>
               <CDBTableHeader>

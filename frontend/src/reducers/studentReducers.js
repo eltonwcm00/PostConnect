@@ -9,6 +9,7 @@ import {
     STUDENT_CW_FAIL,
 
     STUDENT_APPLICATION,
+    STUDENT_MEETING_LOG,
 } from "../constants/studentConstants";
 
 export const studentLoginReducer = (state = {}, action) => {
@@ -43,8 +44,17 @@ export const studentApplicationStatusReducer = (state = {}, action) => {
   switch (action.type) {
       case  STUDENT_APPLICATION:
         return { applicationStatusMsg: true,
-                 meetingLogStatusMsg: true,
-                 currentStudentInfo: action.payload };
+                 currentApplicationInfo: action.payload };
+      default:
+        return state;
+    }
+};
+
+export const studentMeetingLogStatusReducer = (state = {}, action) => {
+  switch (action.type) {
+      case  STUDENT_MEETING_LOG:
+        return { meetingLogStatusMsg: true,
+                 currentMeetingInfo: action.payload };
       default:
         return state;
     }

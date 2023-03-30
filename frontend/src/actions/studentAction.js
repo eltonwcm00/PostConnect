@@ -9,6 +9,7 @@ import {
     STUDENT_CW_FAIL,
 
     STUDENT_APPLICATION,
+    STUDENT_MEETING_LOG,
 } from "../constants/studentConstants";
 
 import axios from "axios";
@@ -100,7 +101,7 @@ export const studentApplicationStatus = () => async (dispatch, getState) => {
     );
     dispatch({ type: STUDENT_APPLICATION, payload: data });
   } catch (error) {
-    console.log(error);
+      console.log(error);
   }
 };
 
@@ -154,8 +155,8 @@ export const studentMeetingLogStatus = () => async (dispatch, getState) => {
     const { data } = await axios.get(
       "http://localhost:5000/api/student/studentMeetingLogStatus", config
     );
-    dispatch({ type: STUDENT_APPLICATION, payload: data });
+    dispatch({ type: STUDENT_MEETING_LOG, payload: data });
   } catch (error) {
-    console.log(error);
+      console.log(error);
   }
 };

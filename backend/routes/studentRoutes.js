@@ -8,10 +8,9 @@ const router = express.Router();
 
 router.post("/studentLogin", studentLogin);
 router.route("/studentRequestRPD").post(protectStudent, upload.single('myFile'), studentRequestRPD);
-router.route("/studentRPDApplicationStatus").get(protectStudent, studentViewRPDApplication);
 router.route("/studentSubmitMeetingLog").post(protectStudent, studentSubmitMeetingLog);
+router.route("/studentRPDApplicationStatus").get(protectStudent, studentViewRPDApplication);
 router.route("/studentMeetingLogStatus").get(protectStudent, studentViewMeetingLog);
-
 
 export default router;
 

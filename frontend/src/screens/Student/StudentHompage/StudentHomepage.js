@@ -2,18 +2,22 @@ import React, { useEffect, useState } from "react";
 import moment from 'moment';
 import StudentTemplate from "../../../components/StudentTemplate";
 import { Toast, ToastContainer } from 'react-bootstrap';
+import 'react-calendar/dist/Calendar.css';
 import {useNavigate} from "react-router-dom";
-import { useDispatch, useSelector, connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { studentApplicationStatus, studentMeetingLogStatus } from "../../../actions/studentAction";
+import './StudentHomepage.css';
 
 const StudentHomepage = () => {
 
   let navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [rpdToastPosition, setRPDToastPosition] = useState('top-end');
   const [showToast, setShowToast] = useState(true);
   const [showToastB, setShowToastB] = useState(true);
+  const [dateJoin, setDateJoin] = useState(new Date());
+  
+  const dispatch = useDispatch();
 
   const toggleShowA = () => setShowToast(!showToast);
   const toggleShowB = () => setShowToastB(!showToastB);
@@ -22,55 +26,47 @@ const StudentHomepage = () => {
   const studentLoginState = useSelector((state) => state.studentLogin);
   const { studentInfo } = studentLoginState;
   const studentApplicationStatusState = useSelector((state) => state.studentApplicationStatus);
-  const { currentStudentInfo, applicationStatusMsg, meetingLogStatusMsg } = studentApplicationStatusState;
-
-  const fetchItems = () => async dispatch => {
-    try {
-      dispatch(studentApplicationStatus());
-      dispatch(studentMeetingLogStatus())
-    } catch (error) {
-        console.log(error);
-    }
-  }
-
-  // useEffect(() => {
-  
-  //   dispatch(studentApplicationStatus());
-  //     if (!studentInfo) {
-  //       navigate("/");
-  //     }
-  //   // dispatch(fetchItems())
-  // }, [currentStudentInfo]);
+  const { applicationStatusMsg, currentApplicationInfo } = studentApplicationStatusState;
+  const studentMeetingLogStatusState = useSelector((state) => state.studentMeetingLogStatus);
+  const {  meetingLogStatusMsg, currentMeetingInfo } = studentMeetingLogStatusState;
 
   useEffect(() => {
     dispatch(studentApplicationStatus());
+    if (!studentInfo) {
+      navigate("/");
+    }
+  }, [dispatch, navigate, studentInfo]);
+
+  useEffect(() => {
     dispatch(studentMeetingLogStatus());
-  }, [currentStudentInfo ])
+    if (!studentInfo) {
+      navigate("/");
+    }
+  }, [dispatch, navigate, studentInfo])
 
   return (
-    <div>
-      <StudentTemplate>
-        <h2 className="sub-heading">{moment().format(' Do MMMM ')}</h2>
-        <ToastContainer className="p-5" position={rpdToastPosition}>
-          <Toast onClose={toggleShowA} show={showToast} animation={true}>
-            <Toast.Header>
-              <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-              <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-              <small>{moment().fromNow()}</small>
-            </Toast.Header>
-            <Toast.Body>{applicationStatusMsg && <>{currentStudentInfo.applicationStatusMsg}</>}</Toast.Body>
-          </Toast>
-          <Toast onClose={toggleShowB} show={showToastB} animation={true}>
-            <Toast.Header>
+    <StudentTemplate>
+      <h2 className="sub-heading">{moment().format(' Do MMMM ')}</h2>
+      <ToastContainer className="p-5 toast-container" position={rpdToastPosition}>
+        <h3 className="toast-notification" style={{marginBottom: 30}}>Notification</h3>
+        <Toast onClose={toggleShowA} show={showToast} animation={true}>
+          <Toast.Header>
             <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-              <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-              <small>{moment().fromNow()}</small>
-            </Toast.Header>
-            <Toast.Body>{meetingLogStatusMsg && <>{currentStudentInfo.meetingLogStatusMsg}</>}</Toast.Body>
-          </Toast>
-        </ToastContainer>
-      </StudentTemplate>
-    </div>
+            <strong className="me-auto">{`Hi, ${studentInfo.usernameStud}`}</strong>
+            <small>{moment().fromNow()}</small>
+          </Toast.Header>
+          <Toast.Body>{applicationStatusMsg && <>{currentApplicationInfo.applicationStatusMsg}</>}</Toast.Body>
+        </Toast>
+        <Toast onClose={toggleShowB} show={showToastB} animation={true}>
+          <Toast.Header>
+          <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+            <strong className="me-auto">{`Hi, ${studentInfo.usernameStud}`}</strong>
+            <small>{moment().fromNow()}</small>
+          </Toast.Header>
+          <Toast.Body>{meetingLogStatusMsg && <>{currentMeetingInfo.meetingLogStatusMsg}</>}</Toast.Body>
+        </Toast>
+      </ToastContainer>
+    </StudentTemplate>
   )
 }
 
