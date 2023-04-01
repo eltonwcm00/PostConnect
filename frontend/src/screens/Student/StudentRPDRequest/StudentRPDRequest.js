@@ -20,14 +20,19 @@ const StudentRPDRequest = () => {
 
     const dispatch = useDispatch();
 
+    const studentLoginState = useSelector((state) => state.studentLogin);
+    const { studentInfo } = studentLoginState;
     const studentCWReadRequestState = useSelector((state) => state.studentCWReadRequest);
     const {loadingStudentCW, studentCW, errorStudentCW } = studentCWReadRequestState;
     const studentCWRequestState = useSelector((state) => state.studentCWRequest);
-    const { loading, error, studentInfo, successMsg } = studentCWRequestState;
+    const { loading, error, applicationInfo, successMsg } = studentCWRequestState;
 
     useEffect(() => {
         if (studentInfo) {
           navigate("/studentRequestRPD");
+        }
+        else {
+          navigate("/");
         }
     }, [navigate, studentInfo]);
 
@@ -57,7 +62,7 @@ const StudentRPDRequest = () => {
             {loadingStudentCW && <Loading /> }
             {errorStudentCW && <ErrorMessage variant="danger">{errorStudentCW}</ErrorMessage>}
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-            {successMsg && <SuccessMessage variant="success">{studentInfo.successMessage}</SuccessMessage>}
+            {successMsg && <SuccessMessage variant="success">{applicationInfo.successMessage}</SuccessMessage>}
             {loading && <Loading />}
             <Form className="form" onSubmit={submitHandler} enctype="multipart/form-data">
                 {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
 import moment from 'moment';
@@ -17,7 +17,8 @@ const FacultyChooseStud = () => {
 
   let navigate = useNavigate();
   let index = 1; 
-
+  
+  const [isClick, setClick] = useState(false);  
   let [chooseCount, setChooseCount] = useState(0);
 
   const [supervisorList, setSupervisorList] = useState("");
@@ -46,6 +47,10 @@ const FacultyChooseStud = () => {
       navigate("/");
     }
   }, [dispatch, navigate, facultyInfo,]);
+
+  const isClickLogic= () => {
+    setClick(!isClick);
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -80,7 +85,7 @@ const FacultyChooseStud = () => {
             </Form.Select>
           </Col>
           <Col>
-            <Button className=" mt-3" variant="primary" type="submit">
+            <Button className=" mt-3" variant="primary" type="submit" onClick={isClickLogic}>
               Select
             </Button>
           </Col>
@@ -113,7 +118,8 @@ const FacultyChooseStud = () => {
                       <td> {moment(list.dateJoin).format('MMMM d, YYYY')} </td>
                       <td> {list.degreeLvl} </td>
                       <td> {list.academicStatus} </td>
-                      <td className='table-details-button'><Button onClick={() => selectStudent(list._id, chooseCount, supervisorList)}>Assign</Button></td>
+                      {isClick && <td className='table-details-button'><Button onClick={() => selectStudent(list._id, chooseCount, supervisorList)}>Assign</Button></td>}
+                      {!isClick && <td className='table-details-button'><Button onClick={() => selectStudent(list._id, chooseCount, supervisorList)} disabled>Assign</Button></td>}
                     </tr>           
                 )   
                ) 

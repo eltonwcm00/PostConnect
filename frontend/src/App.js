@@ -24,6 +24,7 @@ import StudentMeetingLog from './screens/Student/StudentMeetingLog/StudentMeetin
 
 import SupervisorLogin from './screens/Supervisor/SupervisorLogin/SupervisorLogin';
 import SupervisorHomepage from './screens/Supervisor/SupervisorHomepage/SupervisorHomepage';
+import SupervisorViewMeetingLog from './screens/Supervisor/SupervisorViewMeetingLog/SupervisorViewMeetingLog';
 
 import PanelLogin from './screens/Panel/PanelLogin/PanelLogin';
 import PanelHomepage from './screens/Panel/PanelHomepage/PanelHomepage';
@@ -55,6 +56,8 @@ function App() {
         
         <Route exact path="/studentRequestRPD" element={<StudentRPDRequest />}/>
         <Route exact path="/studentSubmitMeetingLog" element={<StudentMeetingLog />}/>
+
+        <Route exact path="/supervisorViewMeetingLog" element={<SupervisorViewMeetingLog />}/>
 
         <Route path="*" element={<Error404 />} />
       </Routes>

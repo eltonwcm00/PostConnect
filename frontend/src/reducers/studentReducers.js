@@ -49,7 +49,7 @@ export const studentCWRequestReducer = (state = {}, action) => {
       case STUDENT_CW_REQUEST:
         return { loading: true };
       case STUDENT_CW_SUCCESS:
-        return { loading: false, studentInfo: action.payload, successMsg: true };
+        return { loading: false, applicationInfo: action.payload, successMsg: true };
       case STUDENT_CW_FAIL:
         return { loading: false, error: action.payload };
       default:

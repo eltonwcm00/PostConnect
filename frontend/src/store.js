@@ -23,7 +23,8 @@ import {
 } from "./reducers/studentReducers";
 
 import {
-  supervisorLoginReducer,
+  supervisorLoginReducer, 
+  supervisorReadMeetingLogReducer,
 } from "./reducers/supervisorReducers";
 
 import {
@@ -42,6 +43,7 @@ const reducer = combineReducers({
     facultyUpdateChooseStudent: facultyUpdateChooseStudentReducer,
 
     supervisorLogin: supervisorLoginReducer,
+    supervisorReadMeetingLog: supervisorReadMeetingLogReducer,
    
     studentLogin: studentLoginReducer,
     studentCWReadRequest: studentCWReadRequestReducer,

@@ -51,6 +51,11 @@ import { supervisorLogout } from '../actions/supervisorAction';
                 View Work Completion Defence Result
                 </CDBSidebarMenuItem>
               </NavLink>
+              <NavLink exact to="/supervisorViewMeetingLog" activeClassName="activeClicked">
+                <CDBSidebarMenuItem icon="fa-solid fa-magnifying-glass">
+                View Meeting Log
+                </CDBSidebarMenuItem>
+              </NavLink>
               <NavLink exact to="#" activeClassName="activeClicked">
                 <CDBSidebarMenuItem icon="fa-solid fa-chart-column">
                   Student Data Report

@@ -18,13 +18,18 @@ const StudentMeetingLog = () => {
     
     const dispatch = useDispatch();
 
+    const studentLoginState = useSelector((state) => state.studentLogin);
+    const { studentInfo } = studentLoginState;
     const studentCWRequestState = useSelector((state) => state.studentCWRequest);
-    const { loading, error, studentInfo, successMsg } = studentCWRequestState;
+    const { loading, error, applicationInfo, successMsg } = studentCWRequestState;
 
     useEffect(() => {
         if (studentInfo) {
           navigate("/studentSubmitMeetingLog");
         }
+        else {
+            navigate("/");
+          }
     }, [navigate, studentInfo]);
 
     useEffect(() => {
@@ -45,7 +50,7 @@ const StudentMeetingLog = () => {
         <StudentTemplate>
             <div className="form-title-desc-container">Meeting Log Form</div>
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-            {successMsg && <SuccessMessage variant="success">{studentInfo.sucessMessage}</SuccessMessage>}
+            {successMsg && <SuccessMessage variant="success">{applicationInfo.sucessMessage}</SuccessMessage>}
             {loading && <Loading />}
             <Form className="form" onSubmit={submitHandler} enctype="multipart/form-data">
                 <Form.Group as={Row}  controlId="formBasicEmail">

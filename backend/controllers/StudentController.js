@@ -71,7 +71,7 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
       //fullName,
       fullName: currentStudent.usernameStud,
       miniThesisTitle,
-      supervisorName,
+      // supervisorName,
       supervisorName: hasSupervisor,
       miniThesisPDF, // miniThesisPDF: req.file, //req.file.filename
       dateApplyRPD: moment(),
