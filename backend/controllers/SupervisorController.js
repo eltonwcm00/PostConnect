@@ -38,7 +38,18 @@ const supervisorReadMeetingLog = asyncHandler(async (req, res) => {
   else {
     res.status(401).json({message: "Unable to retrieve student info"});
   }
-
 });
 
-export { supervisorLogin, supervisorReadMeetingLog };
+const supervisorReadMeetingLogByID = asyncHandler(async (req, res) => {
+
+  const meetingLogStudentID = await MeetingLog.findById(req.params.id).populate('studentUser');
+
+  if (meetingLogStudentID) {
+    res.status(201).json(meetingLogStudentID);
+  }
+  else {
+    res.status(401).json({ message: "Meeting log of thi student is not found" });
+  }
+});
+
+export { supervisorLogin, supervisorReadMeetingLog, supervisorReadMeetingLogByID };

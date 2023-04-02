@@ -1,16 +1,19 @@
 import React from 'react'
 import MainScreen from './MainScreen'
 import SupervisorSidebar from './SupervisorSidebar'
+import {useParams } from 'react-router-dom';
 
 const SupervisorTemplate = ({ children }) => {
 
   let pageURL = 'http://localhost:3000/'
   let pageTitle;
 
+  const { id } = useParams();
+
   if (window.location.href === pageURL+'supervisorHomepage'){
     pageTitle = "Supervisor's Homepage";
   }
-  else if (window.location.href === pageURL+'supervisorViewMeetingLog'){
+  else if (window.location.href === pageURL+'supervisorViewMeetingLog'|| window.location.href === pageURL+`supervisorViewMeetingLog/${id}`){
     pageTitle = "Student's Meeting Log";
   } 
   else if (window.location.href === pageURL+'#') {
