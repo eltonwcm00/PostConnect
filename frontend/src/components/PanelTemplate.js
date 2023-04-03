@@ -10,8 +10,8 @@ const PanelTemplate = ({ children }) => {
   if (window.location.href === pageURL+'panelHomepage'){
     pageTitle = "Panel's Homepage";
   }
-  else if (window.location.href === pageURL+'#'){
-    pageTitle = "#";
+  else if (window.location.href === pageURL+'panelEvaluateRPD'){
+    pageTitle = "Research Proposal Defence Evaluation";
   }
   else if (window.location.href === pageURL+'#'){
     pageTitle = "#";

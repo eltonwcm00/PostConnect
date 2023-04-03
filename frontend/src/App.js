@@ -29,6 +29,7 @@ import SupervisorViewMeetingLogID from './screens/Supervisor/SupervisorViewMeeti
 
 import PanelLogin from './screens/Panel/PanelLogin/PanelLogin';
 import PanelHomepage from './screens/Panel/PanelHomepage/PanelHomepage';
+import PanelEvaluateRPD from './screens/Panel/PanelEvaluateRPD/PanelEvaluateRPD';
 
 function App() {
   return (
@@ -60,6 +61,8 @@ function App() {
 
         <Route exact path="/supervisorViewMeetingLog" element={<SupervisorViewMeetingLog />}/>
         <Route exact path="/supervisorViewMeetingLog/:id" element={<SupervisorViewMeetingLogID />}/>
+
+        <Route exact path="/panelEvaluateRPD" element={<PanelEvaluateRPD />}/>
 
         <Route path="*" element={<Error404 />} />
       </Routes>

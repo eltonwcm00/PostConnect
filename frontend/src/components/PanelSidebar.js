@@ -43,7 +43,7 @@ import { panelLogout } from '../actions/panelAction';
               <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-user" className="sidebar-icon">User Profile</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="/panelEvaluateRPD" activeClassName="activeClicked" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa-solid fa-file-circle-check">Research Proposal Defence Evaluation </CDBSidebarMenuItem> 
               </NavLink>
               <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">

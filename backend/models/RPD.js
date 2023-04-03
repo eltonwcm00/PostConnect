@@ -4,7 +4,6 @@ const RPDSchema = mongoose.Schema(
   {
     fullname: {
       type: String,
-      // required: true,
     },
     miniThesisTitle: {
       type: String,
@@ -12,18 +11,15 @@ const RPDSchema = mongoose.Schema(
     },
     dateScheduleRPD: {
       type: Date,
-      // required: true,
     },
     grade: {
       type: String,
-      // required: true,
     },
     retryAttempt: { //cannot exceed 3 retries
       type: Number,
     },
-    status: {
+    status: { // indicates if the student pass already or not
       type: Boolean,
-      // default: true,
     },
     rpdApplication: {
       type: mongoose.Schema.Types.ObjectId,

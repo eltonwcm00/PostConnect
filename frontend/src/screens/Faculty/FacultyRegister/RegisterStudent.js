@@ -108,7 +108,7 @@ const RegisterStudent = () => {
               </Form.Select>
             
               <Button className=" mt-4 float-right" variant="primary" type="submit">
-                Register
+                Submit
               </Button>
             </Form >
         </FacultyTemplate>

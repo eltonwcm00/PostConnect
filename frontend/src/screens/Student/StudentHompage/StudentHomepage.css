@@ -9,5 +9,6 @@
 .toast-container {
     /* border: 1px solid black; */
     height: -webkit-fill-available;
+    width: 26%;
     box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 30%);
 }

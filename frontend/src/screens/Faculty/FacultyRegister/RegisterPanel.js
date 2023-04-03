@@ -85,7 +85,7 @@ const RegisterPanel= () => {
               </Form.Group>
 
               <Button className=" mt-4 float-right" variant="primary" type="submit">
-                Register
+                Submit
               </Button>
             </Form >
       </FacultyTemplate>       
