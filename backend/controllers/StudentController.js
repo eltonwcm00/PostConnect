@@ -104,17 +104,23 @@ const studentViewRPDApplication = asyncHandler(async (req, res) => {
   const currentStudent = req.userStudent;
   
   const appliedForRPD = await RPDApplication.findOne({ studentUser: currentStudent}); 
-  const applicationStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: false});
+  const applicationFalseStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: false});
+  const applicationTrueStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: true});
+  
 
   if (appliedForRPD) { 
     
-    if (applicationStatus) {
+    if (applicationFalseStatus) {
       res.status(201).json({applicationStatusMsg: `Sorry, your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 
                             is rejected, please refer to your supervisor`});
     }
-    else {
+    else if (applicationTrueStatus) {
       res.status(201).json({applicationStatusMsg: `Congratulation! Your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 
                             is approved, the RPD will be happened roughly after 2 weeks`});
+    }
+    else {
+      res.status(201).json({applicationStatusMsg: `Your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 
+      is pending to be approved`});
     }
   }
   else {

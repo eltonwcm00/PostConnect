@@ -48,15 +48,29 @@ const PanelEvaluateRPDID = () => {
         fetching2();
     }, [id]);
 
-    const submitHandler = () => {
+    const gradeSelection = (e) => {
+        setGrade(e.target.value);
+    };
 
-    }
+    const submitSelection = (e) => {
+        console.log(grade);
+        switch(grade) {
+            case 'Satisfactory': 
+                // dispatch(action())
+                break;
+            case 'Unsatisfactory':
+                // dispatch(action())
+                break;
+            default:
+                console.log('err');
+        } 
+    };
 
     return (
         <>
             <PanelTemplate>
                 <div className="form-title-desc-container">Details of The Research Proposal Defence</div>
-                <Form className="form" onSubmit={submitHandler}>
+                <Form className="form">
                 <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
                     <Form.Label column sm={2}>Full Name</Form.Label>
                     <Col sm={10}>
@@ -84,12 +98,28 @@ const PanelEvaluateRPDID = () => {
                 <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
                     <Form.Label column sm={2}>Mini Thesis File</Form.Label>
                     <Col sm={10}>
-                        <a href={dummyPDF} target="_blank" 
-                    rel="noreferrer">Open me</a>
+                    <i class="fa-solid fa-arrow-pointer" style={{ position:'absolute', marginLeft: '3em', marginTop: '1em'}}>
+                    </i> 
+                    <a href={dummyPDF} target="_blank">View</a>
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
+                    <Form.Label column sm={2}>Grade</Form.Label>
+                    <Col sm={10}>
+                    <Row>
+                        <Col sm={5}>
+                            <span>Satisfactory</span>
+                            <input type="radio" value="Satisfactory" id="vehicle1" name="vehicle1" onChange={gradeSelection} style={{marginLeft: '5em', boxShadow: 'none'}}/>
+                        </Col>
+                        <Col>
+                            <span>Unsatisfactory</span>                          
+                            <input type="radio" value="Unsatisfactory" id="vehicle1" name="vehicle1" onChange={gradeSelection} style={{marginLeft: '6em', boxShadow: 'none'}}/>
+                        </Col>
+                    </Row>
                     </Col>
                 </Form.Group>
                 
-                <Button className=" mt-4 submit-btn" variant="primary" type="submit">
+                <Button className=" mt-4 submit-btn" variant="primary" type="submit" onClick={submitSelection}>
                     Submit 
                 </Button>
             </Form>     

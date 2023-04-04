@@ -3,27 +3,26 @@ import multer from 'multer';
 //Configuration for Multer
 const multerStorage = multer.diskStorage({
    destination: (req, file, cb) => {
-     cb(null, "public");
+     cb(null, "./public");
    },
    filename: (req, file, cb) => {
-     const ext = file.mimetype.split("/")[1];
-     cb(null, `files/admin-${file.fieldname}-${Date.now()}.${ext}`);
+    cb(null, Date.now()+file.originalname) // file name setting
    },
  });
 
-// Multer Filter
-const multerFilter = (req, file, cb) => {
-   if (file.mimetype.split("/")[1] === "pdf") {
-     cb(null, true);
-   } else {
-     cb(new Error("Not a PDF File!!"), false);
-   }
- };
+//Upload Setting
+let upload = multer({
+ storage: multerStorage,
+ fileFilter:(req, file, cb)=>{
+  if(file.mimetype.split("/")[1] === "pdf"){
+      cb(null, true)
+  }
+  else{
+      cb(null, false);
+      cb(new Error('"Not a PDF File!!'))
+  }
+ }
+})
 
- //Calling the "multer" Function
-const upload = multer({
-   storage: multerStorage,
-   fileFilter: multerFilter,
- });
+export { upload };
 
-export {upload };
