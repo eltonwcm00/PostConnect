@@ -8,6 +8,8 @@ import { panelReadRPD } from "../../../actions/panelAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import PanelTemplate from "../../../components/PanelTemplate";
+import ViewPDF from "../../../components/ViewPDF";
+
 // import "./FacultyEvaluateRPDApplication.css";
 
 const PanelEvaluateRPD = () => {
@@ -31,13 +33,13 @@ const PanelEvaluateRPD = () => {
     return (
         <>
             {loading && <Loading />}
-            {errorRPDList && <ErrorMessage variant="danger">{errorRPDList}</ErrorMessage>}
+            {errorRPDList && <ErrorMessage variant="danger">{errorRPDList.errorRPDList}</ErrorMessage>}
             <PanelTemplate>
                 <CDBContainer style={{padding: '0px', textAlign: "center"}} className="list-container">
                 <CDBTable borderless>
                     <CDBTableHeader className="d-flex p-2 table-header">
                     <tr className='table-desc'>
-                        <th className="table-desc-th">Date</th>
+                        <th className="table-desc-th">Schedule Date</th>
                         <th className="table-desc-th">Full Name</th>
                         <th className="table-desc-th">Mini Thesis Title</th>
                         <th className="table-desc-th">Evaluation</th>

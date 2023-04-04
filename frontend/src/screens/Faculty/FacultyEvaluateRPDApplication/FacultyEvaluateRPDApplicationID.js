@@ -226,7 +226,7 @@ const FacultyEvaluateRPDApplicationID = () => {
                                 </tr>
                                 <tr>
                                     <td>Application Date</td>
-                                    <td colspan="2">{dateApplyRPD}</td>
+                                    <td colSpan="2">{dateApplyRPD}</td>
                                     <td>
                                         {moment(dateApplyRPD, 'l') < moment(dateJoined,'l').add(days, 'days') 
                                             && <i className="fa-solid fa-check" onClick={handleShowe} style={{ cursor: 'pointer' }}></i>
@@ -370,7 +370,7 @@ const FacultyEvaluateRPDApplicationID = () => {
                                 </Col>
                             </Form.Group>
 
-                            {(!invalid && (applicationStatus != false && applicationStatus != true)) && <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
+                            {(!invalid && (applicationStatus !== false && applicationStatus !== true)) && <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
                                 <Form.Label column sm={2}>Schedule Date</Form.Label>
                                 <Calendar
                                     value={dateScheduleRPD}
@@ -380,24 +380,24 @@ const FacultyEvaluateRPDApplicationID = () => {
                             </Form.Group>}
                             <Form.Group className="float-right">
                                 <Row>
-                                    {(invalid && (applicationStatus != false && applicationStatus != true)) && <Col className="col-5"><small style={{color: 'red'}}>*Unable to approve the application due to one or more INVALID information is existed</small></Col>}
-                                    {(invalid && (applicationStatus != false && applicationStatus != true)) && <Col>
+                                    {(invalid && (applicationStatus !== false && applicationStatus !== true)) && <Col className="col-5"><small style={{color: 'red'}}>*Unable to approve the application due to one or more INVALID information is existed</small></Col>}
+                                    {(invalid && (applicationStatus !== false && applicationStatus !== true)) && <Col>
                                         <Button className="table-details-button mt-4 mr-4" variant="primary" disabled>
                                             Approve
                                         </Button> </Col>
                                     }
-                                    {(invalid && (applicationStatus != false && applicationStatus != true)) && <Col>
+                                    {(invalid && (applicationStatus !== false && applicationStatus !== true)) && <Col>
                                         <Button className="table-details-button mt-4" variant="primary" onClick={() => rejectApplication()} >
                                             Reject
                                         </Button></Col>
                                     }
-                                    {(!invalid && (applicationStatus != false && applicationStatus != true)) && <Col className="col-5"><small style={{color: 'red'}}>*Unable to reject the application due to all information is VALID</small></Col>}
-                                    {(!invalid && (applicationStatus != false && applicationStatus != true)) && <Col> 
+                                    {(!invalid && (applicationStatus !== false && applicationStatus !== true)) && <Col className="col-5"><small style={{color: 'red'}}>*Unable to reject the application due to all information is VALID</small></Col>}
+                                    {(!invalid && (applicationStatus !== false && applicationStatus !== true)) && <Col> 
                                         <Button className="table-details-button mt-4" variant="primary" onClick={() => approveApplication()}>
                                             Approve
                                         </Button></Col>
                                     }
-                                    {(!invalid && (applicationStatus != false && applicationStatus != true)) && <Col>
+                                    {(!invalid && (applicationStatus !== false && applicationStatus !== true)) && <Col>
                                         <Button className="table-details-button mt-4" variant="primary" disabled>
                                             Reject
                                         </Button></Col>

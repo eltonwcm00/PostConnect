@@ -40,36 +40,36 @@ import { facultyLogout } from '../actions/facultyAction';
   
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
-              <NavLink exact to="/facultyRegister" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="/facultyRegister" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-plus" className="sidebar-icon-role">Role Registration</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/#" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="/#" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-user" className="sidebar-icon">User Profile</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/facultyEvaluateRPDApplication" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="/facultyEvaluateRPDApplication" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-file-text">Research Proposal Defence Request Application</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/#" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="/#" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-file-text">
                   Work Completion Defence Request Application
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/#" target="_blank" activeClassName="activeClicked">
+              <NavLink exact to="/#" target="_blank">
                 <CDBSidebarMenuItem icon="fa fa-users">
                   Candidature Monitoring
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/facultyAssignNumSupervisor" activeClassName="activeClicked">
+              <NavLink exact to="/facultyAssignNumSupervisor">
                 <CDBSidebarMenuItem icon="fa-regular fa-sitemap">
                   Assign Number of Supervision
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/facultyReadChooseStudent" activeClassName="activeClicked">
+              <NavLink exact to="/facultyReadChooseStudent">
                 <CDBSidebarMenuItem icon="fa-solid fa-arrow-pointer">
                   Choose Student to Supervise
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/#" activeClassName="activeClicked">
+              <NavLink exact to="/#">
                 <CDBSidebarMenuItem icon="fa-solid fa-chart-column">
                   Student Data Report
                 </CDBSidebarMenuItem>
@@ -83,7 +83,7 @@ import { facultyLogout } from '../actions/facultyAction';
                 }}>
                   Logout
                 </CDBBtn>}
-                {!facultyInfo && <NavLink exact to="/facultyLogin" activeClassName="activeClicked">Login</NavLink>}
+                {!facultyInfo && <NavLink exact to="/facultyLogin">Login</NavLink>}
               </CDBSidebarMenuItem>
             </CDBSidebarMenu>
           </CDBSidebarContent>

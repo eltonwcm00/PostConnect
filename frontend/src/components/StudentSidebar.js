@@ -42,21 +42,21 @@ import { studentLogout } from '../actions/studentAction';
   
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
-              <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="#" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-user" className="sidebar-icon">User Profile</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/studentRequestRPD" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="/studentRequestRPD" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-file-text">Request For Research Proposal Defence</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="#" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-file-text"> Request For Work Completion Defence </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#"  activeClassName="activeClicked">
+              <NavLink exact to="#">
                 <CDBSidebarMenuItem icon="fa-sharp fa-regular fa-file-invoice">
                     Submit Progress Report
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/studentSubmitMeetingLog" activeClassName="activeClicked">
+              <NavLink exact to="/studentSubmitMeetingLog">
                 <CDBSidebarMenuItem icon="fa-sharp fa-regular fa-file-invoice">
                     Submit Meeting Log
                 </CDBSidebarMenuItem>
@@ -70,7 +70,7 @@ import { studentLogout } from '../actions/studentAction';
                 }}>
                   Logout
                 </CDBBtn>}
-                {!studentInfo && <NavLink exact to="/studentLogin" activeClassName="activeClicked">Login</NavLink>}
+                {!studentInfo && <NavLink exact to="/studentLogin">Login</NavLink>}
               </CDBSidebarMenuItem>
             </CDBSidebarMenu>
           </CDBSidebarContent>

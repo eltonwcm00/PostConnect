@@ -40,23 +40,23 @@ import { supervisorLogout } from '../actions/supervisorAction';
   
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
-              <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="#" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-user" className="sidebar-icon">User Profile</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="#" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa-solid fa-magnifying-glass"> View Research Proposal Defence Result </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#" activeClassName="activeClicked">
+              <NavLink exact to="#">
                 <CDBSidebarMenuItem icon="fa-solid fa-magnifying-glass">
                 View Work Completion Defence Result
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/supervisorViewMeetingLog" activeClassName="activeClicked">
+              <NavLink exact to="/supervisorViewMeetingLog">
                 <CDBSidebarMenuItem icon="fa-solid fa-magnifying-glass">
                 View Meeting Log
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#" activeClassName="activeClicked">
+              <NavLink exact to="#">
                 <CDBSidebarMenuItem icon="fa-solid fa-chart-column">
                   Student Data Report
                 </CDBSidebarMenuItem>
@@ -70,7 +70,7 @@ import { supervisorLogout } from '../actions/supervisorAction';
                 }}>
                   Logout
                 </CDBBtn>}
-                {!supervisorInfo && <NavLink exact to="/supervisorLogin" activeClassName="activeClicked">Login</NavLink>}
+                {!supervisorInfo && <NavLink exact to="/supervisorLogin">Login</NavLink>}
               </CDBSidebarMenuItem>
             </CDBSidebarMenu>
           </CDBSidebarContent>

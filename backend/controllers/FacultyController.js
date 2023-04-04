@@ -370,8 +370,8 @@ const facultyApproveEvaluateRPDApplicationByID = asyncHandler(async (req, res) =
         if (!dateScheduleRPD) {
           res.status(401).json({ message: "Please pick a date to schedule the student's RPD" });
         } 
-        else if (moment(dateScheduleRPD) > moment()) {
-          res.status(401).json({message: "Invalid, schedule date is greater than today's date"});
+        else if (moment(dateScheduleRPD) < moment()) {
+          res.status(401).json({message: "Invalid, schedule date is not greater than today's date"});
         } 
         else {
           if (readTrueApplicationStatus) {

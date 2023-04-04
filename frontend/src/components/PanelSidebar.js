@@ -40,16 +40,16 @@ import { panelLogout } from '../actions/panelAction';
   
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
-              <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="#" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-user" className="sidebar-icon">User Profile</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/panelEvaluateRPD" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="/panelEvaluateRPD" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa-solid fa-file-circle-check">Research Proposal Defence Evaluation </CDBSidebarMenuItem> 
               </NavLink>
-              <NavLink exact to="#" activeClassName="activeClicked" className="sidebar-nav">
+              <NavLink exact to="#" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa-solid fa-file-circle-check"> Work Completion Defence Evaluation </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#" target="_blank" activeClassName="activeClicked">
+              <NavLink exact to="#" target="_blank">
                 <CDBSidebarMenuItem icon="fa-solid fa-file-circle-check">
                     Progress Report Evaluation
                 </CDBSidebarMenuItem>
@@ -63,7 +63,7 @@ import { panelLogout } from '../actions/panelAction';
                 }}>
                   Logout
                 </CDBBtn>}
-                {!panelInfo && <NavLink exact to="/panelLogin" activeClassName="activeClicked">Login</NavLink>}
+                {!panelInfo && <NavLink exact to="/panelLogin">Login</NavLink>}
               </CDBSidebarMenuItem>
             </CDBSidebarMenu>
           </CDBSidebarContent>
