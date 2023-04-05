@@ -45,9 +45,26 @@ const panelReadRPDByID = asyncHandler(async (req, res) => {
     res.status(201).json(fetchRPDID);
   }
   else {
-    // res.status(401).json("Today date is greater than the schedule date. The RPD is not ready to be evaluate yet");
     res.status(401).json({message: "Error in .db reference"});
   }
 })
 
-export {panelLogin, panelReadRPD, panelReadRPDByID};
+const panelEvaluatePassRPD = asyncHandler(async (req, res) => {
+  
+  const fetchRPDID = await RPD.findById(req.params.id);
+
+  if (fetchRPDID) {
+    fetchRPDID.status = true;
+    const passRPDID = await fetchRPDID.save();
+    res.status(201).json({
+        passRPDID,
+        approveMsg: "The RPD is evaluated, the grade of the evaluation is given 'Satisfactory (S)'"
+      }
+    );
+  } 
+  else {
+    res.status(401).json({ message: "Internal server error" });
+  }
+})
+
+export {panelLogin, panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD};

@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import moment from "moment";
 import Student from "../models/Student.js";
 import RPDApplication from "../models/RPDApplication.js";
+import RPD from "../models/RPD.js";
 import MeetingLog from "../models/MeetingLog.js";
 
 const studentLogin = asyncHandler(async (req, res) => {
@@ -106,21 +107,25 @@ const studentViewRPDApplication = asyncHandler(async (req, res) => {
   const appliedForRPD = await RPDApplication.findOne({ studentUser: currentStudent}); 
   const applicationFalseStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: false});
   const applicationTrueStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: true});
+  const rpdPassed = await RPD.findOne({fullname:currentStudent.usernameStud, status: true})
   
 
   if (appliedForRPD) { 
     
     if (applicationFalseStatus) {
       res.status(201).json({applicationStatusMsg: `Sorry, your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 
-                            is rejected, please refer to your supervisor`});
+                              is rejected, please refer to your supervisor`});
+    }
+    else if (rpdPassed) {
+      res.status(201).json({applicationStatusMsg: "Congratulation! You have passed your RPD and received a 'Satisfactory (S)' grade"});
     }
     else if (applicationTrueStatus) {
       res.status(201).json({applicationStatusMsg: `Congratulation! Your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 
-                            is approved, the RPD will be happened roughly after 2 weeks`});
+                              is approved, the RPD will be happened roughly after 2 weeks`});
     }
     else {
       res.status(201).json({applicationStatusMsg: `Your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 
-      is pending to be approved`});
+                              is pending to be approved`});
     }
   }
   else {

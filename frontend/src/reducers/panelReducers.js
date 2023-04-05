@@ -6,6 +6,10 @@ import {
     PANEL_RPD_LIST_REQUEST,
     PANEL_RPD_LIST_SUCCESS,
     PANEL_RPD_LIST_FAIL,
+    PANEL_UPDATE_APPLICATION_REQUEST,
+    PANEL_REJECT_APPLICATION_SUCCESS,
+    PANEL_APPROVE_APPLICATION_SUCCESS,
+    PANEL_UPDATE_APPLICATION_FAIL,
 } from "../constants/panelConstants";
 
 export const panelLoginReducer = (state = {}, action) => {
@@ -35,4 +39,19 @@ export const panelReadRPDReducer = (state = { fetchRPDList: [] }, action) => {
       return state;
   }
 };
+
+export const panelEvaluateRPDReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PANEL_UPDATE_APPLICATION_REQUEST:
+      return { loading: true };
+    case PANEL_REJECT_APPLICATION_SUCCESS:
+      return { loading: false, successRejectMsg: action.payload };
+    case PANEL_APPROVE_APPLICATION_SUCCESS:
+      return { loading: false, successApproveMsg: action.payload };
+    case PANEL_UPDATE_APPLICATION_FAIL:
+      return { loading: false, error: action.payload};
+    default:
+      return state;
+  }
+}
 

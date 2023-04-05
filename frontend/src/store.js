@@ -30,6 +30,7 @@ import {
 import {
   panelLoginReducer,
   panelReadRPDReducer,
+  panelEvaluateRPDReducer,
 } from "./reducers/panelReducers";
 
 const reducer = combineReducers({
@@ -54,6 +55,7 @@ const reducer = combineReducers({
 
     panelLogin: panelLoginReducer,
     panelReadRPD: panelReadRPDReducer,
+    panelEvaluateRPD: panelEvaluateRPDReducer
 })
 
 const facultyInfoFromStorage = localStorage.getItem("facultyInfo")

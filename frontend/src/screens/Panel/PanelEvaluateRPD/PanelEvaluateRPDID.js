@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from 'moment';
 import { useDispatch, useSelector } from "react-redux";
 import {useParams, useNavigate } from 'react-router-dom';
-import { facultyUpdateApplication, facultyApproveApplication } from "../../../actions/facultyAction";
+import { panelEvaluatePassRPD } from "../../../actions/panelAction";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
@@ -26,16 +26,17 @@ const PanelEvaluateRPDID = () => {
 
     const panelLogin = useSelector((state) => state.panelLogin);
     const { panelInfo } = panelLogin;
+    const panelEvaluateRPD = useSelector((state) => state.panelEvaluateRPD);
+    const { loading, error, successApproveMsg, successRejectMsg } = panelEvaluateRPD;
 
     useEffect(() => {
-        // dispatch(panelReadRPD());
         if (!panelInfo) {
           navigate("/");
         }
     }, [dispatch, navigate, panelInfo,]);
 
     useEffect(() => {
-        const fetching2 = async () => {
+        const fetching = async () => {
         
             const { data } = await axios.get(`http://localhost:5000/api/panel/panelEvaluateRPD/${id}`);
 
@@ -45,7 +46,7 @@ const PanelEvaluateRPDID = () => {
 
             console.log(data);
         };
-        fetching2();
+        fetching();
     }, [id]);
 
     const gradeSelection = (e) => {
@@ -53,23 +54,34 @@ const PanelEvaluateRPDID = () => {
     };
 
     const submitSelection = (e) => {
+        e.preventDefault();
         console.log(grade);
         switch(grade) {
             case 'Satisfactory': 
-                // dispatch(action())
-                break;
+                dispatch(panelEvaluatePassRPD(id));
             case 'Unsatisfactory':
-                // dispatch(action())
                 break;
             default:
                 console.log('err');
         } 
     };
 
+    useEffect(() => {
+        if (successApproveMsg || successRejectMsg) {
+          const timer = setTimeout(() => {
+            navigate("/panelEvaluateRPD");
+          }, 5000);
+          return () => clearTimeout(timer);
+        }
+    }, [navigate, successApproveMsg, successRejectMsg])
+
     return (
         <>
             <PanelTemplate>
                 <div className="form-title-desc-container">Details of The Research Proposal Defence</div>
+                {loading && <Loading/>}
+                {error && <ErrorMessage variant="danger">{error.message}</ErrorMessage>}
+                {successApproveMsg && <SuccessMessage variant="success">{successApproveMsg.approveMsg}</SuccessMessage>}
                 <Form className="form">
                 <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
                     <Form.Label column sm={2}>Full Name</Form.Label>
@@ -98,30 +110,39 @@ const PanelEvaluateRPDID = () => {
                 <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
                     <Form.Label column sm={2}>Mini Thesis File</Form.Label>
                     <Col sm={10}>
-                    <i class="fa-solid fa-arrow-pointer" style={{ position:'absolute', marginLeft: '3em', marginTop: '1em'}}>
-                    </i> 
-                    <a href={dummyPDF} target="_blank">View</a>
+                    {/* <i class="fa-solid fa-bullseye-pointer fa-flip-horizontal" style={{ position:'absolute', marginLeft: '3em', marginTop: '1em'}}></i> */}
+                    <a href={dummyPDF} target="_blank">View Here</a>
                     </Col>
                 </Form.Group>
-                <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
-                    <Form.Label column sm={2}>Grade</Form.Label>
-                    <Col sm={10}>
-                    <Row>
-                        <Col sm={5}>
-                            <span>Satisfactory</span>
-                            <input type="radio" value="Satisfactory" id="vehicle1" name="vehicle1" onChange={gradeSelection} style={{marginLeft: '5em', boxShadow: 'none'}}/>
+                { moment(dateScheduleRPD).format('l') <= moment().format('l') && 
+                    <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
+                        <Form.Label column sm={2}>Grade</Form.Label>
+                        <Col sm={10}>
+                        <Row>
+                            <Col sm={5}>
+                                <span>Satisfactory</span>
+                                <input type="radio" value="Satisfactory" id="vehicle1" name="vehicle1" onChange={gradeSelection} style={{marginLeft: '5em', boxShadow: 'none'}}/>
+                            </Col>
+                            <Col>
+                                <span>Unsatisfactory</span>                          
+                                <input type="radio" value="Unsatisfactory" id="vehicle1" name="vehicle1" onChange={gradeSelection} style={{marginLeft: '6em', boxShadow: 'none'}}/>
+                            </Col>
+                        </Row>
                         </Col>
-                        <Col>
-                            <span>Unsatisfactory</span>                          
-                            <input type="radio" value="Unsatisfactory" id="vehicle1" name="vehicle1" onChange={gradeSelection} style={{marginLeft: '6em', boxShadow: 'none'}}/>
+                    </Form.Group>
+                }        
+                {
+                    moment(dateScheduleRPD).format('l') <= moment().format('l') && 
+                        <Button className=" mt-4 submit-btn" variant="primary" type="submit" onClick={submitSelection}>
+                            Submit 
+                        </Button>
+                }
+                {
+                    moment(dateScheduleRPD).format('l') > moment().format('l') && 
+                        <Col className="col-5">
+                            <small style={{color: 'red'}}>*Unable to evaluate the RPD, due to today's date is earlier than the schedule date</small>
                         </Col>
-                    </Row>
-                    </Col>
-                </Form.Group>
-                
-                <Button className=" mt-4 submit-btn" variant="primary" type="submit" onClick={submitSelection}>
-                    Submit 
-                </Button>
+                }
             </Form>     
             </PanelTemplate>
         </>
