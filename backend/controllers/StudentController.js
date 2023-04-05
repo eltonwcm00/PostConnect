@@ -52,13 +52,16 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
   let appliedRPD;
 
   const hasApplied = await RPDApplication.findOne({ studentUser: currentStudent });
+  const isReApplyAllow = await Student.findOne({studentUser: currentStudent, 
+                                              retryRPDAttempt: {$gte: 1}});
+  //const isRPDFailed = await RPD.findOne({fullname:currentStudent.usernameStud, status: false});
 
   const hasSupervisor = req.userStudent.supervisorUser;
 
   if (!hasSupervisor) {
     res.status(401).json({message: "Access denied! you have not been assigned to any supervisor, please refer to faculty"});
   }
-  else if (hasApplied) { 
+  else if (hasApplied && (!isReApplyAllow)) { 
     res.status(401).json({message: "You have applied the application previously"});
   }
   else if (currentStudent) {
@@ -107,8 +110,10 @@ const studentViewRPDApplication = asyncHandler(async (req, res) => {
   const appliedForRPD = await RPDApplication.findOne({ studentUser: currentStudent}); 
   const applicationFalseStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: false});
   const applicationTrueStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: true});
-  const rpdPassed = await RPD.findOne({fullname:currentStudent.usernameStud, status: true})
-  
+  const rpdPassed = await RPD.findOne({fullname:currentStudent.usernameStud, status: true});
+  const rpdFailed = await RPD.findOne({fullname:currentStudent.usernameStud, status: false});
+  const rpdReapplied = await Student.findOne({fullname:currentStudent.usernameStud, retryRPDAttempt: {$gte: 1}});
+
 
   if (appliedForRPD) { 
     
@@ -117,7 +122,10 @@ const studentViewRPDApplication = asyncHandler(async (req, res) => {
                               is rejected, please refer to your supervisor`});
     }
     else if (rpdPassed) {
-      res.status(201).json({applicationStatusMsg: "Congratulation! You have passed your RPD and received a 'Satisfactory (S)' grade"});
+      res.status(201).json({applicationStatusMsg: "Congratulation! You have received a 'Satisfactory (S)' grade and passed your RPD"});
+    }
+    else if (rpdFailed) {
+      res.status(201).json({applicationStatusMsg: "Sorry, You have received a 'Unsatisfactory (US)' grade and failed your RPD, please re-apply the RPD"});
     }
     else if (applicationTrueStatus) {
       res.status(201).json({applicationStatusMsg: `Congratulation! Your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 

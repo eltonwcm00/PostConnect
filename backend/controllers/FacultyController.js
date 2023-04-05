@@ -49,6 +49,7 @@ const facultyPanelRegistration = asyncHandler(async (req, res) => {
       usernamePanel,
       password: hashedPassword,
       facultyUser: req.userFaculty._id,
+      isPanel: true,
     });
   }
   else {
@@ -98,6 +99,7 @@ const facultySupervisorRegistration = asyncHandler(async (req, res) => {
       academicPos,
       numSupervision,
       facultyUser: req.userFaculty._id,
+      isSupervisor: true,
     });
   }
 
@@ -151,6 +153,7 @@ const facultyStudentRegistration = asyncHandler(async (req, res) => {
       dateJoin,
       degreeLvl,
       facultyUser: req.userFaculty._id, // link faculty model to student model
+      isStudent: true,
     });
   }
 

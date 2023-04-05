@@ -15,9 +15,9 @@ const RPDSchema = mongoose.Schema(
     grade: {
       type: String,
     },
-    retryAttempt: { //cannot exceed 3 retries
-      type: Number,
-    },
+    // retryAttempt: { //cannot exceed 3 retries
+    //   type: Number,
+    // },
     status: { // indicates if the student pass already or not
       type: Boolean,
     },

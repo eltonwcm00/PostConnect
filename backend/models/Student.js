@@ -25,6 +25,10 @@ const StudentSchema = mongoose.Schema(
         type: String,
         default: "Active",
     },
+    retryRPDAttempt: { //cannot exceed 3 retries
+      type: Number,
+      default: 0,
+    },
     facultyUser: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

@@ -47,7 +47,7 @@ const PanelEvaluateRPD = () => {
                     </CDBTableHeader>
                     <CDBTableBody>
                     {
-                        fetchRPDList && fetchRPDList.filter(x =>(x.status !== true)).map((list) => (
+                        fetchRPDList && fetchRPDList.filter(x =>(x.status !== true && x.status !== false)).map((list) => (
                                 <tr className='table-desc' key={list._id}>
                                 <td> {moment(list.dateScheduleRPD).format('l')} </td>
                                 <td> {list.fullname} </td>

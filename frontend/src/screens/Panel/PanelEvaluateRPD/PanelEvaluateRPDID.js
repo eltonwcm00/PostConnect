@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from 'moment';
 import { useDispatch, useSelector } from "react-redux";
 import {useParams, useNavigate } from 'react-router-dom';
-import { panelEvaluatePassRPD } from "../../../actions/panelAction";
+import { panelEvaluatePassRPD, panelEvaluateFailRPD } from "../../../actions/panelAction";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
@@ -60,6 +60,7 @@ const PanelEvaluateRPDID = () => {
             case 'Satisfactory': 
                 dispatch(panelEvaluatePassRPD(id));
             case 'Unsatisfactory':
+                dispatch(panelEvaluateFailRPD(id));
                 break;
             default:
                 console.log('err');
@@ -82,6 +83,7 @@ const PanelEvaluateRPDID = () => {
                 {loading && <Loading/>}
                 {error && <ErrorMessage variant="danger">{error.message}</ErrorMessage>}
                 {successApproveMsg && <SuccessMessage variant="success">{successApproveMsg.approveMsg}</SuccessMessage>}
+                {successRejectMsg && <SuccessMessage variant="success">{successRejectMsg.rejectMsg}</SuccessMessage>}
                 <Form className="form">
                 <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
                     <Form.Label column sm={2}>Full Name</Form.Label>

@@ -8,6 +8,7 @@ import {
     PANEL_RPD_LIST_FAIL,
     PANEL_UPDATE_APPLICATION_REQUEST,
     PANEL_APPROVE_APPLICATION_SUCCESS,
+    PANEL_REJECT_APPLICATION_SUCCESS,
     PANEL_UPDATE_APPLICATION_FAIL,
 } from "../constants/panelConstants";
 
@@ -102,6 +103,40 @@ export const panelEvaluatePassRPD = (id) => async (dispatch, getState) => {
 
     dispatch({
       type: PANEL_APPROVE_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: PANEL_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+export const panelEvaluateFailRPD = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PANEL_UPDATE_APPLICATION_REQUEST,
+    });
+
+    const {
+      panelLogin: { panelInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${panelInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/panel/panelEvaluateRPD2/${id}`, {}, config);
+
+    dispatch({
+      type: PANEL_REJECT_APPLICATION_SUCCESS,
       payload: data,
     });
   } catch (error) {
