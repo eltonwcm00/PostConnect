@@ -67,7 +67,6 @@ const panelEvaluatePassRPD = asyncHandler(async (req, res) => {
   else {
     res.status(401).json({ message: "Internal server error" });
   }
-
   // 'S' grade after re-evaluated 
   if(insertStudent) {
     insertStudent.retryRPDAttempt = 0;
@@ -94,7 +93,6 @@ const panelEvaluateFailRPD = asyncHandler(async (req, res) => {
   else {
     res.status(401).json({ message: "Internal server error" });
   }
-
   // 'US' grade
   if(insertStudent) {
     insertStudent.retryRPDAttempt = insertStudent.retryRPDAttempt + 1;

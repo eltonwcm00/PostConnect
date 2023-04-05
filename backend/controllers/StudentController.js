@@ -19,6 +19,7 @@ const studentLogin = asyncHandler(async (req, res) => {
         usernameStud: userStudent.usernameStud,       
         dateJoined: userStudent.dateJoin,
         isStudent: true,
+        retryRPDAttempt: userStudent.retryRPDAttempt,
         token: generateToken(userStudent._id),
         successMessage: "Logged in successfully!"
       });
@@ -112,7 +113,7 @@ const studentViewRPDApplication = asyncHandler(async (req, res) => {
   const applicationTrueStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: true});
   const rpdPassed = await RPD.findOne({fullname:currentStudent.usernameStud, status: true});
   const rpdFailed = await RPD.findOne({fullname:currentStudent.usernameStud, status: false});
-  const rpdReapplied = await Student.findOne({fullname:currentStudent.usernameStud, retryRPDAttempt: {$gte: 1}});
+  // const rpdReapplied = await Student.findOne({fullname:currentStudent.usernameStud, retryRPDAttempt: {$gte: 1}});
 
 
   if (appliedForRPD) { 

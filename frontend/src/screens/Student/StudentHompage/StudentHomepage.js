@@ -15,14 +15,15 @@ const StudentHomepage = () => {
   const [rpdToastPosition, setRPDToastPosition] = useState('top-end');
   const [showToast, setShowToast] = useState(true);
   const [showToastB, setShowToastB] = useState(true);
+  const [showToastC, setShowToastC] = useState(true);
   const [dateJoin, setDateJoin] = useState(new Date());
   
   const dispatch = useDispatch();
 
   const toggleShowA = () => setShowToast(!showToast);
   const toggleShowB = () => setShowToastB(!showToastB);
-
-    
+  const toggleShowC = () => setShowToastC(!showToastC);
+  
   const studentLoginState = useSelector((state) => state.studentLogin);
   const { studentInfo } = studentLoginState;
   const studentApplicationStatusState = useSelector((state) => state.studentApplicationStatus);
@@ -65,6 +66,20 @@ const StudentHomepage = () => {
           </Toast.Header>
           <Toast.Body>{meetingLogStatusMsg && <>{currentMeetingInfo.meetingLogStatusMsg}</>}</Toast.Body>
         </Toast>
+        {/* Remind student he/she about to be terminated from study if fail more than 3 consecutive times */}
+        {
+          (studentInfo && studentInfo.retryRPDAttempt == 2) && 
+            <Toast onClose={toggleShowC} show={showToastC} animation={true}>
+              <Toast.Header>
+              <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                <small>{moment().fromNow()}</small>
+              </Toast.Header>
+              <Toast.Body>
+                {"Warning!, you have failed your RPD for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
+              </Toast.Body>
+            </Toast>
+        }
       </ToastContainer>
     </StudentTemplate>
   )
