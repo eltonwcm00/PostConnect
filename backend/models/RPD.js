@@ -21,6 +21,10 @@ const RPDSchema = mongoose.Schema(
     status: { // indicates if the student pass already or not
       type: Boolean,
     },
+    studentRef: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+    },
     rpdApplication: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "RPDApplication",

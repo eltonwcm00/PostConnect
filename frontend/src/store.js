@@ -24,7 +24,7 @@ import {
 
 import {
   supervisorLoginReducer, 
-  supervisorReadMeetingLogReducer,
+  supervisorReadCWReducer,
 } from "./reducers/supervisorReducers";
 
 import {
@@ -45,7 +45,7 @@ const reducer = combineReducers({
     facultyUpdateChooseStudent: facultyUpdateChooseStudentReducer,
 
     supervisorLogin: supervisorLoginReducer,
-    supervisorReadMeetingLog: supervisorReadMeetingLogReducer,
+    supervisorReadCW: supervisorReadCWReducer,
    
     studentLogin: studentLoginReducer,
     studentCWReadRequest: studentCWReadRequestReducer,

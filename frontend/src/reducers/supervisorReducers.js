@@ -3,9 +3,9 @@ import {
     SUPERVISOR_LOGIN_REQUEST,
     SUPERVISOR_LOGIN_SUCCESS,
     SUPERVISOR_LOGOUT,
-    SUPERVISOR_MEETING_LOG_REQUEST,
-    SUPERVISOR_MEETING_LOG_SUCCESS,
-    SUPERVISOR_MEETING_LOG_FAIL
+    SUPERVISOR_CW_REQUEST,
+    SUPERVISOR_CW_SUCCESS,
+    SUPERVISOR_CW_FAIL
 } from "../constants/supervisorConstants";
 
 export const supervisorLoginReducer = (state = {}, action) => {
@@ -23,14 +23,14 @@ export const supervisorLoginReducer = (state = {}, action) => {
     }
 };
 
-export const supervisorReadMeetingLogReducer = (state = { meetingLogList: [] }, action) => {
+export const supervisorReadCWReducer = (state = { meetingLogList: [] }, action) => {
   switch (action.type) {
-    case SUPERVISOR_MEETING_LOG_REQUEST:
+    case SUPERVISOR_CW_REQUEST:
       return { loading: true };
-    case SUPERVISOR_MEETING_LOG_SUCCESS:
-      return { loading: false, meetingLogInfo: action.payload };
-    case SUPERVISOR_MEETING_LOG_FAIL:
-      return { loading: false, meetingLogFail: action.payload };
+    case SUPERVISOR_CW_SUCCESS:
+      return { loading: false, cwInfoSuccess: action.payload };
+    case SUPERVISOR_CW_FAIL:
+      return { loading: false, cwInfoFail: action.payload };
     default:
       return state;
   }

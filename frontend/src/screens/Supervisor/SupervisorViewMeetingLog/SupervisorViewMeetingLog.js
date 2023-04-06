@@ -18,8 +18,8 @@ const SupervisorViewMeetingLog = () => {
     const supervisorLogin = useSelector((state) => state.supervisorLogin);
     const { supervisorInfo } = supervisorLogin;
     
-    const supervisorReadMeetingLogState = useSelector((state) => state.supervisorReadMeetingLog);
-    const { loading, meetingLogInfo, meetingLogFail } = supervisorReadMeetingLogState;
+    const supervisorReadMeetingLogState = useSelector((state) => state. supervisorReadCW);
+    const { loading, cwInfoSuccess, cwInfoFail } = supervisorReadMeetingLogState;
 
     useEffect(() => {
         dispatch(supervisorReadMeetingLog());
@@ -30,9 +30,9 @@ const SupervisorViewMeetingLog = () => {
   
     return (
     <SupervisorTemplate>
-        {console.log(meetingLogInfo)}
+        {console.log(cwInfoSuccess)}
         { loading && <Loading/> }
-        { meetingLogFail && <ErrorMessage variant="danger">{meetingLogFail}</ErrorMessage> }
+        { cwInfoFail && <ErrorMessage variant="danger">{cwInfoFail}</ErrorMessage> }
         <div className="form-title-desc-container">Meeting Logs</div>
         <CDBContainer style={{padding: '0px', textAlign: "center", marginTop: "15px"}} className="list-container">
               <CDBTable borderless>
@@ -46,7 +46,7 @@ const SupervisorViewMeetingLog = () => {
                 </CDBTableHeader>
                 <CDBTableBody>
                   {
-                    meetingLogInfo && meetingLogInfo.map((list) => (
+                    cwInfoSuccess && cwInfoSuccess.map((list) => (
                         <tr className='table-desc' key={list._id}>
                           <td> {moment(list.dateLog).format('l')} </td>
                           <td> {list.studentUser.usernameStud} </td>

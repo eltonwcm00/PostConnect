@@ -379,6 +379,7 @@ const facultyApproveEvaluateRPDApplicationByID = asyncHandler(async (req, res) =
         else {
           if (readTrueApplicationStatus) {
             insertRPD = await RPD.create({
+              studentRef: readTrueApplicationStatus.studentUser,
               rpdApplication: readTrueApplicationStatus._id,
               fullname: readTrueApplicationStatus.fullName,
               miniThesisTitle: readTrueApplicationStatus.miniThesisTitle,
@@ -393,6 +394,7 @@ const facultyApproveEvaluateRPDApplicationByID = asyncHandler(async (req, res) =
         if(insertRPD) {
           res.status(201).json({ 
             _id: insertRPD._id,
+            studRef: insertRPD.studentRef,
             fullName: insertRPD.fullName,
             miniThesisTitle: insertRPD.miniThesisTitle,
             dateScheduleRPD: insertRPD.dateScheduleRPD,

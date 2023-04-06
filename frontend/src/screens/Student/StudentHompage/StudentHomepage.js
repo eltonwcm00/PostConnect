@@ -49,7 +49,7 @@ const StudentHomepage = () => {
     <StudentTemplate>
       <h2 className="sub-heading">{moment().format(' Do MMMM ')}</h2>
       <ToastContainer className="p-5 toast-container" position={rpdToastPosition}>
-        <h3 className="toast-notification" style={{marginBottom: 30}}>Notification</h3>
+        <h3 className="toast-notification" style={{marginBottom: 30}}>Annoucement</h3>
         <Toast onClose={toggleShowA} show={showToast} animation={true}>
           <Toast.Header>
             <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
