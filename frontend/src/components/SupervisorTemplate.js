@@ -16,8 +16,8 @@ const SupervisorTemplate = ({ children }) => {
   else if (window.location.href === pageURL+'supervisorViewMeetingLog'|| window.location.href === pageURL+`supervisorViewMeetingLog/${id}`){
     pageTitle = "Student's Meeting Log";
   } 
-  else if (window.location.href === pageURL+'#') {
-    pageTitle = "#";
+  else if (window.location.href === pageURL+'supervisorViewRPD') {
+    pageTitle = "View Research Proposal Defence Result";
   }
   else if (window.location.href === pageURL+'#') {
     pageTitle = "#";

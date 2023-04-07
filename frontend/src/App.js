@@ -16,6 +16,8 @@ import FacultyAssignNumSupID from './screens/Faculty/FacultyAssignNumSupervisor/
 import FacultyEvaluateRPDApplication from './screens/Faculty/FacultyEvaluateRPDApplication/FacultyEvaluateRPDApplication';
 import FacultyEvaluateRPDApplicationID from './screens/Faculty/FacultyEvaluateRPDApplication/FacultyEvaluateRPDApplicationID';
 import FacultyChooseStud from './screens/Faculty/FacultyChooseStudent/FacultyChooseStud';
+import FacultySubjectRegistration from './screens/Faculty/FacultySubjectRegistration/FacultySubjectRegistration';
+import FacultySubjectRegistrationID from './screens/Faculty/FacultySubjectRegistration/FacultySubjectRegistrationID';
 
 import StudentLogin from './screens/Student/StudentLogin/StudentLogin';
 import StudentHomepage from './screens/Student/StudentHompage/StudentHomepage';
@@ -57,6 +59,9 @@ function App() {
         <Route exact path="/facultyEvaluateRPDApplication" element={<FacultyEvaluateRPDApplication />}/>
         <Route exact path="/facultyEvaluateRPDApplication/:id" element={<FacultyEvaluateRPDApplicationID />}/>
         <Route exact path="/facultyReadChooseStudent" element={<FacultyChooseStud />}/>
+        <Route exact path="/facultySubjectRegistration" element={<FacultySubjectRegistration />}/>
+        <Route exact path="/facultySubjectRegistration/:id" element={<FacultySubjectRegistrationID />}/>
+
         
         <Route exact path="/studentRequestRPD" element={<StudentRPDRequest />}/>
         <Route exact path="/studentSubmitMeetingLog" element={<StudentMeetingLog />}/>

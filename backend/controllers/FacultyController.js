@@ -31,6 +31,8 @@ const facultyLogin = asyncHandler(async (req, res) => {
     }
   });
 
+/*************************************************** USER TYPE REGISTRATION ***************************************************/
+
 const facultyPanelRegistration = asyncHandler(async (req, res) => {
 
   let hashedPassword, userPanel;
@@ -174,6 +176,10 @@ const facultyStudentRegistration = asyncHandler(async (req, res) => {
   }
 });
 
+/*************************************************** END USER TYPE REGISTRATION  ***************************************************/
+
+/*************************************************** SUPERVISION MONITORING ***************************************************/
+
 const facultyReadAssignSupervision = asyncHandler(async (req, res) => {
  
  const fetchSupervisorList = await Supervisor.find({facultyUser: req.userFaculty._id});
@@ -291,6 +297,9 @@ const facultyUpdateChooseStudentByID = asyncHandler(async (req, res) => {
   }
 });
 
+/*************************************************** END SUPERVISION MONITORING ***************************************************/
+
+/*************************************************** RPD EVALUATION ***************************************************/
 
 const facultyReadEvaluateRPDApplication = asyncHandler(async (req, res) => {
   const RPDApplicationList = await RPDApplication.find({});
@@ -414,8 +423,37 @@ const facultyApproveEvaluateRPDApplicationByID = asyncHandler(async (req, res) =
   }
 });
 
+/*************************************************** END RPD EVALUATION ***************************************************/
+
+/*************************************************** SUBJECT REGISTRATION MONITORING ***************************************************/
+
+const facultyReadSubjectStudent = asyncHandler(async (req, res) => {
+
+  const fetchStudentList = await Student.find();
+
+  if (fetchStudentList) {
+    res.json(fetchStudentList);
+  }
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+});
+
+const facultyReadSubjectStudentByID = asyncHandler(async (req, res) => {
+ 
+  const fetchStudentID = await Student.findById(req.params.id);
+
+  if (fetchStudentID) {
+    res.json(fetchStudentID);
+  } 
+  else {
+    res.status(404).json({ message: "Student is not found" });
+  }
+});
+
 export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
          facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
          facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID, 
-         facultyUpdateChooseStudentByID };
+         facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID };

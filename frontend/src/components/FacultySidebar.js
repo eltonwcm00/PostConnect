@@ -74,6 +74,9 @@ import { facultyLogout } from '../actions/facultyAction';
                   Student Data Report
                 </CDBSidebarMenuItem>
               </NavLink>
+              <NavLink exact to="/facultySubjectRegistration" className="sidebar-nav">
+                <CDBSidebarMenuItem icon="fa fa-plus" className="sidebar-icon-role">Assign Student With Passed Subjects</CDBSidebarMenuItem>
+              </NavLink>
               <CDBSidebarMenuItem icon="fa-light fa-right-from-bracket">
                 {facultyInfo && <CDBBtn onClick={handleLogout} color="primary" style={{backgroundColor: 'transparent', 
                   fontWeight: 'normal',

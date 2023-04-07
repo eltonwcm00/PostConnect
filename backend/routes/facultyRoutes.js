@@ -4,7 +4,7 @@ import {
    facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
    facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
    facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID, 
-   facultyUpdateChooseStudentByID,
+   facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID
 } from "../controllers/FacultyController.js";
 import { protectFaculty,} from "../middleware/authMiddleware.js";
 
@@ -26,6 +26,10 @@ router.route("/facultyReadEvaluateRPDApplication").get(protectFaculty,facultyRea
 router.route("/facultyReadEvaluateRPDApplication2/:id").get(facultyReadEvaluateRPDApplicationByID)
                                                       .put(protectFaculty, facultyApproveEvaluateRPDApplicationByID)
 router.route("/facultyReadEvaluateRPDApplication/:id").get(facultyReadEvaluateRPDApplicationByID)
-                                                      .put(protectFaculty, facultyRejectEvaluateRPDApplicationByID);                                              
+                                                      .put(protectFaculty, facultyRejectEvaluateRPDApplicationByID); 
+
+router.route("/facultyReadSubjectStudent").get(protectFaculty, facultyReadSubjectStudent);
+router.route("/facultyReadSubjectStudent/:id").get(facultyReadSubjectStudentByID)
+                                             
 export default router;
 

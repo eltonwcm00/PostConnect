@@ -40,19 +40,19 @@ const SupervisorViewRPD = () => {
                     <th className="table-desc-th">Mini Thesis Title</th>
                     <th className="table-desc-th">Grade</th>
                     <th className="table-desc-th">Status</th>
-                    <th className="table-desc-th">Retry Attempt</th>
+                    {/* <th className="table-desc-th">Retry Attempt</th> */}
                   </tr>
                 </CDBTableHeader>
                 <CDBTableBody>
                   {
                     cwInfoSuccess && cwInfoSuccess.map((list) => (
                         <tr className='table-desc' key={list._id}>
-                          <td> {moment(list.updatedAt).format('l')} </td>
+                          <td> {moment(list.updatedAt).format('L')} </td>
                           <td> {list.fullname} </td>
                           <td> {list.miniThesisTitle} </td>
-                          <td> {list.status ? 'US' : 'S' } </td>
-                          <td> {list.status ? 'Failed' : 'Passed' } </td>
-                          <td> {list.studentRef.retryRPDAttempt} </td>
+                          <td> {list.status ? 'S' : 'US' } </td>
+                          <td> {list.status ? 'Passed' : 'Failed' } </td>
+                          {/* <td> {list.studentRef.retryRPDAttempt} </td> */}
                         </tr>
                         // console.log("hi")
                       )

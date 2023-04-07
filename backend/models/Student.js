@@ -29,6 +29,14 @@ const StudentSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
+    subjectA: {
+      type: String,
+      default: " ",
+    },
+    subjectB: {
+      type: String,
+      default: " ",
+    },
     facultyUser: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

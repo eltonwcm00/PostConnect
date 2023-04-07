@@ -29,6 +29,8 @@ const studentLogin = asyncHandler(async (req, res) => {
     }
 });
 
+/*************************************************** RPD ***************************************************/
+
 const studentViewDataRequestRPD = asyncHandler(async (req, res) => {
 
   let currentStudInfo;
@@ -156,6 +158,9 @@ const studentViewRPDApplication = asyncHandler(async (req, res) => {
   }
 });
 
+/*************************************************** END RPD ***************************************************/
+
+/*************************************************** MEETING LOG ***************************************************/
 const studentSubmitMeetingLog = asyncHandler(async (req, res) => {
   
   let submitLog;
@@ -208,5 +213,9 @@ const studentViewMeetingLog = asyncHandler(async (req, res) => {
         from your registration date. Last day to submit is on ${moment(currentStudent.dateJoin).add(14, 'days').format('MMMM Do YYYY')}`});
   }
 });
+/*************************************************** END MEETING LOG ***************************************************/
+
+/*************************************************** WCD ***************************************************/
+
 
 export {studentLogin, studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog, studentViewMeetingLog};
