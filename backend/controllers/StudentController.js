@@ -6,6 +6,7 @@ import Student from "../models/Student.js";
 import RPDApplication from "../models/RPDApplication.js";
 import RPD from "../models/RPD.js";
 import MeetingLog from "../models/MeetingLog.js";
+import WCDApplication from "../models/WCDApplication.js";
 
 const studentLogin = asyncHandler(async (req, res) => {
     const { usernameStud, password } = req.body;
@@ -226,5 +227,64 @@ const studentViewMeetingLog = asyncHandler(async (req, res) => {
 
 /*************************************************** WCD ***************************************************/
 
+const studentRequestWCD = asyncHandler(async (req, res) => {
 
-export {studentLogin, studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog, studentViewMeetingLog};
+  const { thesisTitle, thesisPDF } = req.body;
+  const currentStudent = req.userStudent;
+
+  let appliedRPD;
+
+  const hasApplied = await WCDApplication.findOne({ studentUser: currentStudent });
+  // const isReApplyAllow = await Student.findOne({studentUser: currentStudent, 
+                                                // retryRPDAttempt: {$gte: 1}});
+
+  const hasSupervisor = req.userStudent.supervisorUser;
+
+  if (!hasSupervisor) {
+    res.status(401).json({message: "Access denied! you have not been assigned to any supervisor, please refer to faculty"});
+  }
+  else if (hasApplied) { 
+    res.status(401).json({message: "You have applied the application previously"});
+  }
+  else if (currentStudent) {
+    
+    // if(fullName.trim().length === 0) { res.status(401).json({message: "Please fill in your full name"});}
+    if(thesisTitle.trim().length === 0) {res.status(401).json({message: "Please fill in your full thesis title"});}
+    // else if(supervisorName.trim().length === 0) { res.status(401).json({message: "Please fill your supervisor name"});}
+    else if (thesisPDF.trim().length === 0) { res.status(401).json({message: "Please upload your full thesis .pdf file"});}
+
+    appliedRPD = await WCDApplication.create({
+      //fullName,
+      fullName: currentStudent.usernameStud,
+      thesisTitle,
+      // supervisorName,
+      supervisorName: hasSupervisor,
+      thesisPDF, // miniThesisPDF: req.file, //req.file.filename
+      dateApplyWCD: moment(),
+      studentUser: currentStudent,
+    });
+  }
+  else {
+    res.status(500);
+    console.log(req.file.path);
+    throw new Error("Internal server error");
+  }
+  
+  if (appliedRPD) {
+    res.status(201).json({
+      _id: appliedRPD._id,
+      fullName: appliedRPD.fullName,
+      fullThesisTitle: appliedRPD.thesisTitle,
+      supervisorName: appliedRPD.supervisorName,
+      thesisPDF: appliedRPD.thesisPDF,
+      dateApplyWCD: appliedRPD.dateApplyWCD,
+      applicationStatus: appliedRPD.applicationStatus,
+      studentUser: appliedRPD.studentUser,
+      successMessage: "The WCD request application is submitted",
+    })
+  }
+});
+
+
+export { studentLogin, studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog, studentViewMeetingLog,
+        studentRequestWCD };

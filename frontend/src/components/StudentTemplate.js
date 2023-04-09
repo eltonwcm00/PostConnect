@@ -16,8 +16,8 @@ const StudentTemplate = ({ children }) => {
   else if (window.location.href === pageURL+'studentSubmitMeetingLog'){
     pageTitle = "Meeting Log Submission";
   } 
-  else if (window.location.href === pageURL+'#') {
-    pageTitle = "#";
+  else if (window.location.href === pageURL+'studentRequestWCD') {
+    pageTitle = "Request For Work Completion Defence";
   }
   else if (window.location.href === pageURL+'#') {
     pageTitle = "#";

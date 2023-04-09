@@ -48,7 +48,7 @@ import { studentLogout } from '../actions/studentAction';
               <NavLink exact to="/studentRequestRPD" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-file-text">Request For Research Proposal Defence</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#" className="sidebar-nav">
+              <NavLink exact to="/studentRequestWCD" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-file-text"> Request For Work Completion Defence </CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="#">

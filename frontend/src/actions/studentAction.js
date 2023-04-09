@@ -194,3 +194,37 @@ export const studentMeetingLogStatus = () => async (dispatch, getState) => {
       console.log(error);
   }
 };
+
+export const studentWCDRequest = (fullName, thesisTitle, supervisorName, thesisPDF) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: STUDENT_CW_REQUEST });
+
+    const {
+      studentLogin: { studentInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${studentInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      "http://localhost:5000/api/student/studentRequestWCD",
+      { fullName, thesisTitle, supervisorName, thesisPDF},
+      config
+    );
+
+    dispatch({ type: STUDENT_CW_SUCCESS, payload: data });
+
+  } catch (error) {
+    dispatch({
+      type: STUDENT_CW_FAIL,
+      payload:
+        error.response 
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+}; 

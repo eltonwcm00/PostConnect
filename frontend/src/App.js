@@ -23,6 +23,7 @@ import StudentLogin from './screens/Student/StudentLogin/StudentLogin';
 import StudentHomepage from './screens/Student/StudentHompage/StudentHomepage';
 import StudentRPDRequest from './screens/Student/StudentRPDRequest/StudentRPDRequest';
 import StudentMeetingLog from './screens/Student/StudentMeetingLog/StudentMeetingLog';
+import StudentWCDRequest from './screens/Student/StudentWCDRequest/StudentWCDRequest';
 
 import SupervisorLogin from './screens/Supervisor/SupervisorLogin/SupervisorLogin';
 import SupervisorHomepage from './screens/Supervisor/SupervisorHomepage/SupervisorHomepage';
@@ -65,6 +66,8 @@ function App() {
         
         <Route exact path="/studentRequestRPD" element={<StudentRPDRequest />}/>
         <Route exact path="/studentSubmitMeetingLog" element={<StudentMeetingLog />}/>
+        <Route exact path="/studentRequestWCD" element={<StudentWCDRequest />}/>
+
 
         <Route exact path="/supervisorViewMeetingLog" element={<SupervisorViewMeetingLog />}/>
         <Route exact path="/supervisorViewMeetingLog/:id" element={<SupervisorViewMeetingLogID />}/>
