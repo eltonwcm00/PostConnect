@@ -30,12 +30,12 @@ const StudentSchema = mongoose.Schema(
       default: 0,
     },
     subjectA: {
-      type: String,
-      default: " ",
+      type: Boolean,
+      default: false,
     },
     subjectB: {
-      type: String,
-      default: " ",
+      type: Boolean,
+      default: false,
     },
     facultyUser: {
       type: mongoose.Schema.Types.ObjectId,

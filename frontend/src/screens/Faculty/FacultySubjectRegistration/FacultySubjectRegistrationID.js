@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Table, Button, Row, Col } from "react-bootstrap";
+import { facultyUpdateSubjectStudent } from "../../../actions/facultyAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
+import SuccessMessage from "../../../components/SuccessMessage";
 import FacultyTemplate from "../../../components/FacultyTemplate";
 
 const FacultySubjectRegistrationID = () => {
     
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { id } = useParams();
+    
     const facultyLogin = useSelector((state) => state.facultyLogin);
-  const { facultyInfo } = facultyLogin;
+    const { facultyInfo } = facultyLogin;
 
-    const studentListUpdate = useSelector((state) => state.facultyUpdateChooseStudent);
-    const { successMsg, fetchStudent, error2 } = studentListUpdate;
+    const studentSubjectUpdate = useSelector((state) => state.facultyUpdateChooseStudent);
+    const { successMsg, fetchStudent, error2 } = studentSubjectUpdate;
 
-    const [subjectA, setSubjectA] = useState("");
-    const [subjectB, setSubjectB] = useState("");
+    const [subjectA, setSubjectA] = useState(null);
+    const [subjectB, setSubjectB] = useState(null);
     
     const subjectSelectionA = (e) => {
         setSubjectA(e.target.checked);
@@ -24,27 +30,32 @@ const FacultySubjectRegistrationID = () => {
     const subjectSelectionB = (e) => {
         setSubjectB(e.target.checked);
     };
+
+    useEffect(() => {
+        if (!facultyInfo) {
+          navigate('/');
+        }
+    }, [navigate, facultyInfo]);
     
     const submitHandler = (e) => {
         e.preventDefault();
-        
-        if(subjectA && subjectB) {
-            console.log("Subject A and Subject B is selected");
-        }
-        else if(subjectA) {
-            console.log("Subject A is selected");
-        }
-        else if(subjectB) {
-            console.log("Subject B is selected");
-        }
-        else {
-            console.log("No subject is selected")
-        }
+        dispatch(facultyUpdateSubjectStudent(id, subjectA, subjectB))
     }
+
+    useEffect(() => {
+        if (successMsg) {
+          const timer = setTimeout(() => {
+            navigate("/facultySubjectRegistration");
+          }, 5000);
+          return () => clearTimeout(timer);
+        }
+    }, [navigate, successMsg])
   
     return (
         <FacultyTemplate>
         <div className="form-title-desc-container">Assign Passed Subject</div>
+            {error2 && <ErrorMessage variant="danger">{fetchStudent.failMessage}</ErrorMessage>}
+            {successMsg && <SuccessMessage variant="success">{fetchStudent.successMessage}</SuccessMessage>}
             <Form>
                 <Row className="justify-content-md-center" style={{textAlign: 'center'}}>
                     <Col md="8">

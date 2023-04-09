@@ -44,6 +44,7 @@ const FacultySubjectRegistration = () => {
                   <th>Subject A</th>
                   <th>Subject B</th>
                   <th>Action</th>
+                  <th>Status</th>
                 </tr>
               </CDBTableHeader>
               <CDBTableBody>
@@ -52,9 +53,10 @@ const FacultySubjectRegistration = () => {
                     <tr className='table-desc' key={list._id}>
                       <td> {index++} </td>
                       <td> {list.usernameStud} </td>
-                      <td> {"Data Structure and Algorithm"} </td>
-                      <td> {"Web App Development with MERN Stack"} </td>
+                      <td> {list.subjectA ? "Data Structure and Algorithm" : <b>-</b>} </td>
+                      <td> {list.subjectB ? "Web App Development with MERN Stack" : <b>-</b>} </td>
                       <td className='table-details-button'><Button href={`http://localhost:3000/facultySubjectRegistration/${list._id}`}>Assign</Button></td>
+                      {(list.subjectA || list.subjectB) && <td><i className="fa-sharp fa-solid fa-check"></i></td>}
                     </tr>           
                 )   
                ) 

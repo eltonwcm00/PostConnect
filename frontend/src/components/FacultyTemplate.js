@@ -1,7 +1,7 @@
 import React from 'react'
 import MainScreen from './MainScreen'
 import FacultySidebar from './FacultySidebar'
-import {useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const FacultyTemplate = ({ children }) => {
 

@@ -452,8 +452,45 @@ const facultyReadSubjectStudentByID = asyncHandler(async (req, res) => {
   }
 });
 
+const facultyUpdateSubjectStudentByID = asyncHandler(async (req, res) => {
+
+  const { subjectA, subjectB } = req.body;
+
+  const updateStudentSubject = await Student.findById(req.params.id);
+
+  if(subjectA && subjectB) {
+    updateStudentSubject.subjectA = true;
+    updateStudentSubject.subjectB = true;
+  }
+  else if(subjectA) {
+      updateStudentSubject.subjectA = true;
+  }
+  else if(subjectB) {
+      updateStudentSubject.subjectB = true;
+  }
+  else {
+      console.log("No subject is selected");
+  }
+  const updatedSubject = await updateStudentSubject.save();
+
+  if (updatedSubject) {
+    res.status(201).json({
+      id: updatedSubject._id,
+      passSubjectA: updatedSubject.subjectA,
+      passSubjectB: updatedSubject.subjectB,
+      successMessage: "Assigning pass subject to the student successfully"
+    })
+  }
+  else {
+    res.status(401).json({
+      failMessage: "Assigning failed"
+    })
+  }
+})
+
 export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
          facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
          facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID, 
-         facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID };
+         facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID, facultyUpdateSubjectStudentByID,
+       };
