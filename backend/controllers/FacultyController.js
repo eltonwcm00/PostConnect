@@ -8,6 +8,8 @@ import Supervisor from "../models/Supervisor.js";
 import Student from "../models/Student.js";
 import RPDApplication from "../models/RPDApplication.js";
 import RPD from "../models/RPD.js";
+import WCDApplication from "../models/WCDApplication.js";
+import WCD from "../models/WCD.js";
 
 const facultyLogin = asyncHandler(async (req, res) => {
   
@@ -488,9 +490,137 @@ const facultyUpdateSubjectStudentByID = asyncHandler(async (req, res) => {
   }
 })
 
+/*************************************************** WCD EVALUATION ***************************************************/
+
+const facultyReadEvaluateWCDApplication = asyncHandler(async (req, res) => {
+  const WCDApplicationList = await WCDApplication.find({});
+
+  if(WCDApplicationList) {
+    res.json(WCDApplicationList);
+  } 
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+});
+
+const facultyReadEvaluateWCDApplicationByID = asyncHandler(async (req, res) => {
+ 
+  const fetchWCDApplicationID = await WCDApplication.findById(req.params.id);
+
+  const fetchWCDApplicationStudentDataID = await WCDApplication.findById(req.params.id)
+                                                  .populate('studentUser');
+
+  const fetchWCDApplicationStudentData2ID = await WCDApplication.findById(req.params.id)
+                                                    .populate({
+                                                      path: 'studentUser',
+                                                      model: 'Student',
+                                                      populate: {
+                                                        path: 'supervisorUser',
+                                                        model: 'Supervisor',
+                                                      },
+                                                  })
+
+  if (fetchWCDApplicationStudentDataID) {
+    res.json(fetchWCDApplicationStudentDataID);
+  }
+  else {
+    res.status(401).json({ message: "Error in student .db ref." });
+  }
+
+  if (fetchWCDApplicationStudentData2ID) {
+    res.json(fetchWCDApplicationStudentData2ID);
+  }
+  else {
+    res.status(401).json({ message: "Error in supervisor .db ref." });
+  }
+  
+  if (fetchWCDApplicationID) {
+    res.status(201).json(fetchWCDApplicationID);
+  } 
+  else {
+    res.status(401).json({ message: "WCD Application is not found" });
+  }
+});
+
+const facultyRejectEvaluateWCDApplicationByID = asyncHandler(async (req, res) => {
+
+  const fetchWCDApplicationID = await WCDApplication.findById(req.params.id);
+  
+  if (fetchWCDApplicationID) {
+    fetchWCDApplicationID.applicationStatus = false;
+    const rejectWCDApplicationID = await fetchWCDApplicationID.save();
+    res.status(201).json(rejectWCDApplicationID);
+  } 
+  else {
+    res.status(401).json({ message: "Internal server error" });
+  }
+});
+
+const facultyApproveEvaluateWCDApplicationByID = asyncHandler(async (req, res) => {
+
+  let insertRPD;
+  const { dateScheduleWCD } = req.body;
+
+  const fetchWCDApplicationID = await WCDApplication.findById(req.params.id);
+  
+  if (fetchWCDApplicationID) {
+    fetchWCDApplicationID.applicationStatus = true;
+    const approveWCDApplicationID = await fetchWCDApplicationID.save();
+    
+    if (approveWCDApplicationID) {
+      const readTrueApplicationStatus = await WCDApplication.findOne({_id: req.params.id, applicationStatus: true});
+        if (!dateScheduleWCD) {
+          res.status(401).json({ message: "Please pick a date to schedule the student's WCD" });
+        } 
+        else if (moment(dateScheduleWCD) < moment()) {
+          res.status(401).json({ message: "Invalid, schedule date is not greater than today's date" });
+        } 
+        else {
+          if (readTrueApplicationStatus) {
+            insertRPD = await WCD.create({
+              studentRef: readTrueApplicationStatus.studentUser,
+              wcdApplication: readTrueApplicationStatus._id,
+              fullname: readTrueApplicationStatus.fullName,
+              thesisTitle: readTrueApplicationStatus.thesisTitle,
+              dateScheduleWCD,
+            })
+          } 
+          else {
+            res.status(401).json({ message: "Error in reading the application with true status" });
+          }
+        }
+
+        if(insertRPD) {
+          res.status(201).json({ 
+            _id: insertRPD._id,
+            studRef: insertRPD.studentRef,
+            fullName: insertRPD.fullName,
+            thesisTitle: insertRPD.thesisTitle,
+            dateScheduleWCD: insertRPD.dateScheduleWCD,
+            wcdApplicationRef: insertRPD.wcdApplication,
+            message: "The application is approved." 
+          });
+        } else {
+          res.status(401).json({ message: "Unable to approve the application" });
+        }
+    }
+    else {
+      res.status(404).json({ message: "Unable to update status of the request application to true" });
+    }
+  } 
+  else {
+    res.status(404).json({ message: "Internal server error" });
+  }
+});
+
+/*************************************************** END WCD EVALUATION ***************************************************/
+
 export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
          facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
          facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID, 
          facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID, facultyUpdateSubjectStudentByID,
+         facultyReadEvaluateWCDApplication, facultyReadEvaluateWCDApplicationByID, facultyRejectEvaluateWCDApplicationByID, 
+         facultyApproveEvaluateWCDApplicationByID
        };

@@ -5,7 +5,8 @@ import {
    facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
    facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID, 
    facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID,
-   facultyUpdateSubjectStudentByID
+   facultyUpdateSubjectStudentByID, facultyReadEvaluateWCDApplication, facultyReadEvaluateWCDApplicationByID,
+   facultyRejectEvaluateWCDApplicationByID, facultyApproveEvaluateWCDApplicationByID
 } from "../controllers/FacultyController.js";
 import { protectFaculty,} from "../middleware/authMiddleware.js";
 
@@ -20,7 +21,7 @@ router.route("/facultyStudentRegistration").post(protectFaculty, facultyStudentR
 router.route("/facultyReadAssignSupervision").get(protectFaculty, facultyReadAssignSupervision);
 router.route("/facultyReadAssignSupervision/:id").get(facultyReadAssignSupervisionByID)
                                                  .put(protectFaculty, facultyUpdateAssignSupervisionByID);
- router.route("/facultyReadChooseStudent").get(protectFaculty, facultyReadChooseStudent)
+router.route("/facultyReadChooseStudent").get(protectFaculty, facultyReadChooseStudent)
 router.route("/facultyReadChooseStudent/:id").get(facultyReadChooseStudentByID)
                                              .put(protectFaculty,facultyUpdateChooseStudentByID)
 router.route("/facultyReadEvaluateRPDApplication").get(protectFaculty,facultyReadEvaluateRPDApplication);
@@ -31,6 +32,10 @@ router.route("/facultyReadEvaluateRPDApplication/:id").get(facultyReadEvaluateRP
 
 router.route("/facultyReadSubjectStudent").get(protectFaculty, facultyReadSubjectStudent);
 router.route("/facultyReadSubjectStudent/:id").get(facultyReadSubjectStudentByID).put(protectFaculty, facultyUpdateSubjectStudentByID);
+router.route("/facultyReadEvaluateWCDApplication").get(protectFaculty,facultyReadEvaluateWCDApplication);
+router.route("/facultyReadEvaluateWCDApplication2/:id").get(facultyReadEvaluateWCDApplicationByID).put(protectFaculty, facultyApproveEvaluateWCDApplicationByID);
+router.route("/facultyReadEvaluateWCDApplication/:id").get(facultyReadEvaluateWCDApplicationByID)
+                                                      .put(protectFaculty, facultyRejectEvaluateWCDApplicationByID); 
                                              
 export default router;
 

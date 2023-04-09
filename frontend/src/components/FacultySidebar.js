@@ -49,7 +49,7 @@ import { facultyLogout } from '../actions/facultyAction';
               <NavLink exact to="/facultyEvaluateRPDApplication" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-file-text">Research Proposal Defence Request Application</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/#" className="sidebar-nav">
+              <NavLink exact to="/facultyEvaluateWCDApplication" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-file-text">
                   Work Completion Defence Request Application
                 </CDBSidebarMenuItem>

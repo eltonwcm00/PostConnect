@@ -37,6 +37,9 @@ const FacultyTemplate = ({ children }) => {
   else if (window.location.href === pageURL+'facultySubjectRegistration' || window.location.href === pageURL+`facultySubjectRegistration/${id}`) {
     pageTitle = "Assign Student With Passed Subjects";
   }
+  else if (window.location.href === pageURL+'facultyEvaluateWCDApplication' || window.location.href === pageURL+`facultyEvaluateWCDApplication/${id}`) {
+    pageTitle = "Work Completion Defence Request Application";
+  }
   else {
     pageTitle = null;
   }

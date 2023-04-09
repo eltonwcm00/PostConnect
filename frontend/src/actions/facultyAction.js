@@ -484,3 +484,107 @@ export const facultyUpdateSubjectStudent = (id, subjectA, subjectB) => async (di
     });
   }
 };
+
+export const facultyReadEvaluateWCDApplication = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FACULTY_APPLICATION_LIST_REQUEST,
+    });
+
+    const {
+      facultyLogin: { facultyInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${facultyInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("http://localhost:5000/api/faculty/facultyReadEvaluateWCDApplication", config);
+
+    dispatch({
+      type: FACULTY_APPLICATION_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: FACULTY_APPLICATION_LIST_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+export const facultyRejectWCDApplication = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FACULTY_UPDATE_APPLICATION_REQUEST,
+    });
+
+    const {
+      facultyLogin: { facultyInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${facultyInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadEvaluateWCDApplication/${id}`, {}, config);
+
+    dispatch({
+      type: FACULTY_UPDATE_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type:FACULTY_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+}
+
+export const facultyApproveWCDApplication = (id, dateScheduleWCD) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FACULTY_UPDATE_APPLICATION_REQUEST,
+    });
+
+    const {
+      facultyLogin: { facultyInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${facultyInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadEvaluateWCDApplication2/${id}`, {dateScheduleWCD}, config);
+
+    dispatch({
+      type: FACULTY_APPROVE_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type:FACULTY_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+}

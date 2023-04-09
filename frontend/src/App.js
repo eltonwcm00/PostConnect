@@ -18,6 +18,8 @@ import FacultyEvaluateRPDApplicationID from './screens/Faculty/FacultyEvaluateRP
 import FacultyChooseStud from './screens/Faculty/FacultyChooseStudent/FacultyChooseStud';
 import FacultySubjectRegistration from './screens/Faculty/FacultySubjectRegistration/FacultySubjectRegistration';
 import FacultySubjectRegistrationID from './screens/Faculty/FacultySubjectRegistration/FacultySubjectRegistrationID';
+import FacultyEvaluateWCDApplication from './screens/Faculty/FacultyEvaluateWCDApplication/FacultyEvaluateWCDApplication';
+import FacultyEvaluateWCDApplicationID from './screens/Faculty/FacultyEvaluateWCDApplication/FacultyEvaluateWCDApplicationID';
 
 import StudentLogin from './screens/Student/StudentLogin/StudentLogin';
 import StudentHomepage from './screens/Student/StudentHompage/StudentHomepage';
@@ -75,6 +77,8 @@ function App() {
 
         <Route exact path="/panelEvaluateRPD" element={<PanelEvaluateRPD />}/>
         <Route exact path="/panelEvaluateRPD/:id" element={<PanelEvaluateRPDID />}/>
+        <Route exact path="/facultyEvaluateWCDApplication" element={<FacultyEvaluateWCDApplication />}/>
+        <Route exact path="/facultyEvaluateWCDApplication/:id" element={<FacultyEvaluateWCDApplicationID />}/>
 
         <Route path="*" element={<Error404 />} />
       </Routes>
