@@ -139,7 +139,7 @@ export const studentApplicationStatus = () => async (dispatch, getState) => {
   }
 };
 
-export const studentSubmitMeetingLog = (contentLog) => async (dispatch, getState) => {
+export const studentSubmitMeetingLog = (dateMeetingLog, contentLog) => async (dispatch, getState) => {
   try {
     dispatch({ type: STUDENT_CW_REQUEST });
 
@@ -156,7 +156,7 @@ export const studentSubmitMeetingLog = (contentLog) => async (dispatch, getState
 
     const { data } = await axios.post(
       "http://localhost:5000/api/student/studentSubmitMeetingLog",
-      { contentLog },
+      { dateMeetingLog, contentLog },
       config
     );
 

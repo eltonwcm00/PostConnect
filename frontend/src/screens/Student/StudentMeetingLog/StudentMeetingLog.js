@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import moment from 'moment';
+import Calendar from 'react-calendar';
 import {useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,7 @@ const StudentMeetingLog = () => {
     let navigate = useNavigate();
 
     const [contentLog, setContentLog] = useState("");
+    const [dateMeetingLog, setDateMeetingLog] = useState(null);
     
     const dispatch = useDispatch();
 
@@ -43,7 +44,7 @@ const StudentMeetingLog = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(studentSubmitMeetingLog(contentLog));
+        dispatch(studentSubmitMeetingLog(dateMeetingLog, contentLog));
     };
 
     return (
@@ -54,9 +55,17 @@ const StudentMeetingLog = () => {
             {loading && <Loading />}
             <Form className="form" onSubmit={submitHandler} enctype="multipart/form-data">
                 <Form.Group as={Row}  controlId="formBasicEmail">
-                    <Form.Label column sm={2} style={{marginTop: -5}}>Today's Date</Form.Label>
-                    <Col sm={10} mb={3}>
-                        <small>{moment().format('l')}</small>
+                    <Form.Label column sm={2} style={{marginTop: -5}}>Date Join</Form.Label>
+                    <Col sm={10} mb={3}>                       
+                        {/* <Form.Group as={Row} className="mb-4" controlId="formBasicPassword"> */}
+                            
+                            <Calendar
+                                value={dateMeetingLog}
+                                onChange={setDateMeetingLog}
+                                dateFormat="MMMM d, yyyy"
+                                className="mb-5"
+                            />
+                        
                     </Col>
                     <Form.Label column sm={2}>Decription*</Form.Label>
                     <Col sm={10} mb={3}>

@@ -165,15 +165,24 @@ const studentSubmitMeetingLog = asyncHandler(async (req, res) => {
   
   let submitLog;
   const currentStudent = req.userStudent;
-  const today = moment().format('l');
+  // const today = moment().format('l');
 
-  const { contentLog } = req.body;
+  const { contentLog, dateMeetingLog } = req.body;
+
+  let dateSubmit_ = moment(dateMeetingLog);
+  let todayDate = moment();
 
   const studentSupervisor = await Student.findById(currentStudent).populate('supervisorUser')
-  const recentExist = await MeetingLog.findOne({ studentUser: currentStudent, dateLog: today});
+  // const recentExist = await MeetingLog.findOne({ studentUser: currentStudent, dateLog: today});
 
-  if (recentExist) {
-    res.status(401).json({message: "You have already submitted the meeting log for today, please try again on tomorrow"});
+  // if (recentExist) {
+  //   res.status(401).json({message: "You have already submitted the meeting log for today, please try again on tomorrow"});
+  // }
+  if (!dateMeetingLog) {
+    res.status(401).json({message: "Please fill in the meeting log date"});
+  }
+  else if (dateSubmit_ > todayDate) {
+    res.status(401).json({message: "Invalid, the meeting log date is greater than today's date"});
   }
   else if (contentLog.trim().length === 0) {
     res.status(401).json({message: "Please fill in the meeting log content"});
@@ -181,7 +190,7 @@ const studentSubmitMeetingLog = asyncHandler(async (req, res) => {
   else {
     submitLog = await MeetingLog.create({
       contentLog,
-      dateLog: moment().format('l'),
+      dateLog: moment(dateMeetingLog).format('l'),
       studentUser: currentStudent,
       studentSupervisor: studentSupervisor.supervisorUser,
     })

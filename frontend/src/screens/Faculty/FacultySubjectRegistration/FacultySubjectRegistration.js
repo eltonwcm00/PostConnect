@@ -62,8 +62,8 @@ const FacultySubjectRegistration = () => {
                ) 
               }
             </CDBTableBody>
-            </CDBTable>
-          </CDBContainer>
+          </CDBTable>
+        </CDBContainer>
       </FacultyTemplate>
     </>
   )
