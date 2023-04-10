@@ -17,7 +17,7 @@ import "../InputForm.css";
 const FacultyEvaluateWCDApplicationID = () => {
 
     let navigate = useNavigate();
-    let msgStudent, msgSupervisor, msgDegree, msgThesis, msgDate, passedSubjectA, passedSubjectB;
+    let msgStudent, msgSupervisor, msgDegree, msgThesis, msgDate, passedSubjectA, passedSubjectB, passedStudRPD;
     let invalid = false, months, days;
 
     // request form
@@ -36,6 +36,7 @@ const FacultyEvaluateWCDApplicationID = () => {
     const [applicationStatus, setApplicationStatus] = useState();
     const [passedSubA, setPassedSubA] = useState();
     const [passedSubB, setPassedSubB] = useState();
+    const [passedRPD, setPassedRPD] = useState();
 
     // Bootstrap Modal
     const [show, setShow] = useState(false); const handleShow = () => setShow(true); const handleClose = () => setShow(false);
@@ -45,7 +46,7 @@ const FacultyEvaluateWCDApplicationID = () => {
     const [showe, setShowe] = useState(false); const handleShowe = () => setShowe(true); const handleClosee = () => setShowe(false);
     const [showf, setShowf] = useState(false); const handleShowf = () => setShowf(true); const handleClosef = () => setShowf(false);
     const [showg, setShowg] = useState(false); const handleShowg = () => setShowg(true); const handleCloseg = () => setShowg(false);
-    
+    const [showh, setShowh] = useState(false); const handleShowh = () => setShowh(true); const handleCloseh = () => setShowh(false);
 
     const { id } = useParams();
     const dispatch =  useDispatch();
@@ -80,6 +81,7 @@ const FacultyEvaluateWCDApplicationID = () => {
             setUsernameSup(data.studentUser.supervisorUser); 
             setPassedSubA(data.studentUser.subjectA);
             setPassedSubB(data.studentUser.subjectB);
+            setPassedRPD(data.studentUser.retryRPDAttempt);
 
             console.log(data);
         };
@@ -151,6 +153,14 @@ const FacultyEvaluateWCDApplicationID = () => {
     } else {
         passedSubjectB = <><span className="valid-msg">Valid: </span>
             Student's subject B is passed</>
+    }
+    if(passedRPD > 0) {
+        passedStudRPD = <><span className="invalid-msg">Invalid: </span>
+             Student's RPD is failed</>
+        invalid = true;
+    } else {
+        passedStudRPD = <><span className="valid-msg">Valid: </span>
+             Student's RPD is passed</>
     }
 
     switch(degreeLvl) {
@@ -277,6 +287,14 @@ const FacultyEvaluateWCDApplicationID = () => {
                                         { passedSubB && <i className="fa-solid fa-check" onClick={handleShowg} style={{ cursor: 'pointer' }}></i>}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>Research Proposal Def.</td>
+                                    <td>{}</td>
+                                    <td>{passedRPD > 0 ? "Failed" : "Passed"}</td>
+                                    <td>
+                                        {passedRPD > 0 ? <i className="fa-solid fa-xmark" onClick={handleShowh} style={{ cursor: 'pointer', color: 'red' }}></i> : <i className="fa-solid fa-check" onClick={handleShowh} style={{ cursor: 'pointer' }}></i> }
+                                    </td>
+                                </tr>
                             </tbody>
                         </Table>
 
@@ -313,6 +331,9 @@ const FacultyEvaluateWCDApplicationID = () => {
                                 </tr>
                                 <tr>
                                     <td>{passedSubjectB}</td>
+                                </tr>
+                                <tr>
+                                    <td>{passedStudRPD}</td>
                                 </tr>
                             </tbody>
                         </Table>    
@@ -378,6 +399,15 @@ const FacultyEvaluateWCDApplicationID = () => {
                             </Modal.Header>
                             <Modal.Body>
                                 {passedSubjectB}
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showh} onHide={handleCloseh} dialogClassName="modal-90w">
+                            <Modal.Header closeButton>
+                            <Modal.Title>Status: Research Proposal Defence</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {passedStudRPD}
                             </Modal.Body>
                         </Modal>
                     </div>
