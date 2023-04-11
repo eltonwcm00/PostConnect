@@ -59,6 +59,7 @@ const PanelEvaluateWCDID = () => {
         switch(grade) {
             case 'Satisfactory': 
                 dispatch(panelEvaluatePassWCD(id));
+                break;
             case 'Unsatisfactory':
                 dispatch(panelEvaluateFailWCD(id));
                 break;

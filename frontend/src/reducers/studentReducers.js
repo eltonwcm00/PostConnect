@@ -13,6 +13,7 @@ import {
     STUDENT_CW_FAIL,
 
     STUDENT_APPLICATION,
+    STUDENT_APPLICATION_2,
     STUDENT_MEETING_LOG,
 } from "../constants/studentConstants";
 
@@ -77,3 +78,12 @@ export const studentMeetingLogStatusReducer = (state = {}, action) => {
     }
 };
 
+export const studentApplicationStatus2Reducer = (state = {}, action) => {
+  switch (action.type) {
+      case  STUDENT_APPLICATION_2:
+        return { applicationStatusMsg2: true,
+                 currentApplicationInfo2: action.payload };
+      default:
+        return state;
+    }
+};

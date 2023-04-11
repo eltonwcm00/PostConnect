@@ -7,6 +7,7 @@ import RPDApplication from "../models/RPDApplication.js";
 import RPD from "../models/RPD.js";
 import MeetingLog from "../models/MeetingLog.js";
 import WCDApplication from "../models/WCDApplication.js";
+import WCD from "../models/WCD.js";
 
 const studentLogin = asyncHandler(async (req, res) => {
     const { usernameStud, password } = req.body;
@@ -21,6 +22,7 @@ const studentLogin = asyncHandler(async (req, res) => {
         dateJoined: userStudent.dateJoin,
         isStudent: true,
         retryRPDAttempt: userStudent.retryRPDAttempt,
+        retryWCDAtempt: userStudent.retryWCDAttempt,
         token: generateToken(userStudent._id),
         successMessage: "Logged in successfully!"
       });
@@ -235,15 +237,15 @@ const studentRequestWCD = asyncHandler(async (req, res) => {
   let appliedRPD;
 
   const hasApplied = await WCDApplication.findOne({ studentUser: currentStudent });
-  // const isReApplyAllow = await Student.findOne({studentUser: currentStudent, 
-                                                // retryRPDAttempt: {$gte: 1}});
+  const isReApplyAllow = await Student.findOne({studentUser: currentStudent, 
+                                                retryWCDAttempt: {$gte: 1}});
 
   const hasSupervisor = req.userStudent.supervisorUser;
 
   if (!hasSupervisor) {
     res.status(401).json({message: "Access denied! you have not been assigned to any supervisor, please refer to faculty"});
   }
-  else if (hasApplied) { 
+  else if (hasApplied && (!isReApplyAllow)) { 
     res.status(401).json({message: "You have applied the application previously"});
   }
   else if (currentStudent) {
@@ -284,7 +286,59 @@ const studentRequestWCD = asyncHandler(async (req, res) => {
     })
   }
 });
+
+const studentViewWCDApplication = asyncHandler(async (req, res) => {
+
+  const currentStudent = req.userStudent;
+  
+  const appliedForWCD = await WCDApplication.findOne({ studentUser: currentStudent}); 
+  const applicationFalseStatus = await WCDApplication.findOne({ studentUser: currentStudent, applicationStatus: false});
+  const applicationTrueStatus = await WCDApplication.findOne({ studentUser: currentStudent, applicationStatus: true});
+  const wcdPassed = await WCD.findOne({fullname:currentStudent.usernameStud, status: true});
+  const wcdFailed = await WCD.findOne({fullname:currentStudent.usernameStud, status: false});
+  // const rpdReapplied = await Student.findOne({fullname:currentStudent.usernameStud, retryRPDAttempt: {$gte: 1}});
+
+
+  if (appliedForWCD) { 
+    
+    if (applicationFalseStatus) {
+      res.status(201).json({applicationStatusMsg: `Sorry, your WCD application on ${moment(appliedForWCD.dateApplyWCD).format('MMMM Do YYYY')} 
+                              is rejected, please refer to your supervisor`});
+    }
+    else if (wcdPassed) {
+      res.status(201).json({applicationStatusMsg: "Congratulation! You have received a 'Satisfactory (S)' grade and passed your WCD"});
+    }
+    else if (wcdFailed) {
+      res.status(201).json({applicationStatusMsg: "Sorry, You have received a 'Unsatisfactory (US)' grade and failed your WCD please re-apply the WCD"});
+    }
+    else if (applicationTrueStatus) {
+      res.status(201).json({applicationStatusMsg: `Congratulation! Your WCD application on ${moment(appliedForWCD.dateApplyWCD).format('MMMM Do YYYY')} 
+                              is approved, the WCD will be happened roughly after 2 weeks`});
+    }
+    else {
+      res.status(201).json({applicationStatusMsg: `Your WCD application on ${moment(appliedForWCD.dateApplyWCD).format('MMMM Do YYYY')} 
+                              is pending to be approved`});
+    }
+  }
+  else {
+    let days = 0;
+    if (currentStudent.degreeLvl === 'Doctoral Degree (Part-Time)') { 
+      days = 365;
+    }
+    else if (currentStudent.degreeLvl === 'Doctoral Degree (Full-Time)') {
+      days = 274;
+    }
+    else if (currentStudent.degreeLvl === 'Master Degree (Part-Time)') {
+      days = 274;
+    }
+    else if (currentStudent.degreeLvl === 'Master Degree (Full-Time)') {
+      days = 183;
+    }
+    res.status(201).json({applicationStatusMsg: `You have not yet apply for the WCD, the due date to apply is on, 
+      ${moment(currentStudent.dateJoin).add(days, 'days').format('MMMM Do YYYY')}`});
+  }
+});
 /*************************************************** END WCD ***************************************************/
 
 export { studentLogin, studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog, studentViewMeetingLog,
-        studentRequestWCD };
+        studentRequestWCD, studentViewWCDApplication };

@@ -59,6 +59,7 @@ const PanelEvaluateRPDID = () => {
         switch(grade) {
             case 'Satisfactory': 
                 dispatch(panelEvaluatePassRPD(id));
+                break;
             case 'Unsatisfactory':
                 dispatch(panelEvaluateFailRPD(id));
                 break;

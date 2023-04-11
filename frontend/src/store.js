@@ -19,6 +19,7 @@ import {
   studentCWReadRequestReducer,
   studentCWRequestReducer,
   studentApplicationStatusReducer,
+  studentApplicationStatus2Reducer,
   studentMeetingLogStatusReducer
 } from "./reducers/studentReducers";
 
@@ -51,6 +52,7 @@ const reducer = combineReducers({
     studentCWReadRequest: studentCWReadRequestReducer,
     studentCWRequest: studentCWRequestReducer,
     studentApplicationStatus: studentApplicationStatusReducer,
+    studentApplicationStatus2: studentApplicationStatus2Reducer,
     studentMeetingLogStatus: studentMeetingLogStatusReducer,
 
     panelLogin: panelLoginReducer,

@@ -14,6 +14,7 @@ import {
 
     STUDENT_APPLICATION,
     STUDENT_MEETING_LOG,
+    STUDENT_APPLICATION_2,
 } from "../constants/studentConstants";
 
 import axios from "axios";
@@ -228,3 +229,25 @@ export const studentWCDRequest = (fullName, thesisTitle, supervisorName, thesisP
     });
   }
 }; 
+
+export const studentApplicationStatus2 = () => async (dispatch, getState) => {
+  try {
+    const {
+      studentLogin: { studentInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${studentInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/student/studentWCDApplicationStatus", config
+    );
+    dispatch({ type: STUDENT_APPLICATION_2, payload: data });
+  } catch (error) {
+      console.log(error);
+  }
+};
