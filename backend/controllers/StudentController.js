@@ -22,7 +22,7 @@ const studentLogin = asyncHandler(async (req, res) => {
         dateJoined: userStudent.dateJoin,
         isStudent: true,
         retryRPDAttempt: userStudent.retryRPDAttempt,
-        retryWCDAtempt: userStudent.retryWCDAttempt,
+        retryWCDAttempt: userStudent.retryWCDAttempt,
         token: generateToken(userStudent._id),
         successMessage: "Logged in successfully!"
       });

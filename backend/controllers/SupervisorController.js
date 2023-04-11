@@ -3,8 +3,8 @@ import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcryptjs";
 import Supervisor from "../models/Supervisor.js";
 import MeetingLog from "../models/MeetingLog.js";
-import RPDApplication from "../models/RPDApplication.js";
 import RPD from "../models/RPD.js";
+import WCD from "../models/WCD.js";
 import Student from "../models/Student.js";
 
 const supervisorLogin = asyncHandler(async (req, res) => {
@@ -63,9 +63,10 @@ const supervisorReadRPDResult = asyncHandler(async (req, res) => {
   // const readRPD = await RPD.find({studentRef: getSupervisingStudent._id}).populate('studRef'); // status, grade, mini thesis, date, fullname 
 
   // const rpdReference = await RPD.find({});
-  const getSupervisingStudent = await Student.find({supervisorUser: currentSupervisor._id});// retry attempt
-  const readRPD = await RPD.find({studentRef:getSupervisingStudent}).populate('studentRef'); // status, grade, mini thesis, date, fullname 
-
+  const getSupervisingStudent = await Student.find({supervisorUser: currentSupervisor._id});
+  const readRPD = await RPD.find({studentRef:getSupervisingStudent})
+                              .or([{status:{$eq: false}}, {status:{$eq: true}}])
+                                .populate('studentRef'); 
 
   if (readRPD) {
     res.status(201).json(readRPD);
@@ -73,7 +74,23 @@ const supervisorReadRPDResult = asyncHandler(async (req, res) => {
   else {
     res.status(401).json({message: "Unable to retrieve student details"});
   }
+});
 
-})
+const supervisorReadWCDResult = asyncHandler(async (req, res) => {
 
-export { supervisorLogin, supervisorReadMeetingLog, supervisorReadMeetingLogByID, supervisorReadRPDResult };
+  const currentSupervisor = req.userSupervisor;
+
+  const getSupervisingStudent = await Student.find({supervisorUser: currentSupervisor._id});
+  const readWCD = await WCD.find({studentRef:getSupervisingStudent})
+                              .or([{status:{$eq: false}}, {status:{$eq: true}}])
+                                .populate('studentRef');
+
+  if (readWCD) {
+    res.status(201).json(readWCD);
+  }
+  else {
+    res.status(401).json({message: "Unable to retrieve student details"});
+  }
+});
+
+export { supervisorLogin, supervisorReadMeetingLog, supervisorReadMeetingLogByID, supervisorReadRPDResult, supervisorReadWCDResult };

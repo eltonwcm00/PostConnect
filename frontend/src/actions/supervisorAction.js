@@ -108,3 +108,35 @@ export const supervisorReadRPDResult = () => async (dispatch, getState) => {
     });
   }
 };
+
+export const supervisorReadWCDResult = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: SUPERVISOR_CW_REQUEST });
+
+    const {
+      supervisorLogin: { supervisorInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${supervisorInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/supervisor/supervisorReadWCDResult", config
+    );
+
+    dispatch({ type: SUPERVISOR_CW_SUCCESS, payload: data });
+
+  } catch (error) {
+    dispatch({
+      type: SUPERVISOR_CW_FAIL,
+      payload:
+        error.response 
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
