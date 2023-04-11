@@ -3,9 +3,9 @@ import {
     PANEL_LOGIN_REQUEST,
     PANEL_LOGIN_SUCCESS,
     PANEL_LOGOUT,
-    PANEL_RPD_LIST_REQUEST,
-    PANEL_RPD_LIST_SUCCESS,
-    PANEL_RPD_LIST_FAIL,
+    PANEL_APPLICATION_LIST_REQUEST,
+    PANEL_APPLICATION_LIST_SUCCESS,
+    PANEL_APPLICATION_LIST_FAIL,
     PANEL_UPDATE_APPLICATION_REQUEST,
     PANEL_REJECT_APPLICATION_SUCCESS,
     PANEL_APPROVE_APPLICATION_SUCCESS,
@@ -27,14 +27,14 @@ export const panelLoginReducer = (state = {}, action) => {
       }
 };
 
-export const panelReadRPDReducer = (state = { fetchRPDList: [] }, action) => {
+export const panelReadApplicationReducer = (state = { fetchRPDList: [] }, action) => {
   switch (action.type) {
-    case PANEL_RPD_LIST_REQUEST:
+    case PANEL_APPLICATION_LIST_REQUEST:
       return { loading: true };
-    case PANEL_RPD_LIST_SUCCESS:
-      return { loading: false, fetchRPDList: action.payload };
-    case PANEL_RPD_LIST_FAIL:
-      return { loading: false, errorRPDList: action.payload };
+    case PANEL_APPLICATION_LIST_SUCCESS:
+      return { loading: false, fetchApplicationList: action.payload };
+    case PANEL_APPLICATION_LIST_FAIL:
+      return { loading: false, errorApplicationList: action.payload };
     default:
       return state;
   }

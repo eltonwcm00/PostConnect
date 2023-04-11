@@ -29,7 +29,7 @@ import {
 
 import {
   panelLoginReducer,
-  panelReadRPDReducer,
+  panelReadApplicationReducer,
   panelEvaluateRPDReducer,
 } from "./reducers/panelReducers";
 
@@ -54,7 +54,7 @@ const reducer = combineReducers({
     studentMeetingLogStatus: studentMeetingLogStatusReducer,
 
     panelLogin: panelLoginReducer,
-    panelReadRPD: panelReadRPDReducer,
+    panelReadApplication: panelReadApplicationReducer,
     panelEvaluateRPD: panelEvaluateRPDReducer
 })
 

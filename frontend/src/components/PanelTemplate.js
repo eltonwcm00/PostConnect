@@ -16,8 +16,8 @@ const PanelTemplate = ({ children }) => {
   else if (window.location.href === pageURL+'panelEvaluateRPD' || window.location.href === pageURL+`panelEvaluateRPD/${id}`){
     pageTitle = "Research Proposal Defence Evaluation";
   }
-  else if (window.location.href === pageURL+'#'){
-    pageTitle = "#";
+  else if (window.location.href === pageURL+'panelEvaluateWCD' || window.location.href === pageURL+`panelEvaluateWCD/${id}`){
+    pageTitle = "Work Completion Defence Evaluation";
   } 
   else if (window.location.href === pageURL+'#') {
     pageTitle = "#";

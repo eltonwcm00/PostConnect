@@ -4,7 +4,7 @@ import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import { useDispatch, useSelector } from "react-redux";
-import { panelReadRPD } from "../../../actions/panelAction";
+import { panelReadWCD } from "../../../actions/panelAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import PanelTemplate from "../../../components/PanelTemplate";
@@ -12,7 +12,7 @@ import ViewPDF from "../../../components/ViewPDF";
 
 // import "./FacultyEvaluateRPDApplication.css";
 
-const PanelEvaluateRPD = () => {
+const PanelEvaluateWCD = () => {
     
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -20,11 +20,11 @@ const PanelEvaluateRPD = () => {
     const panelLogin = useSelector((state) => state.panelLogin);
     const { panelInfo } = panelLogin;
 
-    const RPDList = useSelector((state) => state.panelReadApplication);
-    const { loading, errorApplicationList, fetchApplicationList } = RPDList;
+    const WCDList = useSelector((state) => state.panelReadApplication);
+    const { loading, errorApplicationList, fetchApplicationList } = WCDList;
 
     useEffect(() => {
-        dispatch(panelReadRPD());
+        dispatch(panelReadWCD());
         if (!panelInfo) {
           navigate("/");
         }
@@ -41,7 +41,7 @@ const PanelEvaluateRPD = () => {
                     <tr className='table-desc'>
                         <th className="table-desc-th">Schedule Date</th>
                         <th className="table-desc-th">Full Name</th>
-                        <th className="table-desc-th">Mini Thesis Title</th>
+                        <th className="table-desc-th">Full Thesis Title</th>
                         <th className="table-desc-th">Evaluation</th>
                     </tr>
                     </CDBTableHeader>
@@ -49,10 +49,10 @@ const PanelEvaluateRPD = () => {
                     {
                         fetchApplicationList && fetchApplicationList.filter(x =>(x.status !== true && x.status !== false)).map((list) => (
                                 <tr className='table-desc' key={list._id}>
-                                <td> {moment(list.dateScheduleRPD).format('l')} </td>
+                                <td> {moment(list.dateScheduleWCD).format('l')} </td>
                                 <td> {list.fullname} </td>
-                                <td> {list.miniThesisTitle} </td>
-                                <td><Button className='table-details-button' href={`http://localhost:3000/panelEvaluateRPD/${list._id}`}>Evaluate</Button></td>
+                                <td> {list.thesisTitle} </td>
+                                <td><Button className='table-details-button' href={`http://localhost:3000/panelEvaluateWCD/${list._id}`}>Evaluate</Button></td>
                                 </tr>
                             )
                         )
@@ -65,4 +65,4 @@ const PanelEvaluateRPD = () => {
     )
 }
 
-export default PanelEvaluateRPD
+export default PanelEvaluateWCD

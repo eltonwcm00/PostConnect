@@ -3,9 +3,9 @@ import {
     PANEL_LOGIN_REQUEST,
     PANEL_LOGIN_SUCCESS,
     PANEL_LOGOUT,
-    PANEL_RPD_LIST_REQUEST,
-    PANEL_RPD_LIST_SUCCESS,
-    PANEL_RPD_LIST_FAIL,
+    PANEL_APPLICATION_LIST_REQUEST,
+    PANEL_APPLICATION_LIST_SUCCESS,
+    PANEL_APPLICATION_LIST_FAIL,
     PANEL_UPDATE_APPLICATION_REQUEST,
     PANEL_APPROVE_APPLICATION_SUCCESS,
     PANEL_REJECT_APPLICATION_SUCCESS,
@@ -52,7 +52,7 @@ export const panelLogout = () => async (dispatch) => {
 export const panelReadRPD = () => async (dispatch, getState) => {
   try {
     dispatch({
-      type: PANEL_RPD_LIST_REQUEST,
+      type: PANEL_APPLICATION_LIST_REQUEST,
     });
 
     const {
@@ -68,13 +68,13 @@ export const panelReadRPD = () => async (dispatch, getState) => {
     const { data } = await axios.get("http://localhost:5000/api/panel/panelReadRPD", config);
 
     dispatch({
-      type: PANEL_RPD_LIST_SUCCESS,
+      type: PANEL_APPLICATION_LIST_SUCCESS,
       payload: data,
     });
   } catch (error) {
    
     dispatch({
-      type: PANEL_RPD_LIST_FAIL,
+      type: PANEL_APPLICATION_LIST_FAIL,
       payload:
         error.response 
         ? error.response.data.message
@@ -134,6 +134,108 @@ export const panelEvaluateFailRPD = (id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(`http://localhost:5000/api/panel/panelEvaluateRPD2/${id}`, {}, config);
+
+    dispatch({
+      type: PANEL_REJECT_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: PANEL_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+export const panelReadWCD = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PANEL_APPLICATION_LIST_REQUEST,
+    });
+
+    const {
+      panelLogin: { panelInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${panelInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("http://localhost:5000/api/panel/panelReadWCD", config);
+
+    dispatch({
+      type: PANEL_APPLICATION_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: PANEL_APPLICATION_LIST_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+export const panelEvaluatePassWCD = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PANEL_UPDATE_APPLICATION_REQUEST,
+    });
+
+    const {
+      panelLogin: { panelInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${panelInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/panel/panelEvaluateWCD/${id}`, {}, config);
+
+    dispatch({
+      type: PANEL_APPROVE_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: PANEL_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+export const panelEvaluateFailWCD = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PANEL_UPDATE_APPLICATION_REQUEST,
+    });
+
+    const {
+      panelLogin: { panelInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${panelInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/panel/panelEvaluateWCD2/${id}`, {}, config);
 
     dispatch({
       type: PANEL_REJECT_APPLICATION_SUCCESS,

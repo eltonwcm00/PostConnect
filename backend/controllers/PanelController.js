@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import Panel from "../models/Panel.js";
 import RPD from "../models/RPD.js";
 import Student from "../models/Student.js";
+import WCD from "../models/WCD.js";
 
 const panelLogin = asyncHandler(async (req, res) => {
     const { usernamePanel, password } = req.body;
@@ -25,6 +26,8 @@ const panelLogin = asyncHandler(async (req, res) => {
     }
 });
 
+/*************************************************** RPD EVALUATION ***************************************************/
+
 const panelReadRPD = asyncHandler(async (req, res) => {
   
   const RPDList = await RPD.find();
@@ -35,7 +38,7 @@ const panelReadRPD = asyncHandler(async (req, res) => {
   else {
     res.status(401).json({errorRPDList: "No RPD is ready to be evaluate"});
   }
-})
+});
 
 const panelReadRPDByID = asyncHandler(async (req, res) => {
 
@@ -47,7 +50,7 @@ const panelReadRPDByID = asyncHandler(async (req, res) => {
   else {
     res.status(401).json({message: "Error in .db reference"});
   }
-})
+});
 
 const panelEvaluatePassRPD = asyncHandler(async (req, res) => {
   
@@ -98,6 +101,86 @@ const panelEvaluateFailRPD = asyncHandler(async (req, res) => {
     insertStudent.retryRPDAttempt = insertStudent.retryRPDAttempt + 1;
     await insertStudent.save();
   }
+});
+
+/*************************************************** END RPD EVALUATION ***************************************************/
+
+/*************************************************** WCD EVALUATION ***************************************************/
+
+const panelReadWCD = asyncHandler(async (req, res) => {
+  
+  const WCDList = await WCD.find();
+
+  if(WCDList) {
+    res.json(WCDList);
+  } 
+  else {
+    res.status(401).json({errorWCDList: "No WCD is ready to be evaluate"});
+  }
 })
 
-export {panelLogin, panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD};
+const panelReadWCDByID = asyncHandler(async (req, res) => {
+
+  const fetchWCDID = await WCD.findById(req.params.id);
+
+  if (fetchWCDID) {
+    res.status(201).json(fetchWCDID);
+  }
+  else {
+    res.status(401).json({message: "Error in .db reference"});
+  }
+});
+
+const panelEvaluatePassWCD = asyncHandler(async (req, res) => {
+  
+  const fetchWCDID = await WCD.findById(req.params.id);
+  const insertStudent = await Student.findOne({usernameStud: fetchWCDID.fullname, 
+                                               retryWCDAttempt: {$gte: 1}});
+
+  if (fetchWCDID) {
+    fetchWCDID.status = true;
+    const passWCDID = await fetchWCDID.save();
+    res.status(201).json({
+        passWCDID,
+        approveMsg: "The WCD is evaluated, the grade of the evaluation is given 'Satisfactory (S)'"
+      }
+    );
+  } 
+  else {
+    res.status(401).json({ message: "Internal server error" });
+  }
+  // 'S' grade after re-evaluated 
+  if(insertStudent) {
+    insertStudent.retryWCDAttempt = 0;
+    fetchWCDID.status = true;
+    await insertStudent.save();
+    await fetchWCDID.save();
+  }
+});
+
+const panelEvaluateFailWCD = asyncHandler(async (req, res) => {
+
+  const fetchWCDID = await WCD.findById(req.params.id);
+  const insertStudent = await Student.findOne({usernameStud: fetchWCDID.fullname})
+
+  if (fetchWCDID) {
+    fetchWCDID.status = false;
+    const passWCDID = await fetchWCDID.save();
+    res.status(201).json({
+        passWCDID,
+        rejectMsg: "The WCD is evaluated, the grade of the evaluation is given 'Unsatisfactory (US)'"
+      }
+    );
+  } 
+  else {
+    res.status(401).json({ message: "Internal server error" });
+  }
+  // 'US' grade
+  if(insertStudent) {
+    insertStudent.retryWCDAttempt = insertStudent.retryWCDAttempt + 1;
+    await insertStudent.save();
+  }
+});
+
+export {panelLogin, panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
+        panelReadWCD, panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD};

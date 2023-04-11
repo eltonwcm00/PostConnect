@@ -46,7 +46,7 @@ import { panelLogout } from '../actions/panelAction';
               <NavLink exact to="/panelEvaluateRPD" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa-solid fa-file-circle-check">Research Proposal Defence Evaluation </CDBSidebarMenuItem> 
               </NavLink>
-              <NavLink exact to="#" className="sidebar-nav">
+              <NavLink exact to="/panelEvaluateWCD" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa-solid fa-file-circle-check"> Work Completion Defence Evaluation </CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="#" target="_blank">
