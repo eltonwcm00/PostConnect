@@ -33,6 +33,7 @@ const FacultyEvaluateWCDApplication = () => {
       <FacultyTemplate>
         {console.log(WCDApplicationList)}
         {loading && <Loading />}
+        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         <Tabs defaultActiveKey="pending" id="fill-tab-example" className="mb-3 tab mt-4" justify transition={false}>
           <Tab eventKey="pending" title="Pending">
             <CDBContainer style={{padding: '0px', textAlign: "center"}} className="list-container">
@@ -95,7 +96,6 @@ const FacultyEvaluateWCDApplication = () => {
             </CDBContainer>
           </Tab>
         </Tabs>
-        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       </FacultyTemplate>
     </>
   )

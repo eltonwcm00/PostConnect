@@ -41,6 +41,10 @@ const RegisterPanel= () => {
       dispatch(facultyPanelRegistration(usernamePanel, password, cfrmPassword));
     };
 
+    const cancelBtn = () => {
+      navigate(-1);
+    }
+
     return (
       <FacultyTemplate>
         <div className="form-title-desc-container">Details Of The Panel</div>
@@ -83,10 +87,18 @@ const RegisterPanel= () => {
                   />
                 </Col>
               </Form.Group>
-
-              <Button className=" mt-4 float-right" variant="primary" type="submit">
-                Submit
-              </Button>
+              <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
+                <Col sm={10}>
+                  <Button className=" mt-4 float-right" variant="primary" type="submit">
+                    Submit
+                  </Button>
+                </Col>
+                <Col sm={1}>
+                  <Button className=" mt-4 float-right" variant="secondary" onClick={cancelBtn}>
+                    Cancel
+                  </Button>
+                </Col>
+              </Form.Group>
             </Form >
       </FacultyTemplate>       
     );

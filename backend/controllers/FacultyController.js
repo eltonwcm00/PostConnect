@@ -310,8 +310,8 @@ const facultyReadEvaluateRPDApplication = asyncHandler(async (req, res) => {
     res.json(RPDApplicationList);
   } 
   else {
-    res.status(500);
-    throw new Error("Internal server error");
+    res.status(401).json({error: "No request currently"});
+    // throw new Error("Internal server error");
   }
 });
 
@@ -499,8 +499,7 @@ const facultyReadEvaluateWCDApplication = asyncHandler(async (req, res) => {
     res.json(WCDApplicationList);
   } 
   else {
-    res.status(500);
-    throw new Error("Internal server error");
+    res.status(401).json({error: "No request currently"});
   }
 });
 

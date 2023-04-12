@@ -33,6 +33,7 @@ const FacultyEvaluateRPDApplication = () => {
       <FacultyTemplate>
         {console.log(RPDApplicationList)}
         {loading && <Loading />}
+        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         <Tabs defaultActiveKey="pending" id="fill-tab-example" className="mb-3 tab mt-4" justify transition={false}>
           <Tab eventKey="pending" title="Pending">
             <CDBContainer style={{padding: '0px', textAlign: "center"}} className="list-container">
@@ -95,7 +96,6 @@ const FacultyEvaluateRPDApplication = () => {
             </CDBContainer>
           </Tab>
         </Tabs>
-        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       </FacultyTemplate>
     </>
   )

@@ -55,7 +55,7 @@ const StudentMeetingLog = () => {
             {loading && <Loading />}
             <Form className="form" onSubmit={submitHandler} enctype="multipart/form-data">
                 <Form.Group as={Row}  controlId="formBasicEmail">
-                    <Form.Label column sm={2} style={{marginTop: -5}}>Date Join</Form.Label>
+                    <Form.Label column sm={2} style={{marginTop: -5}}>Last Meeting Date</Form.Label>
                     <Col sm={10} mb={3}>                       
                         {/* <Form.Group as={Row} className="mb-4" controlId="formBasicPassword"> */}
                             
