@@ -53,5 +53,7 @@ export const panelEvaluateRPDReducer = (state = {}, action) => {
     default:
       return state;
   }
-}
+};
+
+
 

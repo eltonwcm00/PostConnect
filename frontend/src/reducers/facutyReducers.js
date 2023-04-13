@@ -25,6 +25,8 @@ import {
     FACULTY_CHOOSE_STUDENT_REQUEST,
     FACULTY_CHOOSE_STUDENT_SUCCESS,
     FACULTY_CHOOSE_STUDENT_FAIL,
+    FACULTY_PROGRESS_REPORT_SUCCESS,
+    FACULTY_PROGRESS_REPORT__FAIL
 } from "../constants/facultyConstants";
 
 export const facultyLoginReducer = (state = {}, action) => {
@@ -130,6 +132,17 @@ export const facultyUpdateApplicationReducer = (state = {}, action) => {
       return { loading: false, successApproveMsg: true };
     case FACULTY_UPDATE_APPLICATION_FAIL:
       return { loading: false, error: action.payload};
+    default:
+      return state;
+  }
+};
+
+export const facultySetPRReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FACULTY_PROGRESS_REPORT_SUCCESS:
+      return { prDateInfo: action.payload, successMsg: true, };
+    case FACULTY_PROGRESS_REPORT__FAIL:
+      return { error: action.payload };
     default:
       return state;
   }

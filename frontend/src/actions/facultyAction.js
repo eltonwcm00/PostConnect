@@ -25,6 +25,8 @@ import {
     FACULTY_CHOOSE_STUDENT_REQUEST,
     FACULTY_CHOOSE_STUDENT_SUCCESS,
     FACULTY_CHOOSE_STUDENT_FAIL,
+    FACULTY_PROGRESS_REPORT_SUCCESS,
+    FACULTY_PROGRESS_REPORT__FAIL
 } from "../constants/facultyConstants";
 
 import axios from "axios";
@@ -588,3 +590,34 @@ export const facultyApproveWCDApplication = (id, dateScheduleWCD) => async (disp
     });
   }
 }
+
+export const facultySetPRDate = (dateSetPR) => async (dispatch, getState) => {
+  try {
+
+    const {
+      facultyLogin: { facultyInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${facultyInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put('http://localhost:5000/api/faculty/facultySetDatePR',{dateSetPR},config);
+
+    dispatch({
+      type: FACULTY_PROGRESS_REPORT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: FACULTY_PROGRESS_REPORT__FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};

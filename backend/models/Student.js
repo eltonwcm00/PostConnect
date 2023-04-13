@@ -29,7 +29,11 @@ const StudentSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    retryWCDAttempt: { //cannot exceed 3 retries
+    retryWCDAttempt: { 
+      type: Number,
+      default: 0,
+    },
+    retryPRAttempt: { 
       type: Number,
       default: 0,
     },

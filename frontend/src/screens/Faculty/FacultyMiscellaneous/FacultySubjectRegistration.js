@@ -7,6 +7,7 @@ import { facultyReadSubjectStudent } from "../../../actions/facultyAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import FacultyTemplate from "../../../components/FacultyTemplate";
+import FacultySetPRDate from "./FacultySetPRDate";
 
 const FacultySubjectRegistration = () => {
   
@@ -31,7 +32,7 @@ const FacultySubjectRegistration = () => {
   return (
     <>
       <FacultyTemplate>
-      <div className="form-title-desc-container">List of The Student With Passed Subjects</div>
+      <div className="form-title-desc-container">Assign The Student With Passed Subjects</div>
         {console.log(fetchStudentList)}
         {loading && <Loading />}
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
@@ -55,7 +56,7 @@ const FacultySubjectRegistration = () => {
                       <td> {list.usernameStud} </td>
                       <td> {list.subjectA ? "Data Structure and Algorithm" : <b>-</b>} </td>
                       <td> {list.subjectB ? "Web App Development with MERN Stack" : <b>-</b>} </td>
-                      <td className='table-details-button'><Button href={`http://localhost:3000/facultySubjectRegistration/${list._id}`}>Assign</Button></td>
+                      <td className='table-details-button'><Button href={`http://localhost:3000/miscellaneous/${list._id}`}>Assign</Button></td>
                       {(list.subjectA || list.subjectB) && <td><i className="fa-sharp fa-solid fa-check"></i></td>}
                     </tr>           
                 )   
@@ -64,6 +65,7 @@ const FacultySubjectRegistration = () => {
             </CDBTableBody>
           </CDBTable>
         </CDBContainer>
+        <FacultySetPRDate/>
       </FacultyTemplate>
     </>
   )

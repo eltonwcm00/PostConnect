@@ -11,7 +11,8 @@ import {
   facultyReadApplicationReducer,
   facultyUpdateApplicationReducer,
   facultyReadChooseStudentReducer,
-  facultyUpdateChooseStudentReducer
+  facultyUpdateChooseStudentReducer,
+  facultySetPRReducer
 } from "./reducers/facutyReducers";
 
 import { 
@@ -44,6 +45,7 @@ const reducer = combineReducers({
     facultyUpdateApplication: facultyUpdateApplicationReducer,
     facultyReadChooseStudent: facultyReadChooseStudentReducer,
     facultyUpdateChooseStudent: facultyUpdateChooseStudentReducer,
+    facultySetPR: facultySetPRReducer,
 
     supervisorLogin: supervisorLoginReducer,
     supervisorReadCW: supervisorReadCWReducer,

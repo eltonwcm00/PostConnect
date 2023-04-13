@@ -10,6 +10,7 @@ import RPDApplication from "../models/RPDApplication.js";
 import RPD from "../models/RPD.js";
 import WCDApplication from "../models/WCDApplication.js";
 import WCD from "../models/WCD.js";
+import ProgressReport from "../models/ProgressReport.js";
 
 const facultyLogin = asyncHandler(async (req, res) => {
   
@@ -615,11 +616,53 @@ const facultyApproveEvaluateWCDApplicationByID = asyncHandler(async (req, res) =
 
 /*************************************************** END WCD EVALUATION ***************************************************/
 
-export { facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
+/*************************************************** PROGRESS REPORT ***************************************************/
+
+const facultySetDatePR = asyncHandler(async (req, res) => {
+    
+    const { dateSetPR } = req.body;
+
+    let insertSetDate;
+    let dateSet = moment(dateSetPR);
+    let todayDate = moment();
+    
+    if(dateSet < todayDate) {
+      res.status(401).json({message: "Invalid, set date for progress report submission is greater than today's date"});
+    }
+    else {
+      const fetchPRDate = await ProgressReport.findOne({dateSetPR:{$exists: true}});
+    
+      if (fetchPRDate) {
+        fetchPRDate.dateSetPR = dateSetPR;
+        const updatePRDate = await fetchPRDate.save();
+        if (updatePRDate) {
+          res.status(201).json({setPRDate: updatePRDate.dateSetPR, messagePRSucess: "Date for submission of progress report is updated"});
+        }
+        else {
+          res.status(401).json({ messagePRError: "Unable to update the date for submission of progress repeort" });
+        }
+      }
+      else {
+         insertSetDate = await ProgressReport.create({
+          dateSetPR,
+        });
+      }
+      if (insertSetDate) {
+        res.status(201).json({dateSetPR: insertSetDate.dateSetPR, messagePRSucess: "Date for submission of progress report is set"})
+      }
+      else {
+        res.status(401).json({ messagePRError: "Error in setting the date for submission of progress report" });
+      }
+    }
+});
+
+/*************************************************** END PROGRESS REPORT ***************************************************/
+export { 
+         facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
          facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
          facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID, 
          facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID, facultyUpdateSubjectStudentByID,
          facultyReadEvaluateWCDApplication, facultyReadEvaluateWCDApplicationByID, facultyRejectEvaluateWCDApplicationByID, 
-         facultyApproveEvaluateWCDApplicationByID
+         facultyApproveEvaluateWCDApplicationByID, facultySetDatePR
        };

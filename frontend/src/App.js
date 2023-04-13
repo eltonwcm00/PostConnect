@@ -16,8 +16,8 @@ import FacultyAssignNumSupID from './screens/Faculty/FacultyAssignNumSupervisor/
 import FacultyEvaluateRPDApplication from './screens/Faculty/FacultyEvaluateRPDApplication/FacultyEvaluateRPDApplication';
 import FacultyEvaluateRPDApplicationID from './screens/Faculty/FacultyEvaluateRPDApplication/FacultyEvaluateRPDApplicationID';
 import FacultyChooseStud from './screens/Faculty/FacultyChooseStudent/FacultyChooseStud';
-import FacultySubjectRegistration from './screens/Faculty/FacultySubjectRegistration/FacultySubjectRegistration';
-import FacultySubjectRegistrationID from './screens/Faculty/FacultySubjectRegistration/FacultySubjectRegistrationID';
+import FacultySubjectRegistration from './screens/Faculty/FacultyMiscellaneous/FacultySubjectRegistration';
+import FacultySubjectRegistrationID from './screens/Faculty/FacultyMiscellaneous/FacultySubjectRegistrationID';
 import FacultyEvaluateWCDApplication from './screens/Faculty/FacultyEvaluateWCDApplication/FacultyEvaluateWCDApplication';
 import FacultyEvaluateWCDApplicationID from './screens/Faculty/FacultyEvaluateWCDApplication/FacultyEvaluateWCDApplicationID';
 
@@ -65,8 +65,8 @@ function App() {
         <Route exact path="/facultyEvaluateRPDApplication" element={<FacultyEvaluateRPDApplication />}/>
         <Route exact path="/facultyEvaluateRPDApplication/:id" element={<FacultyEvaluateRPDApplicationID />}/>
         <Route exact path="/facultyReadChooseStudent" element={<FacultyChooseStud />}/>
-        <Route exact path="/facultySubjectRegistration" element={<FacultySubjectRegistration />}/>
-        <Route exact path="/facultySubjectRegistration/:id" element={<FacultySubjectRegistrationID />}/>
+        <Route exact path="/miscellaneous" element={<FacultySubjectRegistration />}/>
+        <Route exact path="/miscellaneous/:id" element={<FacultySubjectRegistrationID />}/>
         <Route exact path="/facultyEvaluateWCDApplication" element={<FacultyEvaluateWCDApplication />}/>
         <Route exact path="/facultyEvaluateWCDApplication/:id" element={<FacultyEvaluateWCDApplicationID />}/>
 
