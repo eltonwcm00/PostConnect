@@ -8,6 +8,7 @@ import RPD from "../models/RPD.js";
 import MeetingLog from "../models/MeetingLog.js";
 import WCDApplication from "../models/WCDApplication.js";
 import WCD from "../models/WCD.js";
+import ProgressReport from "../models/ProgressReport.js";
 
 const studentLogin = asyncHandler(async (req, res) => {
     const { usernameStud, password } = req.body;
@@ -338,7 +339,43 @@ const studentViewWCDApplication = asyncHandler(async (req, res) => {
       ${moment(currentStudent.dateJoin).add(days, 'days').format('MMMM Do YYYY')}`});
   }
 });
+
+const studentRegisterPR = asyncHandler(async (req, res) => {
+  
+  let todayDate = moment();
+  let insertPRRegisteredStatus;
+
+  const fetchPRDate = await ProgressReport.findOne({dateSetPR:{$exists: true}});
+
+  if (fetchPRDate) {
+    if (todayDate > moment(fetchPRDate.dateSetPR)) {
+      res.status(401).json({ messagePRError: "Sorry. The registration date for progress report submission is closed" });
+    }
+    else {
+      const fetchPRRegisteredStatus = await ProgressReport.findOne({registeredPR:{$exists: true}});
+      if (fetchPRRegisteredStatus) {
+        res.status(401).json({ messagePRError: "You have registered for progress report submission before. Kindly proceed to submit your progress report" });
+      }
+      else {
+        insertPRRegisteredStatus = await ProgressReport.create({
+          studentUser: req.userStudent,
+          registeredPR: true,
+        });
+        if (insertPRRegisteredStatus) {
+          res.status(201).json({
+            studentUser: insertPRRegisteredStatus.studentUser, 
+            registeredPR: insertPRRegisteredStatus.registeredPR, 
+            messagePRSucess: "You have successfully registered for the progress report submission. Kindly proceed to submit your progress report"
+          })
+        }
+      }
+    }
+  }
+  else {
+    res.status(401).json({ messagePRError: "The registration date for progress report submission is not yet be opened. Kindly wait for the annoucement" });
+  }
+})
 /*************************************************** END WCD ***************************************************/
 
 export { studentLogin, studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog, studentViewMeetingLog,
-        studentRequestWCD, studentViewWCDApplication };
+        studentRequestWCD, studentViewWCDApplication, studentRegisterPR };
