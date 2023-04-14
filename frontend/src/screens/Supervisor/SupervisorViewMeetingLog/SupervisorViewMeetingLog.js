@@ -49,7 +49,7 @@ const SupervisorViewMeetingLog = () => {
                     cwInfoSuccess && cwInfoSuccess.map((list) => (
                         <tr className='table-desc' key={list._id}>
                           <td> {moment(list.dateLog).format('l')} </td>
-                          <td> {list.studentUser.usernameStud && list.studentUser.usernameStud} </td>
+                          <td> {list.studentUser.usernameStud} </td>
                           {console.log(list.studentUser.usernameStud)}
                           <td> {excerpt(list.contentLog, 80, " ", "...")} </td>
                           <td><Button className='table-details-button' href={`http://localhost:3000/supervisorViewMeetingLog/${list._id}`}>Details</Button></td>

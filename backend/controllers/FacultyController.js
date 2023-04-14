@@ -646,12 +646,13 @@ const facultySetDatePR = asyncHandler(async (req, res) => {
          insertSetDate = await ProgressReport.create({
           dateSetPR,
         });
-      }
-      if (insertSetDate) {
-        res.status(201).json({dateSetPR: insertSetDate.dateSetPR, messagePRSucess: "Date for submission of progress report is set"})
-      }
-      else {
-        res.status(401).json({ messagePRError: "Error in setting the date for submission of progress report" });
+        
+        if (insertSetDate) {
+          res.status(201).json({dateSetPR: insertSetDate.dateSetPR, messagePRSucess: "Date for submission of progress report is set"})
+        }
+        else {
+          res.status(401).json({ messagePRError: "Error in setting the date for submission of progress report" });
+        }
       }
     }
 });

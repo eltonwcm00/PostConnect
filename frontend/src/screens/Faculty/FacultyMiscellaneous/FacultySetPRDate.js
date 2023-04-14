@@ -46,19 +46,19 @@ const FacultySetPRDate = () => {
             <div className="form-title-desc-container">Set Date Of Progress Report Presentation</div>
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             {successMsg && <SuccessMessage variant="success">{prDateInfo.messagePRSucess}</SuccessMessage>}
-            <Form>
+            <Form className="mt-3 form">
                 <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
                     <Form.Label column sm={2}o>Date</Form.Label>
                     <Col sm={10}>
-                    <Calendar
-                        value={dateSetPR}
-                        onChange={setPRDate}
-                        dateFormat="MMMM d, yyyy"
-                    />
+                        <Calendar
+                            value={dateSetPR}
+                            onChange={setPRDate}
+                            dateFormat="MMMM d, yyyy"
+                        />
                     </Col>
                 </Form.Group>
                 <Row>
-                    <Button style={{margin: '0 auto'}} className=" mt-4 submit-btn" variant="primary" type="submit" onClick={submitHandler}>
+                    <Button className=" mt-4 submit-btn" variant="primary" type="submit" onClick={submitHandler}>
                         Submit 
                     </Button>
                 </Row>

@@ -43,7 +43,7 @@ const FacultyEvaluateRPDApplication = () => {
                     <th className="table-desc-th">Request Date</th>
                     <th className="table-desc-th">Full Name</th>
                     <th className="table-desc-th">Mini Thesis Title</th>
-                    <th className="table-desc-th">Status</th>
+                    {/* <th className="table-desc-th">Status</th> */}
                     <th className="table-desc-th">Evaluate</th>
                   </tr>
                 </CDBTableHeader>
@@ -54,7 +54,7 @@ const FacultyEvaluateRPDApplication = () => {
                           <td> {moment(list.dateApplyRPD).format('l')} </td>
                           <td> {list.fullName} </td>
                           <td> {list.miniThesisTitle} </td>
-                          <td> {!list.applicationStatus ? "Pending" : "Processed" } </td>
+                          {/* <td> {!list.applicationStatus ? "Pending" : "Processed" } </td> */}
                           <td><Button className='table-details-button' href={`http://localhost:3000/facultyEvaluateRPDApplication/${list._id}`}>Details</Button></td>
                         </tr>
                       )
@@ -72,7 +72,7 @@ const FacultyEvaluateRPDApplication = () => {
                     <th className="table-desc-th">Processed Date</th>
                     <th className="table-desc-th">Full Name</th>
                     <th className="table-desc-th">Mini Thesis Title</th>
-                    <th className="table-desc-th">Status</th>
+                    {/* <th className="table-desc-th">Status</th> */}
                     <th className="table-desc-th">Evaluation</th>
                     <th className="table-desc-th">Details</th>
                   </tr>
@@ -84,7 +84,7 @@ const FacultyEvaluateRPDApplication = () => {
                           <td> {moment(list.updatedAt).format('l')} </td>
                           <td> {list.fullName} </td>
                           <td> {list.miniThesisTitle} </td>
-                          <td> {"Processed"} </td>
+                          {/* <td> {"Processed"} </td> */}
                           <td> {list.applicationStatus ? "Approved" : "Rejected"} </td>
                           <td><Button className='table-details-button' href={`http://localhost:3000/facultyEvaluateRPDApplication/${list._id}`}>Details</Button></td>
                         </tr>
