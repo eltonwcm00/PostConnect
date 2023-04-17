@@ -20,7 +20,7 @@ const StudentTemplate = ({ children }) => {
     pageTitle = "Request For Work Completion Defence";
   }
   else if (window.location.href === pageURL+'studentSubmitPR') {
-    pageTitle = "Progress Report Registration & Submission";
+    pageTitle = "Progress Report";
   }
   else {
     pageTitle = null;

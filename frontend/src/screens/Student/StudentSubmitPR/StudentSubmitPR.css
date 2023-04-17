@@ -1,0 +1,20 @@
+.pr-main-container {
+    margin-top: 3em;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+.pr-date {
+    display: block;
+    margin-top: 1em;
+}
+
+.color {
+    font-size: 20px;
+    color: lightslategrey;
+}
+
+.pr-sub-container-left {
+    border-left: 1px solid lightslategrey;
+    border-right: 1px solid lightslategrey;
+}

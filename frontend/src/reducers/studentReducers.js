@@ -16,7 +16,9 @@ import {
     STUDENT_APPLICATION_2,
     STUDENT_MEETING_LOG,
 
-    PR_READ_REQUEST
+    PR_READ_REQUEST,
+    PR_REGISTER_SUCCESS,
+    PR_REGISTER_FAIL,
 } from "../constants/studentConstants";
 
 export const studentLoginReducer = (state = {}, action) => {

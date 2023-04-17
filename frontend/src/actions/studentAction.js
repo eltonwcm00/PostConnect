@@ -274,3 +274,31 @@ export const studentPRLandingPage = () => async (dispatch, getState) => {
       console.log(error);
   }
 };
+
+export const studentPRRegister = () => async (dispatch, getState) => {
+  try {
+    const {
+      studentLogin: { studentInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${studentInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      "http://localhost:5000/api/student/studentRegisterPR", {}, config
+    );
+    dispatch({ type: STUDENT_CW_SUCCESS, payload: data });
+  }  catch (error) {
+    dispatch({
+      type: STUDENT_CW_FAIL,
+      payload:
+        error.response 
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

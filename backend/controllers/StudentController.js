@@ -344,10 +344,9 @@ const studentRegisterPRLandingPage = asyncHandler(async (req, res) => {
   
   const fetchPRDate = await ProgressReport.findOne({dateSetPR:{$exists: true}});
   
-
   if (fetchPRDate) {
-    res.status(201).json({prDate: `The date of progress report submission is set to be at ${moment(fetchPRDate.dateSetPR).format('MMMM Do YYYY')}. 
-                                   Kindly proceed with the registration and submit before the due date`})
+    res.status(201).json({
+      date: moment(fetchPRDate.dateSetPR).format('MMMM Do YYYY')})
   }
   else {
     res.status(201).json({prDate: `The date of progress report submission is not yet annouce by the faculty. Kindly wait for further annoucement`})
@@ -359,20 +358,22 @@ const studentRegisterPR = asyncHandler(async (req, res) => {
   let todayDate = moment();
   let insertPRRegisteredStatus;
 
+  const currentStudent = req.userStudent;
+
   const fetchPRDate = await ProgressReport.findOne({dateSetPR:{$exists: true}});
 
   if (fetchPRDate) {
     if (todayDate > moment(fetchPRDate.dateSetPR)) {
-      res.status(401).json({ messagePRError: "Sorry. The registration date for progress report submission is closed" });
+      res.status(401).json({ message: "Sorry. The registration date for progress report submission is closed" });
     }
     else {
       const fetchPRRegisteredStatus = await ProgressReport.findOne({registeredPR:{$exists: true}});
       if (fetchPRRegisteredStatus) {
-        res.status(401).json({ messagePRError: "You have registered for progress report submission before. Kindly proceed to submit your progress report" });
+        res.status(401).json({ message: "You have registered for progress report submission before. Kindly proceed to submit your progress report" });
       }
       else {
         insertPRRegisteredStatus = await ProgressReport.create({
-          studentUser: req.userStudent,
+          studentUser: currentStudent,
           registeredPR: true,
         });
         if (insertPRRegisteredStatus) {
@@ -386,7 +387,7 @@ const studentRegisterPR = asyncHandler(async (req, res) => {
     }
   }
   else {
-    res.status(401).json({ messagePRError: "The registration date for progress report submission is not yet be opened. Kindly wait for the annoucement" });
+    res.status(401).json({ message: "The registration date for progress report submission is not yet be opened. Kindly wait for the annoucement" });
   }
 });
 /*************************************************** END WCD ***************************************************/
