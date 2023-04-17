@@ -44,8 +44,8 @@ const LandingPage = () => {
   return (
     <div style={{ display: "flex", height: "100vh", backgroundColor: '#071B63'}}>
       <Container>
-      <center><img src="/image/postconnect.png" alt="PostConnect Logo"/></center>
         <h3 className="main-title">Choose Account Type</h3>
+        {/* <center><img src="/image/postconnect.png" alt="PostConnect Logo"/></center> */}
           <Row className="justify-content-md-center">
             <Col className="user-container" xl={2}>
               <Row>

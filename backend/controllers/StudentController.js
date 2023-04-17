@@ -219,7 +219,7 @@ const studentViewMeetingLog = asyncHandler(async (req, res) => {
 
   if (submitedMeetingLog) { 
       res.status(201).json({meetingLogStatusMsg: `Your meeting log has been submitted! Kindly submit the next meeting logs
-         in 2 weeks later, on date ${moment(submitedMeetingLog.dateLog).add(14, 'days').format('MMMM Do YYYY')}`});
+         after the next meeting`});
   }
   else {
      res.status(201).json({meetingLogStatusMsg: `You have not yet submit the meeting log! Kindly submit within 14 days
@@ -340,6 +340,20 @@ const studentViewWCDApplication = asyncHandler(async (req, res) => {
   }
 });
 
+const studentRegisterPRLandingPage = asyncHandler(async (req, res) => {
+  
+  const fetchPRDate = await ProgressReport.findOne({dateSetPR:{$exists: true}});
+  
+
+  if (fetchPRDate) {
+    res.status(201).json({prDate: `The date of progress report submission is set to be at ${moment(fetchPRDate.dateSetPR).format('MMMM Do YYYY')}. 
+                                   Kindly proceed with the registration and submit before the due date`})
+  }
+  else {
+    res.status(201).json({prDate: `The date of progress report submission is not yet annouce by the faculty. Kindly wait for further annoucement`})
+  }
+});
+
 const studentRegisterPR = asyncHandler(async (req, res) => {
   
   let todayDate = moment();
@@ -374,8 +388,8 @@ const studentRegisterPR = asyncHandler(async (req, res) => {
   else {
     res.status(401).json({ messagePRError: "The registration date for progress report submission is not yet be opened. Kindly wait for the annoucement" });
   }
-})
+});
 /*************************************************** END WCD ***************************************************/
 
 export { studentLogin, studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog, studentViewMeetingLog,
-        studentRequestWCD, studentViewWCDApplication, studentRegisterPR };
+        studentRequestWCD, studentViewWCDApplication, studentRegisterPR, studentRegisterPRLandingPage };

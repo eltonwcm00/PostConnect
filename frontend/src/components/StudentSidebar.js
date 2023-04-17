@@ -51,7 +51,7 @@ import { studentLogout } from '../actions/studentAction';
               <NavLink exact to="/studentRequestWCD" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-file-text"> Request For Work Completion Defence </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#">
+              <NavLink exact to="/studentSubmitPR">
                 <CDBSidebarMenuItem icon="fa-sharp fa-regular fa-file-invoice">
                     Submit Progress Report
                 </CDBSidebarMenuItem>

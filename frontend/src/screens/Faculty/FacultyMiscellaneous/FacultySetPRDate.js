@@ -43,7 +43,7 @@ const FacultySetPRDate = () => {
   
     return (
         <>
-            <div className="form-title-desc-container">Set Date Of Progress Report Presentation</div>
+            <div className="form-title-desc-container">Set Date Of Progress Report Submission</div>
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             {successMsg && <SuccessMessage variant="success">{prDateInfo.messagePRSucess}</SuccessMessage>}
             <Form className="mt-3 form">

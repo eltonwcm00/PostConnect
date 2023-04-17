@@ -15,6 +15,8 @@ import {
     STUDENT_APPLICATION,
     STUDENT_APPLICATION_2,
     STUDENT_MEETING_LOG,
+
+    PR_READ_REQUEST
 } from "../constants/studentConstants";
 
 export const studentLoginReducer = (state = {}, action) => {
@@ -86,4 +88,13 @@ export const studentApplicationStatus2Reducer = (state = {}, action) => {
       default:
         return state;
     }
+};
+
+export const studentPRLandingPageReducer = (state = {}, action) => {
+  switch (action.type) {
+      case PR_READ_REQUEST:
+        return { landingMsgStatus: true, landingMsg: action.payload};
+      default:
+        return state;
+  }
 };
