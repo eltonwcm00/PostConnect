@@ -18,3 +18,11 @@
     border-left: 1px solid lightslategrey;
     border-right: 1px solid lightslategrey;
 }
+
+.pr-form {
+    padding: 2em;
+}
+
+.pr-desc {
+    text-align: initial;
+}

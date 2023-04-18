@@ -49,7 +49,7 @@ const FacultyEvaluateRPDApplication = () => {
                 </CDBTableHeader>
                 <CDBTableBody>
                   {
-                    fetchApplicationList && fetchApplicationList.filter(x => (x.applicationStatus != false && x.applicationStatus != true)).map((list) => (
+                    fetchApplicationList && fetchApplicationList.filter(x => (x.applicationStatus !== false && x.applicationStatus !== true)).map((list) => (
                         <tr className='table-desc' key={list._id}>
                           <td> {moment(list.dateApplyRPD).format('l')} </td>
                           <td> {list.fullName} </td>
@@ -79,7 +79,7 @@ const FacultyEvaluateRPDApplication = () => {
                 </CDBTableHeader>
                 <CDBTableBody>
                   {
-                    fetchApplicationList && fetchApplicationList.filter(x => (x.applicationStatus == false || x.applicationStatus == true)).map((list) => (
+                    fetchApplicationList && fetchApplicationList.filter(x => (x.applicationStatus === false || x.applicationStatus === true)).map((list) => (
                         <tr className='table-desc' key={list._id}>
                           <td> {moment(list.updatedAt).format('l')} </td>
                           <td> {list.fullName} </td>

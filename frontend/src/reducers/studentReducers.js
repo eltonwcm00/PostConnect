@@ -17,8 +17,10 @@ import {
     STUDENT_MEETING_LOG,
 
     PR_READ_REQUEST,
-    PR_REGISTER_SUCCESS,
-    PR_REGISTER_FAIL,
+    
+    STUDENT_PR_REQUEST,
+    STUDENT_PR_SUCCESS,
+    STUDENT_PR_FAIL,
 } from "../constants/studentConstants";
 
 export const studentLoginReducer = (state = {}, action) => {
@@ -60,6 +62,19 @@ export const studentCWRequestReducer = (state = {}, action) => {
       default:
         return state;
     }
+};
+
+export const studentPRSubmitReducer = (state = {}, action) => {
+  switch (action.type) {
+    case STUDENT_PR_REQUEST:
+      return { loadingPR: true };
+    case STUDENT_PR_SUCCESS:
+      return { loadingPR: false, studentPR: action.payload, successStudentPR: true };
+    case STUDENT_PR_FAIL:
+      return { loadingPR: false, errorStudentPR: action.payload, failedStudentPR: true};
+    default:
+      return state;
+  }
 };
 
 export const studentApplicationStatusReducer = (state = {}, action) => {

@@ -340,13 +340,22 @@ const studentViewWCDApplication = asyncHandler(async (req, res) => {
   }
 });
 
+/*************************************************** END WCD ***************************************************/
+
+/*************************************************** PR ***************************************************/
+
 const studentRegisterPRLandingPage = asyncHandler(async (req, res) => {
   
+  const currentStudent = req.userStudent;
+
   const fetchPRDate = await ProgressReport.findOne({dateSetPR:{$exists: true}});
-  
+  const fetchPRRegisteredStatus = await ProgressReport.findOne({studentUser: currentStudent});
+
   if (fetchPRDate) {
     res.status(201).json({
-      date: moment(fetchPRDate.dateSetPR).format('MMMM Do YYYY')})
+      date: moment(fetchPRDate.dateSetPR).format('MMMM Do YYYY'),
+      registeredPR: fetchPRRegisteredStatus?.registeredPR,
+    })
   }
   else {
     res.status(201).json({prDate: `The date of progress report submission is not yet annouce by the faculty. Kindly wait for further annoucement`})
@@ -390,7 +399,47 @@ const studentRegisterPR = asyncHandler(async (req, res) => {
     res.status(401).json({ message: "The registration date for progress report submission is not yet be opened. Kindly wait for the annoucement" });
   }
 });
-/*************************************************** END WCD ***************************************************/
+
+const studentSubmitPR = asyncHandler(async (req, res) => {
+
+  const { contentPR } = req.body;
+  const currentStudent = req.userStudent;
+
+  const hasSubmitted = await ProgressReport.findOne({ studentUser: currentStudent, contentPR:{$exists: true} });
+  const submitPR = await ProgressReport.findOne({studentUser: currentStudent});
+  //const isReApplyAllow = await Student.findOne({studentUser: currentStudent, 
+                                                // retryWCDAttempt: {$gte: 1}});
+
+  const hasSupervisor = req.userStudent.supervisorUser;
+
+  if (!hasSupervisor) {
+    res.status(401).json({message: "Access denied! you have not been assigned to any supervisor, please refer to faculty"});
+  }
+  else if (hasSubmitted) { 
+    res.status(401).json({message: "You have submitted the progress report previously"});
+  }
+  else if (currentStudent) {
+    
+    if (contentPR.trim().length === 0) { 
+      res.status(401).json({message: "Please upload your progress report .pdf file"});
+    }
+    else {
+      submitPR.contentPR = contentPR;
+      submitPR.dateSubmitPR = moment();
+      submitPR.supervisorUser = hasSupervisor;
+      const submittedPR = await submitPR.save();
+      res.status(201).json({
+        submittedPR,
+        messagePRSubmittedSucess: "The progress report has been submitted. Kindly for the result to be evaluated'"
+      });
+    }
+  }
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+});
+/*************************************************** END PR ***************************************************/
 
 export { studentLogin, studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog, studentViewMeetingLog,
-        studentRequestWCD, studentViewWCDApplication, studentRegisterPR, studentRegisterPRLandingPage };
+        studentRequestWCD, studentViewWCDApplication, studentRegisterPR, studentRegisterPRLandingPage, studentSubmitPR };

@@ -1,7 +1,8 @@
 import express from "express";
 import { studentLogin, studentViewDataRequestRPD, studentRequestRPD, 
          studentViewRPDApplication,studentSubmitMeetingLog, studentViewMeetingLog,
-         studentRequestWCD, studentViewWCDApplication, studentRegisterPR, studentRegisterPRLandingPage } from "../controllers/StudentController.js";
+         studentRequestWCD, studentViewWCDApplication, studentRegisterPR, studentRegisterPRLandingPage,
+         studentSubmitPR } from "../controllers/StudentController.js";
 import { protectStudent } from "../middleware/authMiddleware.js";
 import { upload } from "../middleware/multer.js"
 
@@ -19,6 +20,7 @@ router.route("/studentRequestWCD").post(protectStudent, upload.single('myFile'),
 router.route("/studentWCDApplicationStatus").get(protectStudent, studentViewWCDApplication);
 router.route("/studentRegisterPRLandingPage").get(protectStudent, studentRegisterPRLandingPage);
 router.route("/studentRegisterPR").post(protectStudent, studentRegisterPR);
+router.route("/studentSubmitPR").put(protectStudent, upload.single('myFile'), studentSubmitPR);
 
 export default router;
 
