@@ -15,6 +15,7 @@ import {
     STUDENT_APPLICATION,
     STUDENT_MEETING_LOG,
     STUDENT_APPLICATION_2,
+    STUDENT_APPLICATION_3,
     
     PR_READ_REQUEST,
     STUDENT_PR_REQUEST,
@@ -340,3 +341,25 @@ export const studentPRSubmit = (contentPR) => async (dispatch, getState) => {
     });
   }
 }; 
+
+export const studentApplicationStatus3 = () => async (dispatch, getState) => {
+  try {
+    const {
+      studentLogin: { studentInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${studentInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/student/studentViewPRStatus", config
+    );
+    dispatch({ type: STUDENT_APPLICATION_3, payload: data });
+  } catch (error) {
+      console.log(error);
+  }
+};

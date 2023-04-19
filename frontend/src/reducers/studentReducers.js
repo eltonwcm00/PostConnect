@@ -14,6 +14,7 @@ import {
 
     STUDENT_APPLICATION,
     STUDENT_APPLICATION_2,
+    STUDENT_APPLICATION_3,
     STUDENT_MEETING_LOG,
 
     PR_READ_REQUEST,
@@ -114,4 +115,14 @@ export const studentPRLandingPageReducer = (state = {}, action) => {
       default:
         return state;
   }
+};
+
+export const studentApplicationStatus3Reducer = (state = {}, action) => {
+  switch (action.type) {
+      case  STUDENT_APPLICATION_3:
+        return { applicationStatusMsg3: true,
+                 currentApplicationInfo3: action.payload };
+      default:
+        return state;
+    }
 };

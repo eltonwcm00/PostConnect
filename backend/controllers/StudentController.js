@@ -463,7 +463,28 @@ const studentSubmitPR = asyncHandler(async (req, res) => {
     throw new Error("Internal server error");
   }
 });
+
+const studentViewPR = asyncHandler(async (req, res) => {
+
+  const currentStudent = req.userStudent;
+  
+  const registeredForPR = await ProgressReport.findOne({ studentUser: currentStudent}); 
+
+  if (!registeredForPR) { 
+    res.status(201).json({applicationStatusMsg: `You have not yet register for the progress report submission, the due date of the registration and submission is on,
+                                                 ${moment(registeredForPR.dateSetPR).format('MMMM Do YYYY')}`});
+  }
+  else if (!registeredForPR.dateSubmitPR) {
+    res.status(201).json({applicationStatusMsg: `You have not yet submit the progress report, the due date of the submission is on,
+                                                 ${moment(registeredForPR.dateSetPR).format('MMMM Do YYYY')}`});
+  }
+  else {
+    res.status(201).json({applicationStatusMsg: `You have submit the progress report on ${moment(registeredForPR.dateSubmitPR).format('MMMM Do YYYY')}. Kindly wait
+                                                 for the result to be evaluated.`});
+  }
+});
+
 /*************************************************** END PR ***************************************************/
 
 export { studentLogin, studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog, studentViewMeetingLog,
-        studentRequestWCD, studentViewWCDApplication, studentRegisterPR, studentRegisterPRLandingPage, studentSubmitPR };
+        studentRequestWCD, studentViewWCDApplication, studentRegisterPR, studentRegisterPRLandingPage, studentSubmitPR, studentViewPR };
