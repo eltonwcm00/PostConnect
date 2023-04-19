@@ -17,6 +17,9 @@ const ProgressReportSchema = mongoose.Schema(
     registeredPR: {
       type: Boolean,
     },
+    prMoreThanOnce: {
+      type: Boolean,
+    },
     grade: {
         type: String,
     },

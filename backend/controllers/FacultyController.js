@@ -631,20 +631,29 @@ const facultySetDatePR = asyncHandler(async (req, res) => {
     }
     else {
       const fetchPRDate = await ProgressReport.findOne({dateSetPR:{$exists: true}});
-    
+
       if (fetchPRDate) {
         fetchPRDate.dateSetPR = dateSetPR;
         const updatePRDate = await fetchPRDate.save();
+
         if (updatePRDate) {
           res.status(201).json({setPRDate: updatePRDate.dateSetPR, messagePRSucess: "Date for submission of progress report is updated"});
         }
         else {
           res.status(401).json({ messagePRError: "Unable to update the date for submission of progress repeort" });
         }
+
+        const fetchResubmitPR = await ProgressReport.updateMany({ prMoreThanOnce: { $eq: false }},
+                                                                 { $set: { prMoreThanOnce : true }});
+
+        if(fetchResubmitPR) {
+          console.log(fetchResubmitPR.prMoreThanOnce); 
+        }
       }
       else {
          insertSetDate = await ProgressReport.create({
           dateSetPR,
+          prMoreThanOnce: true,
         });
         
         if (insertSetDate) {

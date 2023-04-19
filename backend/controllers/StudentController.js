@@ -371,12 +371,18 @@ const studentRegisterPR = asyncHandler(async (req, res) => {
 
   const fetchPRDate = await ProgressReport.findOne({dateSetPR:{$exists: true}});
 
+  const hasSupervisor = req.userStudent.supervisorUser;
+
+  if (!hasSupervisor) {
+    res.status(401).json({message: "Access denied! you have not been assigned to any supervisor, please refer to faculty"});
+  }
+
   if (fetchPRDate) {
     if (todayDate > moment(fetchPRDate.dateSetPR)) {
       res.status(401).json({ message: "Sorry. The registration date for progress report submission is closed" });
     }
     else {
-      const fetchPRRegisteredStatus = await ProgressReport.findOne({registeredPR:{$exists: true}});
+      const fetchPRRegisteredStatus = await ProgressReport.findOne({studentUser: currentStudent, registeredPR:{$exists: true}});
       if (fetchPRRegisteredStatus) {
         res.status(401).json({ message: "You have registered for progress report submission before. Kindly proceed to submit your progress report" });
       }
@@ -407,31 +413,49 @@ const studentSubmitPR = asyncHandler(async (req, res) => {
 
   const hasSubmitted = await ProgressReport.findOne({ studentUser: currentStudent, contentPR:{$exists: true} });
   const submitPR = await ProgressReport.findOne({studentUser: currentStudent});
-  //const isReApplyAllow = await Student.findOne({studentUser: currentStudent, 
-                                                // retryWCDAttempt: {$gte: 1}});
-
+ 
   const hasSupervisor = req.userStudent.supervisorUser;
 
-  if (!hasSupervisor) {
-    res.status(401).json({message: "Access denied! you have not been assigned to any supervisor, please refer to faculty"});
-  }
-  else if (hasSubmitted) { 
+  if (hasSubmitted && (!submitPR.prMoreThanOnce)) { 
     res.status(401).json({message: "You have submitted the progress report previously"});
   }
-  else if (currentStudent) {
+  if (currentStudent) {
     
     if (contentPR.trim().length === 0) { 
       res.status(401).json({message: "Please upload your progress report .pdf file"});
     }
     else {
-      submitPR.contentPR = contentPR;
-      submitPR.dateSubmitPR = moment();
-      submitPR.supervisorUser = hasSupervisor;
-      const submittedPR = await submitPR.save();
-      res.status(201).json({
-        submittedPR,
-        messagePRSubmittedSucess: "The progress report has been submitted. Kindly for the result to be evaluated'"
-      });
+      if(submitPR.prMoreThanOnce) {
+        const subsequentSubmitPR = await ProgressReport.create({
+          registeredPR: true,
+          studentUser: currentStudent,
+          supervisorUser: hasSupervisor,
+          contentPR,
+          prMoreThanOnce: false,
+          dateSubmitPR: moment(),
+        });
+        res.status(201).json({
+          subsequentSubmitPR,
+          messagePRSubmittedSucess: "The subsequent half year progress report has been submitted. Kindly wait for the result to be evaluated"
+        })
+      }
+      else {
+        submitPR.contentPR = contentPR;
+        submitPR.dateSubmitPR = moment();
+        submitPR.supervisorUser = hasSupervisor;
+        submitPR.prMoreThanOnce = false;
+        const submittedPR = await submitPR.save();
+        
+        res.status(201).json({
+          submittedPR,
+          messagePRSubmittedSucess: "The half-year progress report has been submitted. Kindly wait for the result to be evaluated"
+        });
+      }
+      const fetchResubmitPR = await ProgressReport.updateMany( {studentUser: currentStudent, prMoreThanOnce: { $eq: true } },
+                                                               { $set: { prMoreThanOnce : false } });
+      if(fetchResubmitPR) {
+        console.log(fetchResubmitPR.prMoreThanOnce); 
+      }
     }
   }
   else {

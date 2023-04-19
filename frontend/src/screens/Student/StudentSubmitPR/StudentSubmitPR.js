@@ -57,7 +57,7 @@ const StudentSubmitPR = () => {
       if (successMsg) {
         const timer = setTimeout(() => {
           navigate("/studentHomepage");
-        }, 2000);
+        }, 5000);
         return () => clearTimeout(timer);
       }
     }, [navigate, successMsg])
@@ -89,7 +89,7 @@ const StudentSubmitPR = () => {
                 <>
                   <div className="row pr-date color"><q>{landingMsg.date}</q></div>
                   {
-                    landingMsgStatus && (!landingMsg.registeredPR ? 
+                    landingMsgStatus && ((!landingMsg.registeredPR) ?  
                       <>
                         <div className="row pr-date" style={{marginLeft: '2px'}}>Kindly proceed with the registration and submit before the due date</div>
                         <Button className='table-details-button mt-4' onClick={registerHandler}>Register</Button>
@@ -133,23 +133,23 @@ const StudentSubmitPR = () => {
                             </div>
                           ))
                         }
-                              <Form.Group as={Row} className="mb-5 pr-desc" controlId="formBasicPassword">
-                                <Form.Label column sm={2}>Progress Report</Form.Label>
-                                <Col sm={10}>
-                                <Form.Control
-                                    type="file"
-                                    value={contentPR}
-                                    name="myFile"
-                                    placeholder="Your progress report"
-                                    onChange={(e) => setContentPR(e.target.value)}
-                                    className="py-4 input-request"
-                                />
-                                </Col>
-                              </Form.Group>
+                            <Form.Group as={Row} className="mb-5 pr-desc" controlId="formBasicPassword">
+                              <Form.Label column sm={2}>Progress Report</Form.Label>
+                              <Col sm={10}>
+                              <Form.Control
+                                  type="file"
+                                  value={contentPR}
+                                  name="myFile"
+                                  placeholder="Your progress report"
+                                  onChange={(e) => setContentPR(e.target.value)}
+                                  className="py-4 input-request"
+                              />
+                              </Col>
+                            </Form.Group>
 
-                            <Button className=" mt-4 submit-btn" variant="primary" type="submit">
-                              Submit 
-                            </Button>
+                          <Button className=" mt-4 submit-btn" variant="primary" type="submit">
+                            Submit 
+                          </Button>
                         </Form>
                       </>
                     )
