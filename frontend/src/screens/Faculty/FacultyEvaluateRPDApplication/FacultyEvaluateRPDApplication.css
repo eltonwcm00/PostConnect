@@ -1,5 +1,6 @@
 .tab, .tab button  {
     font-family: 'Montserrat', sans-serif;
+    white-space: nowrap;
     color: white !important;
     font-weight: bold;
     background-color: #071b63;

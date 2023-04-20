@@ -126,21 +126,26 @@ const studentViewRPDApplication = asyncHandler(async (req, res) => {
     
     if (applicationFalseStatus) {
       res.status(201).json({applicationStatusMsg: `Sorry, your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 
-                              is rejected, please refer to your supervisor`});
+                              is rejected, please refer to your supervisor`,
+                            updatedAt: applicationFalseStatus.updatedAt});
     }
     else if (rpdPassed) {
-      res.status(201).json({applicationStatusMsg: "Congratulation! You have received a 'Satisfactory (S)' grade and passed your RPD"});
+      res.status(201).json({applicationStatusMsg: "Congratulation! You have received a 'Satisfactory (S)' grade and passed your RPD",
+                            updatedAt: rpdPassed.updatedAt});
     }
     else if (rpdFailed) {
-      res.status(201).json({applicationStatusMsg: "Sorry, You have received a 'Unsatisfactory (US)' grade and failed your RPD, please re-apply the RPD"});
+      res.status(201).json({applicationStatusMsg: "Sorry, You have received a 'Unsatisfactory (US)' grade and failed your RPD, please re-apply the RPD",
+                            updatedAt: rpdFailed.updatedAt});
     }
     else if (applicationTrueStatus) {
       res.status(201).json({applicationStatusMsg: `Congratulation! Your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 
-                              is approved, the RPD will be happened roughly after 2 weeks`});
+                              is approved, the RPD will be happened roughly after 2 weeks`,
+                            updatedAt: applicationTrueStatus.updatedAt});
     }
     else {
       res.status(201).json({applicationStatusMsg: `Your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 
-                              is pending to be approved`});
+                              is pending to be approved`,
+                            updatedAt: appliedForRPD});
     }
   }
   else {
@@ -219,11 +224,12 @@ const studentViewMeetingLog = asyncHandler(async (req, res) => {
 
   if (submitedMeetingLog) { 
       res.status(201).json({meetingLogStatusMsg: `Your meeting log has been submitted! Kindly submit the next meeting logs
-         after the next meeting`});
+                                                  after the next meeting`,
+                            updatedAt: submitedMeetingLog.updatedAt});
   }
   else {
      res.status(201).json({meetingLogStatusMsg: `You have not yet submit the meeting log! Kindly submit within 14 days
-        from your registration date. Last day to submit is on ${moment(currentStudent.dateJoin).add(14, 'days').format('MMMM Do YYYY')}`});
+                                                 from your registration date. Last day to submit is on ${moment(currentStudent.dateJoin).add(14, 'days').format('MMMM Do YYYY')}`});
   }
 });
 /*************************************************** END MEETING LOG ***************************************************/
@@ -304,21 +310,26 @@ const studentViewWCDApplication = asyncHandler(async (req, res) => {
     
     if (applicationFalseStatus) {
       res.status(201).json({applicationStatusMsg: `Sorry, your WCD application on ${moment(appliedForWCD.dateApplyWCD).format('MMMM Do YYYY')} 
-                              is rejected, please refer to your supervisor`});
+                              is rejected, please refer to your supervisor`,
+                            updatedAt: applicationFalseStatus.updatedAt});
     }
     else if (wcdPassed) {
-      res.status(201).json({applicationStatusMsg: "Congratulation! You have received a 'Satisfactory (S)' grade and passed your WCD"});
+      res.status(201).json({applicationStatusMsg: "Congratulation! You have received a 'Satisfactory (S)' grade and passed your WCD",
+                            updatedAt: wcdPassed.updatedAt});
     }
     else if (wcdFailed) {
-      res.status(201).json({applicationStatusMsg: "Sorry, You have received a 'Unsatisfactory (US)' grade and failed your WCD please re-apply the WCD"});
+      res.status(201).json({applicationStatusMsg: "Sorry, You have received a 'Unsatisfactory (US)' grade and failed your WCD please re-apply the WCD",
+                            updatedAt: wcdFailed.updatedAt});
     }
     else if (applicationTrueStatus) {
       res.status(201).json({applicationStatusMsg: `Congratulation! Your WCD application on ${moment(appliedForWCD.dateApplyWCD).format('MMMM Do YYYY')} 
-                              is approved, the WCD will be happened roughly after 2 weeks`});
+                              is approved, the WCD will be happened roughly after 2 weeks`,
+                            updatedAt: applicationTrueStatus.updatedAt});
     }
     else {
       res.status(201).json({applicationStatusMsg: `Your WCD application on ${moment(appliedForWCD.dateApplyWCD).format('MMMM Do YYYY')} 
-                              is pending to be approved`});
+                              is pending to be approved`,
+                            updatedAt: appliedForWCD.updatedAt});
     }
   }
   else {
@@ -468,19 +479,22 @@ const studentViewPR = asyncHandler(async (req, res) => {
 
   const currentStudent = req.userStudent;
   
+  const prInfo = await ProgressReport.find({}); 
   const registeredForPR = await ProgressReport.findOne({ studentUser: currentStudent}); 
 
-  if (!registeredForPR) { 
-    res.status(201).json({applicationStatusMsg: `You have not yet register for the progress report submission, the due date of the registration and submission is on,
-                                                 ${moment(registeredForPR.dateSetPR).format('MMMM Do YYYY')}`});
+  if (!registeredForPR.dateSubmitPR) {
+    res.status(201).json({applicationStatusMsg: `You have registered but not yet submit the progress report, the due date of the submission is on,
+                                                 ${moment(prInfo.dateSetPR).format('MMMM Do YYYY')}`,
+                          updatedAt: registeredForPR.updatedAt});
   }
-  else if (!registeredForPR.dateSubmitPR) {
-    res.status(201).json({applicationStatusMsg: `You have not yet submit the progress report, the due date of the submission is on,
-                                                 ${moment(registeredForPR.dateSetPR).format('MMMM Do YYYY')}`});
+  else if (registeredForPR) { 
+    res.status(201).json({applicationStatusMsg: `You have submit the progress report on ${moment(registeredForPR.dateSubmitPR).format('MMMM Do YYYY')}. Kindly wait
+                                                 for the result to be evaluated.`,
+                          updatedAt: registeredForPR.updatedAt});
   }
   else {
-    res.status(201).json({applicationStatusMsg: `You have submit the progress report on ${moment(registeredForPR.dateSubmitPR).format('MMMM Do YYYY')}. Kindly wait
-                                                 for the result to be evaluated.`});
+    res.status(201).json({applicationStatusMsg: `You have not yet register for the progress report submission, the due date of the registration and submission is on,
+                                                 ${moment(prInfo.dateSetPR).format('MMMM Do YYYY')}`});
   }
 });
 

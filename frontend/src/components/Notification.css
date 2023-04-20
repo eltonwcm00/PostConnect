@@ -1,14 +1,27 @@
-.toast-notification {
+.toast-title {
     font-family: 'Montserrat', sans-serif;
-    color: #4C4C4C;
-    font-weight: 400;
-    text-decoration: underline;
-    text-decoration-thickness: from-font;
-    text-underline-offset: 10px;
 }
 .toast-container {
     /* border: 1px solid black; */
     height: -webkit-fill-available;
     width: 26%;
-    box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 30%);
+    display: inline-table;
+    position: initial !important;
+    box-shadow: none;
+}
+.toast {
+    /* border: solid lightgrey 1px !important; */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    border: 1px solid #eeeeee!important;
+    padding: 16px;
+    margin: 16px 0;
+    background-color: #eeeeee !important;
+    color: black;
+    text-align: center;
+    font-weight: light;
+    border-radius: 8px;
+}
+.toast-header {
+    background-color: #f3f9fb;
+    color: black;
 }
