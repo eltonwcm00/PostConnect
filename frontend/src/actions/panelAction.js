@@ -253,3 +253,37 @@ export const panelEvaluateFailWCD = (id) => async (dispatch, getState) => {
   }
 };
 
+export const panelReadPR = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PANEL_APPLICATION_LIST_REQUEST,
+    });
+
+    const {
+      panelLogin: { panelInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${panelInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("http://localhost:5000/api/panel/panelReadPR", config);
+
+    dispatch({
+      type: PANEL_APPLICATION_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: PANEL_APPLICATION_LIST_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+

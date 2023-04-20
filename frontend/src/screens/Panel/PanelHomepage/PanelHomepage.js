@@ -21,7 +21,7 @@ const PanelHomepage = () => {
   return (
     <PanelTemplate>
       <h2 className="sub-heading">{moment().format(' Do MMMM ')}</h2>
-      <ViewPDF />
+      {/* <ViewPDF /> */}
     </PanelTemplate>
   )
 }

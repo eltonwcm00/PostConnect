@@ -2,9 +2,10 @@ import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcryptjs";
 import Panel from "../models/Panel.js";
-import RPD from "../models/RPD.js";
 import Student from "../models/Student.js";
+import RPD from "../models/RPD.js";
 import WCD from "../models/WCD.js";
+import ProgressReport from "../models/ProgressReport.js";
 
 const panelLogin = asyncHandler(async (req, res) => {
     const { usernamePanel, password } = req.body;
@@ -182,5 +183,19 @@ const panelEvaluateFailWCD = asyncHandler(async (req, res) => {
   }
 });
 
+/*************************************************** PR EVALUATION ***************************************************/
+
+const panelReadPR = asyncHandler(async (req, res) => {
+  
+  const PRList = await ProgressReport.find({dateSubmitPR:{$exists: true}}).populate('studentUser');
+
+  if(PRList) {
+    res.status(201).json(PRList)
+  } 
+  else {
+    res.status(401).json({errorWCDList: "No WCD is ready to be evaluate"});
+  }
+})
+
 export {panelLogin, panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
-        panelReadWCD, panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD};
+        panelReadWCD, panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD, panelReadPR};
