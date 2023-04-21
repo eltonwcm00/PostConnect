@@ -21,7 +21,8 @@ const ProgressReportSchema = mongoose.Schema(
       type: Boolean,
     },
     grade: {
-        type: String,
+        type: Number,
+        default: 0,
     },
     studentUser: {
       type: mongoose.Schema.Types.ObjectId,

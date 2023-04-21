@@ -46,11 +46,11 @@ const PanelEvaluatePR = () => {
                     </CDBTableHeader>
                     <CDBTableBody>
                     {
-                        fetchApplicationList && fetchApplicationList.filter(x =>(x.status !== true && x.status !== false)).map((list) => (
+                        fetchApplicationList && fetchApplicationList.filter(x =>(x.grade == 0)).map((list) => (
                                 <tr className='table-desc' key={list._id}>
-                                <td> {moment(list.dateSubmitPR).format('l')} </td>
+                                <td> {moment(list.dateSubmitPR).format('MMMM Do YYYY')} </td>
                                 <td> {list.studentUser.usernameStud} </td>
-                                <td><Button className='table-details-button' href={`http://localhost:3000/panelEvaluateRPD/${list._id}`}>Evaluate</Button></td>
+                                <td><Button className='table-details-button' href={`http://localhost:3000/panelEvaluatePR/${list._id}`}>Evaluate</Button></td>
                                 </tr>
                             )
                         )

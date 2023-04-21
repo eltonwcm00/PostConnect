@@ -42,6 +42,7 @@ import PanelEvaluateRPDID from './screens/Panel/PanelEvaluateRPD/PanelEvaluateRP
 import PanelEvaluateWCD from './screens/Panel/PanelEvaluateWCD/PanelEvaluateWCD';
 import PanelEvaluateWCDID from './screens/Panel/PanelEvaluateWCD/PanelEvaluateWCDID';
 import PanelEvaluatePR from './screens/Panel/PanelEvaluatePR/PanelEvaluatePR';
+import PanelEvaluatePRID from './screens/Panel/PanelEvaluatePR/PanelEvaluatePRID';
 
 function App() {
   return (
@@ -88,6 +89,7 @@ function App() {
         <Route exact path="/panelEvaluateWCD" element={<PanelEvaluateWCD />}/>
         <Route exact path="/panelEvaluateWCD/:id" element={<PanelEvaluateWCDID />}/>
         <Route exact path="/panelEvaluatePR" element={<PanelEvaluatePR />}/>
+        <Route exact path="/panelEvaluatePR/:id" element={<PanelEvaluatePRID />}/>
 
         <Route path="*" element={<Error404 />} />
       </Routes>

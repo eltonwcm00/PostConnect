@@ -455,6 +455,7 @@ const studentSubmitPR = asyncHandler(async (req, res) => {
         submitPR.dateSubmitPR = moment();
         submitPR.supervisorUser = hasSupervisor;
         submitPR.prMoreThanOnce = false;
+        
         const submittedPR = await submitPR.save();
         
         res.status(201).json({

@@ -49,7 +49,7 @@ const PanelEvaluateWCD = () => {
                     {
                         fetchApplicationList && fetchApplicationList.filter(x =>(x.status !== true && x.status !== false)).map((list) => (
                                 <tr className='table-desc' key={list._id}>
-                                <td> {moment(list.dateScheduleWCD).format('l')} </td>
+                                <td> {moment(list.dateScheduleWCD).format('MMMM Do YYYY')} </td>
                                 <td> {list.fullname} </td>
                                 <td> {list.thesisTitle} </td>
                                 <td><Button className='table-details-button' href={`http://localhost:3000/panelEvaluateWCD/${list._id}`}>Evaluate</Button></td>

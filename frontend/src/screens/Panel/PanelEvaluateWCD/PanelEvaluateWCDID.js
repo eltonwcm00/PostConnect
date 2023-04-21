@@ -82,7 +82,7 @@ const PanelEvaluateWCDID = () => {
             <PanelTemplate>
                 <div className="form-title-desc-container">Details of The Work Completion Defence</div>
                 {loading && <Loading/>}
-                {error && <ErrorMessage variant="danger">{error.message}</ErrorMessage>}
+                {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
                 {successApproveMsg && <SuccessMessage variant="success">{successApproveMsg.approveMsg}</SuccessMessage>}
                 {successRejectMsg && <SuccessMessage variant="success">{successRejectMsg.rejectMsg}</SuccessMessage>}
                 <Form className="form">

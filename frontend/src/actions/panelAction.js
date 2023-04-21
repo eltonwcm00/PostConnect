@@ -287,3 +287,38 @@ export const panelReadPR = () => async (dispatch, getState) => {
   }
 };
 
+export const panelEvaluatePR = (id, grade) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PANEL_UPDATE_APPLICATION_REQUEST,
+    });
+
+    const {
+      panelLogin: { panelInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${panelInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/panel/panelEvaluatePR/${id}`, {grade}, config);
+
+    dispatch({
+      type: PANEL_APPROVE_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: PANEL_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+

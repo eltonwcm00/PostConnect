@@ -185,6 +185,13 @@ const panelEvaluateFailWCD = asyncHandler(async (req, res) => {
 
 /*************************************************** PR EVALUATION ***************************************************/
 
+const panelReadPRDateSetPR = asyncHandler(async (req, res) => {
+  const fetchDateSetPR = await ProgressReport.findOne({dateSetPR: {$exists: true}});
+  if (fetchDateSetPR) {
+    res.status(201).json(fetchDateSetPR);
+  }
+});
+
 const panelReadPR = asyncHandler(async (req, res) => {
   
   const PRList = await ProgressReport.find({dateSubmitPR:{$exists: true}}).populate('studentUser');
@@ -193,9 +200,48 @@ const panelReadPR = asyncHandler(async (req, res) => {
     res.status(201).json(PRList)
   } 
   else {
-    res.status(401).json({errorWCDList: "No WCD is ready to be evaluate"});
+    res.status(401).json({errorWCDList: "No PR is ready to be evaluate"});
   }
+});
+
+const panelReadPRByID = asyncHandler(async (req, res) => {
+
+  const fetchPRID = await ProgressReport.findById(req.params.id).populate('studentUser');
+
+  if (fetchPRID) {
+    res.status(201).json(fetchPRID);
+  }
+  else {
+    res.status(401).json({message: "Error in .db reference"});
+  }
+});
+
+const panelEvaluatePR = asyncHandler(async (req, res) => {
+  
+  const fetchPRID = await ProgressReport.findById(req.params.id);
+
+  if (fetchPRID) {
+    
+    const { grade } = req.body;
+
+    if (!grade) {
+      res.status(401).json({message: "Please give a grade for the evaluation of progress report"});
+    } 
+
+    fetchPRID.grade = fetchPRID.grade + parseInt(grade);
+    const prGrade = await fetchPRID.save();
+
+    if (prGrade) {
+      res.status(201).json({
+        prGrade,
+        messagePRSuccess: `The progress report is evaluated, the grade of the evaluation is given by ${prGrade.grade}`
+      });
+    }
+  };
 })
 
-export {panelLogin, panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
-        panelReadWCD, panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD, panelReadPR};
+/*************************************************** END PR EVALUATION ***************************************************/
+
+export { panelLogin, panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
+         panelReadWCD, panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD, 
+         panelReadPRDateSetPR, panelReadPR, panelReadPRByID, panelEvaluatePR };

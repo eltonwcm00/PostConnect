@@ -49,7 +49,7 @@ const PanelEvaluateRPD = () => {
                     {
                         fetchApplicationList && fetchApplicationList.filter(x =>(x.status !== true && x.status !== false)).map((list) => (
                                 <tr className='table-desc' key={list._id}>
-                                <td> {moment(list.dateScheduleRPD).format('l')} </td>
+                                <td> {moment(list.dateScheduleRPD).format('MMMM Do YYYY')} </td>
                                 <td> {list.fullname} </td>
                                 <td> {list.miniThesisTitle} </td>
                                 <td><Button className='table-details-button' href={`http://localhost:3000/panelEvaluateRPD/${list._id}`}>Evaluate</Button></td>
