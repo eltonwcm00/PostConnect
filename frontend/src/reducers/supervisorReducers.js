@@ -5,7 +5,10 @@ import {
     SUPERVISOR_LOGOUT,
     SUPERVISOR_CW_REQUEST,
     SUPERVISOR_CW_SUCCESS,
-    SUPERVISOR_CW_FAIL
+    SUPERVISOR_CW_FAIL,
+    SUPERVISOR_UPDATE_APPLICATION_REQUEST,
+    SUPERVISOR_APPROVE_APPLICATION_SUCCESS,
+    SUPERVISOR_UPDATE_APPLICATION_FAIL
 } from "../constants/supervisorConstants";
 
 export const supervisorLoginReducer = (state = {}, action) => {
@@ -34,5 +37,17 @@ export const supervisorReadCWReducer = (state = { meetingLogList: [] }, action) 
     default:
       return state;
   }
-}
+};
 
+export const supervisorEvaluatePRReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SUPERVISOR_UPDATE_APPLICATION_REQUEST:
+      return { loading: true };
+    case SUPERVISOR_APPROVE_APPLICATION_SUCCESS:
+      return { loading: false, successApproveMsg: action.payload };
+    case SUPERVISOR_UPDATE_APPLICATION_FAIL:
+      return { loading: false, error: action.payload};
+    default:
+      return state;
+  }
+};

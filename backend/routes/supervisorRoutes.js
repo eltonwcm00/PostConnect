@@ -1,5 +1,6 @@
 import express from "express";
-import { supervisorLogin, supervisorReadMeetingLog, supervisorReadMeetingLogByID, supervisorReadRPDResult, supervisorReadWCDResult } from "../controllers/SupervisorController.js";
+import { supervisorLogin, supervisorReadMeetingLog, supervisorReadMeetingLogByID, supervisorReadRPDResult, supervisorReadWCDResult,
+         supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR } from "../controllers/SupervisorController.js";
 import { protectSupervisor } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -9,6 +10,9 @@ router.route('/supervisorReadMeetingLog').get(protectSupervisor, supervisorReadM
 router.route('/supervisorReadMeetingLog/:id').get(supervisorReadMeetingLogByID);
 router.route('/supervisorReadRPDResult').get(protectSupervisor, supervisorReadRPDResult);
 router.route('/supervisorReadWCDResult').get(protectSupervisor, supervisorReadWCDResult);
+router.route("/supervisorReadPR").get(protectSupervisor, supervisorReadPR);
+router.route("/supervisorEvaluatePR/:id").get(supervisorReadPRByID)
+                                    .put(protectSupervisor, supervisorEvaluatePR);
 
 export default router;
 

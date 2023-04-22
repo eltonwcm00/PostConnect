@@ -34,6 +34,8 @@ import SupervisorViewMeetingLog from './screens/Supervisor/SupervisorViewMeeting
 import SupervisorViewMeetingLogID from './screens/Supervisor/SupervisorViewMeetingLog/SupervisorViewMeetingLogID';
 import SupervisorViewRPD from './screens/Supervisor/SupervisorViewRPD/SupervisorViewRPD';
 import SupervisorViewWCD from './screens/Supervisor/SupervisorViewWCD/SupervisorViewWCD';
+import SupervisorEvaluatePR from './screens/Supervisor/SupervisorEvaluatePR/SupervisorEvaluatePR';
+import SupervisorEvaluatePRID from './screens/Supervisor/SupervisorEvaluatePR/SupervisorEvaluatePRID';
 
 import PanelLogin from './screens/Panel/PanelLogin/PanelLogin';
 import PanelHomepage from './screens/Panel/PanelHomepage/PanelHomepage';
@@ -83,6 +85,8 @@ function App() {
         <Route exact path="/supervisorViewMeetingLog/:id" element={<SupervisorViewMeetingLogID />}/>
         <Route exact path="/supervisorViewRPD" element={<SupervisorViewRPD />}/>
         <Route exact path="/supervisorViewWCD" element={<SupervisorViewWCD />}/>
+        <Route exact path="/supervisorEvaluatePR" element={<SupervisorEvaluatePR />}/>
+        <Route exact path="/supervisorEvaluatePR/:id" element={<SupervisorEvaluatePRID />}/>
 
         <Route exact path="/panelEvaluateRPD" element={<PanelEvaluateRPD />}/>
         <Route exact path="/panelEvaluateRPD/:id" element={<PanelEvaluateRPDID />}/>

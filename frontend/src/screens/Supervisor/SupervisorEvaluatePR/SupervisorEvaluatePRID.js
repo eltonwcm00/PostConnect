@@ -3,15 +3,15 @@ import axios from "axios";
 import moment from 'moment';
 import { useDispatch, useSelector } from "react-redux";
 import {useParams, useNavigate } from 'react-router-dom';
-import { panelEvaluatePR } from "../../../actions/panelAction";
+import { supervisorEvaluatePR } from "../../../actions/supervisorAction";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SuccessMessage from "../../../components/SuccessMessage";
-import PanelTemplate from "../../../components/PanelTemplate";
+import SupervisorTemplate from "../../../components/SupervisorTemplate";
 import dummyPDF from "./REFERENCE LETTER.pdf"
 
-const PanelEvaluatePRID = () => {
+const SupervisorEvaluatePRID = () => {
     
     const [fullname, setFullName] = useState();
     const [miniThesis, setThesis] = useState();
@@ -23,16 +23,16 @@ const PanelEvaluatePRID = () => {
     let navigate = useNavigate();
     const { id } = useParams();
 
-    const panelLogin = useSelector((state) => state.panelLogin);
-    const { panelInfo } = panelLogin;
-    const panelEvaluateRPD = useSelector((state) => state.panelEvaluateRPD);
-    const { loading, error, successApproveMsg } = panelEvaluateRPD;
-
+    const supervisorLogin = useSelector((state) => state.supervisorLogin);
+    const { supervisorInfo } = supervisorLogin;
+    const supervisorEvaluatePRState = useSelector((state) => state.supervisorEvaluatePR);
+    const { loading, error, successApproveMsg } = supervisorEvaluatePRState;
+ 
     useEffect(() => {
-        if (!panelInfo) {
+        if (!supervisorInfo) {
           navigate("/");
         }
-    }, [dispatch, navigate, panelInfo,]);
+    }, [dispatch, navigate, supervisorInfo,]);
 
     useEffect(() => {
         const initFetching = async () => {            
@@ -49,7 +49,7 @@ const PanelEvaluatePRID = () => {
     useEffect(() => {
         const fetching = async () => {
         
-            const { data } = await axios.get(`http://localhost:5000/api/panel/panelEvaluatePR/${id}`);
+            const { data } = await axios.get(`http://localhost:5000/api/supervisor/supervisorEvaluatePR/${id}`);
 
             setFullName(data.studentUser.usernameStud);
             setDateSchedulePR(moment(data.dateSubmitPR).format('l'));
@@ -67,14 +67,14 @@ const PanelEvaluatePRID = () => {
         e.preventDefault();
         if (window.confirm("Are you sure to approve?")) {
             console.log(grade);
-            dispatch(panelEvaluatePR(id, grade));
+            dispatch(supervisorEvaluatePR(id, grade));
         }
     };
 
     useEffect(() => {
         if (successApproveMsg) {
           const timer = setTimeout(() => {
-            navigate("/panelEvaluatePR");
+            navigate("/supervisorEvaluatePR");
           }, 5000);
           return () => clearTimeout(timer);
         }
@@ -82,7 +82,7 @@ const PanelEvaluatePRID = () => {
 
     return (
         <>
-            <PanelTemplate>
+            <SupervisorTemplate>
                 <div className="form-title-desc-container">Details of The Progress Report</div>
                 {loading && <Loading/>}
                 {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
@@ -142,9 +142,9 @@ const PanelEvaluatePRID = () => {
                    </Col>
                 }        
             </Form>     
-            </PanelTemplate>
+            </SupervisorTemplate>
         </>
     )
 }
 
-export default PanelEvaluatePRID
+export default SupervisorEvaluatePRID

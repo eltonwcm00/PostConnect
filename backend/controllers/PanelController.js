@@ -219,26 +219,25 @@ const panelReadPRByID = asyncHandler(async (req, res) => {
 const panelEvaluatePR = asyncHandler(async (req, res) => {
   
   const fetchPRID = await ProgressReport.findById(req.params.id);
+  const { grade } = req.body;
 
-  if (fetchPRID) {
-    
-    const { grade } = req.body;
+  const hasPanel = req.userPanel;
 
-    if (!grade) {
-      res.status(401).json({message: "Please give a grade for the evaluation of progress report"});
-    } 
+  if (!grade) {
+    res.status(401).json({message: "Please give a grade for the evaluation of progress report"});
+  } 
 
-    fetchPRID.grade = fetchPRID.grade + parseInt(grade);
-    const prGrade = await fetchPRID.save();
+  fetchPRID.grade = fetchPRID.grade + parseInt(grade);
+  fetchPRID.panelUser = hasPanel;
+  const prGrade = await fetchPRID.save();
 
-    if (prGrade) {
-      res.status(201).json({
-        prGrade,
-        messagePRSuccess: `The progress report is evaluated, the grade of the evaluation is given by ${prGrade.grade}`
-      });
-    }
-  };
-})
+  if (prGrade) {
+    res.status(201).json({
+      prGrade,
+      messagePRSuccess: `The progress report is evaluated, the grade of the evaluation is given by ${grade}`
+    });
+  }
+});
 
 /*************************************************** END PR EVALUATION ***************************************************/
 

@@ -1,11 +1,12 @@
 import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcryptjs";
+import Student from "../models/Student.js";
 import Supervisor from "../models/Supervisor.js";
 import MeetingLog from "../models/MeetingLog.js";
 import RPD from "../models/RPD.js";
 import WCD from "../models/WCD.js";
-import Student from "../models/Student.js";
+import ProgressReport from "../models/ProgressReport.js";
 
 const supervisorLogin = asyncHandler(async (req, res) => {
   const { usernameSup, password } = req.body;
@@ -58,11 +59,6 @@ const supervisorReadRPDResult = asyncHandler(async (req, res) => {
 
   const currentSupervisor = req.userSupervisor;
 
-  // const rpdReference = await RPD.find({});
-  // const getSupervisingStudent = await Student.find({_id: rpdReference.studentRef, supervisorUser: currentSupervisor});// retry attempt
-  // const readRPD = await RPD.find({studentRef: getSupervisingStudent._id}).populate('studRef'); // status, grade, mini thesis, date, fullname 
-
-  // const rpdReference = await RPD.find({});
   const getSupervisingStudent = await Student.find({supervisorUser: currentSupervisor._id});
   const readRPD = await RPD.find({studentRef:getSupervisingStudent})
                               .or([{status:{$eq: false}}, {status:{$eq: true}}])
@@ -93,4 +89,58 @@ const supervisorReadWCDResult = asyncHandler(async (req, res) => {
   }
 });
 
-export { supervisorLogin, supervisorReadMeetingLog, supervisorReadMeetingLogByID, supervisorReadRPDResult, supervisorReadWCDResult };
+const supervisorReadPR = asyncHandler(async (req, res) => {
+  
+  const currentSupervisor = req.userSupervisor;
+
+  const getSupervisingStudent = await Student.find({supervisorUser: currentSupervisor._id});
+  const PRList = await ProgressReport.find({studentUser: getSupervisingStudent,
+                                            dateSubmitPR:{$exists: true}})
+                                              .populate('studentUser');
+
+  if(PRList) {
+    res.status(201).json(PRList)
+  } 
+  else {
+    res.status(401).json({errorWCDList: "No PR is ready to be evaluate"});
+  }
+});
+
+const supervisorReadPRByID = asyncHandler(async (req, res) => {
+
+  const fetchPRID = await ProgressReport.findById(req.params.id).populate('studentUser');
+
+  if (fetchPRID) {
+    res.status(201).json(fetchPRID);
+  }
+  else {
+    res.status(401).json({message: "Error in .db reference"});
+  }
+});
+
+const supervisorEvaluatePR = asyncHandler(async (req, res) => {
+  
+  const fetchPRID = await ProgressReport.findById(req.params.id);
+
+  const { grade } = req.body;
+
+  const hasSupervisor = req.userSupervisor;
+
+  if (!grade) {
+    res.status(401).json({message: "Please give a grade for the evaluation of progress report"});
+  } 
+
+  fetchPRID.grade = fetchPRID.grade + parseInt(grade);
+  fetchPRID.supervisorUser = hasSupervisor;
+  const prGrade = await fetchPRID.save();
+
+  if (prGrade) {
+    res.status(201).json({
+      prGrade,
+      messagePRSuccess: `The progress report is evaluated, the grade of the evaluation is given by ${grade}`
+    });
+  }
+});
+
+export { supervisorLogin, supervisorReadMeetingLog, supervisorReadMeetingLogByID, supervisorReadRPDResult, supervisorReadWCDResult, 
+         supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR };

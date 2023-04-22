@@ -424,8 +424,6 @@ const studentSubmitPR = asyncHandler(async (req, res) => {
 
   const hasSubmitted = await ProgressReport.findOne({ studentUser: currentStudent, contentPR:{$exists: true} });
   const submitPR = await ProgressReport.findOne({studentUser: currentStudent});
- 
-  const hasSupervisor = req.userStudent.supervisorUser;
 
   if (hasSubmitted && (!submitPR.prMoreThanOnce)) { 
     res.status(401).json({message: "You have submitted the progress report previously"});
@@ -440,7 +438,6 @@ const studentSubmitPR = asyncHandler(async (req, res) => {
         const subsequentSubmitPR = await ProgressReport.create({
           registeredPR: true,
           studentUser: currentStudent,
-          supervisorUser: hasSupervisor,
           contentPR,
           prMoreThanOnce: false,
           dateSubmitPR: moment(),
@@ -453,7 +450,6 @@ const studentSubmitPR = asyncHandler(async (req, res) => {
       else {
         submitPR.contentPR = contentPR;
         submitPR.dateSubmitPR = moment();
-        submitPR.supervisorUser = hasSupervisor;
         submitPR.prMoreThanOnce = false;
         
         const submittedPR = await submitPR.save();
@@ -480,10 +476,14 @@ const studentViewPR = asyncHandler(async (req, res) => {
 
   const currentStudent = req.userStudent;
   
-  const prInfo = await ProgressReport.find({}); 
+  const prInfo = await ProgressReport.findOne({}); 
   const registeredForPR = await ProgressReport.findOne({ studentUser: currentStudent}); 
 
-  if (!registeredForPR.dateSubmitPR) {
+  if (!registeredForPR) {
+    res.status(201).json({applicationStatusMsg: `You have not yet register for the progress report submission, the due date of the registration and submission is on,
+                                                 ${moment(prInfo.dateSetPR).format('MMMM Do YYYY')}`});
+  }
+  else if (!registeredForPR.dateSubmitPR) {
     res.status(201).json({applicationStatusMsg: `You have registered but not yet submit the progress report, the due date of the submission is on,
                                                  ${moment(prInfo.dateSetPR).format('MMMM Do YYYY')}`,
                           updatedAt: registeredForPR.updatedAt});
@@ -492,10 +492,6 @@ const studentViewPR = asyncHandler(async (req, res) => {
     res.status(201).json({applicationStatusMsg: `You have submit the progress report on ${moment(registeredForPR.dateSubmitPR).format('MMMM Do YYYY')}. Kindly wait
                                                  for the result to be evaluated.`,
                           updatedAt: registeredForPR.updatedAt});
-  }
-  else {
-    res.status(201).json({applicationStatusMsg: `You have not yet register for the progress report submission, the due date of the registration and submission is on,
-                                                 ${moment(prInfo.dateSetPR).format('MMMM Do YYYY')}`});
   }
 });
 

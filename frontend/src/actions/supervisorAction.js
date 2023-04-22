@@ -5,7 +5,10 @@ import {
     SUPERVISOR_LOGOUT,
     SUPERVISOR_CW_REQUEST,
     SUPERVISOR_CW_SUCCESS,
-    SUPERVISOR_CW_FAIL
+    SUPERVISOR_CW_FAIL,
+    SUPERVISOR_UPDATE_APPLICATION_REQUEST,
+    SUPERVISOR_APPROVE_APPLICATION_SUCCESS,
+    SUPERVISOR_UPDATE_APPLICATION_FAIL
 } from "../constants/supervisorConstants";
 
 import axios from "axios";
@@ -137,6 +140,74 @@ export const supervisorReadWCDResult = () => async (dispatch, getState) => {
         error.response 
           ? error.response.data.message
           : error.message,
+    });
+  }
+};
+
+export const supervisorReadPR = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SUPERVISOR_CW_REQUEST,
+    });
+
+    const {
+      supervisorLogin: { supervisorInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${supervisorInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("http://localhost:5000/api/supervisor/supervisorReadPR", config);
+
+    dispatch({
+      type: SUPERVISOR_CW_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: SUPERVISOR_CW_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+export const supervisorEvaluatePR = (id, grade) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SUPERVISOR_UPDATE_APPLICATION_REQUEST,
+    });
+
+    const {
+      supervisorLogin: { supervisorInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${supervisorInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/supervisor/supervisorEvaluatePR/${id}`, {grade}, config);
+
+    dispatch({
+      type: SUPERVISOR_APPROVE_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: SUPERVISOR_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
     });
   }
 };

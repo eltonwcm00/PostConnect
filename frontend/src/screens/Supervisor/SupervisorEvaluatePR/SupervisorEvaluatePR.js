@@ -4,35 +4,35 @@ import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import { useDispatch, useSelector } from "react-redux";
-import { panelReadPR } from "../../../actions/panelAction";
+import { supervisorReadPR } from "../../../actions/supervisorAction";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
-import PanelTemplate from "../../../components/PanelTemplate";
+import SupervisorTemplate from "../../../components/SupervisorTemplate";
 import ViewPDF from "../../../components/ViewPDF";
 
-const PanelEvaluatePR = () => {
+const SupervisorEvaluatePR = () => {
     
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
-    const panelLogin = useSelector((state) => state.panelLogin);
-    const { panelInfo } = panelLogin;
+    const supervisorLogin = useSelector((state) => state.supervisorLogin);
+    const { supervisorInfo } = supervisorLogin;
 
-    const PRList = useSelector((state) => state.panelReadApplication);
-    const { loading, errorApplicationList, fetchApplicationList } = PRList;
+    const PRList = useSelector((state) => state.supervisorReadCW);
+    const { loading, cwInfoSuccess, cwInfoFail } = PRList;
 
     useEffect(() => {
-        dispatch(panelReadPR());
-        if (!panelInfo) {
+        dispatch(supervisorReadPR());
+        if (!supervisorInfo) {
           navigate("/");
         }
-    }, [dispatch, navigate, panelInfo,]);
+    }, [dispatch, navigate, supervisorInfo,]);
 
     return (
         <>
             {loading && <Loading />}
-            {errorApplicationList && <ErrorMessage variant="danger">{errorApplicationList}</ErrorMessage>}
-            <PanelTemplate>
+            {cwInfoFail && <ErrorMessage variant="danger">{cwInfoFail}</ErrorMessage>}
+            <SupervisorTemplate>
                 <CDBContainer style={{padding: '0px', textAlign: "center"}} className="list-container">
                 <CDBTable borderless>
                     <CDBTableHeader className="d-flex p-2 table-header">
@@ -44,11 +44,11 @@ const PanelEvaluatePR = () => {
                     </CDBTableHeader>
                     <CDBTableBody>
                     {
-                        fetchApplicationList && fetchApplicationList.filter(x =>(!x.panelUser)).map((list) => (
+                        cwInfoSuccess && cwInfoSuccess.filter(x =>(!x.supervisorUser)).map((list) => (
                                 <tr className='table-desc' key={list._id}>
                                 <td> {moment(list.dateSubmitPR).format('MMMM Do YYYY')} </td>
                                 <td> {list.studentUser.usernameStud} </td>
-                                <td><Button className='table-details-button' href={`http://localhost:3000/panelEvaluatePR/${list._id}`}>Evaluate</Button></td>
+                                <td><Button className='table-details-button' href={`http://localhost:3000/supervisorEvaluatePR/${list._id}`}>Evaluate</Button></td>
                                 </tr>
                             )
                         )
@@ -56,9 +56,9 @@ const PanelEvaluatePR = () => {
                     </CDBTableBody>
                 </CDBTable>
                 </CDBContainer>
-            </PanelTemplate>
+            </SupervisorTemplate>
         </>
     )
 }
 
-export default PanelEvaluatePR
+export default SupervisorEvaluatePR

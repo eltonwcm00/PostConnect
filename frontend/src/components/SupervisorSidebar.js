@@ -46,6 +46,11 @@ import { supervisorLogout } from '../actions/supervisorAction';
               <NavLink exact to="/supervisorViewRPD" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa-solid fa-magnifying-glass"> View Research Proposal Defence Result </CDBSidebarMenuItem>
               </NavLink>
+              <NavLink exact to="/supervisorEvaluatePR">
+                <CDBSidebarMenuItem icon="fa-solid fa-file-circle-check">
+                    Progress Report Evaluation
+                </CDBSidebarMenuItem>
+              </NavLink>
               <NavLink exact to="/supervisorViewWCD">
                 <CDBSidebarMenuItem icon="fa-solid fa-magnifying-glass">
                 View Work Completion Defence Result
