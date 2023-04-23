@@ -219,6 +219,9 @@ const panelReadPRByID = asyncHandler(async (req, res) => {
 const panelEvaluatePR = asyncHandler(async (req, res) => {
   
   const fetchPRID = await ProgressReport.findById(req.params.id);
+  const insertStudent = await Student.findOne({_id: fetchPRID.studentUser});
+  const insertStudentAfterReevaluate = await Student.findOne({_id: fetchPRID.studentUser, 
+                                                              retryPRAttempt: {$gte: 1}});
   const { grade } = req.body;
 
   const hasPanel = req.userPanel;
@@ -226,16 +229,39 @@ const panelEvaluatePR = asyncHandler(async (req, res) => {
   if (!grade) {
     res.status(401).json({message: "Please give a grade for the evaluation of progress report"});
   } 
+  else {
+    fetchPRID.grade = fetchPRID.grade + parseInt(grade);
+    fetchPRID.panelUser = hasPanel;
+    const prGrade = await fetchPRID.save();
 
-  fetchPRID.grade = fetchPRID.grade + parseInt(grade);
-  fetchPRID.panelUser = hasPanel;
-  const prGrade = await fetchPRID.save();
+    if (prGrade) {
+      res.status(201).json({
+        prGrade,
+        messagePRSuccess: `The progress report is evaluated, the grade of the evaluation is given by ${grade}`
+      });
+    }
+  }
 
-  if (prGrade) {
-    res.status(201).json({
-      prGrade,
-      messagePRSuccess: `The progress report is evaluated, the grade of the evaluation is given by ${grade}`
-    });
+  if ((fetchPRID.panelUser && fetchPRID.supervisorUser) 
+        && (fetchPRID.grade > 0 && fetchPRID.grade < 3)) {
+    fetchPRID.status = false;
+  }
+  else if ((fetchPRID.panelUser && fetchPRID.supervisorUser) 
+             && (fetchPRID.grade > 0 && fetchPRID.grade >= 3)) {
+    fetchPRID.status = true;
+
+    // 'S' grade after re-evaluated 
+    if(insertStudentAfterReevaluate) {
+      insertStudent.retryPRAttempt = 0;
+      await insertStudent.save();
+    }
+  }
+  await fetchPRID.save();
+
+  // 'US' grade if total grade < 3
+  if((fetchPRID.grade > 0 && fetchPRID.grade < 3) && fetchPRID.status === false) {
+    insertStudent.retryPRAttempt = insertStudent.retryPRAttempt + 1;
+    await insertStudent.save();
   }
 });
 

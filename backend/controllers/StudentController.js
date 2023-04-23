@@ -24,6 +24,7 @@ const studentLogin = asyncHandler(async (req, res) => {
         isStudent: true,
         retryRPDAttempt: userStudent.retryRPDAttempt,
         retryWCDAttempt: userStudent.retryWCDAttempt,
+        retryPRAttempt: userStudent.retryPRAttempt,
         token: generateToken(userStudent._id),
         successMessage: "Logged in successfully!"
       });
@@ -478,19 +479,31 @@ const studentViewPR = asyncHandler(async (req, res) => {
   
   const prInfo = await ProgressReport.findOne({}); 
   const registeredForPR = await ProgressReport.findOne({ studentUser: currentStudent}); 
+  const currentStud = await Student.findOne({_id: currentStudent});
+  const currentStudGrade = await ProgressReport.findOne({ studentUser: currentStudent}).sort({createdAt: -1}); // find latest result
 
   if (!registeredForPR) {
     res.status(201).json({applicationStatusMsg: `You have not yet register for the progress report submission, the due date of the registration and submission is on,
                                                  ${moment(prInfo.dateSetPR).format('MMMM Do YYYY')}`});
   }
-  else if (!registeredForPR.dateSubmitPR) {
-    res.status(201).json({applicationStatusMsg: `You have registered but not yet submit the progress report, the due date of the submission is on,
-                                                 ${moment(prInfo.dateSetPR).format('MMMM Do YYYY')}`,
+  else if (registeredForPR.dateSubmitPR && registeredForPR.grade > 0 && currentStud.retryRPDAttempt == 0) {
+    res.status(201).json({applicationStatusMsg: `Your progress report has been evaluated. Congratulation! you have been given grade ${currentStudGrade.grade} 
+                                                 for your progress report and received grade 'Satisfactory' (S).`,
                           updatedAt: registeredForPR.updatedAt});
   }
-  else if (registeredForPR) { 
+  else if (registeredForPR.dateSubmitPR && registeredForPR.grade > 0 && currentStud.retryRPDAttempt > 0) {
+    res.status(201).json({applicationStatusMsg: `Your progress report has been evaluated. Sorry, you have been given grade ${currentStudGrade.grade} 
+                                                 for your progress report and received grade 'Unsatisfactory' (US).`,
+                          updatedAt: registeredForPR.updatedAt});
+  }
+  else if (registeredForPR && registeredForPR.dateSubmitPR) { 
     res.status(201).json({applicationStatusMsg: `You have submit the progress report on ${moment(registeredForPR.dateSubmitPR).format('MMMM Do YYYY')}. Kindly wait
                                                  for the result to be evaluated.`,
+                          updatedAt: registeredForPR.updatedAt});
+  }
+  else if (registeredForPR && !registeredForPR.dateSubmitPR) {
+    res.status(201).json({applicationStatusMsg: `You have registered but not yet submit the progress report, the due date of the submission is on,
+                                                 ${moment(prInfo.dateSetPR).format('MMMM Do YYYY')}`,
                           updatedAt: registeredForPR.updatedAt});
   }
 });

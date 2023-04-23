@@ -153,6 +153,20 @@ const Notification = () => {
                       </Toast.Header>
                       <Toast.Body>{applicationStatusMsg3 && <>{currentApplicationInfo3.applicationStatusMsg}</>}</Toast.Body>
                     </Toast>
+                    {/* Remind student he/she about to be terminated from study if fail WCD more than 3 consecutive times */}
+                    {
+                        (studentInfo && studentInfo.retryPRAttempt == 2) && 
+                          <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
+                            <Toast.Header className="toast-header">
+                            <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                              <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                              <small>{moment().fromNow()}</small>
+                            </Toast.Header>
+                            <Toast.Body>
+                              {"Warning!, you have failed your PR for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
+                            </Toast.Body>
+                          </Toast>
+                      }
                   </ToastContainer>
                   </CDBTableBody>
                 </CDBTable>

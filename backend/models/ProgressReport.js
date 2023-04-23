@@ -12,7 +12,7 @@ const ProgressReportSchema = mongoose.Schema(
       type: Date,
     },
     status: {
-       type: Boolean, // true: when evaluation is done by supervisor & panel
+       type: Boolean,
     },
     registeredPR: {
       type: Boolean,
