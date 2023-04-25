@@ -28,6 +28,8 @@ const supervisorLogin = asyncHandler(async (req, res) => {
   }
 });
 
+/*************************************************** MEETING LOG ***************************************************/
+
 const supervisorReadMeetingLog = asyncHandler(async (req, res) => {
   
   let meetingLogStudent;
@@ -55,6 +57,10 @@ const supervisorReadMeetingLogByID = asyncHandler(async (req, res) => {
   }
 });
 
+/*************************************************** END MEETING LOG ***************************************************/
+
+/*************************************************** RPD ***************************************************/
+
 const supervisorReadRPDResult = asyncHandler(async (req, res) => {
 
   const currentSupervisor = req.userSupervisor;
@@ -72,6 +78,10 @@ const supervisorReadRPDResult = asyncHandler(async (req, res) => {
   }
 });
 
+/*************************************************** END RPD ***************************************************/
+
+/*************************************************** WCD ***************************************************/
+
 const supervisorReadWCDResult = asyncHandler(async (req, res) => {
 
   const currentSupervisor = req.userSupervisor;
@@ -88,6 +98,10 @@ const supervisorReadWCDResult = asyncHandler(async (req, res) => {
     res.status(401).json({message: "Unable to retrieve student details"});
   }
 });
+
+/*************************************************** END WCD ***************************************************/
+
+/*************************************************** PR ***************************************************/
 
 const supervisorReadPR = asyncHandler(async (req, res) => {
   
@@ -167,5 +181,23 @@ const supervisorEvaluatePR = asyncHandler(async (req, res) => {
   }
 });
 
+const supervisorReadPRResult = asyncHandler(async (req, res) => {
+
+  const currentSupervisor = req.userSupervisor;
+
+  const getSupervisingStudent = await Student.find({supervisorUser: currentSupervisor._id});
+  const readRPD = await ProgressReport.find({studentUser:getSupervisingStudent})
+                              .or([{status:{$eq: false}}, {status:{$eq: true}}])
+                                .populate('studentUser'); 
+
+  if (readRPD) {
+    res.status(201).json(readRPD);
+  }
+  else {
+    res.status(401).json({message: "Unable to retrieve student details"});
+  }
+});
+
+
 export { supervisorLogin, supervisorReadMeetingLog, supervisorReadMeetingLogByID, supervisorReadRPDResult, supervisorReadWCDResult, 
-         supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR };
+         supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR, supervisorReadPRResult };

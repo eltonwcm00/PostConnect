@@ -211,3 +211,35 @@ export const supervisorEvaluatePR = (id, grade) => async (dispatch, getState) =>
     });
   }
 };
+
+export const supervisorReadPRResult = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: SUPERVISOR_CW_REQUEST });
+
+    const {
+      supervisorLogin: { supervisorInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${supervisorInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/supervisor/supervisorReadPRResult", config
+    );
+
+    dispatch({ type: SUPERVISOR_CW_SUCCESS, payload: data });
+
+  } catch (error) {
+    dispatch({
+      type: SUPERVISOR_CW_FAIL,
+      payload:
+        error.response 
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

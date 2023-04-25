@@ -61,7 +61,7 @@ import { supervisorLogout } from '../actions/supervisorAction';
               </NavLink>
               <NavLink exact to="/supervisorViewMeetingLog">
                 <CDBSidebarMenuItem icon="fa-solid fa-magnifying-glass">
-                View Meeting Log
+                  View Meeting Log
                 </CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="#">
