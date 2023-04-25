@@ -486,12 +486,12 @@ const studentViewPR = asyncHandler(async (req, res) => {
     res.status(201).json({applicationStatusMsg: `You have not yet register for the progress report submission, the due date of the registration and submission is on,
                                                  ${moment(prInfo.dateSetPR).format('MMMM Do YYYY')}`});
   }
-  else if (registeredForPR.dateSubmitPR && registeredForPR.grade > 0 && currentStud.retryRPDAttempt == 0) {
+  else if (registeredForPR.dateSubmitPR && registeredForPR.grade > 0 && currentStud.retryPRAttempt == 0) {
     res.status(201).json({applicationStatusMsg: `Your progress report has been evaluated. Congratulation! you have been given grade ${currentStudGrade.grade} 
                                                  for your progress report and received grade 'Satisfactory' (S).`,
                           updatedAt: registeredForPR.updatedAt});
   }
-  else if (registeredForPR.dateSubmitPR && registeredForPR.grade > 0 && currentStud.retryRPDAttempt > 0) {
+  else if (registeredForPR.dateSubmitPR && registeredForPR.grade > 0 && currentStud.retryPRAttempt > 0) {
     res.status(201).json({applicationStatusMsg: `Your progress report has been evaluated. Sorry, you have been given grade ${currentStudGrade.grade} 
                                                  for your progress report and received grade 'Unsatisfactory' (US).`,
                           updatedAt: registeredForPR.updatedAt});

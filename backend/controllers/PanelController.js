@@ -230,7 +230,7 @@ const panelEvaluatePR = asyncHandler(async (req, res) => {
     res.status(401).json({message: "Please give a grade for the evaluation of progress report"});
   } 
   else {
-    fetchPRID.grade = fetchPRID.grade + parseInt(grade);
+    fetchPRID.grade = fetchPRID.grade + (parseInt(grade)*0.5);
     fetchPRID.panelUser = hasPanel;
     const prGrade = await fetchPRID.save();
 
