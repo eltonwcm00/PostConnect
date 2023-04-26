@@ -64,7 +64,8 @@ const FacultyEvaluateRPDApplicationID = () => {
             const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyReadEvaluateRPDApplication/${id}`);
 
             setFullName(data.fullName);
-            setSupervisorName(data.supervisorName); 
+            setSupervisorName(data.studentUser.supervisorUser); 
+            // setSupervisorName(data.supervisorName); 
             setAcademicStatus(data.applicationStatus);
             setMiniThesisTitle(data.miniThesisTitle);
             setDateApplyRPD(moment(data.dateApplyRPD).format('l'));
@@ -196,7 +197,7 @@ const FacultyEvaluateRPDApplicationID = () => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style={{whiteSpace: "nowrap"}}>Supervisor Name</td>
+                                    <td style={{whiteSpace: "nowrap"}}>Supervisor ID</td>
                                     <td>{supervisorName}</td>
                                     <td>{supervisorUser}</td>
                                     <td>
@@ -219,7 +220,7 @@ const FacultyEvaluateRPDApplicationID = () => {
                                         { miniThesisTitle && <i className="fa-solid fa-check" onClick={handleShowc} style={{ cursor: 'pointer' }}></i>}
                                     </td>
                                 </tr>
-                                 <tr>
+                                <tr>
                                     <td style={{whiteSpace: "nowrap"}}>Date Joined</td>
                                     <td>{}</td>
                                     <td rowSpan={2}>{dateJoined}</td>

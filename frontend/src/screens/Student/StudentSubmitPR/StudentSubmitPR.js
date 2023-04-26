@@ -122,6 +122,7 @@ const StudentSubmitPR = () => {
                                   <Form.Control
                                       type="text"
                                       // value={supervisorName}
+                                      // value={sCW.supervisorUser.usernameSup}
                                       value={sCW.supervisorUser}
                                       placeholder="Your supervisor name"
                                       onChange={(e) => setsupervisorName(e.target.value)}

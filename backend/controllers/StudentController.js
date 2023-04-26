@@ -34,6 +34,43 @@ const studentLogin = asyncHandler(async (req, res) => {
     }
 });
 
+const systemReadVerifyStudentStatus = asyncHandler(async (req, res) => {
+    
+  const currentStudent = req.userStudent;
+
+  const currentStudInfo = await Student.findOne({ _id: currentStudent});
+
+  if (currentStudInfo) {
+    res.status(201).json(currentStudInfo);
+  }
+
+});
+
+const systemVerifyStudentStatus = asyncHandler(async (req, res) => {
+    
+  const currentStudent = req.userStudent;
+
+  const currentStudInfo = await Student.findOne({ _id: currentStudent})
+                                          .or([{retryRPDAttempt: {$gte: 3}}, 
+                                               {retryWCDAttempt: {$gte: 3}},
+                                               {retryPRAttempt: {$gte: 3}}]);
+
+  if (!currentStudInfo) {
+      res.status(401).json({message: "No student is found"})  
+      return;
+  }
+  else {
+        currentStudInfo.isStudent = false;   
+        const terminateStudStatus = await currentStudInfo.save(); 
+            
+        if (terminateStudStatus) {
+            res.status(201).json({studentStatus: terminateStudStatus.isStudent, 
+                                  terminateMsg: "You have been terminated from studies due to the lack of study performance. Please refer this case to your supervisor"})
+        }
+    // }
+  }
+});
+
 /*************************************************** RPD ***************************************************/
 
 const studentViewDataRequestRPD = asyncHandler(async (req, res) => {
@@ -42,13 +79,14 @@ const studentViewDataRequestRPD = asyncHandler(async (req, res) => {
 
   const currentStudent = req.userStudent;
   
-  currentStudInfo = await Student.find({ _id: currentStudent}); //findByID(req.params.id)
+  // currentStudInfo = await Student.find({ _id: currentStudent}).populate('supervisorUser'); //findByID(req.params.id)
+  currentStudInfo = await Student.find({ _id: currentStudent})
 
   if (currentStudInfo) {
     res.status(201).json(currentStudInfo)
   }
   else {
-    res.status(401).json({message: "Yout student details are not found, please refer to faculty"});
+    res.status(401).json({message: "Your student details are not found, please refer to faculty"});
   }
 })
 
@@ -188,7 +226,10 @@ const studentSubmitMeetingLog = asyncHandler(async (req, res) => {
   // if (recentExist) {
   //   res.status(401).json({message: "You have already submitted the meeting log for today, please try again on tomorrow"});
   // }
-  if (!dateMeetingLog) {
+  if (!req.userStudent.supervisorUser) {
+    res.status(401).json({message: "Access denied! you have not been assigned to any supervisor, please refer to faculty"});
+  }
+  else if (!dateMeetingLog) {
     res.status(401).json({message: "Please fill in the meeting log date"});
   }
   else if (dateSubmit_ > todayDate) {
@@ -311,7 +352,7 @@ const studentViewWCDApplication = asyncHandler(async (req, res) => {
     
     if (applicationFalseStatus) {
       res.status(201).json({applicationStatusMsg: `Sorry, your WCD application on ${moment(appliedForWCD.dateApplyWCD).format('MMMM Do YYYY')} 
-                              is rejected, please refer to your supervisor`,
+                                                   is rejected, please refer to your supervisor`,
                             updatedAt: applicationFalseStatus.updatedAt});
     }
     else if (wcdPassed) {
@@ -324,12 +365,12 @@ const studentViewWCDApplication = asyncHandler(async (req, res) => {
     }
     else if (applicationTrueStatus) {
       res.status(201).json({applicationStatusMsg: `Congratulation! Your WCD application on ${moment(appliedForWCD.dateApplyWCD).format('MMMM Do YYYY')} 
-                              is approved, the WCD will be happened roughly after 2 weeks`,
+                                                   is approved, the WCD will be happened roughly after 2 weeks`,
                             updatedAt: applicationTrueStatus.updatedAt});
     }
     else {
       res.status(201).json({applicationStatusMsg: `Your WCD application on ${moment(appliedForWCD.dateApplyWCD).format('MMMM Do YYYY')} 
-                              is pending to be approved`,
+                                                   is pending to be approved`,
                             updatedAt: appliedForWCD.updatedAt});
     }
   }
@@ -510,5 +551,6 @@ const studentViewPR = asyncHandler(async (req, res) => {
 
 /*************************************************** END PR ***************************************************/
 
-export { studentLogin, studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, studentSubmitMeetingLog, studentViewMeetingLog,
-        studentRequestWCD, studentViewWCDApplication, studentRegisterPR, studentRegisterPRLandingPage, studentSubmitPR, studentViewPR };
+export { studentLogin, systemVerifyStudentStatus, systemReadVerifyStudentStatus, studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, 
+         studentSubmitMeetingLog, studentViewMeetingLog, studentRequestWCD, studentViewWCDApplication, 
+         studentRegisterPR, studentRegisterPRLandingPage, studentSubmitPR, studentViewPR };

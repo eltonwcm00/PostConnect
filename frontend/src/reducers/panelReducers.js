@@ -34,7 +34,7 @@ export const panelReadApplicationReducer = (state = { fetchRPDList: [] }, action
     case PANEL_APPLICATION_LIST_SUCCESS:
       return { loading: false, fetchApplicationList: action.payload };
     case PANEL_APPLICATION_LIST_FAIL:
-      return { loading: false, errorApplicationList: action.payload };
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

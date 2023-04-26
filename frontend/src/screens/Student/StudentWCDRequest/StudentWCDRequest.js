@@ -68,32 +68,34 @@ const StudentWCDRequest = () => {
                     studentCW && studentCW.map((sCW) => (
                         <div>
                             <Form.Group as={Row} className="mb-5" controlId="formBasicEmail">
-                            <Form.Label column sm={2}>Full Name*</Form.Label>
-                            <Col sm={10} mb={3}>
-                            <Form.Control
-                                type="text"
-                                value={sCW.usernameStud}
-                                placeholder="Your fullname"
-                                onChange={(e) => setfullName(e.target.value)}
-                                className="py-4 input-request"
-                                disabled
-                            />
-                            </Col>
-                        </Form.Group>
+                                <Form.Label column sm={2}>Full Name*</Form.Label>
+                                <Col sm={10} mb={3}>
+                                <Form.Control
+                                    type="text"
+                                    value={sCW.usernameStud}
+                                    placeholder="null"
+                                    onChange={(e) => setfullName(e.target.value)}
+                                    className="py-4 input-request"
+                                    disabled
+                                />
+                                </Col>
+                            </Form.Group>
 
-                        <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
-                            <Form.Label column sm={2}>Supervisor Name*</Form.Label>
-                            <Col sm={10}>
-                            <Form.Control
-                                type="text"
-                                // value={supervisorName}
-                                value={sCW.supervisorUser}
-                                placeholder="Your supervisor name"
-                                onChange={(e) => setsupervisorName(e.target.value)}
-                                className="py-4 input-request"
-                                disabled
-                            />
-                            </Col>
+                            <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
+                                <Form.Label column sm={2}>Supervisor Name*</Form.Label>
+                                <Col sm={10}>
+                                <Form.Control
+                                    type="text"
+                                    // value={supervisorName}
+                                    // value={sCW.supervisorUser.usernameSup}
+                                    value={sCW.supervisorUser}
+                                    optional
+                                    placeholder="null"
+                                    onChange={(e) => setsupervisorName(e.target.value)}
+                                    className="py-4 input-request"
+                                    disabled
+                                />
+                                </Col>
                             </Form.Group>
                         </div>
                     ))

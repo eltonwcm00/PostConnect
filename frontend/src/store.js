@@ -16,6 +16,7 @@ import {
 } from "./reducers/facutyReducers";
 
 import { 
+  studentStatusValidatorReducer,
   studentLoginReducer,
   studentCWReadRequestReducer,
   studentCWRequestReducer,
@@ -56,6 +57,7 @@ const reducer = combineReducers({
     supervisorEvaluatePR: supervisorEvaluatePRReducer,
    
     studentLogin: studentLoginReducer,
+    studentStatusValidator: studentStatusValidatorReducer,
     studentCWReadRequest: studentCWReadRequestReducer,
     studentCWRequest: studentCWRequestReducer,
     studentApplicationStatus: studentApplicationStatusReducer,
@@ -89,7 +91,7 @@ const panelInfoFromStorage = localStorage.getItem("panelInfo")
 // initial state of userInfo from the login reducer is equivalent to userInfoFromStorage
 const initialState = {
     facultyLogin: { facultyInfo: facultyInfoFromStorage },
-    studentLogin: { studentInfo: studentInfoFromStorage },
+    studentLogin: { studentInfo: studentInfoFromStorage || null },
     supervisorLogin: { supervisorInfo: supervisorInfoFromStorage },
     panelLogin: { panelInfo: panelInfoFromStorage},
 };

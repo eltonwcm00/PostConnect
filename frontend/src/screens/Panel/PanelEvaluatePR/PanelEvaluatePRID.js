@@ -113,7 +113,7 @@ const PanelEvaluatePRID = () => {
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
-                    <Form.Label column sm={2}>Mini Thesis File</Form.Label>
+                    <Form.Label column sm={2}>Progress Report</Form.Label>
                     <Col sm={10}>
                     <a href={dummyPDF} target="_blank">View Here</a>
                     </Col>

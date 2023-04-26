@@ -1,4 +1,6 @@
 import {
+    STUDENT_STATUS_VALIDATOR,
+  
     STUDENT_LOGIN_FAIL,
     STUDENT_LOGIN_REQUEST,
     STUDENT_LOGIN_SUCCESS,
@@ -38,6 +40,16 @@ export const studentLoginReducer = (state = {}, action) => {
           return state;
       }
 };
+
+export const studentStatusValidatorReducer = (state = {}, action) => {
+  switch (action.type) {
+      case STUDENT_STATUS_VALIDATOR:
+        return {flag: true, studentTerminationStatus: action.payload}
+      default:
+        return state;
+  }
+};
+
 
 export const studentCWReadRequestReducer = (state = { studentCW: [] }, action) => {
   switch (action.type) {

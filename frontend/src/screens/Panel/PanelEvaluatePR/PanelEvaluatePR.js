@@ -19,7 +19,7 @@ const PanelEvaluatePR = () => {
     const { panelInfo } = panelLogin;
 
     const PRList = useSelector((state) => state.panelReadApplication);
-    const { loading, errorApplicationList, fetchApplicationList } = PRList;
+    const { loading, error, fetchApplicationList } = PRList;
 
     useEffect(() => {
         dispatch(panelReadPR());
@@ -31,7 +31,7 @@ const PanelEvaluatePR = () => {
     return (
         <>
             {loading && <Loading />}
-            {errorApplicationList && <ErrorMessage variant="danger">{errorApplicationList}</ErrorMessage>}
+            {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             <PanelTemplate>
                 <CDBContainer style={{padding: '0px', textAlign: "center"}} className="list-container">
                 <CDBTable borderless>

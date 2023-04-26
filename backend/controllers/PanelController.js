@@ -200,7 +200,7 @@ const panelReadPR = asyncHandler(async (req, res) => {
     res.status(201).json(PRList)
   } 
   else {
-    res.status(401).json({errorWCDList: "No PR is ready to be evaluate"});
+    res.status(401).json({message: "No PR is ready to be evaluate"});
   }
 });
 

@@ -74,7 +74,7 @@ const StudentRPDRequest = () => {
                             <Form.Control
                                 type="text"
                                 value={sCW.usernameStud}
-                                placeholder="Your fullname"
+                                placeholder="null"
                                 onChange={(e) => setfullName(e.target.value)}
                                 className="py-4 input-request"
                                 disabled
@@ -88,8 +88,9 @@ const StudentRPDRequest = () => {
                             <Form.Control
                                 type="text"
                                 // value={supervisorName}
+                                // value={sCW.supervisorUser.usernameSup}
                                 value={sCW.supervisorUser}
-                                placeholder="Your supervisor name"
+                                placeholder="null"
                                 onChange={(e) => setsupervisorName(e.target.value)}
                                 className="py-4 input-request"
                                 disabled
