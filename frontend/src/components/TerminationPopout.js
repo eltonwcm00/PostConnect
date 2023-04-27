@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {useParams, useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { studentLogout } from "../actions/studentAction";
-import { Container, Toast, ToastContainer, Button, Row, Col } from 'react-bootstrap';
+import { Toast, Button, Row, Col } from 'react-bootstrap';
 
 const TerminationPopout = ({ message }) => {
   

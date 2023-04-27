@@ -26,11 +26,16 @@ const StudentMeetingLog = () => {
 
     useEffect(() => {
         if (studentInfo) {
-          navigate("/studentSubmitMeetingLog");
+          if (!studentInfo.isStudent){
+            navigate("/studentHomepage");
+          }
+          else {
+            navigate("/studentSubmitMeetingLog");
+          }
         }
         else {
             navigate("/");
-          }
+        }
     }, [navigate, studentInfo]);
 
     useEffect(() => {

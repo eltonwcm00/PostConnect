@@ -36,11 +36,17 @@ const StudentSubmitPR = () => {
     const { loadingPR, studentPR, successStudentPR, errorStudentPR, failedStudentPR } = prSubmitState;
 
     useEffect(() => {
-        if (!studentInfo) {
-          navigate('/');
+        if (studentInfo) {
+          if (!studentInfo.isStudent){
+            navigate("/studentHomepage");
+          }
+          else {
+            navigate("/studentSubmitPR");
+            dispatch(studentPRLandingPage());
+          }
         }
         else {
-          dispatch(studentPRLandingPage());
+            navigate("/");
         }
     }, [navigate, studentInfo]);
 

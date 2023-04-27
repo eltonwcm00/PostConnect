@@ -28,10 +28,15 @@ const StudentWCDRequest = () => {
 
     useEffect(() => {
         if (studentInfo) {
-          navigate("/studentRequestWCD");
-        }
+            if (!studentInfo.isStudent){
+              navigate("/studentHomepage");
+            }
+            else {
+              navigate("/studentRequestWCD");
+            }
+          }
         else {
-          navigate("/");
+            navigate("/");
         }
     }, [navigate, studentInfo]);
 

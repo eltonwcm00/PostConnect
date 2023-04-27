@@ -21,7 +21,7 @@ const studentLogin = asyncHandler(async (req, res) => {
         _id: userStudent._id,
         usernameStud: userStudent.usernameStud,       
         dateJoined: userStudent.dateJoin,
-        isStudent: true,
+        isStudent: userStudent.isStudent,
         retryRPDAttempt: userStudent.retryRPDAttempt,
         retryWCDAttempt: userStudent.retryWCDAttempt,
         retryPRAttempt: userStudent.retryPRAttempt,
@@ -79,8 +79,8 @@ const studentViewDataRequestRPD = asyncHandler(async (req, res) => {
 
   const currentStudent = req.userStudent;
   
-  // currentStudInfo = await Student.find({ _id: currentStudent}).populate('supervisorUser'); //findByID(req.params.id)
-  currentStudInfo = await Student.find({ _id: currentStudent})
+  currentStudInfo = await Student.find({ _id: currentStudent}) //findByID(req.params.id)
+  // currentStudInfo = await Student.find({ _id: currentStudent})
 
   if (currentStudInfo) {
     res.status(201).json(currentStudInfo)

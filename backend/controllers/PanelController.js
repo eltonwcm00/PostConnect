@@ -74,6 +74,7 @@ const panelEvaluatePassRPD = asyncHandler(async (req, res) => {
   // 'S' grade after re-evaluated 
   if(insertStudent) {
     insertStudent.retryRPDAttempt = 0;
+    insertStudent.isStudent = true;
     fetchRPDID.status = true;
     await insertStudent.save();
     await fetchRPDID.save();
@@ -153,6 +154,7 @@ const panelEvaluatePassWCD = asyncHandler(async (req, res) => {
   // 'S' grade after re-evaluated 
   if(insertStudent) {
     insertStudent.retryWCDAttempt = 0;
+    insertStudent.isStudent = true;
     fetchWCDID.status = true;
     await insertStudent.save();
     await fetchWCDID.save();

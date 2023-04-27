@@ -29,10 +29,15 @@ const StudentRPDRequest = () => {
 
     useEffect(() => {
         if (studentInfo) {
-          navigate("/studentRequestRPD");
-        }
+            if (!studentInfo.isStudent){
+              navigate("/studentHomepage");
+            }
+            else {
+              navigate("/studentRequestRPD");
+            }
+          }
         else {
-          navigate("/");
+            navigate("/");
         }
     }, [navigate, studentInfo]);
 
@@ -83,13 +88,13 @@ const StudentRPDRequest = () => {
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
-                            <Form.Label column sm={2}>Supervisor Name*</Form.Label>
+                            <Form.Label column sm={2}>Supervisor ID*</Form.Label>
                             <Col sm={10}>
                             <Form.Control
                                 type="text"
                                 // value={supervisorName}
-                                // value={sCW.supervisorUser.usernameSup}
                                 value={sCW.supervisorUser}
+                                // value={sCW.supervisorUser}
                                 placeholder="null"
                                 onChange={(e) => setsupervisorName(e.target.value)}
                                 className="py-4 input-request"

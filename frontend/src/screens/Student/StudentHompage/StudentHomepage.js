@@ -21,7 +21,6 @@ const StudentHomepage = () => {
 
   const [access, setAccess] = useState();
 
-  
   useEffect(() => {
     if (studentInfo) {
       dispatch(studentStatus());
@@ -29,33 +28,33 @@ const StudentHomepage = () => {
   }, []);
 
   useEffect(() => {
-  const fetching = async () => {
-    if (token) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const { data } = await axios.get(
-        `http://localhost:5000/api/student/systemReadVerifyStudentStatus`,
-        config
-      );
+    const fetching = async () => {
+      if (token) {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const { data } = await axios.get(
+          `http://localhost:5000/api/student/systemReadVerifyStudentStatus`,
+          config
+        );
 
-      setAccess(data.isStudent);
-
-      console.log(data);
-    }
-  };
-  fetching();
-}, [dispatch, token]);
+        setAccess(data.isStudent);
+        console.log(data);
+      }
+    };
+    fetching();
+  }, [dispatch, token]);
+  
   return (
     <>
         {
-          (access === true) ?
+          access === true ?
             <StudentTemplate> 
               <Notification />
             </StudentTemplate> 
-            : 
+              : 
             <TerminationPopout message={flag && <>{studentTerminationStatus.terminateMsg}</>}/>
         }    
     </> 
