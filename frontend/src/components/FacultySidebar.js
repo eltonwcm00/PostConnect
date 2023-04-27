@@ -54,7 +54,7 @@ import { facultyLogout } from '../actions/facultyAction';
                   Work Completion Defence Request Application
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/#" target="_blank">
+              <NavLink exact to="/facultyMonitorStudent">
                 <CDBSidebarMenuItem icon="fa fa-users">
                   Candidature Monitoring
                 </CDBSidebarMenuItem>

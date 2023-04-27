@@ -47,7 +47,9 @@ const systemReadVerifyStudentStatus = asyncHandler(async (req, res) => {
 });
 
 const systemVerifyStudentStatus = asyncHandler(async (req, res) => {
-    
+ 
+  let terminationCause = ""
+
   const currentStudent = req.userStudent;
 
   const currentStudInfo = await Student.findOne({ _id: currentStudent})
@@ -62,14 +64,27 @@ const systemVerifyStudentStatus = asyncHandler(async (req, res) => {
   else {
         currentStudInfo.isStudent = false;   
         const terminateStudStatus = await currentStudInfo.save(); 
-            
+        
+        if (currentStudInfo.retryRPDAttempt >= 3) {
+          terminationCause = "Research Proposal Defence (RPD)";
+        }
+        else if (currentStudInfo.retryWCDAttempt >= 3) {
+          terminationCause = "Work Completion Defence (WCD)";
+        }
+        else if (currentStudInfo.retryPRAttempt >= 3) {
+          terminationCause = "Progress Report (PR)";
+        }
+
         if (terminateStudStatus) {
             res.status(201).json({studentStatus: terminateStudStatus.isStudent, 
-                                  terminateMsg: "You have been terminated from studies due to the lack of study performance. Please refer this case to your supervisor"})
+                                  terminateMsg: `You have been terminated from studies due to the fact that you have 
+                                                 received 'Unsatisfactory (US)' grade for ${terminationCause}. 
+                                                 Please refer this case to your supervisor`})
         }
-    // }
   }
 });
+
+// course completion status, when student passed rpd, wcd, ppm
 
 /*************************************************** RPD ***************************************************/
 

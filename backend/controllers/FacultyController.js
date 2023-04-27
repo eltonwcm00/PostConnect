@@ -667,6 +667,33 @@ const facultySetDatePR = asyncHandler(async (req, res) => {
 });
 
 /*************************************************** END PROGRESS REPORT ***************************************************/
+
+/*************************************************** CANDIDATURE MONITORING ***************************************************/
+
+const facultyReadMonitorStudent = asyncHandler(async (req, res) => {
+  const fetchStudentList = await Student.find();
+
+  if (fetchStudentList) {
+    res.json(fetchStudentList);
+  }
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+});
+
+const facultyReadMonitorStudenByID = asyncHandler(async (req, res) => {
+ 
+  const fetchStudentID = await Student.findById(req.params.id);
+
+  if (fetchStudentID) {
+    res.json(fetchStudentID);
+  } 
+  else {
+    res.status(404).json({ message: "Student is not found" });
+  }
+});
+
 export { 
          facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
@@ -674,5 +701,5 @@ export {
          facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID, 
          facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID, facultyUpdateSubjectStudentByID,
          facultyReadEvaluateWCDApplication, facultyReadEvaluateWCDApplicationByID, facultyRejectEvaluateWCDApplicationByID, 
-         facultyApproveEvaluateWCDApplicationByID, facultySetDatePR
+         facultyApproveEvaluateWCDApplicationByID, facultySetDatePR, facultyReadMonitorStudent, facultyReadMonitorStudenByID 
        };

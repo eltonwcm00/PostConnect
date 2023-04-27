@@ -40,6 +40,9 @@ const FacultyTemplate = ({ children }) => {
   else if (window.location.href === pageURL+'facultyEvaluateWCDApplication' || window.location.href === pageURL+`facultyEvaluateWCDApplication/${id}`) {
     pageTitle = "Work Completion Defence Request Application";
   }
+  else if (window.location.href === pageURL+'facultyMonitorStudent' || window.location.href === pageURL+`facultyMonitorStudent/${id}`) {
+    pageTitle = "Candidature Monitoring";
+  }
   else {
     pageTitle = null;
   }

@@ -20,6 +20,7 @@ import FacultySubjectRegistration from './screens/Faculty/FacultyMiscellaneous/F
 import FacultySubjectRegistrationID from './screens/Faculty/FacultyMiscellaneous/FacultySubjectRegistrationID';
 import FacultyEvaluateWCDApplication from './screens/Faculty/FacultyEvaluateWCDApplication/FacultyEvaluateWCDApplication';
 import FacultyEvaluateWCDApplicationID from './screens/Faculty/FacultyEvaluateWCDApplication/FacultyEvaluateWCDApplicationID';
+import FacultyMonitorStud from './screens/Faculty/FacultyMonitorStudent/FacultyMonitorStud';
 
 import StudentLogin from './screens/Student/StudentLogin/StudentLogin';
 import StudentHomepage from './screens/Student/StudentHompage/StudentHomepage';
@@ -46,6 +47,7 @@ import PanelEvaluateWCD from './screens/Panel/PanelEvaluateWCD/PanelEvaluateWCD'
 import PanelEvaluateWCDID from './screens/Panel/PanelEvaluateWCD/PanelEvaluateWCDID';
 import PanelEvaluatePR from './screens/Panel/PanelEvaluatePR/PanelEvaluatePR';
 import PanelEvaluatePRID from './screens/Panel/PanelEvaluatePR/PanelEvaluatePRID';
+import FacultyMonitorStudID from './screens/Faculty/FacultyMonitorStudent/FacultyMonitorStudID';
 
 function App() {
   return (
@@ -75,8 +77,9 @@ function App() {
         <Route exact path="/miscellaneous/:id" element={<FacultySubjectRegistrationID />}/>
         <Route exact path="/facultyEvaluateWCDApplication" element={<FacultyEvaluateWCDApplication />}/>
         <Route exact path="/facultyEvaluateWCDApplication/:id" element={<FacultyEvaluateWCDApplicationID />}/>
+        <Route exact path="/facultyMonitorStudent" element={<FacultyMonitorStud />}/>
+        <Route exact path="/facultyMonitorStudent/:id" element={<FacultyMonitorStudID />}/>
 
-        
         <Route exact path="/studentRequestRPD" element={<StudentRPDRequest />}/>
         <Route exact path="/studentSubmitMeetingLog" element={<StudentMeetingLog />}/>
         <Route exact path="/studentRequestWCD" element={<StudentWCDRequest />}/>
