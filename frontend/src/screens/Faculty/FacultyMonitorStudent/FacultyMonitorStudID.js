@@ -131,7 +131,6 @@ const FacultyMonitorStudID = () => {
         }
     }
 
-
     return (
         <FacultyTemplate>
             <div className="form-title-desc-container">Details of The Student</div>
