@@ -621,3 +621,73 @@ export const facultySetPRDate = (dateSetPR) => async (dispatch, getState) => {
     });
   }
 };
+
+export const facultyTerminateStudent = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FACULTY_UPDATE_APPLICATION_REQUEST,
+    });
+
+    const {
+      facultyLogin: { facultyInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${facultyInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadMonitorStudent/${id}`, {}, config);
+
+    dispatch({
+      type: FACULTY_UPDATE_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type:FACULTY_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+}
+
+export const facultyActiveStudent = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FACULTY_UPDATE_APPLICATION_REQUEST,
+    });
+
+    const {
+      facultyLogin: { facultyInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${facultyInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadMonitorStudent2/${id}`, {}, config);
+
+    dispatch({
+      type: FACULTY_APPROVE_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type:FACULTY_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+}

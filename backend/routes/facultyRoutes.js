@@ -7,7 +7,7 @@ import {
    facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID,
    facultyUpdateSubjectStudentByID, facultyReadEvaluateWCDApplication, facultyReadEvaluateWCDApplicationByID,
    facultyRejectEvaluateWCDApplicationByID, facultyApproveEvaluateWCDApplicationByID, facultySetDatePR,
-   facultyReadMonitorStudent
+   facultyReadMonitorStudent, facultyTerminateStudent, facultyActiveStudent
 } from "../controllers/FacultyController.js";
 import { protectFaculty,} from "../middleware/authMiddleware.js";
 
@@ -39,7 +39,10 @@ router.route("/facultyReadEvaluateWCDApplication/:id").get(facultyReadEvaluateWC
                                                       .put(protectFaculty, facultyRejectEvaluateWCDApplicationByID); 
 router.route("/facultySetDatePR").put(protectFaculty, facultySetDatePR);
 router.route("/facultyReadMonitorStudent").get(protectFaculty, facultyReadMonitorStudent);
-router.route("/facultyReadMonitorStudent/:id").get(facultyReadChooseStudentByID);
+router.route("/facultyReadMonitorStudent/:id").get(facultyReadChooseStudentByID)
+                                              .put(protectFaculty, facultyTerminateStudent); 
+router.route("/facultyReadMonitorStudent2/:id").get(facultyReadChooseStudentByID)
+                                               .put(protectFaculty, facultyActiveStudent); 
 
 export default router;
 

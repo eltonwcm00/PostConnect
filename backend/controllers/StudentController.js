@@ -52,35 +52,52 @@ const systemVerifyStudentStatus = asyncHandler(async (req, res) => {
 
   const currentStudent = req.userStudent;
 
+  const currentTerminateExceedStudyStudInfo = await Student.findOne({ _id: currentStudent})
+  .and([
+      {isStudent: false},
+      {retryRPDAttempt: {$lt: 3}}, 
+      {retryWCDAttempt: {$lt: 3}},
+      {retryPRAttempt: {$lt: 3}}]);  
+
+
   const currentStudInfo = await Student.findOne({ _id: currentStudent})
-                                          .or([{retryRPDAttempt: {$gte: 3}}, 
+                                          .or([
+                                               {retryRPDAttempt: {$gte: 3}}, 
                                                {retryWCDAttempt: {$gte: 3}},
                                                {retryPRAttempt: {$gte: 3}}]);
+  
 
-  if (!currentStudInfo) {
-      res.status(401).json({message: "No student is found"})  
-      return;
+  if (currentTerminateExceedStudyStudInfo) {
+    res.status(201).json({
+      terminateMsg: `You have been terminated from studies due to the fact that you have 
+                     exceed the maximum amount of study duration. Pleae refer this case your supervisor`});
   }
   else {
-        currentStudInfo.isStudent = false;   
-        const terminateStudStatus = await currentStudInfo.save(); 
-        
-        if (currentStudInfo.retryRPDAttempt >= 3) {
-          terminationCause = "Research Proposal Defence (RPD)";
-        }
-        else if (currentStudInfo.retryWCDAttempt >= 3) {
-          terminationCause = "Work Completion Defence (WCD)";
-        }
-        else if (currentStudInfo.retryPRAttempt >= 3) {
-          terminationCause = "Progress Report (PR)";
-        }
+    if (!currentStudInfo) {
+      res.status(401).json({message: "No student is found"});  
+      return;
+    }
+    else if (currentStudInfo) {
+          currentStudInfo.isStudent = false;   
+          const terminateStudStatus = await currentStudInfo.save(); 
+          
+          if (currentStudInfo.retryRPDAttempt >= 3) {
+            terminationCause = "Research Proposal Defence (RPD)";
+          }
+          else if (currentStudInfo.retryWCDAttempt >= 3) {
+            terminationCause = "Work Completion Defence (WCD)";
+          }
+          else if (currentStudInfo.retryPRAttempt >= 3) {
+            terminationCause = "Progress Report (PR)";
+          }
 
-        if (terminateStudStatus) {
-            res.status(201).json({studentStatus: terminateStudStatus.isStudent, 
-                                  terminateMsg: `You have been terminated from studies due to the fact that you have 
-                                                 received 'Unsatisfactory (US)' grade for ${terminationCause}. 
-                                                 Please refer this case to your supervisor`})
-        }
+          if (terminateStudStatus) {
+              res.status(201).json({studentStatus: terminateStudStatus.isStudent, 
+                                    terminateMsg: `You have been terminated from studies due to the fact that you have 
+                                                  received 'Unsatisfactory (US)' grade for ${terminationCause}. 
+                                                  Please refer this case to your supervisor`});
+          }
+    }
   }
 });
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-// import { facultyUpdateAssignSupervision } from "../../../actions/facultyAction";
+import { facultyTerminateStudent, facultyActiveStudent } from "../../../actions/facultyAction";
 import moment from 'moment';
 import { Form, Table, Button, Row, Col } from "react-bootstrap";
 import Loading from "../../../components/Loading";
@@ -30,6 +30,9 @@ const FacultyMonitorStudID = () => {
 
     const facultyLoginState = useSelector((state) => state.facultyLogin);
     const { facultyInfo } = facultyLoginState;
+
+    const studentTerminationState = useSelector((state) => state.facultyUpdateApplication);
+    const { loading, error, successMsg, successApproveMsg } = studentTerminationState;
 
     useEffect(() => {
         if (!facultyInfo) {
@@ -68,21 +71,14 @@ const FacultyMonitorStudID = () => {
             years = 7;
             break;
         default:
-            years = null
+            years = null;
             break;
     }
 
-            /************ Test Data: ************/ 
-    // var initDate = moment([2020, 0, 3]); // 2020/06/03
-    // var limitDate = moment([2020, 0, 10]); // 2020/06/10
-    // var diffDate = limitDate.diff(initDate, 'days')  // 2020/06/10 - 2020/06/03 = 7 days
-
-    var initDate = moment(dateJoin); 
     var limitDate = moment(dateJoin).add(years , 'years'); 
-    var diffDate = limitDate.diff(initDate, 'years');
+    console.log(limitDate);
 
-    // if(4 years && Active) -> exceed duration (md-partTime <= 3), else -> do not exceed duration
-    if (diffDate > years && academicStatus === "Active") { 
+    if (moment() > moment(limitDate) && academicStatus === "Active") { 
         msgDateJoin = <><span className="invalid-msg">Duration Of The Study: </span> 
             {`Student's duration of studies had exceed the allowed max. duration (${years} years) of study`}</>
     } else {
@@ -111,34 +107,38 @@ const FacultyMonitorStudID = () => {
         msgStatus = <><span className="valid-msg">Student Status: </span>
             Active. Student is active in the program.</>
     }
-    // if(!miniThesisTitle) {
-    //     msgThesis = <><span className="invalid-msg">Invalid: </span>
-    //        Mini Thesis is not found</>;
-    // } else {
-    //     msgThesis = <><span className="valid-msg">Valid: </span>
-    //         Mini Thesis is found</>;
-    // }
 
-    // useEffect(() => {
-    //     if (successMsg) {
-    //       const timer = setTimeout(() => {
-    //         navigate("/facultyAssignNumSupervisor");
-    //       }, 2000);
-    //       return () => clearTimeout(timer);
-    //     }
-    // }, [navigate, successMsg])
+    useEffect(() => {
+        if (successMsg || successApproveMsg) {
+          const timer = setTimeout(() => {
+            navigate("/facultyMonitorStudent");
+          }, 5000);
+          return () => clearTimeout(timer);
+        }
+    }, [navigate, successMsg, successApproveMsg])
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        // dispatch(facultyUpdateAssignSupervision(id, numSupervision, academicPos));
-    };
+    const terminateStudent = () => {
+        if (window.confirm("Are you sure to terminate the student status?")) {
+            console.log("terminate");
+            dispatch(facultyTerminateStudent(id));
+        }
+    }
+
+    const activateStudent = () => {
+        if (window.confirm("Are you sure to re-active the student status?")) {
+            console.log("activated");
+            dispatch(facultyActiveStudent(id));
+        }
+    }
+
 
     return (
         <FacultyTemplate>
             <div className="form-title-desc-container">Details of The Student</div>
-                {/* {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-                {successMsg && <SuccessMessage variant="success">{"Assigned successfully!"}</SuccessMessage>}
-                {loading && <Loading />} */}
+            {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+            {successMsg && <SuccessMessage variant="success">{"The student's status has been set to be 'Terminated'"}</SuccessMessage>}
+            {successApproveMsg && <SuccessMessage variant="success">{"The student's status has been set to be 'Active'"}</SuccessMessage>}
+            {loading && <Loading />}
                 <div className="row" style={{marginTop: '40px'}}>
                     <div className="col-5 instruction-box" style={{borderRadius: '5px'}}>
                         <Table className="table-borderless" style={{fontFamily: 'Montserrat'}}>
@@ -191,7 +191,7 @@ const FacultyMonitorStudID = () => {
                 </div>
                     </div>
                     <div className="col">
-                        <Form className="form" onSubmit={submitHandler} style={{marginTop: 0}}>
+                        <Form className="form" style={{marginTop: 0}}>
                             <Form.Group  className="mb-4" controlId="title">
                                 <Form.Label>Student Name</Form.Label>
                                 <Form.Control
@@ -230,12 +230,12 @@ const FacultyMonitorStudID = () => {
                             </Form.Group>
                             <Row>
                                 <Col sm={3}>
-                                   <Button className="table-details-button mt-5" variant="primary">
+                                   <Button className="table-details-button mt-5" variant="primary" onClick={() => activateStudent()}>
                                        Active
                                    </Button> 
                                 </Col>
                                 <Col>
-                                    <Button className="table-details-button mt-5" variant="primary">
+                                    <Button className="table-details-button mt-5" variant="primary" onClick={() => terminateStudent()}>
                                         Terminate
                                     </Button>
                                 </Col>

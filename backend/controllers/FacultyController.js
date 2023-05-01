@@ -694,6 +694,41 @@ const facultyReadMonitorStudenByID = asyncHandler(async (req, res) => {
   }
 });
 
+const facultyTerminateStudent = asyncHandler(async (req, res) => {
+
+  const fetchStudentID = await Student.findById(req.params.id);
+  
+  if (fetchStudentID) {
+    
+    fetchStudentID.isStudent = false;
+    
+    const terminateStudentID = await fetchStudentID.save();
+    res.status(201).json(terminateStudentID);
+  } 
+  else {
+    res.status(401).json({ message: "Internal server error" });
+  }
+});
+
+const facultyActiveStudent = asyncHandler(async (req, res) => {
+
+  const fetchStudentID = await Student.findById(req.params.id);
+  
+  if (fetchStudentID) {
+    
+    fetchStudentID.isStudent = true;
+    fetchStudentID.retryRPDAttempt = 0;
+    fetchStudentID.retryWCDAttempt = 0;
+    fetchStudentID.retryPRAttempt = 0;
+
+    const terminateStudentID = await fetchStudentID.save();
+    res.status(201).json(terminateStudentID);
+  } 
+  else {
+    res.status(401).json({ message: "Internal server error" });
+  }
+});
+
 export { 
          facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
@@ -701,5 +736,6 @@ export {
          facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID, 
          facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID, facultyUpdateSubjectStudentByID,
          facultyReadEvaluateWCDApplication, facultyReadEvaluateWCDApplicationByID, facultyRejectEvaluateWCDApplicationByID, 
-         facultyApproveEvaluateWCDApplicationByID, facultySetDatePR, facultyReadMonitorStudent, facultyReadMonitorStudenByID 
+         facultyApproveEvaluateWCDApplicationByID, facultySetDatePR, facultyReadMonitorStudent, facultyReadMonitorStudenByID,
+         facultyTerminateStudent, facultyActiveStudent
        };
