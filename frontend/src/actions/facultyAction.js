@@ -3,6 +3,9 @@ import {
     FACULTY_LOGIN_REQUEST,
     FACULTY_LOGIN_SUCCESS,
     FACULTY_LOGOUT,
+    FACULTY_PROFILE_REQUEST,
+    FACULTY_PROFILE_SUCCESS,
+    FACULTY_PROFILE_FAIL,
     FACULTY_REGISTER_FAIL,
     FACULTY_REGISTER_REQUEST,
     FACULTY_REGISTER_SUCCESS,
@@ -59,11 +62,43 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
             : error.message,
       });
     }
-  };
+};
 
 export const facultyLogout = () => async (dispatch) => {
   localStorage.removeItem("facultyInfo");
   dispatch({ type: FACULTY_LOGOUT });
+};
+
+export const facultyViewOwnProfile = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: FACULTY_PROFILE_REQUEST });
+
+    const {
+      facultyLogin: { facultyInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+         Authorization: `Bearer ${facultyInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/faculty/facultyViewOwnProfile", config
+    );
+
+    dispatch({ type: FACULTY_PROFILE_SUCCESS, payload: data });
+    
+  } catch (error) {
+    dispatch({
+      type: FACULTY_PROFILE_FAIL,
+      payload:
+        error.response 
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
 
 export const facultyPanelRegistration = (usernamePanel, password, cfrmPassword) => async (dispatch, getState) => {

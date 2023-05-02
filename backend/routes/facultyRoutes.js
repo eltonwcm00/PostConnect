@@ -1,6 +1,7 @@
 import express from "express";
 import {
-   facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
+   facultyLogin, facultyViewOwnProfile, facultyProfileCountPanel,
+   facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
    facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
    facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
    facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID, 
@@ -15,6 +16,8 @@ const router = express.Router();
 //router.use(protectFaculty);
 
 router.post("/facultyLogin", facultyLogin);
+router.route("/facultyViewOwnProfile").get(protectFaculty, facultyViewOwnProfile);
+router.route("/facultyProfileCountPanel").get(facultyProfileCountPanel);
 router.route("/facultyPanelRegistration").post(protectFaculty, facultyPanelRegistration);
 router.route("/facultySupervisorRegistration").post(protectFaculty, facultySupervisorRegistration);
 router.route("/facultyStudentRegistration").post(protectFaculty, facultyStudentRegistration);

@@ -1,0 +1,24 @@
+.profileImg {
+    display: block; 
+    margin: 0 auto;
+}
+
+.profileText {
+    font-family: 'Montserrat', sans-serif;
+    display: block;
+}
+
+.profileTextDot {
+    width: 10px;
+    height: 10px;
+    background: #00FF00;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 12%;
+}
+
+.roundImg {
+    background-color: #ebd9dd;
+    border-radius: 60px;
+}

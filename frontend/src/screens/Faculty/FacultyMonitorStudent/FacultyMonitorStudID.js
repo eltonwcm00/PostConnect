@@ -101,8 +101,12 @@ const FacultyMonitorStudID = () => {
         }
 
         msgStatus = <><span className="invalid-msg">Student Status: </span>
-            {`Terminated. Student is lack in the study performance. He/She has received 3 consecutive fail grade for ${terminationCause}. 
-              Hence, his/her has been terminated automatically by the system.`} </>
+            {
+                (rpdStatus >= 3 || wcdStatus >= 3 || prStatus >= 3) ? 
+                `Terminated. Student is lack in the study performance. He/She has received 3 consecutive fail grade for ${terminationCause}. 
+                 Hence, his/her has been terminated automatically by the system.`
+                    : `Terminated. Student had exceed the allowed max. study duration (years) of study`
+            } </>
     } else {
         msgStatus = <><span className="valid-msg">Student Status: </span>
             Active. Student is active in the program.</>
@@ -230,7 +234,7 @@ const FacultyMonitorStudID = () => {
                             <Row>
                                 <Col sm={3}>
                                    <Button className="table-details-button mt-5" variant="primary" onClick={() => activateStudent()}>
-                                       Active
+                                       Activate
                                    </Button> 
                                 </Col>
                                 <Col>

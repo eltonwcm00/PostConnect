@@ -43,7 +43,7 @@ import { facultyLogout } from '../actions/facultyAction';
               <NavLink exact to="/facultyRegister" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-plus" className="sidebar-icon-role">Role Registration</CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/#" className="sidebar-nav">
+              <NavLink exact to="/facultyViewProfile" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-user" className="sidebar-icon">User Profile</CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="/facultyEvaluateRPDApplication" className="sidebar-nav">

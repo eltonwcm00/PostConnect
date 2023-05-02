@@ -32,7 +32,29 @@ const facultyLogin = asyncHandler(async (req, res) => {
     else {
       res.status(401).json({message: "Username or Password is incorrect!"});
     }
-  });
+});
+
+const facultyViewOwnProfile = asyncHandler(async (req, res) => {
+  
+  const fetchCurrentFaculty = await Faculty.find({_id: req.userFaculty._id});
+
+  if(fetchCurrentFaculty) {
+    res.status(201).json(fetchCurrentFaculty);
+  } 
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+});
+
+const facultyProfileCountPanel = asyncHandler(async (req, res) => {
+  
+  const fetchPanelCount = await Panel.estimatedDocumentCount();
+
+  if (fetchPanelCount) {
+    res.status(201).json(fetchPanelCount);
+  }
+});
 
 /*************************************************** USER TYPE REGISTRATION ***************************************************/
 
@@ -730,7 +752,7 @@ const facultyActiveStudent = asyncHandler(async (req, res) => {
 });
 
 export { 
-         facultyLogin, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
+         facultyLogin, facultyViewOwnProfile, facultyProfileCountPanel, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
          facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
          facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID, 

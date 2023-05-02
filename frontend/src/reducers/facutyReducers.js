@@ -3,6 +3,9 @@ import {
     FACULTY_LOGIN_REQUEST,
     FACULTY_LOGIN_SUCCESS,
     FACULTY_LOGOUT,
+    FACULTY_PROFILE_REQUEST,
+    FACULTY_PROFILE_SUCCESS,
+    FACULTY_PROFILE_FAIL,
     FACULTY_REGISTER_FAIL,
     FACULTY_REGISTER_REQUEST,
     FACULTY_REGISTER_SUCCESS,
@@ -43,6 +46,19 @@ export const facultyLoginReducer = (state = {}, action) => {
           return state;
       }
 };
+
+export const facultyProfileReducer = (state = { fetchProfile: [] }, action) => {
+  switch (action.type) {
+    case FACULTY_PROFILE_REQUEST:
+      return { loading: true };
+    case FACULTY_PROFILE_SUCCESS:
+      return { loading: false, fetchProfile: action.payload };
+    case FACULTY_PROFILE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
 
 export const facultyRegistrationReducer = (state = {}, action) => {
   switch (action.type) {

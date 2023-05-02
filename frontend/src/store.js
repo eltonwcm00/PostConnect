@@ -5,6 +5,7 @@ import localStorage from 'localStorage';
 
 import {
   facultyLoginReducer, 
+  facultyProfileReducer,
   facultyRegistrationReducer,
   facultyReadAssignSupervisionReducer,
   facultyUpdateAssignSupervisionReducer,
@@ -42,6 +43,7 @@ import {
 
 const reducer = combineReducers({
     facultyLogin: facultyLoginReducer,
+    facultyProfile: facultyProfileReducer,
     facultyRegistration: facultyRegistrationReducer,
     
     facultyReadAssignSupervision: facultyReadAssignSupervisionReducer,

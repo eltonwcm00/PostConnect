@@ -16,6 +16,9 @@ const FacultyTemplate = ({ children }) => {
   else if (window.location.href === pageURL+'facultyLogin'){
     pageTitle = "Faculty Login";
   }
+  else if (window.location.href === pageURL+'facultyViewProfile'){
+    pageTitle = "User Profile";
+  }
   else if (window.location.href === pageURL+'facultyStudentRegistration'){
     pageTitle = "Student Registration";
   } 

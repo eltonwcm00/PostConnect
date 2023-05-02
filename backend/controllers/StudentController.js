@@ -53,19 +53,17 @@ const systemVerifyStudentStatus = asyncHandler(async (req, res) => {
   const currentStudent = req.userStudent;
 
   const currentTerminateExceedStudyStudInfo = await Student.findOne({ _id: currentStudent})
-  .and([
-      {isStudent: false},
-      {retryRPDAttempt: {$lt: 3}}, 
-      {retryWCDAttempt: {$lt: 3}},
-      {retryPRAttempt: {$lt: 3}}]);  
-
+                                                              .and([
+                                                                  {isStudent: false},
+                                                                  {retryRPDAttempt: {$lt: 3}}, 
+                                                                  {retryWCDAttempt: {$lt: 3}},
+                                                                  {retryPRAttempt: {$lt: 3}}]);  
 
   const currentStudInfo = await Student.findOne({ _id: currentStudent})
                                           .or([
                                                {retryRPDAttempt: {$gte: 3}}, 
                                                {retryWCDAttempt: {$gte: 3}},
                                                {retryPRAttempt: {$gte: 3}}]);
-  
 
   if (currentTerminateExceedStudyStudInfo) {
     res.status(201).json({
@@ -518,7 +516,7 @@ const studentSubmitPR = asyncHandler(async (req, res) => {
         });
         res.status(201).json({
           subsequentSubmitPR,
-          messagePRSubmittedSucess: "The subsequent half year progress report has been submitted. Kindly wait for the result to be evaluated"
+          messagePRSubmittedSucess: "The subsequent half year progress report has been submitted. Kindly wait for the result to be evaluated."
         })
       }
       else {
@@ -530,7 +528,7 @@ const studentSubmitPR = asyncHandler(async (req, res) => {
         
         res.status(201).json({
           submittedPR,
-          messagePRSubmittedSucess: "The half-year progress report has been submitted. Kindly wait for the result to be evaluated"
+          messagePRSubmittedSucess: "The half-year progress report has been submitted. Kindly wait for the result to be evaluated."
         });
       }
       const fetchResubmitPR = await ProgressReport.updateMany( {studentUser: currentStudent, prMoreThanOnce: { $eq: true } },
