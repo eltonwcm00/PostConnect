@@ -1,12 +1,14 @@
 import express from "express";
-import {panelLogin,panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, panelReadWCD,
-        panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD, 
+import {panelLogin, panelProfileList,
+        panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
+        panelReadWCD, panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD, 
         panelReadPRDateSetPR, panelReadPR, panelReadPRByID, panelEvaluatePR } from "../controllers/PanelController.js";
 import { protectPanel } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.post("/panelLogin", panelLogin);
+router.route("/panelProfileList").get(panelProfileList);
 router.route("/panelReadRPD").get(protectPanel, panelReadRPD);
 router.route("/panelEvaluateRPD/:id").get(panelReadRPDByID)
                                      .put(protectPanel, panelEvaluatePassRPD);

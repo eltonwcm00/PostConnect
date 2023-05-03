@@ -19,6 +19,7 @@ import {
 import { 
   studentStatusValidatorReducer,
   studentLoginReducer,
+  studentProfileReducer,
   studentCWReadRequestReducer,
   studentCWRequestReducer,
   studentApplicationStatusReducer,
@@ -31,12 +32,14 @@ import {
 
 import {
   supervisorLoginReducer, 
+  supervisorProfileReducer,
   supervisorReadCWReducer,
   supervisorEvaluatePRReducer
 } from "./reducers/supervisorReducers";
 
 import {
   panelLoginReducer,
+  panelProfileReducer,
   panelReadApplicationReducer,
   panelEvaluateRPDReducer,
 } from "./reducers/panelReducers";
@@ -55,10 +58,12 @@ const reducer = combineReducers({
     facultySetPR: facultySetPRReducer,
 
     supervisorLogin: supervisorLoginReducer,
+    supervisorProfile: supervisorProfileReducer,
     supervisorReadCW: supervisorReadCWReducer,
     supervisorEvaluatePR: supervisorEvaluatePRReducer,
    
     studentLogin: studentLoginReducer,
+    studentProfile: studentProfileReducer,
     studentStatusValidator: studentStatusValidatorReducer,
     studentCWReadRequest: studentCWReadRequestReducer,
     studentCWRequest: studentCWRequestReducer,
@@ -70,6 +75,7 @@ const reducer = combineReducers({
     studentPRSubmit: studentPRSubmitReducer,
 
     panelLogin: panelLoginReducer,
+    panelProfile: panelProfileReducer,
     panelReadApplication: panelReadApplicationReducer,
     panelEvaluateRPD: panelEvaluateRPDReducer
 })

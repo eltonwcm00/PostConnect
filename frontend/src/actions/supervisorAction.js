@@ -3,6 +3,10 @@ import {
     SUPERVISOR_LOGIN_REQUEST,
     SUPERVISOR_LOGIN_SUCCESS,
     SUPERVISOR_LOGOUT,
+    SUPERVISOR_PROFILE_REQUEST,
+    // SUPERVISOR_PROFILE_ID_REQUEST,
+    SUPERVISOR_PROFILE_SUCCESS,
+    SUPERVISOR_PROFILE_FAIL,
     SUPERVISOR_CW_REQUEST,
     SUPERVISOR_CW_SUCCESS,
     SUPERVISOR_CW_FAIL,
@@ -41,6 +45,34 @@ export const supervisorLogin = (usernameSup, password) => async (dispatch) => {
             : error.message,
       });
     }
+}; 
+
+export const supervisorProfile = () => async (dispatch) => {
+  try {
+    dispatch({ type: SUPERVISOR_PROFILE_REQUEST});
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/supervisor/supervisorProfileList",
+      config
+    );
+
+    dispatch({ type: SUPERVISOR_PROFILE_SUCCESS, payload: data });
+
+  } catch (error) {
+    dispatch({
+      type: SUPERVISOR_PROFILE_FAIL,
+      payload:
+        error.response 
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 }; 
 
 export const supervisorLogout = () => async (dispatch) => {

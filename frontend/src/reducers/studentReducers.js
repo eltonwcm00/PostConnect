@@ -6,6 +6,11 @@ import {
     STUDENT_LOGIN_SUCCESS,
     STUDENT_LOGOUT,
 
+    STUDENT_PROFILE_REQUEST,
+    // STUDENT_PROFILE_ID_REQUEST,
+    STUDENT_PROFILE_SUCCESS,
+    STUDENT_PROFILE_FAIL,
+
     STUDENT_CW_READ_REQUEST,
     STUDENT_CW_READ_SUCCESS,
     STUDENT_CW_READ_FAIL,
@@ -39,6 +44,19 @@ export const studentLoginReducer = (state = {}, action) => {
         default:
           return state;
       }
+};
+
+export const studentProfileReducer = (state = { studentProfileList: [] }, action) => {
+  switch (action.type) {
+      case STUDENT_PROFILE_REQUEST:
+        return { loading: true };
+      case STUDENT_PROFILE_SUCCESS:
+        return { loading: false, studentProfileList: action.payload};
+      case STUDENT_PROFILE_FAIL:
+        return { loading: false, error: action.payload };
+      default:
+        return state;
+    }
 };
 
 export const studentStatusValidatorReducer = (state = {}, action) => {

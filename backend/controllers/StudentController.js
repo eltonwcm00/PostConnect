@@ -34,6 +34,19 @@ const studentLogin = asyncHandler(async (req, res) => {
     }
 });
 
+const studentProfileList = asyncHandler(async (req, res) => {
+
+  const studentList = await Student.find();
+
+  if (studentList) {
+    res.status(201).json(studentList);
+  }
+  else {
+    res.status(401).json({message: "No student currently"});
+  }
+});
+
+
 const systemReadVerifyStudentStatus = asyncHandler(async (req, res) => {
     
   const currentStudent = req.userStudent;
@@ -43,7 +56,6 @@ const systemReadVerifyStudentStatus = asyncHandler(async (req, res) => {
   if (currentStudInfo) {
     res.status(201).json(currentStudInfo);
   }
-
 });
 
 const systemVerifyStudentStatus = asyncHandler(async (req, res) => {
@@ -581,6 +593,7 @@ const studentViewPR = asyncHandler(async (req, res) => {
 
 /*************************************************** END PR ***************************************************/
 
-export { studentLogin, systemVerifyStudentStatus, systemReadVerifyStudentStatus, studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, 
+export { studentLogin, studentProfileList, systemVerifyStudentStatus, systemReadVerifyStudentStatus, 
+         studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, 
          studentSubmitMeetingLog, studentViewMeetingLog, studentRequestWCD, studentViewWCDApplication, 
          studentRegisterPR, studentRegisterPRLandingPage, studentSubmitPR, studentViewPR };

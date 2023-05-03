@@ -3,6 +3,9 @@ import {
     PANEL_LOGIN_REQUEST,
     PANEL_LOGIN_SUCCESS,
     PANEL_LOGOUT,
+    PANEL_PROFILE_REQUEST,
+    PANEL_PROFILE_SUCCESS,
+    PANEL_PROFILE_FAIL,
     PANEL_APPLICATION_LIST_REQUEST,
     PANEL_APPLICATION_LIST_SUCCESS,
     PANEL_APPLICATION_LIST_FAIL,
@@ -42,12 +45,40 @@ export const panelLogin = (usernamePanel, password) => async (dispatch) => {
             : error.message,
       });
     }
-  }; 
+}; 
 
 export const panelLogout = () => async (dispatch) => {
   localStorage.removeItem("panelInfo");
   dispatch({ type: PANEL_LOGOUT });
 };
+
+export const panelProfile = () => async (dispatch) => {
+  try {
+    dispatch({ type: PANEL_PROFILE_REQUEST});
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/panel/panelProfileList",
+      config
+    );
+
+    dispatch({ type: PANEL_PROFILE_SUCCESS, payload: data });
+
+  } catch (error) {
+    dispatch({
+      type: PANEL_PROFILE_FAIL,
+      payload:
+        error.response 
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+}; 
 
 export const panelReadRPD = () => async (dispatch, getState) => {
   try {

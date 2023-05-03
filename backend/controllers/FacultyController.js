@@ -17,13 +17,14 @@ const facultyLogin = asyncHandler(async (req, res) => {
     // username: admin; password: 123
     const { password } = req.body;
   
-    const userFaculty = await Faculty.findOne({ userNameFac:'admin' });
+    const userFaculty = await Faculty.findOne({ userNameFac:'faculty' });
     const validPass = await bcrypt.compare(password, userFaculty.password);
   
     if (userFaculty && validPass) {
       res.status(201).json({
         _id: userFaculty._id,
         userNameFac: userFaculty.userNameFac, 
+        password,
         isFaculty: true,
         token: generateToken(userFaculty._id),
         successMessage: "Logged in successfully!"

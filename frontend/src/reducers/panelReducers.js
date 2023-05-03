@@ -3,6 +3,10 @@ import {
     PANEL_LOGIN_REQUEST,
     PANEL_LOGIN_SUCCESS,
     PANEL_LOGOUT,
+    PANEL_PROFILE_REQUEST,
+    // PANEL_PROFILE_ID_REQUEST,
+    PANEL_PROFILE_SUCCESS,
+    PANEL_PROFILE_FAIL,
     PANEL_APPLICATION_LIST_REQUEST,
     PANEL_APPLICATION_LIST_SUCCESS,
     PANEL_APPLICATION_LIST_FAIL,
@@ -25,6 +29,19 @@ export const panelLoginReducer = (state = {}, action) => {
         default:
           return state;
       }
+};
+
+export const panelProfileReducer = (state = { panelProfileList: [] }, action) => {
+  switch (action.type) {
+      case PANEL_PROFILE_REQUEST:
+        return { loading: true };
+      case PANEL_PROFILE_SUCCESS:
+        return { loading: false, panelProfileList: action.payload};
+      case PANEL_PROFILE_FAIL:
+        return { loading: false, error: action.payload };
+      default:
+        return state;
+    }
 };
 
 export const panelReadApplicationReducer = (state = { fetchRPDList: [] }, action) => {

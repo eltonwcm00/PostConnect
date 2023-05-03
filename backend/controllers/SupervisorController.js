@@ -28,6 +28,18 @@ const supervisorLogin = asyncHandler(async (req, res) => {
   }
 });
 
+const supervisorProfileList = asyncHandler(async (req, res) => {
+
+  const supervisorList = await Supervisor.find();
+
+  if (supervisorList) {
+    res.status(201).json(supervisorList);
+  }
+  else {
+    res.status(401).json({message: "No supervisor currently"});
+  }
+});
+
 /*************************************************** MEETING LOG ***************************************************/
 
 const supervisorReadMeetingLog = asyncHandler(async (req, res) => {
@@ -199,5 +211,7 @@ const supervisorReadPRResult = asyncHandler(async (req, res) => {
 });
 
 
-export { supervisorLogin, supervisorReadMeetingLog, supervisorReadMeetingLogByID, supervisorReadRPDResult, supervisorReadWCDResult, 
+export { supervisorLogin, supervisorProfileList,
+         supervisorReadMeetingLog, supervisorReadMeetingLogByID,
+         supervisorReadRPDResult, supervisorReadWCDResult, 
          supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR, supervisorReadPRResult };

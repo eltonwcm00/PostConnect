@@ -6,6 +6,10 @@ import {
     STUDENT_LOGIN_SUCCESS,
     STUDENT_LOGOUT,
 
+    STUDENT_PROFILE_FAIL,
+    STUDENT_PROFILE_SUCCESS,
+    STUDENT_PROFILE_REQUEST,
+
     STUDENT_CW_READ_REQUEST,
     STUDENT_CW_READ_SUCCESS,
     STUDENT_CW_READ_FAIL,
@@ -85,6 +89,34 @@ export const studentLogout = () => async (dispatch) => {
   localStorage.removeItem("studentInfo");
   dispatch({ type: STUDENT_LOGOUT });
 };
+
+export const studentProfile = () => async (dispatch) => {
+  try {
+    dispatch({ type: STUDENT_PROFILE_REQUEST});
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/student/studentProfileList",
+      config
+    );
+
+    dispatch({ type: STUDENT_PROFILE_SUCCESS, payload: data });
+
+  } catch (error) {
+    dispatch({
+      type: STUDENT_PROFILE_FAIL,
+      payload:
+        error.response 
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+}; 
 
 export const studentRPDReadRequest = () => async (dispatch, getState) => {
   try {

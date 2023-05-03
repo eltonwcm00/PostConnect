@@ -3,6 +3,10 @@ import {
     SUPERVISOR_LOGIN_REQUEST,
     SUPERVISOR_LOGIN_SUCCESS,
     SUPERVISOR_LOGOUT,
+    SUPERVISOR_PROFILE_REQUEST,
+    // SUPERVISOR_PROFILE_ID_REQUEST,
+    SUPERVISOR_PROFILE_SUCCESS,
+    SUPERVISOR_PROFILE_FAIL,
     SUPERVISOR_CW_REQUEST,
     SUPERVISOR_CW_SUCCESS,
     SUPERVISOR_CW_FAIL,
@@ -21,6 +25,19 @@ export const supervisorLoginReducer = (state = {}, action) => {
         return { loading: false, error: action.payload };
       case SUPERVISOR_LOGOUT:
         return {};
+      default:
+        return state;
+    }
+};
+
+export const supervisorProfileReducer = (state = { supervisorProfileList: [] }, action) => {
+  switch (action.type) {
+      case SUPERVISOR_PROFILE_REQUEST:
+        return { loading: true };
+      case SUPERVISOR_PROFILE_SUCCESS:
+        return { loading: false, supervisorProfileList: action.payload};
+      case SUPERVISOR_PROFILE_FAIL:
+        return { loading: false, error: action.payload };
       default:
         return state;
     }

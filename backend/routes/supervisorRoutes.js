@@ -1,11 +1,14 @@
 import express from "express";
-import { supervisorLogin, supervisorReadMeetingLog, supervisorReadMeetingLogByID, supervisorReadRPDResult, supervisorReadWCDResult,
+import { supervisorLogin, supervisorProfileList, 
+         supervisorReadMeetingLog, supervisorReadMeetingLogByID, 
+         supervisorReadRPDResult, supervisorReadWCDResult,
          supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR, supervisorReadPRResult } from "../controllers/SupervisorController.js";
 import { protectSupervisor } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.post("/supervisorLogin", supervisorLogin);
+router.route('/supervisorProfileList').get(supervisorProfileList);
 router.route('/supervisorReadMeetingLog').get(protectSupervisor, supervisorReadMeetingLog);
 router.route('/supervisorReadMeetingLog/:id').get(supervisorReadMeetingLogByID);
 router.route('/supervisorReadRPDResult').get(protectSupervisor, supervisorReadRPDResult);

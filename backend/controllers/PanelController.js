@@ -27,6 +27,18 @@ const panelLogin = asyncHandler(async (req, res) => {
     }
 });
 
+const panelProfileList = asyncHandler(async (req, res) => {
+
+  const panelList = await Panel.find();
+
+  if (panelList) {
+    res.status(201).json(panelList);
+  }
+  else {
+    res.status(401).json({message: "No panel currently"});
+  }
+});
+
 /*************************************************** RPD EVALUATION ***************************************************/
 
 const panelReadRPD = asyncHandler(async (req, res) => {
@@ -119,7 +131,7 @@ const panelReadWCD = asyncHandler(async (req, res) => {
   else {
     res.status(401).json({errorWCDList: "No WCD is ready to be evaluate"});
   }
-})
+});
 
 const panelReadWCDByID = asyncHandler(async (req, res) => {
 
@@ -269,6 +281,6 @@ const panelEvaluatePR = asyncHandler(async (req, res) => {
 
 /*************************************************** END PR EVALUATION ***************************************************/
 
-export { panelLogin, panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
+export { panelLogin, panelProfileList,panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
          panelReadWCD, panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD, 
          panelReadPRDateSetPR, panelReadPR, panelReadPRByID, panelEvaluatePR };

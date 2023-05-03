@@ -1,6 +1,7 @@
 import express from "express";
-import { studentLogin, systemVerifyStudentStatus, systemReadVerifyStudentStatus, studentViewDataRequestRPD, studentRequestRPD, 
-         studentViewRPDApplication,studentSubmitMeetingLog, studentViewMeetingLog,
+import { studentLogin, studentProfileList, systemVerifyStudentStatus, systemReadVerifyStudentStatus, 
+         studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication,
+         studentSubmitMeetingLog, studentViewMeetingLog,
          studentRequestWCD, studentViewWCDApplication, studentRegisterPR, studentRegisterPRLandingPage,
          studentSubmitPR, studentViewPR } from "../controllers/StudentController.js";
 import { protectStudent } from "../middleware/authMiddleware.js";
@@ -9,6 +10,7 @@ import { upload } from "../middleware/multer.js"
 const router = express.Router();
 
 router.post("/studentLogin", studentLogin);
+router.route("/studentProfileList").get(studentProfileList);
 router.route("/systemReadVerifyStudentStatus").get(protectStudent, systemReadVerifyStudentStatus)
 router.route("/systemVerifyStudentStatus").put(protectStudent, systemVerifyStudentStatus);
 router.route("/studentViewDataRequestRPD").get(protectStudent, studentViewDataRequestRPD);
