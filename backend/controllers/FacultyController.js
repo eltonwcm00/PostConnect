@@ -56,6 +56,24 @@ const facultyProfileCountPanel = asyncHandler(async (req, res) => {
   }
 });
 
+const facultyProfileCountSupervisor = asyncHandler(async (req, res) => {
+  
+  const fetchSupervisorCount = await Supervisor.estimatedDocumentCount();
+
+  if (fetchSupervisorCount) {
+    res.status(201).json(fetchSupervisorCount);
+  }
+});
+
+const facultyProfileCountStudent = asyncHandler(async (req, res) => {
+  
+  const fetchStudentCount = await Student.estimatedDocumentCount();
+
+  if (fetchStudentCount) {
+    res.status(201).json(fetchStudentCount);
+  }
+});
+
 /*************************************************** USER TYPE REGISTRATION ***************************************************/
 
 const facultyPanelRegistration = asyncHandler(async (req, res) => {
@@ -752,7 +770,8 @@ const facultyActiveStudent = asyncHandler(async (req, res) => {
 });
 
 export { 
-         facultyLogin, facultyViewOwnProfile, facultyProfileCountPanel, facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
+         facultyLogin, facultyViewOwnProfile, facultyProfileCountPanel, facultyProfileCountSupervisor, facultyProfileCountStudent,
+         facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
          facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
          facultyApproveEvaluateRPDApplicationByID, facultyReadChooseStudent, facultyReadChooseStudentByID, 

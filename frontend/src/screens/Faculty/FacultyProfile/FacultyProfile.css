@@ -1,10 +1,12 @@
-.profileImg {
+.profileCentering {
     display: block; 
     margin: 0 auto;
+    text-align: center;
 }
 
 .profileText {
     font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
     display: block;
 }
 
@@ -14,11 +16,17 @@
     background: #00FF00;
     border-radius: 50%;
     position: absolute;
-    top: 50%;
+    top: 67%;
     left: 12%;
 }
 
 .roundImg {
     background-color: #ebd9dd;
     border-radius: 60px;
+}
+
+.profileEditText {
+    padding: 15px;
+    background-color: blanchedalmond;
+    font-family: 'Montserrat', sans-serif;
 }
