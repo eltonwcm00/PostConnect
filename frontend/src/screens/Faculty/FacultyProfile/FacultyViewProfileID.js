@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useLocation } from 'react-router-dom';
+import { Form, Row, Col, Button } from "react-bootstrap";
+import FacultyTemplate from '../../../components/FacultyTemplate';
+import Calendar from 'react-calendar';
 
 const FacultyViewProfileID = () => {
   
@@ -14,6 +17,7 @@ const FacultyViewProfileID = () => {
         setUrl(pathname);
     }, [location.pathname]);
     
+    let isPanel = false, isSuper = false, isStud = false;
     const { id } = useParams();
 
     const [password, setPassword] = useState();
@@ -32,12 +36,15 @@ const FacultyViewProfileID = () => {
     switch (url) {
         case "/panelProfileList": 
             executeURL = `http://localhost:5000/api/panel/panelProfileList/${id}`;
+            isPanel = true;
             break;
         case "/supervisorProfileList": 
             executeURL = `http://localhost:5000/api/supervisor/supervisorProfileList/${id}`;
+            isSuper = true;
             break;
         case "/studentProfileList": 
             executeURL = `http://localhost:5000/api/student/studentProfileList/${id}`; 
+            isStud = true;
             break;
         default:
             executeURL = "";
@@ -48,13 +55,11 @@ const FacultyViewProfileID = () => {
         const fetching = async () => {
             const { data } = await axios.get(executeURL);
             
-            setPassword(data.password);
-
             setFullNameStud(data.usernameStud || "");
             setFullNameSup(data.usernameSup || "");
             setFullNamePanel(data.usernamePanel || "");
 
-            setDateJoined(data.password || "");
+            setDateJoined(new Date(data.dateJoin) || "");
             setDegreeLvl(data.degreeLvl || "");
 
             setAcademicPos(data.academicPos || "");
@@ -64,16 +69,124 @@ const FacultyViewProfileID = () => {
         fetching();
     }, [executeURL]);
 
+    const updateHandler = () => {
+
+    }
+
     return (
-        <div>
-            {console.log(url)}
-            <div>
-              <span>{fullnameStud}</span>
-            </div>
-            <div>
-              <span>{fullnameSup}</span>
-            </div>
+        <FacultyTemplate>
+        <div className="form-title-desc-container">
+            {isPanel ? "Panel Profile" : isSuper ? "Supervisor Profile" : "Student Profile"}
         </div>
+        {/* {loadingStudentCW && <Loading /> }
+        {errorStudentCW && <ErrorMessage variant="danger">{errorStudentCW}</ErrorMessage>}
+        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+        {successMsg && <SuccessMessage variant="success">{applicationInfo.successMessage}</SuccessMessage>}
+        {loading && <Loading />} */}
+            <Form className="form" enctype="multipart/form-data">
+                <div>
+                    <Form.Group as={Row} className="mb-5" controlId="formBasicEmail">
+                        <Form.Label column sm={2}>
+                            {
+                                isPanel ? "Panel's Name" : 
+                                isSuper ? "Supervisor's Name" : 
+                                "Student's Name"
+                            }
+                        </Form.Label>
+                        <Col sm={10} mb={3}>
+                            <Form.Control
+                                type="text"
+                                value={
+                                    isPanel ? fullnamePanel :
+                                    isSuper ? fullnameSup :
+                                    fullnameStud
+                                }
+                                placeholder="null"
+                                onChange={
+                                    (e) => isPanel ? setFullNamePanel(e.target.value) :
+                                        isSuper ? setFullNameSup(e.target.value) :
+                                        setFullNameStud(e.target.value)
+                                }
+                                className="py-4 input-request"
+                                disabled
+                            />
+                        </Col>
+                    </Form.Group>
+                    {
+                        isStud &&  
+                        <>
+                            <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
+                                <Form.Label column sm={2}>Date Joined</Form.Label>
+                                <Col sm={10}>
+                                    <Calendar
+                                        value={dateJoined}
+                                        onChange={setDateJoined}
+                                        dateFormat="MMMM d, yyyy"
+                                    />
+                                </Col>
+                            </Form.Group>
+                            <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
+                                <Form.Label column sm={2}>Degree Level</Form.Label>
+                                <Col sm={10}>
+                                    <Form.Select column sm aria-label="Default select example" value={degreeLvl} onChange={(e) => setDegreeLvl(e.target.value)}>
+                                        <option>{degreeLvl}</option>
+                                        <option value="Master Degree (Part-Time)">Master Degree (Part-Time)</option>
+                                        <option value="Master Degree (Full-Time)">Master Degree (Full-Time)</option>
+                                        <option value="Doctoral Degree (Part-Time)">Doctoral Degree (Part-Time)</option>
+                                        <option value="Doctoral Degree (Full-Time)">Doctoral Degree (Full-Time)</option>
+                                    </Form.Select> 
+                                </Col> 
+                            </Form.Group>
+                        </>
+                    }
+                    {
+                        isSuper &&
+                        <>
+                            <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
+                                <Form.Label column sm={2}>Academic Position</Form.Label>
+                                <Col sm={10}>
+                                    <Form.Select className="mb-4" column sm aria-label="Default select example" value={academicPos} onChange={(e) => setAcademicPos(e.target.value)}>
+                                        <option>{academicPos}</option>
+                                        <option value="Lecturer">Lecturer</option>
+                                        <option value="Senior Lecturer">Senior Lecturer</option>
+                                        <option value="Principal Lecturer">Principal Lecturer</option>
+                                    </Form.Select>
+                                </Col>
+                            </Form.Group>
+                        </>
+                    }
+                    <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
+                        <Form.Label column sm={2}>New Password</Form.Label>
+                        <Col sm={10}>
+                        <Form.Control
+                            type="password"
+                            value={password}
+                            placeholder="Password"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
+                        <Form.Label column sm={2}>Confirm New Password</Form.Label>
+                        <Col sm={10}>
+                        <Form.Control
+                            type="password"
+                            value={cfrmPassword}
+                            placeholder="Password"
+                            onChange={(e) => setCfrmPassword(e.target.value)}
+                        />
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-4" controlId="formBasicPassword">
+                    <Col sm={10}>
+                        <Button className=" mt-4 submit-btn" variant="primary" type="submit" onClick={updateHandler}>
+                            Update 
+                        </Button>
+                    </Col>
+                    </Form.Group>
+                </div> 
+            </Form>
+        </FacultyTemplate>
     )
 }
 
