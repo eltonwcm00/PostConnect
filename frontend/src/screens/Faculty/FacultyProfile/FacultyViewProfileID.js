@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { facultyUpdateSupervisorProfile, facultyUpdateStudentProfile,
+         facultyUpdatePanelProfile } from '../../../actions/facultyAction';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Form, Row, Col, Button } from "react-bootstrap";
 import FacultyTemplate from '../../../components/FacultyTemplate';
 import Calendar from 'react-calendar';
+import Loading from "../../../components/Loading";
+import ErrorMessage from "../../../components/ErrorMessage";
+import SuccessMessage from "../../../components/SuccessMessage";
 
 const FacultyViewProfileID = () => {
   
+    const dispatch = useDispatch();
     const location = useLocation();
+    const navigate = useNavigate();
+
     const [url, setUrl] = useState(location.pathname);
+
+    const updateProfileState = useSelector((state) => state.facultyUpdateApplication);
+    const { loading, error, successApproveMsg } = updateProfileState;
 
     useEffect(() => {
         const segments = location.pathname.split('/');
@@ -69,20 +81,36 @@ const FacultyViewProfileID = () => {
         fetching();
     }, [executeURL]);
 
-    const updateHandler = () => {
-
+    const updateHandler = (e) => {
+        e.preventDefault();
+        if (window.confirm("Are you sure to update the user details?")) {
+            if (isPanel) {
+                dispatch(facultyUpdatePanelProfile(id, password, cfrmPassword));
+            } else if (isSuper) {
+                dispatch(facultyUpdateSupervisorProfile(id, password, cfrmPassword, academicPos));
+            } else {
+                dispatch(facultyUpdateStudentProfile(id, password, cfrmPassword, degreeLvl));
+            }
+        }
     }
+
+    useEffect(() => {
+        if (successApproveMsg) {
+          const timer = setTimeout(() => {
+            navigate("/facultyViewProfile");
+          }, 5000);
+          return () => clearTimeout(timer);
+        }
+    }, [navigate, successApproveMsg])
 
     return (
         <FacultyTemplate>
         <div className="form-title-desc-container">
             {isPanel ? "Panel Profile" : isSuper ? "Supervisor Profile" : "Student Profile"}
         </div>
-        {/* {loadingStudentCW && <Loading /> }
-        {errorStudentCW && <ErrorMessage variant="danger">{errorStudentCW}</ErrorMessage>}
-        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-        {successMsg && <SuccessMessage variant="success">{applicationInfo.successMessage}</SuccessMessage>}
-        {loading && <Loading />} */}
+            {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+            {successApproveMsg && <SuccessMessage variant="success">{"The account has been updated"}</SuccessMessage>}
+            {loading && <Loading />}
             <Form className="form" enctype="multipart/form-data">
                 <div>
                     <Form.Group as={Row} className="mb-5" controlId="formBasicEmail">

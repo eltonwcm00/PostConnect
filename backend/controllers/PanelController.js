@@ -27,6 +27,8 @@ const panelLogin = asyncHandler(async (req, res) => {
     }
 });
 
+/*************************************************** PROFILE ***************************************************/
+
 const panelProfileList = asyncHandler(async (req, res) => {
 
   const panelList = await Panel.find();
@@ -50,6 +52,41 @@ const panelProfileListByID = asyncHandler(async (req, res) => {
     res.status(401).json({ message: "Details of this panel is not found" });
   }
 });
+
+const panelUpdatedProfile = asyncHandler(async (req, res) => {
+  
+  const { password, cfrmPassword } = req.body
+
+  const panelProfileID = await Panel.findById(req.params.id);
+
+  if (panelProfileID) {
+  
+    if (req.body.password && req.body.cfrmPassword) {
+      if(cfrmPassword !== password) {
+        res.status(401).json({message: "Repeat password and password is not match"});
+      } else {
+        const salt = await bcrypt.genSalt(10);
+        let hashedPassword = await bcrypt.hash(password, salt);
+        panelProfileID.password = hashedPassword;        
+      }
+    }
+
+    const updatedDetail = await panelProfileID.save();
+
+    if (updatedDetail) {
+      res.status(201).json({
+        updatedDetail,
+        messageUpdated: "The profile details have been updated"
+      })
+    }
+  }
+  else {
+    res.status(401).json({ message: "Details of this panel is not found" });
+  }
+});
+
+/*************************************************** END PROFILE ***************************************************/
+
 
 /*************************************************** RPD EVALUATION ***************************************************/
 
@@ -293,7 +330,7 @@ const panelEvaluatePR = asyncHandler(async (req, res) => {
 
 /*************************************************** END PR EVALUATION ***************************************************/
 
-export { panelLogin, panelProfileList, panelProfileListByID, 
+export { panelLogin, panelProfileList, panelProfileListByID, panelUpdatedProfile,
          panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
          panelReadWCD, panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD, 
          panelReadPRDateSetPR, panelReadPR, panelReadPRByID, panelEvaluatePR };

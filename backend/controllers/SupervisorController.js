@@ -28,6 +28,8 @@ const supervisorLogin = asyncHandler(async (req, res) => {
   }
 });
 
+/*************************************************** PROFILE ***************************************************/
+
 const supervisorProfileList = asyncHandler(async (req, res) => {
 
   const supervisorList = await Supervisor.find();
@@ -51,6 +53,42 @@ const supervisorProfileListByID = asyncHandler(async (req, res) => {
     res.status(401).json({ message: "Details of this supervisor is not found" });
   }
 });
+
+const supervisorUpdatedProfile = asyncHandler(async (req, res) => {
+  
+  const { academicPos, password, cfrmPassword } = req.body
+
+  const supervisorProfileID = await Supervisor.findById(req.params.id);
+
+  if (supervisorProfileID) {
+    
+    supervisorProfileID.academicPos = academicPos;
+    
+    if (req.body.password && req.body.cfrmPassword) {
+      if(cfrmPassword !== password) {
+        res.status(401).json({message: "Repeat password and password is not match"});
+      } else {
+        const salt = await bcrypt.genSalt(10);
+        let hashedPassword = await bcrypt.hash(password, salt);
+        supervisorProfileID.password = hashedPassword;        
+      }
+    }
+
+    const updatedDetail = await supervisorProfileID.save();
+
+    if (updatedDetail) {
+      res.status(201).json({
+        updatedDetail,
+        messageUpdated: "The profile details have been updated"
+      })
+    }
+  }
+  else {
+    res.status(401).json({ message: "Details of this supervisor is not found" });
+  }
+});
+
+/*************************************************** END PROFILE ***************************************************/
 
 /*************************************************** MEETING LOG ***************************************************/
 
@@ -223,7 +261,7 @@ const supervisorReadPRResult = asyncHandler(async (req, res) => {
 });
 
 
-export { supervisorLogin, supervisorProfileList, supervisorProfileListByID,
+export { supervisorLogin, supervisorProfileList, supervisorProfileListByID, supervisorUpdatedProfile,
          supervisorReadMeetingLog, supervisorReadMeetingLogByID,
          supervisorReadRPDResult, supervisorReadWCDResult, 
          supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR, supervisorReadPRResult };

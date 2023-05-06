@@ -46,6 +46,10 @@ const FacultyTemplate = ({ children }) => {
   else if (window.location.href === pageURL+'facultyMonitorStudent' || window.location.href === pageURL+`facultyMonitorStudent/${id}`) {
     pageTitle = "Candidature Monitoring";
   }
+  else if (window.location.href === pageURL+`panelProfileList/${id}` || window.location.href === pageURL+`supervisorProfileList/${id}` 
+           || window.location.href === pageURL+`studentProfileList/${id}`) {
+    pageTitle = "Edit User Profile";
+  }
   else {
     pageTitle = null;
   }

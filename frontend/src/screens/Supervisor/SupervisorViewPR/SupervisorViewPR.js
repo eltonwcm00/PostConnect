@@ -47,7 +47,7 @@ const SupervisorViewPR = () => {
                     cwInfoSuccess && cwInfoSuccess.map((list) => (
                         <tr className='table-desc' key={list._id}>
                           <td> {moment(list.updatedAt).format('L')} </td>
-                          <td> {list.studentUser.usernameStud} </td>
+                          <td> {list.studentUser && list.studentUser.usernameStud} </td>
                           <td> {list.status ? 'S' : 'US' } </td>
                           <td> {list.status ? 'Passed' : 'Failed' } </td>
                           {/* <td> {list.studentRef.retryRPDAttempt} </td> */}

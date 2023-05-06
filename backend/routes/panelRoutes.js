@@ -1,5 +1,5 @@
 import express from "express";
-import {panelLogin, panelProfileList, panelProfileListByID,
+import {panelLogin, panelProfileList, panelProfileListByID, panelUpdatedProfile,
         panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
         panelReadWCD, panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD, 
         panelReadPRDateSetPR, panelReadPR, panelReadPRByID, panelEvaluatePR } from "../controllers/PanelController.js";
@@ -9,7 +9,8 @@ const router = express.Router();
 
 router.post("/panelLogin", panelLogin);
 router.route("/panelProfileList").get(panelProfileList);
-router.route('/panelProfileList/:id').get(panelProfileListByID);
+router.route('/panelProfileList/:id').get(panelProfileListByID)
+                                     .put(panelUpdatedProfile);
 router.route("/panelReadRPD").get(protectPanel, panelReadRPD);
 router.route("/panelEvaluateRPD/:id").get(panelReadRPDByID)
                                      .put(protectPanel, panelEvaluatePassRPD);

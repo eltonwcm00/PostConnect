@@ -17,7 +17,7 @@ const PanelSchema = mongoose.Schema(
     },
     facultyUser: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      // required: true,
       ref: "Faculty",
     },
   },

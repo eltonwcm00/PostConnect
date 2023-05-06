@@ -101,6 +101,99 @@ export const facultyViewOwnProfile = () => async (dispatch, getState) => {
   }
 };
 
+export const facultyUpdateSupervisorProfile = (id, password, cfrmPassword, academicPos) => async (dispatch) => {
+  try {
+    dispatch({
+      type: FACULTY_UPDATE_APPLICATION_REQUEST,
+    });
+    
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/supervisor/supervisorProfileList/${id}`, 
+                                      {password, cfrmPassword, academicPos}, config);
+
+    dispatch({
+      type: FACULTY_APPROVE_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type:FACULTY_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+}
+
+export const facultyUpdateStudentProfile = (id, password, cfrmPassword, degreeLvl) => async (dispatch) => {
+  try {
+    dispatch({
+      type: FACULTY_UPDATE_APPLICATION_REQUEST,
+    });
+    
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/student/studentProfileList/${id}`, 
+                                      {password, cfrmPassword, degreeLvl}, config);
+
+    dispatch({
+      type: FACULTY_APPROVE_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type:FACULTY_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+}
+
+export const facultyUpdatePanelProfile = (id, password, cfrmPassword) => async (dispatch) => {
+  try {
+    dispatch({
+      type: FACULTY_UPDATE_APPLICATION_REQUEST,
+    });
+    
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/panel/panelProfileList/${id}`, 
+                                      {password, cfrmPassword}, config);
+
+    dispatch({
+      type: FACULTY_APPROVE_APPLICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type:FACULTY_UPDATE_APPLICATION_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+}
+
 export const facultyPanelRegistration = (usernamePanel, password, cfrmPassword) => async (dispatch, getState) => {
   try {
     dispatch({ type: FACULTY_REGISTER_REQUEST });

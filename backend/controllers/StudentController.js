@@ -34,6 +34,8 @@ const studentLogin = asyncHandler(async (req, res) => {
     }
 });
 
+/*************************************************** PROFILE ***************************************************/
+
 const studentProfileList = asyncHandler(async (req, res) => {
 
   const studentList = await Student.find();
@@ -57,6 +59,42 @@ const studentProfileListByID = asyncHandler(async (req, res) => {
     res.status(401).json({ message: "Details of this student is not found" });
   }
 });
+
+const studentUpdatedProfile = asyncHandler(async (req, res) => {
+  
+  const { degreeLvl, password, cfrmPassword } = req.body
+
+  const studentProfileID = await Student.findById(req.params.id);
+
+  if (studentProfileID) {
+    
+    studentProfileID.degreeLvl = degreeLvl;
+    
+    if (req.body.password && req.body.cfrmPassword) {
+      if(cfrmPassword !== password) {
+        res.status(401).json({message: "Repeat password and password is not match"});
+      } else {
+        const salt = await bcrypt.genSalt(10);
+        let hashedPassword = await bcrypt.hash(password, salt);
+        studentProfileID.password = hashedPassword;        
+      }
+    }
+
+    const updatedDetail = await studentProfileID.save();
+
+    if (updatedDetail) {
+      res.status(201).json({
+        updatedDetail,
+        messageUpdated: "The profile details have been updated"
+      })
+    }
+  }
+  else {
+    res.status(401).json({ message: "Details of this student is not found" });
+  }
+});
+
+/*************************************************** END PROFILE ***************************************************/
 
 const systemReadVerifyStudentStatus = asyncHandler(async (req, res) => {
     
@@ -604,7 +642,7 @@ const studentViewPR = asyncHandler(async (req, res) => {
 
 /*************************************************** END PR ***************************************************/
 
-export { studentLogin, studentProfileList, studentProfileListByID,
+export { studentLogin, studentProfileList, studentProfileListByID, studentUpdatedProfile,
          systemVerifyStudentStatus, systemReadVerifyStudentStatus, 
          studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, 
          studentSubmitMeetingLog, studentViewMeetingLog, studentRequestWCD, studentViewWCDApplication, 
