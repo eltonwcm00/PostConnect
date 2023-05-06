@@ -1,5 +1,6 @@
 import express from "express";
-import { studentLogin, studentProfileList, systemVerifyStudentStatus, systemReadVerifyStudentStatus, 
+import { studentLogin, studentProfileList, studentProfileListByID,
+         systemVerifyStudentStatus, systemReadVerifyStudentStatus, 
          studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication,
          studentSubmitMeetingLog, studentViewMeetingLog,
          studentRequestWCD, studentViewWCDApplication, studentRegisterPR, studentRegisterPRLandingPage,
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.post("/studentLogin", studentLogin);
 router.route("/studentProfileList").get(studentProfileList);
+router.route('/studentProfileList/:id').get(studentProfileListByID);
 router.route("/systemReadVerifyStudentStatus").get(protectStudent, systemReadVerifyStudentStatus)
 router.route("/systemVerifyStudentStatus").put(protectStudent, systemVerifyStudentStatus);
 router.route("/studentViewDataRequestRPD").get(protectStudent, studentViewDataRequestRPD);

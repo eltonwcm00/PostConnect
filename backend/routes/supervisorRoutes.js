@@ -1,5 +1,5 @@
 import express from "express";
-import { supervisorLogin, supervisorProfileList, 
+import { supervisorLogin, supervisorProfileList, supervisorProfileListByID,
          supervisorReadMeetingLog, supervisorReadMeetingLogByID, 
          supervisorReadRPDResult, supervisorReadWCDResult,
          supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR, supervisorReadPRResult } from "../controllers/SupervisorController.js";
@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.post("/supervisorLogin", supervisorLogin);
 router.route('/supervisorProfileList').get(supervisorProfileList);
+router.route('/supervisorProfileList/:id').get(supervisorProfileListByID);
 router.route('/supervisorReadMeetingLog').get(protectSupervisor, supervisorReadMeetingLog);
 router.route('/supervisorReadMeetingLog/:id').get(supervisorReadMeetingLogByID);
 router.route('/supervisorReadRPDResult').get(protectSupervisor, supervisorReadRPDResult);

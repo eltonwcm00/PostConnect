@@ -46,6 +46,17 @@ const studentProfileList = asyncHandler(async (req, res) => {
   }
 });
 
+const studentProfileListByID = asyncHandler(async (req, res) => {
+
+  const studentProfileID = await Student.findById(req.params.id);
+
+  if (studentProfileID) {
+    res.status(201).json(studentProfileID);
+  }
+  else {
+    res.status(401).json({ message: "Details of this student is not found" });
+  }
+});
 
 const systemReadVerifyStudentStatus = asyncHandler(async (req, res) => {
     
@@ -593,7 +604,8 @@ const studentViewPR = asyncHandler(async (req, res) => {
 
 /*************************************************** END PR ***************************************************/
 
-export { studentLogin, studentProfileList, systemVerifyStudentStatus, systemReadVerifyStudentStatus, 
+export { studentLogin, studentProfileList, studentProfileListByID,
+         systemVerifyStudentStatus, systemReadVerifyStudentStatus, 
          studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, 
          studentSubmitMeetingLog, studentViewMeetingLog, studentRequestWCD, studentViewWCDApplication, 
          studentRegisterPR, studentRegisterPRLandingPage, studentSubmitPR, studentViewPR };

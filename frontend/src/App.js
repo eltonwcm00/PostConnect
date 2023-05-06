@@ -8,6 +8,7 @@ import Error404 from './screens/Error404/Error404';
 import FacultyLogin from './screens/Faculty/FacultyLogin/FacultyLogin';
 import FacultyHomepage from './screens/Faculty/FacultyHomepage/FacultyHomepage';
 import FacultyViewOwnProfile from './screens/Faculty/FacultyProfile/FacultyViewProfile';
+import FacultyViewProfileID from './screens/Faculty/FacultyProfile/FacultyViewProfileID';
 import RegisterHomepage from './screens/Faculty/FacultyRegister/RegisterHomepage';
 import RegisterPanel from './screens/Faculty/FacultyRegister/RegisterPanel';
 import RegisterSupervisor from './screens/Faculty/FacultyRegister/RegisterSupervisor';
@@ -66,6 +67,10 @@ function App() {
         <Route exact path="/panelHomepage" element={<PanelHomepage />}/>
 
         <Route exact path="/facultyViewProfile" element={<FacultyViewOwnProfile />}/>
+        <Route exact path="/panelProfileList/:id" element={<FacultyViewProfileID />}/>
+        <Route exact path="/supervisorProfileList/:id" element={<FacultyViewProfileID />}/>
+        <Route exact path="/studentProfileList/:id" element={<FacultyViewProfileID />}/>
+
         <Route exact path="/facultyRegister" element={<RegisterHomepage />}/>
         <Route exact path="/facultyPanelRegistration" element={<RegisterPanel />}/>
         <Route exact path="/facultySupervisorRegistration" element={<RegisterSupervisor />}/>

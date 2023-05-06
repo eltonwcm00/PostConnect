@@ -14,10 +14,10 @@ import ProgressReport from "../models/ProgressReport.js";
 
 const facultyLogin = asyncHandler(async (req, res) => {
   
-    // username: admin; password: 123
-    const { password } = req.body;
+    // username: faculty; password: 123
+    const { userNameFac, password } = req.body;
   
-    const userFaculty = await Faculty.findOne({ userNameFac:'faculty' });
+    const userFaculty = await Faculty.findOne({ userNameFac });
     const validPass = await bcrypt.compare(password, userFaculty.password);
   
     if (userFaculty && validPass) {

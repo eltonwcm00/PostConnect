@@ -39,6 +39,18 @@ const panelProfileList = asyncHandler(async (req, res) => {
   }
 });
 
+const panelProfileListByID = asyncHandler(async (req, res) => {
+
+  const panelProfileID = await Panel.findById(req.params.id);
+
+  if (panelProfileID) {
+    res.status(201).json(panelProfileID);
+  }
+  else {
+    res.status(401).json({ message: "Details of this panel is not found" });
+  }
+});
+
 /*************************************************** RPD EVALUATION ***************************************************/
 
 const panelReadRPD = asyncHandler(async (req, res) => {
@@ -281,6 +293,7 @@ const panelEvaluatePR = asyncHandler(async (req, res) => {
 
 /*************************************************** END PR EVALUATION ***************************************************/
 
-export { panelLogin, panelProfileList,panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
+export { panelLogin, panelProfileList, panelProfileListByID, 
+         panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
          panelReadWCD, panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD, 
          panelReadPRDateSetPR, panelReadPR, panelReadPRByID, panelEvaluatePR };

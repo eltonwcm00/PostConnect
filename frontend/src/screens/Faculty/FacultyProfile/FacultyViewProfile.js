@@ -47,9 +47,6 @@ const FacultyViewProfile = () => {
         navigate('/');
       }
     }, [navigate, facultyInfo]);
-
-    console.log(facultyInfo.password);
-
     useEffect(() => {
       dispatch(facultyViewOwnProfile());
       dispatch(panelProfile());
@@ -209,7 +206,7 @@ const FacultyViewProfile = () => {
                               <td> {moment(list.dateJoin).format("DD/MM/YYYY")} </td>
                               <td> {list.degreeLvl} </td>
                               <td className="table-details-button">
-                                <Button href={`http://localhost:3000/facultyMonitorStudent/${list._id}`}>Edit</Button>
+                                <Button href={`http://localhost:3000/studentProfileList/${list._id}`}>Edit</Button>
                               </td>
                             </tr>
                           ))
@@ -249,7 +246,7 @@ const FacultyViewProfile = () => {
                             <td> {list.usernameSup} </td>
                             <td> {list.academicPos} </td>
                             <td className="table-details-button">
-                              <Button href={`http://localhost:3000/facultyMonitorStudent/${list._id}`}>Edit</Button>
+                              <Button href={`http://localhost:3000/supervisorProfileList/${list._id}`}>Edit</Button>
                             </td>
                           </tr>
                         ))
@@ -276,7 +273,7 @@ const FacultyViewProfile = () => {
                             <td> {indexPanel++} </td>
                             <td> {list.usernamePanel} </td>
                             <td className="table-details-button">
-                              <Button href={`http://localhost:3000/facultyMonitorStudent/${list._id}`}>Edit</Button>
+                              <Button href={`http://localhost:3000/panelProfileList/${list._id}`}>Edit</Button>
                             </td>
                           </tr>
                         ))
