@@ -22,8 +22,8 @@ const PanelTemplate = ({ children }) => {
   else if (window.location.href === pageURL+'panelEvaluatePR' || window.location.href === pageURL+`panelEvaluatePR/${id}`) {
     pageTitle = "Progress Report Evaluation";
   }
-  else if (window.location.href === pageURL+'#') {
-    pageTitle = "#";
+  else if (window.location.href === pageURL+'panelViewProfile') {
+    pageTitle = "Panel's Profile";
   }
   else {
     pageTitle = null;

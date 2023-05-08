@@ -85,6 +85,30 @@ const panelUpdatedProfile = asyncHandler(async (req, res) => {
   }
 });
 
+const panelCountEvaluatedRPD = asyncHandler(async (req, res) => {
+  const fetchEvalutedRPDCount = await RPD.find({}).or([{status:{$eq: false}}, {status:{$eq: true}}]).countDocuments(); 
+
+  if (fetchEvalutedRPDCount) {
+    res.status(201).json(fetchEvalutedRPDCount);
+  }
+});
+
+const panelCountEvaluatedWCD = asyncHandler(async (req, res) => {
+  const fetchEvalutedWCDCount = await WCD.find({}).or([{status:{$eq: false}}, {status:{$eq: true}}]).countDocuments(); 
+
+  if (fetchEvalutedWCDCount) {
+    res.status(201).json(fetchEvalutedWCDCount);
+  }
+});
+
+const panelCountEvaluatedPR = asyncHandler(async (req, res) => {
+  const fetchEvalutedPRCount = await ProgressReport.find({}).or([{status:{$eq: false}}, {status:{$eq: true}}]).countDocuments(); 
+
+  if (fetchEvalutedPRCount) {
+    res.status(201).json(fetchEvalutedPRCount);
+  }
+});
+
 /*************************************************** END PROFILE ***************************************************/
 
 
@@ -331,6 +355,7 @@ const panelEvaluatePR = asyncHandler(async (req, res) => {
 /*************************************************** END PR EVALUATION ***************************************************/
 
 export { panelLogin, panelProfileList, panelProfileListByID, panelUpdatedProfile,
+         panelCountEvaluatedRPD, panelCountEvaluatedWCD, panelCountEvaluatedPR,
          panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
          panelReadWCD, panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD, 
          panelReadPRDateSetPR, panelReadPR, panelReadPRByID, panelEvaluatePR };

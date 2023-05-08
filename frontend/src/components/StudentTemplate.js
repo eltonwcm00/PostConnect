@@ -22,6 +22,9 @@ const StudentTemplate = ({ children }) => {
   else if (window.location.href === pageURL+'studentSubmitPR') {
     pageTitle = "Progress Report";
   }
+  else if (window.location.href === pageURL+'studentViewProfile') {
+    pageTitle = "Student's Profile";
+  }
   else {
     pageTitle = null;
   }

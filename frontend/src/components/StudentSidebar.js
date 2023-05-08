@@ -42,7 +42,7 @@ import { studentLogout } from '../actions/studentAction';
   
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
-              <NavLink exact to="#" className="sidebar-nav">
+              <NavLink exact to="/studentViewProfile" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-user" className="sidebar-icon">User Profile</CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="/studentRequestRPD" className="sidebar-nav">

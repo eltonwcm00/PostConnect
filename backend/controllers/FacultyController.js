@@ -68,7 +68,7 @@ const facultyProfileCountSupervisor = asyncHandler(async (req, res) => {
 
 const facultyProfileCountStudent = asyncHandler(async (req, res) => {
   
-  const fetchStudentCount = await Student.estimatedDocumentCount();
+  const fetchStudentCount = await Student.estimatedDocumentCount(); 
 
   if (fetchStudentCount) {
     res.status(201).json(fetchStudentCount);

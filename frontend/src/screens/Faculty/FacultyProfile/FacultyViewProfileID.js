@@ -17,10 +17,10 @@ const FacultyViewProfileID = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [url, setUrl] = useState(location.pathname);
-
     const updateProfileState = useSelector((state) => state.facultyUpdateApplication);
     const { loading, error, successApproveMsg } = updateProfileState;
+
+    const [url, setUrl] = useState(location.pathname);
 
     useEffect(() => {
         const segments = location.pathname.split('/');
@@ -29,6 +29,7 @@ const FacultyViewProfileID = () => {
         setUrl(pathname);
     }, [location.pathname]);
     
+    let executeURL;
     let isPanel = false, isSuper = false, isStud = false;
     const { id } = useParams();
 
@@ -42,8 +43,6 @@ const FacultyViewProfileID = () => {
     const [dateJoined, setDateJoined] = useState();
     const [degreeLvl, setDegreeLvl] = useState();
     const [academicPos, setAcademicPos] = useState();
-
-    let executeURL;
 
     switch (url) {
         case "/panelProfileList": 

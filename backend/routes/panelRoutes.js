@@ -1,5 +1,6 @@
 import express from "express";
 import {panelLogin, panelProfileList, panelProfileListByID, panelUpdatedProfile,
+        panelCountEvaluatedRPD, panelCountEvaluatedWCD, panelCountEvaluatedPR,
         panelReadRPD, panelReadRPDByID, panelEvaluatePassRPD, panelEvaluateFailRPD, 
         panelReadWCD, panelReadWCDByID, panelEvaluatePassWCD, panelEvaluateFailWCD, 
         panelReadPRDateSetPR, panelReadPR, panelReadPRByID, panelEvaluatePR } from "../controllers/PanelController.js";
@@ -11,6 +12,9 @@ router.post("/panelLogin", panelLogin);
 router.route("/panelProfileList").get(panelProfileList);
 router.route('/panelProfileList/:id').get(panelProfileListByID)
                                      .put(panelUpdatedProfile);
+router.route("/panelCountEvaluatedRPD").get(panelCountEvaluatedRPD);
+router.route("/panelCountEvaluatedWCD").get(panelCountEvaluatedWCD);
+router.route("/panelCountEvaluatedPR").get(panelCountEvaluatedPR);
 router.route("/panelReadRPD").get(protectPanel, panelReadRPD);
 router.route("/panelEvaluateRPD/:id").get(panelReadRPDByID)
                                      .put(protectPanel, panelEvaluatePassRPD);

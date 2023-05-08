@@ -26,6 +26,7 @@ import FacultyMonitorStud from './screens/Faculty/FacultyMonitorStudent/FacultyM
 
 import StudentLogin from './screens/Student/StudentLogin/StudentLogin';
 import StudentHomepage from './screens/Student/StudentHompage/StudentHomepage';
+import StudentViewProfile from './screens/Student/StudentProfile/StudentViewProfile';
 import StudentRPDRequest from './screens/Student/StudentRPDRequest/StudentRPDRequest';
 import StudentMeetingLog from './screens/Student/StudentMeetingLog/StudentMeetingLog';
 import StudentWCDRequest from './screens/Student/StudentWCDRequest/StudentWCDRequest';
@@ -43,6 +44,7 @@ import SupervisorViewPR from './screens/Supervisor/SupervisorViewPR/SupervisorVi
 
 import PanelLogin from './screens/Panel/PanelLogin/PanelLogin';
 import PanelHomepage from './screens/Panel/PanelHomepage/PanelHomepage';
+import PanelViewProfile from './screens/Panel/PanelProfile/PanelViewProfile';
 import PanelEvaluateRPD from './screens/Panel/PanelEvaluateRPD/PanelEvaluateRPD';
 import PanelEvaluateRPDID from './screens/Panel/PanelEvaluateRPD/PanelEvaluateRPDID';
 import PanelEvaluateWCD from './screens/Panel/PanelEvaluateWCD/PanelEvaluateWCD';
@@ -87,6 +89,7 @@ function App() {
         <Route exact path="/facultyMonitorStudent" element={<FacultyMonitorStud />}/>
         <Route exact path="/facultyMonitorStudent/:id" element={<FacultyMonitorStudID />}/>
 
+        <Route exact path="/studentViewProfile" element={<StudentViewProfile />}/>
         <Route exact path="/studentRequestRPD" element={<StudentRPDRequest />}/>
         <Route exact path="/studentSubmitMeetingLog" element={<StudentMeetingLog />}/>
         <Route exact path="/studentRequestWCD" element={<StudentWCDRequest />}/>
@@ -100,6 +103,7 @@ function App() {
         <Route exact path="/supervisorEvaluatePR/:id" element={<SupervisorEvaluatePRID />}/>
         <Route exact path="/supervisorViewPR" element={<SupervisorViewPR />}/>
 
+        <Route exact path="/panelViewProfile" element={<PanelViewProfile />}/>
         <Route exact path="/panelEvaluateRPD" element={<PanelEvaluateRPD />}/>
         <Route exact path="/panelEvaluateRPD/:id" element={<PanelEvaluateRPDID />}/>
         <Route exact path="/panelEvaluateWCD" element={<PanelEvaluateWCD />}/>

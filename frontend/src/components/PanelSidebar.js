@@ -40,7 +40,7 @@ import { panelLogout } from '../actions/panelAction';
   
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
-              <NavLink exact to="#" className="sidebar-nav">
+              <NavLink exact to="/panelViewProfile" className="sidebar-nav">
                 <CDBSidebarMenuItem icon="fa fa-user" className="sidebar-icon">User Profile</CDBSidebarMenuItem>
               </NavLink>
               <NavLink exact to="/panelEvaluateRPD" className="sidebar-nav">
