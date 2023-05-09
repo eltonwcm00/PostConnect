@@ -23,6 +23,7 @@ import FacultySubjectRegistrationID from './screens/Faculty/FacultyMiscellaneous
 import FacultyEvaluateWCDApplication from './screens/Faculty/FacultyEvaluateWCDApplication/FacultyEvaluateWCDApplication';
 import FacultyEvaluateWCDApplicationID from './screens/Faculty/FacultyEvaluateWCDApplication/FacultyEvaluateWCDApplicationID';
 import FacultyMonitorStud from './screens/Faculty/FacultyMonitorStudent/FacultyMonitorStud';
+import FacultyViewStudentData from './screens/Faculty/FacultyStudentDataReport/FacultyViewStudentData';
 
 import StudentLogin from './screens/Student/StudentLogin/StudentLogin';
 import StudentHomepage from './screens/Student/StudentHompage/StudentHomepage';
@@ -89,6 +90,7 @@ function App() {
         <Route exact path="/facultyEvaluateWCDApplication/:id" element={<FacultyEvaluateWCDApplicationID />}/>
         <Route exact path="/facultyMonitorStudent" element={<FacultyMonitorStud />}/>
         <Route exact path="/facultyMonitorStudent/:id" element={<FacultyMonitorStudID />}/>
+        <Route exact path="/facultyViewStudentData" element={<FacultyViewStudentData />}/>
 
         <Route exact path="/studentViewProfile" element={<StudentViewProfile />}/>
         <Route exact path="/studentRequestRPD" element={<StudentRPDRequest />}/>

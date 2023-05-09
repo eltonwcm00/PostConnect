@@ -11,6 +11,7 @@ import RPD from "../models/RPD.js";
 import WCDApplication from "../models/WCDApplication.js";
 import WCD from "../models/WCD.js";
 import ProgressReport from "../models/ProgressReport.js";
+import AcademicReport from "../models/AcademicReport.js";
 
 const facultyLogin = asyncHandler(async (req, res) => {
   
@@ -770,6 +771,28 @@ const facultyActiveStudent = asyncHandler(async (req, res) => {
   }
 });
 
+const facultyInitDataStudent = asyncHandler(async (req, res) => {
+  try {
+    const students = await Student.find({});
+    for (let i = 0; i < students.length; i++) {
+      const student = students[i];
+      const report = await AcademicReport.findOne({ studID: student._id });
+      if (report) {
+        // If a report exists for the student, update it with the new student ID
+        report.studID = student._id;
+        await report.save();
+      } else {
+        // If a report does not exist, create a new one with the student ID
+        await AcademicReport.create({ studID: student._id });
+      }
+    }
+    res.status(201).json({ message: "Academic reports updated with student IDs." });
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
 export { 
          facultyLogin, facultyViewOwnProfile, facultyProfileCountPanel, facultyProfileCountSupervisor, facultyProfileCountStudent,
          facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
@@ -779,5 +802,5 @@ export {
          facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID, facultyUpdateSubjectStudentByID,
          facultyReadEvaluateWCDApplication, facultyReadEvaluateWCDApplicationByID, facultyRejectEvaluateWCDApplicationByID, 
          facultyApproveEvaluateWCDApplicationByID, facultySetDatePR, facultyReadMonitorStudent, facultyReadMonitorStudenByID,
-         facultyTerminateStudent, facultyActiveStudent
+         facultyTerminateStudent, facultyActiveStudent, facultyInitDataStudent
        };

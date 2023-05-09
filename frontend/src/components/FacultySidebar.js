@@ -69,7 +69,7 @@ import { facultyLogout } from '../actions/facultyAction';
                   Choose Student to Supervise
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/#">
+              <NavLink exact to="/facultyViewStudentData">
                 <CDBSidebarMenuItem icon="fa-solid fa-chart-column">
                   Student Data Report
                 </CDBSidebarMenuItem>

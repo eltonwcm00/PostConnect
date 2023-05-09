@@ -8,7 +8,7 @@ import {
    facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID,
    facultyUpdateSubjectStudentByID, facultyReadEvaluateWCDApplication, facultyReadEvaluateWCDApplicationByID,
    facultyRejectEvaluateWCDApplicationByID, facultyApproveEvaluateWCDApplicationByID, facultySetDatePR,
-   facultyReadMonitorStudent, facultyTerminateStudent, facultyActiveStudent
+   facultyReadMonitorStudent, facultyTerminateStudent, facultyActiveStudent, facultyInitDataStudent
 } from "../controllers/FacultyController.js";
 import { protectFaculty,} from "../middleware/authMiddleware.js";
 
@@ -49,6 +49,7 @@ router.route("/facultyReadMonitorStudent/:id").get(facultyReadChooseStudentByID)
                                               .put(protectFaculty, facultyTerminateStudent); 
 router.route("/facultyReadMonitorStudent2/:id").get(facultyReadChooseStudentByID)
                                                .put(protectFaculty, facultyActiveStudent); 
+router.route("/facultyInitDataStudent").post(facultyInitDataStudent);
 
 export default router;
 

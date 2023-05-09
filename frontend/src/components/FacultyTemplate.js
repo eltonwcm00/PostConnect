@@ -50,6 +50,9 @@ const FacultyTemplate = ({ children }) => {
            || window.location.href === pageURL+`studentProfileList/${id}`) {
     pageTitle = "Edit User Profile";
   }
+  else if (window.location.href === pageURL+'facultyViewStudentData') {
+    pageTitle = "Student Data Report";
+  }
   else {
     pageTitle = null;
   }
