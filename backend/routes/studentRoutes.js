@@ -1,6 +1,6 @@
 import express from "express";
-import { studentLogin, studentProfileList, studentProfileListByID, studentUpdatedProfile,
-         systemVerifyStudentStatus, systemReadVerifyStudentStatus, 
+import { studentLogin, studentViewOwnProfile, studentProfileList, studentProfileListByID, 
+         studentUpdatedProfile, systemVerifyStudentStatus, systemReadVerifyStudentStatus, 
          studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication,
          studentSubmitMeetingLog, studentViewMeetingLog,
          studentRequestWCD, studentViewWCDApplication, studentRegisterPR, studentRegisterPRLandingPage,
@@ -11,6 +11,7 @@ import { upload } from "../middleware/multer.js"
 const router = express.Router();
 
 router.post("/studentLogin", studentLogin);
+router.route("/studentViewOwnProfile").get(protectStudent, studentViewOwnProfile);
 router.route("/studentProfileList").get(studentProfileList);
 router.route('/studentProfileList/:id').get(studentProfileListByID)
                                        .put(studentUpdatedProfile);

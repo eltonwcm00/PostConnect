@@ -36,6 +36,20 @@ const studentLogin = asyncHandler(async (req, res) => {
 
 /*************************************************** PROFILE ***************************************************/
 
+const studentViewOwnProfile = asyncHandler(async (req, res) => {
+  
+  const fetchCurrentStudent = await Student.findOne({_id: req.userStudent._id})
+                                           .populate('supervisorUser');
+
+  if(fetchCurrentStudent) {
+    res.status(201).json(fetchCurrentStudent);
+  } 
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+});
+
 const studentProfileList = asyncHandler(async (req, res) => {
 
   const studentList = await Student.find();
@@ -642,8 +656,8 @@ const studentViewPR = asyncHandler(async (req, res) => {
 
 /*************************************************** END PR ***************************************************/
 
-export { studentLogin, studentProfileList, studentProfileListByID, studentUpdatedProfile,
-         systemVerifyStudentStatus, systemReadVerifyStudentStatus, 
+export { studentLogin, studentViewOwnProfile, studentProfileList, studentProfileListByID, 
+         studentUpdatedProfile, systemVerifyStudentStatus, systemReadVerifyStudentStatus, 
          studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, 
          studentSubmitMeetingLog, studentViewMeetingLog, studentRequestWCD, studentViewWCDApplication, 
          studentRegisterPR, studentRegisterPRLandingPage, studentSubmitPR, studentViewPR };
