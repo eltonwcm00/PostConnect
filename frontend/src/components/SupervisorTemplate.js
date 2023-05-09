@@ -28,6 +28,9 @@ const SupervisorTemplate = ({ children }) => {
   else if (window.location.href === pageURL+'supervisorViewPR') {
     pageTitle = "View Progress Report Result";
   }
+  else if (window.location.href === pageURL+'supervisorViewProfile') {
+    pageTitle = "Supervisor's Profile";
+  }
   else {
     pageTitle = null;
   }

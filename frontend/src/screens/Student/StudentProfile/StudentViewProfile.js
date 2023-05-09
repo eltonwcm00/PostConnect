@@ -93,7 +93,8 @@ const StudentViewProfile = () => {
             </Col>
             <Col>
               <div className="mt-4">
-                <span className="profileText">
+                <h4 className="profileSummaryHeader">Summary</h4>
+                <span className="profileText mt-4">
                   <span style={dataDesc}>Date Joined:</span>
                   <span style={dataColor}>{`${moment(dateJoined).format('DD/MM/YY')}`}</span>
                 </span>

@@ -34,6 +34,7 @@ import StudentSubmitPR from './screens/Student/StudentSubmitPR/StudentSubmitPR';
 
 import SupervisorLogin from './screens/Supervisor/SupervisorLogin/SupervisorLogin';
 import SupervisorHomepage from './screens/Supervisor/SupervisorHomepage/SupervisorHomepage';
+import SupervisorViewProfile from './screens/Supervisor/SupervisorProfile/SupervisorViewProfile';
 import SupervisorViewMeetingLog from './screens/Supervisor/SupervisorViewMeetingLog/SupervisorViewMeetingLog';
 import SupervisorViewMeetingLogID from './screens/Supervisor/SupervisorViewMeetingLog/SupervisorViewMeetingLogID';
 import SupervisorViewRPD from './screens/Supervisor/SupervisorViewRPD/SupervisorViewRPD';
@@ -95,6 +96,7 @@ function App() {
         <Route exact path="/studentRequestWCD" element={<StudentWCDRequest />}/>
         <Route exact path="/studentSubmitPR" element={<StudentSubmitPR />}/>
 
+        <Route exact path="/supervisorViewProfile" element={<SupervisorViewProfile />}/>
         <Route exact path="/supervisorViewMeetingLog" element={<SupervisorViewMeetingLog />}/>
         <Route exact path="/supervisorViewMeetingLog/:id" element={<SupervisorViewMeetingLogID />}/>
         <Route exact path="/supervisorViewRPD" element={<SupervisorViewRPD />}/>

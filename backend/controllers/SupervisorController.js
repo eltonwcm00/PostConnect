@@ -42,6 +42,34 @@ const supervisorProfileList = asyncHandler(async (req, res) => {
   }
 });
 
+const supervisorViewOwnProfile = asyncHandler(async (req, res) => {
+  
+  const fetchCurrentSupervisor = await Supervisor.findOne({_id: req.userSupervisor._id});
+                
+  if(fetchCurrentSupervisor) {
+    res.status(201).json(fetchCurrentSupervisor);
+  } 
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+});
+
+const supervisorViewCurrentSupervisingStudent = asyncHandler(async (req, res) => {
+  
+  const currentSup = req.userSupervisor._id;
+  
+  const fetchSupervisingStud = await Student.find({supervisorUser: currentSup});
+                
+  if(fetchSupervisingStud) {
+    res.status(201).json(fetchSupervisingStud);
+  } 
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+});
+
 const supervisorProfileListByID = asyncHandler(async (req, res) => {
 
   const supervisorProfileID = await Supervisor.findById(req.params.id);
@@ -261,7 +289,8 @@ const supervisorReadPRResult = asyncHandler(async (req, res) => {
 });
 
 
-export { supervisorLogin, supervisorProfileList, supervisorProfileListByID, supervisorUpdatedProfile,
+export { supervisorLogin, supervisorProfileList, supervisorProfileListByID, 
+         supervisorViewOwnProfile, supervisorViewCurrentSupervisingStudent, supervisorUpdatedProfile,
          supervisorReadMeetingLog, supervisorReadMeetingLogByID,
          supervisorReadRPDResult, supervisorReadWCDResult, 
          supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR, supervisorReadPRResult };

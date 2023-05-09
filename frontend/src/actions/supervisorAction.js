@@ -75,6 +75,38 @@ export const supervisorProfile = () => async (dispatch) => {
   }
 }; 
 
+export const supervisorSupervisingStudList = () => async (dispatch, getState) => {
+  try {
+    
+    const {
+      supervisorLogin: { supervisorInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+         Authorization: `Bearer ${supervisorInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/supervisor/supervisorViewSupervisingStudent",
+      config
+    );
+
+    dispatch({ type: SUPERVISOR_PROFILE_SUCCESS, payload: data });
+
+  } catch (error) {
+    dispatch({
+      type: SUPERVISOR_PROFILE_FAIL,
+      payload:
+        error.response 
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+}; 
+
 export const supervisorLogout = () => async (dispatch) => {
   localStorage.removeItem("supervisorInfo");
   dispatch({ type: SUPERVISOR_LOGOUT });
