@@ -27,7 +27,7 @@ const FacultySubjectRegistration = () => {
         if (!facultyInfo) {
           navigate("/");
         }
-      }, [dispatch, navigate, facultyInfo,]);
+    }, [dispatch, navigate, facultyInfo,]);
 
   return (
     <>

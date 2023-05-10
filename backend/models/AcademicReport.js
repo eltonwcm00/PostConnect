@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 
 const AcademicReportSchema = mongoose.Schema(
   {
+    studName: {
+      type: String,
+    },
     studID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Student",

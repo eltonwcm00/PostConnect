@@ -774,16 +774,45 @@ const facultyActiveStudent = asyncHandler(async (req, res) => {
 const facultyInitDataStudent = asyncHandler(async (req, res) => {
   try {
     const students = await Student.find({});
+
     for (let i = 0; i < students.length; i++) {
+     
       const student = students[i];
+
+      // id被save进的话， 就代表着已经是被approved了的(rpd,wcd)application, 又或者是submitted了的report(progress report)
+
       const report = await AcademicReport.findOne({ studID: student._id });
+      const rpd = await RPD.findOne({ studentRef: student._id})  // Get latest of (approved) RPDApplication of the exisiting student
+                           .sort({ createdAt: -1 })
+                           .limit(1);
+      const wcd = await WCD.findOne({ studentRef: student._id})  // Get latest of (approved) WCDApplication of the exisiting student
+                           .sort({ createdAt: -1 })
+                           .limit(1);
+      const pr = await ProgressReport.findOne({ studentUser: student._id})  // Get latest of (approved) WCDApplication of the exisiting student
+                           .sort({ createdAt: -1 })
+                           .limit(1);
+      
       if (report) {
         // If a report exists for the student, update it with the new student ID
         report.studID = student._id;
+        report.studName = student.usernameStud;
+        report.supID = student.supervisorUser;
+        report.rpdID = rpd ? rpd._id : null; // set report.rpdID to rpd._id if rpd exists, otherwise set it to null
+        report.wcdID = wcd ? wcd._id : null;
+        report.reportProgressID = pr ? pr._id : null;
+        
         await report.save();
+
       } else {
         // If a report does not exist, create a new one with the student ID
-        await AcademicReport.create({ studID: student._id });
+        await AcademicReport.create({
+          studID: student._id,
+          studName: student.usernameStud,
+          supID: student.supervisorUser,
+          rpdID: rpd ? rpd._id : null, // set report.rpdID to rpd._id if rpd exists, otherwise set it to null
+          wcdID: wcd ? wcd._id : null, 
+          reportProgressID: pr ? pr._id : null, 
+        });
       }
     }
     res.status(201).json({ message: "Academic reports updated with student IDs." });
@@ -792,6 +821,21 @@ const facultyInitDataStudent = asyncHandler(async (req, res) => {
   }
 });
 
+const facultyFetchDataStudent = asyncHandler(async (req, res) => {
+  const fetchStudentDataList = await AcademicReport.find()
+                                                   .populate('studID')
+                                                   .populate('supID')
+                                                   .populate('rpdID')
+                                                   .populate('wcdID')
+                                                   .populate('reportProgressID')
+  if (fetchStudentDataList) {
+    res.json(fetchStudentDataList);
+  }
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+});
 
 export { 
          facultyLogin, facultyViewOwnProfile, facultyProfileCountPanel, facultyProfileCountSupervisor, facultyProfileCountStudent,
@@ -802,5 +846,5 @@ export {
          facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID, facultyUpdateSubjectStudentByID,
          facultyReadEvaluateWCDApplication, facultyReadEvaluateWCDApplicationByID, facultyRejectEvaluateWCDApplicationByID, 
          facultyApproveEvaluateWCDApplicationByID, facultySetDatePR, facultyReadMonitorStudent, facultyReadMonitorStudenByID,
-         facultyTerminateStudent, facultyActiveStudent, facultyInitDataStudent
+         facultyTerminateStudent, facultyActiveStudent, facultyInitDataStudent, facultyFetchDataStudent
        };

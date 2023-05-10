@@ -819,3 +819,37 @@ export const facultyActiveStudent = (id) => async (dispatch, getState) => {
     });
   }
 }
+
+export const facultyViewStudentData = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FACULTY_STUDENT_LIST_REQUEST,
+    });
+
+    const {
+      facultyLogin: { facultyInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${facultyInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("http://localhost:5000/api/faculty/facultyFetchDataStudent", config);
+
+    dispatch({
+      type: FACULTY_STUDENT_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: FACULTY_STUDENT_LIST_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
