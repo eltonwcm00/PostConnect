@@ -72,7 +72,7 @@ const FacultyViewStudentData = () => {
                       <td> {moment(list.studID.createdAt).format('DD/MM/YY')} </td>
                       <td> {list.studID.degreeLvl} </td>
                       <td> {list.supID ? list.supID.usernameSup : '-' } </td>
-                      <td className='table-details-button'><Button href={`http://localhost:3000/miscellaneous/${list._id}`}>More Info.</Button></td>
+                      <td className='table-details-button'><Button href={`http://localhost:3000/facultyViewStudentData/${list._id}`}>More Info.</Button></td>
                     </tr>           
                 )   
                ) 

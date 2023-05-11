@@ -785,11 +785,10 @@ const facultyInitDataStudent = asyncHandler(async (req, res) => {
       const rpd = await RPD.findOne({ studentRef: student._id})  // Get latest of (approved) RPDApplication of the exisiting student
                            .sort({ createdAt: -1 })
                            .limit(1);
-      const wcd = await WCD.findOne({ studentRef: student._id})  // Get latest of (approved) WCDApplication of the exisiting student
+      const wcd = await WCD.findOne({ studentRef: student._id}) 
                            .sort({ createdAt: -1 })
                            .limit(1);
-      const pr = await ProgressReport.findOne({ studentUser: student._id})  // Get latest of (approved) WCDApplication of the exisiting student
-                           .sort({ createdAt: -1 })
+      const pr = await ProgressReport.findOne({ studentUser: student._id})  
                            .limit(1);
       
       if (report) {
@@ -809,7 +808,7 @@ const facultyInitDataStudent = asyncHandler(async (req, res) => {
           studID: student._id,
           studName: student.usernameStud,
           supID: student.supervisorUser,
-          rpdID: rpd ? rpd._id : null, // set report.rpdID to rpd._id if rpd exists, otherwise set it to null
+          rpdID: rpd ? rpd._id : null,
           wcdID: wcd ? wcd._id : null, 
           reportProgressID: pr ? pr._id : null, 
         });
@@ -823,17 +822,30 @@ const facultyInitDataStudent = asyncHandler(async (req, res) => {
 
 const facultyFetchDataStudent = asyncHandler(async (req, res) => {
   const fetchStudentDataList = await AcademicReport.find()
-                                                   .populate('studID')
-                                                   .populate('supID')
-                                                   .populate('rpdID')
-                                                   .populate('wcdID')
-                                                   .populate('reportProgressID')
+                                                    .populate('studID')
+                                                    .populate('supID')
   if (fetchStudentDataList) {
-    res.json(fetchStudentDataList);
+    res.status(201).json(fetchStudentDataList);
   }
   else {
     res.status(500);
     throw new Error("Internal server error");
+  }
+});
+
+const facultyFetchDataStudentByID = asyncHandler(async (req, res) => {
+ 
+  const fetchStudentDataListID = await AcademicReport.findById(req.params.id)
+                                                      .populate('studID')
+                                                      .populate('supID')
+                                                      .populate('rpdID')
+                                                      .populate('wcdID')
+                                                      .populate('reportProgressID')
+  if (fetchStudentDataListID) {
+    res.status(201).json(fetchStudentDataListID);
+  } 
+  else {
+    res.status(404).json({ message: "Accademic report of studeent is not found" });
   }
 });
 
@@ -846,5 +858,5 @@ export {
          facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID, facultyUpdateSubjectStudentByID,
          facultyReadEvaluateWCDApplication, facultyReadEvaluateWCDApplicationByID, facultyRejectEvaluateWCDApplicationByID, 
          facultyApproveEvaluateWCDApplicationByID, facultySetDatePR, facultyReadMonitorStudent, facultyReadMonitorStudenByID,
-         facultyTerminateStudent, facultyActiveStudent, facultyInitDataStudent, facultyFetchDataStudent
+         facultyTerminateStudent, facultyActiveStudent, facultyInitDataStudent, facultyFetchDataStudent, facultyFetchDataStudentByID
        };
