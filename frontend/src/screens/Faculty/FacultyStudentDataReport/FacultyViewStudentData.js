@@ -55,10 +55,11 @@ const FacultyViewStudentData = () => {
               <CDBTableHeader>
                 <tr className='table-desc'>
                   <th>No.</th>
-                  <th>Student</th>
                   <th>Date Joined</th>
+                  <th>Student</th>
                   <th>Degree Level</th>
                   <th>Supervisor</th>
+                  <th>Status</th>
                   <th></th>
                 </tr>
               </CDBTableHeader>
@@ -68,11 +69,12 @@ const FacultyViewStudentData = () => {
                   fetchStudentList.slice(startIndex, endIndex).map((list) => (
                     <tr className='table-desc' key={list._id}>
                       <td> {index++} </td>
-                      <td> {list.studID.usernameStud} </td>
                       <td> {moment(list.studID.createdAt).format('DD/MM/YY')} </td>
+                      <td> {list.studID.usernameStud} </td>
                       <td> {list.studID.degreeLvl} </td>
                       <td> {list.supID ? list.supID.usernameSup : '-' } </td>
-                      <td className='table-details-button'><Button href={`http://localhost:3000/facultyViewStudentData/${list._id}`}>More Info.</Button></td>
+                      <td> {list.studID.isStudent ? "Active" : "Terminated"} </td>
+                      <td className='table-details-button'><Button href={`http://localhost:3000/facultyViewStudentData/${list._id}`}>Details</Button></td>
                     </tr>           
                 )   
                ) 
