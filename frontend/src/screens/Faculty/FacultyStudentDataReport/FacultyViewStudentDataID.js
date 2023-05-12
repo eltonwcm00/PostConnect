@@ -3,13 +3,18 @@ import axios from "axios";
 import {useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import moment from 'moment';
-import { Form, Table, Button, Row, Col } from "react-bootstrap";
+import { Table, Button, Row, Col, Tab, Tabs } from "react-bootstrap";
+import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import FacultyTemplate from "../../../components/FacultyTemplate";
 
 const FacultyViewStudentDataID = () => {
 
     let navigate = useNavigate();
-    let msgDateJoin, msgStatus, years;
+    let index, msgDateJoin, msgStatus, years;
+
+    const [pastCurrentDataRPD, setPastCurrentDataRPD] = useState([]);
+    const [pastCurrentDataWCD, setPastCurrentDataWCD] = useState([]);
+    const [pastCurrentDataPR, setPastCurrentDataPR] = useState([]);
 
     const [usernameStud, setUserNameStud] = useState();
     const [supervisor, setSupervisor] = useState();
@@ -27,7 +32,6 @@ const FacultyViewStudentDataID = () => {
     const [isPassedRPD, setIsPassedRPD] = useState(false);
     const [isPassedWCD, setIsPassedWCD] = useState(false);
     const [isPassedPR, setIsPassedPR] = useState(false);
-    
 
     const { id } = useParams();
 
@@ -95,7 +99,7 @@ const FacultyViewStudentDataID = () => {
             }
 
             if (data.reportProgressID === null) {
-                setPRStatus("The student either has not submit the report or has not re-submit the report after receiving fail grade.");
+                setPRStatus(`The student either has not submit the report OR has not re-submit the report after receiving fail grade.`);
             } else if (data.reportProgressID.status === undefined) {
                 setPRStatus("The student has submitted the report, but the result is not yet evaluate by the authorities.");
             } else {
@@ -110,6 +114,33 @@ const FacultyViewStudentDataID = () => {
                 } 
             }
             console.log(data);
+        };
+        fetching();
+    }, [id]);
+
+    useEffect(() => {
+        const fetching = async () => {
+        
+            const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyFetchPastRPDDataStudent/${id}`);
+            setPastCurrentDataRPD(data);
+        };
+        fetching();
+    }, [id]);
+
+    useEffect(() => {
+        const fetching = async () => {
+        
+            const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyFetchPastWCDDataStudent/${id}`);
+            setPastCurrentDataWCD(data);
+        };
+        fetching();
+    }, [id]);
+
+    useEffect(() => {
+        const fetching = async () => {
+        
+            const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyFetchPastPRDataStudent/${id}`);
+            setPastCurrentDataPR(data);
         };
         fetching();
     }, [id]);
@@ -183,30 +214,13 @@ const FacultyViewStudentDataID = () => {
         <FacultyTemplate>
             <div className="form-title-desc-container">Details of The Student</div>
                 <div className="row" style={{marginTop: '40px'}}>
-                    <div className="col-5">
-                    <Form className="form" enctype="multipart/form-data">
-                        <div>
-                            <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
-                                    <Form.Label column>Student Name</Form.Label>
-                                    <Col sm={4}>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="null"
-                                        value={usernameStud}
-                                        disabled
-                                    />
-                                    </Col>
-                            </Form.Group>
-                        </div>
-                    </Form>
-                    </div>
-                    <div className="col instruction-box" style={{borderRadius: '5px'}}>
+                    <div className="col-5 instruction-box" style={{borderRadius: '5px'}}>
                         <div className="row" style={{marginTop: '20px'}}>
                             <div style={{borderRadius: '5px'}}>
                                 <Table className="table-borderless mt-1" style={{fontFamily: 'Montserrat'}}>
                                     <thead>
                                         <tr>
-                                            <th><i class="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Basic Student Info </i></th>
+                                            <th><i class="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Basic Student Details </i></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -240,38 +254,138 @@ const FacultyViewStudentDataID = () => {
                                 </Table>
                             </div>
                         </div>
-
+                    </div>
+                    <div className="col instruction-box" style={{borderRadius: '5px'}}>
+                        
                         <div className="row" style={{marginTop: '20px'}}>
-                        <div style={{borderRadius: '5px'}}>
-                                <Table className="table-borderless mt-1" style={{fontFamily: 'Montserrat'}}>
-                                    <thead>
-                                        <tr>
-                                            <th><i class="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Academic Performance Details </i></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <span style={rpdColor} className="mr-2">RPD Status:</span>{rpdStatus}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={wcdColor} className="mr-2">WCD Status:</span>{wcdStatus}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={prColor} className="mr-2">PR Status:</span>{prStatus}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
+                            <div style={{borderRadius: '5px'}}>
+                                    <Table className="table-borderless mt-1" style={{fontFamily: 'Montserrat'}}>
+                                        <thead>
+                                            <tr>
+                                                <th><i class="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Current Academic Performance Details </i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <span style={rpdColor} className="mr-2">RPD Status:</span>{rpdStatus}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style={wcdColor} className="mr-2">WCD Status:</span>{wcdStatus}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style={prColor} className="mr-2">PR Status:</span>{prStatus}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                            </div>
                         </div>
+                        <div style={{borderRadius: '5px'}}>
+                            <div className="mt-4">
+                                <span><i class="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Academic Record History </i></span>
+                            </div>
+                            <Tabs defaultActiveKey="Research Proposal Defence" id="fill-tab-example" className="mb-3 tab mt-2" justify transition={false}>
+                                <Tab eventKey="Research Proposal Defence" title="Research Proposal Defence">
+                                    <CDBContainer style={{padding: '0', textAlign: "center"}}>
+                                        <CDBTable borderless>
+                                            <CDBTableHeader>
+                                            <tr className='table-desc'>
+                                                <th>Evaluation Date</th>
+                                                <th>Name</th>
+                                                <th>Mini Thesis Title</th>
+                                                <th>Grade</th>
+                                                <th>{}</th>
+                                            </tr>
+                                            </CDBTableHeader>
+                                            <CDBTableBody>
+                                                {
+                                                    pastCurrentDataRPD.length > 0 ? (pastCurrentDataRPD.map((list) => (
+                                                        <tr className="table-desc" key={list._id}>
+                                                            <td> {moment(list.updatedAt).format("DD/MM/YYYY")} </td>
+                                                            <td> {list.fullname} </td>
+                                                            <td> {list.miniThesisTitle} </td>
+                                                            <td> {list.status ? "Pass" : "Fail" } </td>
+                                                        </tr>
+                                                    ))) : (
+                                                    <tr className="table-desc">
+                                                        <td colSpan="4">No data</td>
+                                                    </tr>
+                                                )}
+                                            </CDBTableBody>
+                                        </CDBTable>
+                                    </CDBContainer>
+                                </Tab>
 
+                                <Tab eventKey="Work Completion Defence" title="Work Completion Defence">
+                                    <CDBContainer style={{padding: '0', textAlign: "center"}}>
+                                        <CDBTable borderless>
+                                            <CDBTableHeader>
+                                            <tr className='table-desc'>
+                                                <th>Evaluation Date</th>
+                                                <th>Name</th>
+                                                <th>Full Thesis Title</th>
+                                                <th>Grade</th>
+                                                <th>{}</th>
+                                            </tr>
+                                            </CDBTableHeader>
+                                            <CDBTableBody>
+                                                {
+                                                    pastCurrentDataWCD.length > 0 ? (pastCurrentDataWCD.map((list) => (
+                                                        <tr className="table-desc" key={list._id}>
+                                                            <td> {moment(list.updatedAt).format("DD/MM/YYYY")} </td>
+                                                            <td> {list.fullname} </td>
+                                                            <td> {list.thesisTitle} </td>
+                                                            <td> {list.status ? "Pass" : "Fail" } </td>
+                                                        </tr>
+                                                    ))) : (
+                                                        <tr className="table-desc">
+                                                            <td colSpan="4">No data</td>
+                                                        </tr>
+                                                )}
+                                            </CDBTableBody>
+                                        </CDBTable>
+                                    </CDBContainer>
+                                </Tab>
+
+                                <Tab eventKey="Progress Report" title="Progress Report">
+                                    <CDBContainer style={{padding: '0', textAlign: "center"}}>
+                                        <CDBTable borderless>
+                                            <CDBTableHeader>
+                                            <tr className='table-desc'>
+                                                <th>Evaluation Date</th>
+                                                <th>Name</th>
+                                                <th>Grade</th>
+                                                <th>{}</th>
+                                            </tr>
+                                            </CDBTableHeader>
+                                            <CDBTableBody>
+                                                {
+                                                    pastCurrentDataPR.length > 0 ? (pastCurrentDataPR.map((list) => (
+                                                        <tr className="table-desc" key={list._id}>
+                                                            <td> {moment(list.updatedAt).format("DD/MM/YYYY")} </td>
+                                                            <td> {list.studentUser.usernameStud} </td>
+                                                            <td> {list.status ? "Pass" : "Fail" } </td>
+                                                        </tr>
+                                                    ))) : (
+                                                        <tr className="table-desc">
+                                                            <td colSpan="4">No data</td>
+                                                        </tr>
+                                                )}
+                                            </CDBTableBody>
+                                        </CDBTable>
+                                    </CDBContainer>
+                                </Tab>
+                            </Tabs>
+                                {/* </tbody> */}
+                            {/* </Table> */}
+                        </div>
                     </div>
                 </div>
-            </div>
         </FacultyTemplate>
     )
 }

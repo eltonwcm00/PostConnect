@@ -9,7 +9,8 @@ import {
    facultyUpdateSubjectStudentByID, facultyReadEvaluateWCDApplication, facultyReadEvaluateWCDApplicationByID,
    facultyRejectEvaluateWCDApplicationByID, facultyApproveEvaluateWCDApplicationByID, facultySetDatePR,
    facultyReadMonitorStudent, facultyTerminateStudent, facultyActiveStudent, 
-   facultyInitDataStudent, facultyFetchDataStudent, facultyFetchDataStudentByID
+   facultyInitDataStudent, facultyFetchDataStudent, facultyFetchDataStudentByID, 
+   facultyFetchPastRPDDataStudentByID, facultyFetchPastWCDDataStudentByID, facultyFetchPastPRDataStudentByID
 } from "../controllers/FacultyController.js";
 import { protectFaculty,} from "../middleware/authMiddleware.js";
 
@@ -52,7 +53,10 @@ router.route("/facultyReadMonitorStudent2/:id").get(facultyReadChooseStudentByID
                                                .put(protectFaculty, facultyActiveStudent); 
 router.route("/facultyInitDataStudent").post(facultyInitDataStudent);
 router.route("/facultyFetchDataStudent").get(protectFaculty, facultyFetchDataStudent);
-router.route("/facultyFetchDataStudent/:id").get(facultyFetchDataStudentByID)
+router.route("/facultyFetchDataStudent/:id").get(facultyFetchDataStudentByID);
+router.route("/facultyFetchPastRPDDataStudent/:id").get(facultyFetchPastRPDDataStudentByID);
+router.route("/facultyFetchPastWCDDataStudent/:id").get(facultyFetchPastWCDDataStudentByID);
+router.route("/facultyFetchPastPRDataStudent/:id").get(facultyFetchPastPRDataStudentByID);
 
 export default router;
 

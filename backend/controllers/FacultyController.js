@@ -849,6 +849,47 @@ const facultyFetchDataStudentByID = asyncHandler(async (req, res) => {
   }
 });
 
+const facultyFetchPastRPDDataStudentByID = asyncHandler(async (req, res) => {
+  
+  const fetchStudentDataListID = await AcademicReport.findById(req.params.id)
+                                                     .populate('studID')
+
+  const studentRef = fetchStudentDataListID.studID._id;
+  
+  const rpdData = await RPD.find({ studentRef })
+                           .sort({ createdAt: -1 })
+                           .limit(1);
+
+  res.status(200).json(rpdData);
+});
+
+const facultyFetchPastWCDDataStudentByID = asyncHandler(async (req, res) => {
+  
+  const fetchStudentDataListID = await AcademicReport.findById(req.params.id).populate('studID');
+
+  const studentRef = fetchStudentDataListID.studID._id;
+
+  const wcdData = await WCD.find({ studentRef })
+                           .sort({ createdAt: -1 })
+                           .limit(1);;
+
+  res.status(200).json(wcdData);
+});
+
+const facultyFetchPastPRDataStudentByID = asyncHandler(async (req, res) => {
+  
+  const fetchStudentDataListID = await AcademicReport.findById(req.params.id).populate('studID');
+
+  const studentRef = fetchStudentDataListID.studID._id;
+  
+  const prData = await ProgressReport.find({ studentUser: studentRef })
+                                     .populate('studentUser')
+                                     .sort({ createdAt: -1 })
+                                     .limit(1);;
+
+  res.status(200).json(prData);
+});
+
 export { 
          facultyLogin, facultyViewOwnProfile, facultyProfileCountPanel, facultyProfileCountSupervisor, facultyProfileCountStudent,
          facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
@@ -858,5 +899,6 @@ export {
          facultyUpdateChooseStudentByID, facultyReadSubjectStudent, facultyReadSubjectStudentByID, facultyUpdateSubjectStudentByID,
          facultyReadEvaluateWCDApplication, facultyReadEvaluateWCDApplicationByID, facultyRejectEvaluateWCDApplicationByID, 
          facultyApproveEvaluateWCDApplicationByID, facultySetDatePR, facultyReadMonitorStudent, facultyReadMonitorStudenByID,
-         facultyTerminateStudent, facultyActiveStudent, facultyInitDataStudent, facultyFetchDataStudent, facultyFetchDataStudentByID
+         facultyTerminateStudent, facultyActiveStudent, facultyInitDataStudent, facultyFetchDataStudent, facultyFetchDataStudentByID,
+         facultyFetchPastRPDDataStudentByID, facultyFetchPastWCDDataStudentByID, facultyFetchPastPRDataStudentByID
        };
