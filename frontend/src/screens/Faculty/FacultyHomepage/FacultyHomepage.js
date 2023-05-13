@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import {useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Container, Form, Button, Row, Col, Tab, Tabs } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import FacultyTemplate from "../../../components/FacultyTemplate";
 import UserCounter from "../../../components/UserCounter";
 import TodoList from "../../../components/ToDoList";

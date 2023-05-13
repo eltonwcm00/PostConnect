@@ -10,7 +10,7 @@ import {
    facultyRejectEvaluateWCDApplicationByID, facultyApproveEvaluateWCDApplicationByID, facultySetDatePR,
    facultyReadMonitorStudent, facultyTerminateStudent, facultyActiveStudent, 
    facultyInitDataStudent, facultyFetchDataStudent, facultyFetchDataStudentByID, 
-   facultyFetchPastRPDDataStudentByID, facultyFetchPastWCDDataStudentByID, facultyFetchPastPRDataStudentByID
+   facultyFetchPastRPDDataStudentByID, facultyFetchPastWCDDataStudentByID, facultyFetchPastPRDataStudentByID, facultyProfileCountFaculty
 } from "../controllers/FacultyController.js";
 import { protectFaculty,} from "../middleware/authMiddleware.js";
 
@@ -19,6 +19,7 @@ const router = express.Router();
 
 router.post("/facultyLogin", facultyLogin);
 router.route("/facultyViewOwnProfile").get(protectFaculty, facultyViewOwnProfile);
+router.route("/facultyProfileCountFaculty").get(facultyProfileCountFaculty);
 router.route("/facultyProfileCountPanel").get(facultyProfileCountPanel);
 router.route("/facultyProfileCountSupervisor").get(facultyProfileCountSupervisor);
 router.route("/facultyProfileCountStudent").get(facultyProfileCountStudent);
