@@ -47,6 +47,7 @@ const FacultyViewProfile = () => {
         navigate('/');
       }
     }, [navigate, facultyInfo]);
+    
     useEffect(() => {
       dispatch(facultyViewOwnProfile());
       dispatch(panelProfile());
@@ -57,28 +58,21 @@ const FacultyViewProfile = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
-    useEffect(() => {
-      const fetching = async () => {
-          const { data } = await axios.get('http://localhost:5000/api/faculty/facultyProfileCountPanel');
-          setNumPanel(data);
+    function fetchData(apiEndpoint, setData) {
+      return async () => {
+        const { data } = await axios.get(`http://localhost:5000/api/faculty/${apiEndpoint}`);
+        setData(data);
       };
-      fetching();
-    }, []);
+    }
 
     useEffect(() => {
-      const fetching = async () => {
-          const { data } = await axios.get('http://localhost:5000/api/faculty/facultyProfileCountSupervisor');
-          setNumSupervisor(data);
-      };
-      fetching();
-    }, []);
-
-    useEffect(() => {
-      const fetching = async () => {
-          const { data } = await axios.get('http://localhost:5000/api/faculty/facultyProfileCountStudent');
-          setNumStudent(data);
-      };
-      fetching();
+      const fetchNumPanel = fetchData('facultyProfileCountPanel', setNumPanel);
+      const fetchNumSupervisor = fetchData('facultyProfileCountSupervisor', setNumSupervisor);
+      const fetchNumStudent = fetchData('facultyProfileCountStudent', setNumStudent);
+  
+      fetchNumPanel();
+      fetchNumSupervisor();
+      fetchNumStudent();
     }, []);
 
     const togglePass = () => {
