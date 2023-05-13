@@ -113,7 +113,6 @@ const PanelEvaluateWCDID = () => {
                 <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
                     <Form.Label column sm={2}>Full Thesis File</Form.Label>
                     <Col sm={10}>
-                    {/* <i class="fa-solid fa-bullseye-pointer fa-flip-horizontal" style={{ position:'absolute', marginLeft: '3em', marginTop: '1em'}}></i> */}
                     <a href={dummyPDF} target="_blank">View Here</a>
                     </Col>
                 </Form.Group>

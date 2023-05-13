@@ -858,7 +858,6 @@ const facultyFetchPastRPDDataStudentByID = asyncHandler(async (req, res) => {
   
   const rpdData = await RPD.find({ studentRef })
                            .sort({ createdAt: -1 })
-                           .limit(1);
 
   res.status(200).json(rpdData);
 });
@@ -871,7 +870,6 @@ const facultyFetchPastWCDDataStudentByID = asyncHandler(async (req, res) => {
 
   const wcdData = await WCD.find({ studentRef })
                            .sort({ createdAt: -1 })
-                           .limit(1);;
 
   res.status(200).json(wcdData);
 });
@@ -885,7 +883,6 @@ const facultyFetchPastPRDataStudentByID = asyncHandler(async (req, res) => {
   const prData = await ProgressReport.find({ studentUser: studentRef })
                                      .populate('studentUser')
                                      .sort({ createdAt: -1 })
-                                     .limit(1);;
 
   res.status(200).json(prData);
 });

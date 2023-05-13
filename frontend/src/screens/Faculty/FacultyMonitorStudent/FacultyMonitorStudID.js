@@ -178,7 +178,7 @@ const FacultyMonitorStudID = () => {
                         <Table className="table-borderless mt-1" style={{fontFamily: 'Montserrat'}}>
                                 <thead>
                                     <tr>
-                                        <th><i class="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Analysis </i></th>
+                                        <th><i className="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Analysis </i></th>
                                     </tr>
                                 </thead>
                                 <tbody>

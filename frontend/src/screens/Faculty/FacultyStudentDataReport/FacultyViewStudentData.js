@@ -69,7 +69,7 @@ const FacultyViewStudentData = () => {
                   fetchStudentList.slice(startIndex, endIndex).map((list) => (
                     <tr className='table-desc' key={list._id}>
                       <td> {index++} </td>
-                      <td> {moment(list.studID.createdAt).format('DD/MM/YY')} </td>
+                      <td> {moment(list.studID.dateJoin).format('DD/MM/YYYY')} </td>
                       <td> {list.studID.usernameStud} </td>
                       <td> {list.studID.degreeLvl} </td>
                       <td> {list.supID ? list.supID.usernameSup : '-' } </td>

@@ -240,7 +240,7 @@ const FacultyEvaluateWCDApplicationID = () => {
                                     <td>Degree Lvl</td>
                                     <td>{}</td>
                                     <td>{degreeLvl}</td>
-                                    <td>{degreeLvl && <i class="fa-solid fa-check" onClick={handleShowd} style={{ cursor: 'pointer' }}></i>}</td>
+                                    <td>{degreeLvl && <i className="fa-solid fa-check" onClick={handleShowd} style={{ cursor: 'pointer' }}></i>}</td>
                                 </tr>
                                 <tr>
                                     <td>Mini Thesis Title</td>
@@ -301,7 +301,7 @@ const FacultyEvaluateWCDApplicationID = () => {
                         <Table className="table-borderless mt-5" style={{fontFamily: 'Montserrat'}}>
                             <thead>
                                 <tr>
-                                    <th><i class="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Result </i></th>
+                                    <th><i className="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Result </i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -413,7 +413,7 @@ const FacultyEvaluateWCDApplicationID = () => {
                     </div>
                     <div className="col">
                         <Form className="form" style={{marginTop: 0, height: '59em'}}>
-                            <i class="fa-solid fa-file mb-3" style={{whiteSpace: "nowrap", color: "#046dba"}}> Student Request Form </i>
+                            <i className="fa-solid fa-file mb-3" style={{whiteSpace: "nowrap", color: "#046dba"}}> Student Request Form </i>
                             <Form.Group as={Row} className="mb-5" controlId="title">
                                 <Form.Label column sm={2}>Full Name</Form.Label>
                                 <Col sm={10}>

@@ -64,11 +64,14 @@ const FacultyViewStudentDataID = () => {
                 setStudentStatus("Terminated");
             }
             
-            if (data.rpdID === null) {
+            if (data.studID.retryRPDAttempt >= 3) {
+                setRpdStatus("The student has recieved fail grade for 3 consecutive times. Thus, he/she has been terminated.");
+            }
+            else if (data.rpdID === null) {
                 setRpdStatus("The student either has not apply for RPD or has not re-apply RPD after receiving fail grade.");
              
             } else if (data.rpdID.status === undefined) {
-                setRpdStatus("The student's RPD application was approved. However, the result is not yet evaluate by the authorities.");
+                setRpdStatus("The student's RPD application OR re-application was approved. However, the result is not yet evaluate by the authorities.");
              
             } else {
                 setRpdStatus(data.rpdID.status ?
@@ -81,11 +84,14 @@ const FacultyViewStudentDataID = () => {
                     setIsPassedRPD(true)
                 } 
             }
-
-            if (data.wcdID === null) {
+            
+            if (data.studID.retryWCDAttempt >= 3) {
+                setWcdStatus("The student has recieved fail grade for 3 consecutive times. Thus, he/she has been terminated.");
+            }
+            else if (data.wcdID === null) {
                 setWcdStatus("The student either has not apply for WCD or has not re-apply WCD after receiving fail grade.");
             } else if (data.wcdID.status === undefined) {
-                setWcdStatus("The student's WCD application was approved. Howvever, the result is not yet evaluate by the authorities.");
+                setWcdStatus("The student's WCD application OR re-application was approved. Howvever, the result is not yet evaluate by the authorities.");
             } else {
                 setWcdStatus(data.wcdID.status ?
                     "The student has passed the WCD."
@@ -98,7 +104,10 @@ const FacultyViewStudentDataID = () => {
                 } 
             }
 
-            if (data.reportProgressID === null) {
+            if (data.studID.retryPRAttempt >= 3) {
+                setPRStatus("The student has recieved fail grade for 3 consecutive times. Thus, he/she has been terminated.");
+            }
+            else if (data.reportProgressID === null) {
                 setPRStatus(`The student either has not submit the report OR has not re-submit the report after receiving fail grade.`);
             } else if (data.reportProgressID.status === undefined) {
                 setPRStatus("The student has submitted the report, but the result is not yet evaluate by the authorities.");
@@ -220,10 +229,15 @@ const FacultyViewStudentDataID = () => {
                                 <Table className="table-borderless mt-1" style={{fontFamily: 'Montserrat'}}>
                                     <thead>
                                         <tr>
-                                            <th><i class="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Basic Student Details </i></th>
+                                            <th><i className="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Basic Student Details </i></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <tr>
+                                            <td>
+                                                <img className="profileCentering roundImg mt-3" src="/image/student.png" alt="React Image" height={60} width={60} />  
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td>
                                                 <span style={{color: 'green'}} className="mr-2">Student Name:</span>{usernameStud}
@@ -262,7 +276,7 @@ const FacultyViewStudentDataID = () => {
                                     <Table className="table-borderless mt-1" style={{fontFamily: 'Montserrat'}}>
                                         <thead>
                                             <tr>
-                                                <th><i class="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Current Academic Performance Details </i></th>
+                                                <th><i className="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Current Academic Performance Details </i></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -287,7 +301,7 @@ const FacultyViewStudentDataID = () => {
                         </div>
                         <div style={{borderRadius: '5px'}}>
                             <div className="mt-4">
-                                <span><i class="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Academic Record History </i></span>
+                                <span><i className="fa-solid fa-circle-info" style={{whiteSpace: "nowrap"}}> Academic Record History </i></span>
                             </div>
                             <Tabs defaultActiveKey="Research Proposal Defence" id="fill-tab-example" className="mb-3 tab mt-2" justify transition={false}>
                                 <Tab eventKey="Research Proposal Defence" title="Research Proposal Defence">
@@ -295,7 +309,7 @@ const FacultyViewStudentDataID = () => {
                                         <CDBTable borderless>
                                             <CDBTableHeader>
                                             <tr className='table-desc'>
-                                                <th>Evaluation Date</th>
+                                                <th>Date</th>
                                                 <th>Name</th>
                                                 <th>Mini Thesis Title</th>
                                                 <th>Grade</th>
@@ -309,11 +323,11 @@ const FacultyViewStudentDataID = () => {
                                                             <td> {moment(list.updatedAt).format("DD/MM/YYYY")} </td>
                                                             <td> {list.fullname} </td>
                                                             <td> {list.miniThesisTitle} </td>
-                                                            <td> {list.status ? "Pass" : "Fail" } </td>
+                                                            <td> {list.status === undefined ? "To be evaluated" : list.status ? "Pass" : "Fail" } </td>
                                                         </tr>
                                                     ))) : (
                                                     <tr className="table-desc">
-                                                        <td colSpan="4">No data</td>
+                                                        <td colSpan="5">No data</td>
                                                     </tr>
                                                 )}
                                             </CDBTableBody>
@@ -326,7 +340,7 @@ const FacultyViewStudentDataID = () => {
                                         <CDBTable borderless>
                                             <CDBTableHeader>
                                             <tr className='table-desc'>
-                                                <th>Evaluation Date</th>
+                                                <th>Date</th>
                                                 <th>Name</th>
                                                 <th>Full Thesis Title</th>
                                                 <th>Grade</th>
@@ -340,11 +354,11 @@ const FacultyViewStudentDataID = () => {
                                                             <td> {moment(list.updatedAt).format("DD/MM/YYYY")} </td>
                                                             <td> {list.fullname} </td>
                                                             <td> {list.thesisTitle} </td>
-                                                            <td> {list.status ? "Pass" : "Fail" } </td>
+                                                            <td> {list.status === undefined ? "To be evaluated" : list.status ? "Pass" : "Fail" } </td>
                                                         </tr>
                                                     ))) : (
                                                         <tr className="table-desc">
-                                                            <td colSpan="4">No data</td>
+                                                            <td colSpan="5">No data</td>
                                                         </tr>
                                                 )}
                                             </CDBTableBody>
@@ -357,7 +371,7 @@ const FacultyViewStudentDataID = () => {
                                         <CDBTable borderless>
                                             <CDBTableHeader>
                                             <tr className='table-desc'>
-                                                <th>Evaluation Date</th>
+                                                <th>Date</th>
                                                 <th>Name</th>
                                                 <th>Grade</th>
                                                 <th>{}</th>
@@ -369,7 +383,7 @@ const FacultyViewStudentDataID = () => {
                                                         <tr className="table-desc" key={list._id}>
                                                             <td> {moment(list.updatedAt).format("DD/MM/YYYY")} </td>
                                                             <td> {list.studentUser.usernameStud} </td>
-                                                            <td> {list.status ? "Pass" : "Fail" } </td>
+                                                            <td> {list.status === undefined ? "To be evaluated" : list.status ? "Pass" : "Fail" } </td>
                                                         </tr>
                                                     ))) : (
                                                         <tr className="table-desc">
@@ -381,8 +395,6 @@ const FacultyViewStudentDataID = () => {
                                     </CDBContainer>
                                 </Tab>
                             </Tabs>
-                                {/* </tbody> */}
-                            {/* </Table> */}
                         </div>
                     </div>
                 </div>
