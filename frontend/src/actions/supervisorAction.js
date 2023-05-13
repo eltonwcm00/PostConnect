@@ -15,6 +15,12 @@ import {
     SUPERVISOR_UPDATE_APPLICATION_FAIL
 } from "../constants/supervisorConstants";
 
+import {
+  FACULTY_STUDENT_LIST_REQUEST,
+  FACULTY_STUDENT_LIST_SUCCESS,
+  FACULTY_STUDENT_LIST_FAIL
+} from "../constants/facultyConstants"
+
 import axios from "axios";
 
 export const supervisorLogin = (usernameSup, password) => async (dispatch) => {
@@ -304,6 +310,40 @@ export const supervisorReadPRResult = () => async (dispatch, getState) => {
         error.response 
           ? error.response.data.message
           : error.message,
+    });
+  }
+};
+
+export const supervisorViewStudentData = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FACULTY_STUDENT_LIST_REQUEST,
+    });
+
+    const {
+      supervisorLogin: { supervisorInfo },
+    } = getState();
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${supervisorInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("http://localhost:5000/api/supervisor/supervisorFetchDataStudent", config);
+
+    dispatch({
+      type: FACULTY_STUDENT_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+   
+    dispatch({
+      type: FACULTY_STUDENT_LIST_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
     });
   }
 };

@@ -64,7 +64,7 @@ import { supervisorLogout } from '../actions/supervisorAction';
                   View Meeting Log
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="#">
+              <NavLink exact to="/supervisorViewStudentData">
                 <CDBSidebarMenuItem icon="fa-solid fa-chart-column">
                   Student Data Report
                 </CDBSidebarMenuItem>

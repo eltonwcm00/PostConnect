@@ -3,14 +3,16 @@ import axios from "axios";
 import {useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import moment from 'moment';
-import { Table, Button, Row, Col, Tab, Tabs } from "react-bootstrap";
+import { Table, Tab, Tabs } from "react-bootstrap";
 import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import FacultyTemplate from "../../../components/FacultyTemplate";
+
+// Shared among 'Faculty' & 'Supervisor' type of users.
 
 const FacultyViewStudentDataID = () => {
 
     let navigate = useNavigate();
-    let index, msgDateJoin, msgStatus, years;
+    let msgDateJoin, msgStatus, years;
 
     const [pastCurrentDataRPD, setPastCurrentDataRPD] = useState([]);
     const [pastCurrentDataWCD, setPastCurrentDataWCD] = useState([]);
@@ -34,15 +36,6 @@ const FacultyViewStudentDataID = () => {
     const [isPassedPR, setIsPassedPR] = useState(false);
 
     const { id } = useParams();
-
-    const facultyLoginState = useSelector((state) => state.facultyLogin);
-    const { facultyInfo } = facultyLoginState;
-
-    useEffect(() => {
-        if (!facultyInfo) {
-          navigate('/');
-        }
-    }, [navigate, facultyInfo]);
 
     useEffect(() => {
         const fetching = async () => {

@@ -3,7 +3,8 @@ import { supervisorLogin, supervisorViewOwnProfile, supervisorViewCurrentSupervi
          supervisorProfileList, supervisorProfileListByID, 
          supervisorUpdatedProfile,supervisorReadMeetingLog, supervisorReadMeetingLogByID, 
          supervisorReadRPDResult, supervisorReadWCDResult,
-         supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR, supervisorReadPRResult } from "../controllers/SupervisorController.js";
+         supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR, supervisorReadPRResult,
+         supervisorFetchDataStudent } from "../controllers/SupervisorController.js";
 import { protectSupervisor } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -22,7 +23,7 @@ router.route("/supervisorReadPR").get(protectSupervisor, supervisorReadPR);
 router.route("/supervisorEvaluatePR/:id").get(supervisorReadPRByID)
                                          .put(protectSupervisor, supervisorEvaluatePR);
 router.route('/supervisorReadPRResult').get(protectSupervisor, supervisorReadPRResult);
-
+router.route("/supervisorFetchDataStudent").get(protectSupervisor, supervisorFetchDataStudent);
 
 export default router;
 

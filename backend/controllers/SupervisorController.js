@@ -7,6 +7,7 @@ import MeetingLog from "../models/MeetingLog.js";
 import RPD from "../models/RPD.js";
 import WCD from "../models/WCD.js";
 import ProgressReport from "../models/ProgressReport.js";
+import AcademicReport from "../models/AcademicReport.js";
 
 const supervisorLogin = asyncHandler(async (req, res) => {
   const { usernameSup, password } = req.body;
@@ -288,9 +289,32 @@ const supervisorReadPRResult = asyncHandler(async (req, res) => {
   }
 });
 
+/*************************************************** END PR ***************************************************/
+
+/*************************************************** VIEW STUDENT DATA REPORT ***************************************************/
+
+const supervisorFetchDataStudent = asyncHandler(async (req, res) => {
+
+  const currentSupervisor = req.userSupervisor;
+
+  const fetchStudentDataList = await AcademicReport.find({supID: currentSupervisor._id })
+                                                    .populate('studID')
+                                                    .populate('supID')
+  if (fetchStudentDataList) {
+    res.status(201).json(fetchStudentDataList);
+  }
+  else {
+    res.status(500);
+    throw new Error("Internal server error");
+  }
+});
+
+/*************************************************** END VIEW STUDENT DATA REPORT ***************************************************/
+
 
 export { supervisorLogin, supervisorProfileList, supervisorProfileListByID, 
          supervisorViewOwnProfile, supervisorViewCurrentSupervisingStudent, supervisorUpdatedProfile,
          supervisorReadMeetingLog, supervisorReadMeetingLogByID,
          supervisorReadRPDResult, supervisorReadWCDResult, 
-         supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR, supervisorReadPRResult };
+         supervisorReadPR, supervisorReadPRByID, supervisorEvaluatePR, supervisorReadPRResult,
+         supervisorFetchDataStudent };
