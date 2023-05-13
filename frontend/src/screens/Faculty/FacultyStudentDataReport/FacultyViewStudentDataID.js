@@ -128,41 +128,29 @@ const FacultyViewStudentDataID = () => {
     }, [id]);
 
     useEffect(() => {
-        const fetching = async () => {
-        
-            const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyFetchPastRPDDataStudent/${id}`);
-            setPastCurrentDataRPD(data);
-        };
-        fetching();
+       fetchData('RPD', setPastCurrentDataRPD);
+       fetchData('WCD', setPastCurrentDataWCD);
+       fetchData('PR', setPastCurrentDataPR);
     }, [id]);
-
-    useEffect(() => {
-        const fetching = async () => {
-        
-            const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyFetchPastWCDDataStudent/${id}`);
-            setPastCurrentDataWCD(data);
-        };
-        fetching();
-    }, [id]);
-
-    useEffect(() => {
-        const fetching = async () => {
-        
-            const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyFetchPastPRDataStudent/${id}`);
-            setPastCurrentDataPR(data);
-        };
-        fetching();
-    }, [id]);
+    
+    const fetchData = async (type, setState) => {
+       try {
+         const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyFetchPast${type}DataStudent/${id}`);
+         setState(data);
+       } catch (error) {
+         console.error(error);
+       }
+    };
 
     const getColorObject = (isPassed) => {
         return isPassed === null ? { color: 'green' } : isPassed ? { color: 'green' } : { color: 'red' };
     };
       
-      const textColor = { ...getColorObject(studentStatus === 'Active') };
-      const supervisorColor = { ...getColorObject(supervisor) };
-      const prColor = { ...getColorObject(isPassedPR) };
-      const rpdColor = { ...getColorObject(isPassedRPD) };
-      const wcdColor = { ...getColorObject(isPassedWCD) };
+    const textColor = { ...getColorObject(studentStatus) };
+    const supervisorColor = { ...getColorObject(supervisor) };
+    const prColor = { ...getColorObject(isPassedPR) };
+    const rpdColor = { ...getColorObject(isPassedRPD) };
+    const wcdColor = { ...getColorObject(isPassedWCD) };
 
     switch(degreeLvl) {
         case 'Master Degree (Part-Time)':
@@ -240,7 +228,7 @@ const FacultyViewStudentDataID = () => {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <span style={{color: 'green'}} className="mr-2">Student Name:</span>{usernameStud}
+                                                <span style={textColor} className="mr-2">Student Name:</span>{usernameStud}
                                             </td>
                                         </tr>
                                         <tr>

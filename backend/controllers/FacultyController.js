@@ -771,6 +771,8 @@ const facultyActiveStudent = asyncHandler(async (req, res) => {
   }
 });
 
+/*************************************************** VIEW STUDENT DATA REPORT  ***************************************************/
+
 const facultyInitDataStudent = asyncHandler(async (req, res) => {
   try {
     const students = await Student.find({});
@@ -782,7 +784,7 @@ const facultyInitDataStudent = asyncHandler(async (req, res) => {
       // id被save进的话， 就代表着已经是被approved了的(rpd,wcd)application, 又或者是submitted了的report(progress report)
 
       const report = await AcademicReport.findOne({ studID: student._id });
-      const rpd = await RPD.findOne({ studentRef: student._id})  // Get latest of (approved) RPDApplication of the exisiting student
+      const rpd = await RPD.findOne({ studentRef: student._id}) 
                            .sort({ createdAt: -1 })
                            .limit(1);
       const wcd = await WCD.findOne({ studentRef: student._id}) 
@@ -886,6 +888,8 @@ const facultyFetchPastPRDataStudentByID = asyncHandler(async (req, res) => {
 
   res.status(200).json(prData);
 });
+
+/*************************************************** END VIEW STUDENT DATA REPORT  ***************************************************/
 
 export { 
          facultyLogin, facultyViewOwnProfile, facultyProfileCountPanel, facultyProfileCountSupervisor, facultyProfileCountStudent,

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 import {Button, Container, Row, Col } from 'react-bootstrap';
 import './LandingPage.css';
 
@@ -8,6 +9,13 @@ const LandingPage = () => {
 
   let navigate = useNavigate();
   const [radioValue, setRadioValue] = useState("");
+
+  useEffect(() => {
+    const fetching = async () => {
+        await axios.post('http://localhost:5000/api/faculty/facultyInitDataStudent');
+    };
+    fetching();
+  }, []);
 
   useEffect(() => {
     localStorage.removeItem('facultyInfo');

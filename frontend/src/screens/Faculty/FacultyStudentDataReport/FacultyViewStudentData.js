@@ -27,18 +27,11 @@ const FacultyViewStudentData = () => {
   const { loading, error, fetchStudentList } = studentListRead;
 
   useEffect(() => {
-    const fetching = async () => {
-        await axios.post('http://localhost:5000/api/faculty/facultyInitDataStudent');
-    };
-    fetching();
-  }, []);
-
-  useEffect(() => {
     dispatch(facultyViewStudentData());
     if (!facultyInfo) {
       navigate("/");
     }
-}, [dispatch, navigate, facultyInfo,]);
+  }, [dispatch, navigate, facultyInfo,]);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
