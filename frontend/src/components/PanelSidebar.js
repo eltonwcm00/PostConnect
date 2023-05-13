@@ -26,7 +26,7 @@ import { panelLogout } from '../actions/panelAction';
 
     return (
       <div
-        style={{ display: "flex", height: "109vh", overflow: "scroll initial" }}
+        style={{ display: "flex", height: "109vh", overflow: "scroll initial", position: "fixed" }}
       >
         <CDBSidebar textColor="#fff" backgroundColor="#333">
           <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>

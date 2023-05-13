@@ -72,144 +72,123 @@ const Notification = () => {
 
     return (
       <>
-        <Row className="mt-5">
-          <Col xs={8}>
-            <h4 className="mb-3 toast-title">Notifications</h4>
-            <Tabs defaultActiveKey="ResearchProposalDefence" id="fill-tab-example" className="mb-3 tab mt-4" justify transition={false}>
-            <Tab eventKey="ResearchProposalDefence" title="Research Proposal Defence">
-              <CDBContainer style={{padding: '20px 0', textAlign: "center"}} className="list-container">
-                <CDBTable borderless>
-                  <CDBTableBody>
-                  <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
-                    <Toast className="toast" onClose={toggleShowA} show={showToast} animation={true}>
-                      <Toast.Header>
-                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                        <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                        <small>{applicationStatusMsg && moment(currentApplicationInfo.updatedAt).format('MMMM Do YYYY')}</small>
-                      </Toast.Header>
-                      <Toast.Body>{applicationStatusMsg && <>{currentApplicationInfo.applicationStatusMsg}</>}</Toast.Body>
-                    </Toast>
-                    {/* Remind student he/she about to be terminated from study if fail RPD more than 3 consecutive times */}
-                    {          
-                      (studentInfo && studentInfo.retryRPDAttempt == 2) && 
-                        <Toast className="toast" onClose={toggleShowC} show={showToastC} animation={true}>
-                          <Toast.Header>
-                          <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                            <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                            <small>{moment().fromNow()}</small>
-                          </Toast.Header>
-                          <Toast.Body>
-                            {"Warning!, you have failed your RPD for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
-                          </Toast.Body>
-                        </Toast>
-                    }
-                  </ToastContainer>
-                  </CDBTableBody>
-                </CDBTable>
-              </CDBContainer>
-            </Tab>
-            <Tab eventKey="WorkCompletionDefence" title="Work Completion Defence">
-              <CDBContainer style={{padding: '10px 0', textAlign: "center"}} className="list-container">
-                <CDBTable borderless>
-                  <CDBTableBody>
-                  <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
-                    <Toast className="toast" onClose={toggleShowD} show={showToastD} animation={true}>
-                      <Toast.Header className="toast-header">
-                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                        <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                        <small>{applicationStatusMsg2 && moment(currentApplicationInfo2.updatedAt).format('MMMM Do YYYY')}</small>
-                      </Toast.Header>
-                      <Toast.Body>{applicationStatusMsg2 && <>{currentApplicationInfo2.applicationStatusMsg}</>}</Toast.Body>
-                    </Toast>
-                      {/* Remind student he/she about to be terminated from study if fail WCD more than 3 consecutive times */}
-                      {
-                        (studentInfo && studentInfo.retryWCDAttempt == 2) && 
-                          <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
-                            <Toast.Header className="toast-header">
-                            <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                              <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                              <small>{moment().fromNow()}</small>
-                            </Toast.Header>
-                            <Toast.Body>
-                              {"Warning!, you have failed your WCD for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
-                            </Toast.Body>
-                          </Toast>
-                      }
-                  </ToastContainer>
-                  </CDBTableBody>
-                </CDBTable>
-              </CDBContainer>
-            </Tab>
-            <Tab eventKey="ProgressReport" title="Progress Report">
-              <CDBContainer style={{padding: '10px 0px', textAlign: "center"}} className="list-container">
-                <CDBTable borderless>
-                  <CDBTableBody>
-                  <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
-                    <Toast className="toast" onClose={toggleShowF} show={showToastF} animation={true}>
-                      <Toast.Header className="toast-header">
-                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                        <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                        <small>{applicationStatusMsg3 && moment(currentApplicationInfo3.updatedAt).format('MMMM Do YYYY')}</small>
-                      </Toast.Header>
-                      <Toast.Body>{applicationStatusMsg3 && <>{currentApplicationInfo3.applicationStatusMsg}</>}</Toast.Body>
-                    </Toast>
-                    {/* Remind student he/she about to be terminated from study if fail WCD more than 3 consecutive times */}
-                    {
-                        (studentInfo && studentInfo.retryPRAttempt == 2) && 
-                          <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
-                            <Toast.Header className="toast-header">
-                            <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                              <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                              <small>{moment().fromNow()}</small>
-                            </Toast.Header>
-                            <Toast.Body>
-                              {"Warning!, you have failed your PR for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
-                            </Toast.Body>
-                          </Toast>
-                      }
-                  </ToastContainer>
-                  </CDBTableBody>
-                </CDBTable>
-              </CDBContainer>
-            </Tab>
-            <Tab eventKey="MeetingLog" title="Meeting Log">
-              <CDBContainer style={{padding: '10px 0px', textAlign: "center"}} className="list-container">
-                <CDBTable borderless>
-                  <CDBTableBody>
-                  <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
-                    <Toast className="toast" onClose={toggleShowB} show={showToastB} animation={true}>
+        <h4 className="mb-3 toast-title">Notifications</h4>
+        <Tabs defaultActiveKey="ResearchProposalDefence" id="fill-tab-example" className="mb-3 tab mt-4" justify transition={false}>
+        <Tab eventKey="ResearchProposalDefence" title="Research Proposal Defence">
+          <CDBContainer style={{padding: '20px 0', textAlign: "center"}} className="list-container">
+            <CDBTable borderless>
+              <CDBTableBody>
+              <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
+                <Toast className="toast" onClose={toggleShowA} show={showToast} animation={true}>
+                  <Toast.Header>
+                    <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                    <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                    <small>{applicationStatusMsg && moment(currentApplicationInfo.updatedAt).format('MMMM Do YYYY')}</small>
+                  </Toast.Header>
+                  <Toast.Body>{applicationStatusMsg && <>{currentApplicationInfo.applicationStatusMsg}</>}</Toast.Body>
+                </Toast>
+                {/* Remind student he/she about to be terminated from study if fail RPD more than 3 consecutive times */}
+                {          
+                  (studentInfo && studentInfo.retryRPDAttempt == 2) && 
+                    <Toast className="toast" onClose={toggleShowC} show={showToastC} animation={true}>
                       <Toast.Header>
                       <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
                         <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                        <small>{meetingLogStatusMsg && moment(currentMeetingInfo.updatedAt).format('MMMM Do YYYY')}</small>
+                        <small>{moment().fromNow()}</small>
                       </Toast.Header>
-                      <Toast.Body>{meetingLogStatusMsg && <>{currentMeetingInfo.meetingLogStatusMsg}</>}</Toast.Body>
+                      <Toast.Body>
+                        {"Warning!, you have failed your RPD for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
+                      </Toast.Body>
                     </Toast>
-                  </ToastContainer>
-                  </CDBTableBody>
-                </CDBTable>
-              </CDBContainer>
-            </Tab>
-          </Tabs>
-          </Col>
-          <Col>
-            <Row>
-              <Col>
-                <div>
-                  <Clock/>
-                </div>
-              </Col>
-              <Col>
-                <div style={{marginTop: '2.5em', marginLeft: '3em'}}>
-                  <h4 className="mb-3 toast-title">Calendar</h4>
-                  <Calendar
-                    dateFormat="MMMM d, yyyy"
-                  />
-                </div>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+                }
+              </ToastContainer>
+              </CDBTableBody>
+            </CDBTable>
+          </CDBContainer>
+        </Tab>
+        <Tab eventKey="WorkCompletionDefence" title="Work Completion Defence">
+          <CDBContainer style={{padding: '10px 0', textAlign: "center"}} className="list-container">
+            <CDBTable borderless>
+              <CDBTableBody>
+              <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
+                <Toast className="toast" onClose={toggleShowD} show={showToastD} animation={true}>
+                  <Toast.Header className="toast-header">
+                    <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                    <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                    <small>{applicationStatusMsg2 && moment(currentApplicationInfo2.updatedAt).format('MMMM Do YYYY')}</small>
+                  </Toast.Header>
+                  <Toast.Body>{applicationStatusMsg2 && <>{currentApplicationInfo2.applicationStatusMsg}</>}</Toast.Body>
+                </Toast>
+                  {/* Remind student he/she about to be terminated from study if fail WCD more than 3 consecutive times */}
+                  {
+                    (studentInfo && studentInfo.retryWCDAttempt == 2) && 
+                      <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
+                        <Toast.Header className="toast-header">
+                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                          <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                          <small>{moment().fromNow()}</small>
+                        </Toast.Header>
+                        <Toast.Body>
+                          {"Warning!, you have failed your WCD for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
+                        </Toast.Body>
+                      </Toast>
+                  }
+              </ToastContainer>
+              </CDBTableBody>
+            </CDBTable>
+          </CDBContainer>
+        </Tab>
+        <Tab eventKey="ProgressReport" title="Progress Report">
+          <CDBContainer style={{padding: '10px 0px', textAlign: "center"}} className="list-container">
+            <CDBTable borderless>
+              <CDBTableBody>
+              <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
+                <Toast className="toast" onClose={toggleShowF} show={showToastF} animation={true}>
+                  <Toast.Header className="toast-header">
+                    <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                    <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                    <small>{applicationStatusMsg3 && moment(currentApplicationInfo3.updatedAt).format('MMMM Do YYYY')}</small>
+                  </Toast.Header>
+                  <Toast.Body>{applicationStatusMsg3 && <>{currentApplicationInfo3.applicationStatusMsg}</>}</Toast.Body>
+                </Toast>
+                {/* Remind student he/she about to be terminated from study if fail WCD more than 3 consecutive times */}
+                {
+                    (studentInfo && studentInfo.retryPRAttempt == 2) && 
+                      <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
+                        <Toast.Header className="toast-header">
+                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                          <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                          <small>{moment().fromNow()}</small>
+                        </Toast.Header>
+                        <Toast.Body>
+                          {"Warning!, you have failed your PR for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
+                        </Toast.Body>
+                      </Toast>
+                  }
+              </ToastContainer>
+              </CDBTableBody>
+            </CDBTable>
+          </CDBContainer>
+        </Tab>
+        <Tab eventKey="MeetingLog" title="Meeting Log">
+          <CDBContainer style={{padding: '10px 0px', textAlign: "center"}} className="list-container">
+            <CDBTable borderless>
+              <CDBTableBody>
+              <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
+                <Toast className="toast" onClose={toggleShowB} show={showToastB} animation={true}>
+                  <Toast.Header>
+                  <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                    <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                    <small>{meetingLogStatusMsg && moment(currentMeetingInfo.updatedAt).format('MMMM Do YYYY')}</small>
+                  </Toast.Header>
+                  <Toast.Body>{meetingLogStatusMsg && <>{currentMeetingInfo.meetingLogStatusMsg}</>}</Toast.Body>
+                </Toast>
+              </ToastContainer>
+              </CDBTableBody>
+            </CDBTable>
+          </CDBContainer>
+        </Tab>
+      </Tabs>
       </>    
     )
 }

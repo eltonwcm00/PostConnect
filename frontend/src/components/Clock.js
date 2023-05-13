@@ -18,7 +18,7 @@ const Clock = () => {
     }
     return (
     <>
-     <h4 className="mb-3 toast-title" style={{textAlign: 'left', marginLeft: '2em', marginTop: '2.5em'}}>Clock</h4>
+     {/* <h4 className="mb-3 toast-title" style={{textAlign: 'left', marginLeft: '2em', marginTop: '2.5em'}}>Clock</h4> */}
      <div className="clock-container">
         {date.toLocaleTimeString()}
      </div>
