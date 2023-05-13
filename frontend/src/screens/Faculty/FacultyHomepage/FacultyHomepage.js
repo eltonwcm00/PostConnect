@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { Container, Form, Button, Row, Col, Tab, Tabs } from "react-bootstrap";
 import FacultyTemplate from "../../../components/FacultyTemplate";
 import UserCounter from "../../../components/UserCounter";
+import TodoList from "../../../components/ToDoList";
+import Calendar from "react-calendar";
 
 const FacultyHomepage = () => {
 
@@ -49,17 +51,22 @@ const FacultyHomepage = () => {
        <h2 className="sub-heading">{moment().format(' Do MMMM ')}</h2>
        <Container className="mt-4">
         <Row>
-          <Col style={{backgroundColor: 'green'}}>
+          <Col>
             <UserCounter userOneCount={numPanel} userOneImg={panelImg} userOneType={"TOTAL PANEL"}
                          userTwoCount={numSupervisor} userTwoImg={supervisorImg} userTwoType={"TOTAL SUPERVISOR"}
                          userThreeCount={numStudent} userThreeImg={studentImg} userThreeType={"TOTAL STUDENT"}
             />
-            <Row>
-              To-Do List
-            </Row>
+            
+              <TodoList/>
+            
           </Col>
-          <Col xs={4} style={{backgroundColor: 'red'}}>
-            Calender
+          <Col xs={4}>
+            <div style={{marginTop: '2.5em', marginLeft: '3em'}}>
+              <h4 className="mb-3 toast-title">Calendar</h4>
+              <Calendar
+                dateFormat="MMMM d, yyyy"
+              />
+            </div>
           </Col>
         </Row>
        </Container>

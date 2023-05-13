@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap";
 
 const UserCounter = ({userOneCount, userOneImg, userOneType, userTwoCount, userTwoImg, userTwoType, userThreeCount, userThreeImg, userThreeType}) => {
   return (
-        <Row>
+        <Row className="instruction-box" style={{padding: '30px', borderRadius: "15px", margin: 0}}>
            <Col className="d-flex align-items-center justify-content-center flex-column">
              <Row className="mt-3 d-flex justify-content-center align-items-center">
                <Col xs={2}>
