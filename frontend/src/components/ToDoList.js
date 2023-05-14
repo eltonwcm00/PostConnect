@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment'
 import { ListGroup, ListGroupItem, Form, Button, Row, Col } from 'react-bootstrap';
 
-function TodoList() {
+function TodoList({ userType, username }) {
   const [todos, setTodos] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
   // Load data from localStorage when component mounts
   useEffect(() => {
-    const storedTodos = JSON.parse(localStorage.getItem('todos') || '[]');
+    const storedTodos = JSON.parse(localStorage.getItem(`todos_${userType}_${username}`) || '[]');
     setTodos(storedTodos);
-  }, []);
+  }, [userType, username]);
 
   // Save data to localStorage whenever the todos array changes
   useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
+    localStorage.setItem(`todos_${userType}_${username}`, JSON.stringify(todos));
+  }, [todos, userType, username]);
 
   function handleAddTodo() {
     if (inputValue === '') {
@@ -28,7 +28,7 @@ function TodoList() {
       completed: false,
     };
 
-    setTodos([...todos, newTodo]);
+    setTodos([...todos, newTodo], `todos_${userType}_${username}`);
     setInputValue('');
   }
 
@@ -39,16 +39,16 @@ function TodoList() {
       }
       return item;
     });
-    setTodos(updatedTodos);
+    setTodos(updatedTodos, `todos_${userType}_${username}`);
   }
 
 //   function handleDelete(id) {
 //     const updatedTodos = todos.filter(todo => todo.id !== id);
-//     setTodos(updatedTodos);
+//     setTodos(updatedTodos, `todos_${userType}`);
 //   }
 
   function handleDeleteAll() {
-    setTodos([]);
+    setTodos([], `todos_${userType}_${username}`);
   }
 
   return (

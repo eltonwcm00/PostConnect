@@ -57,7 +57,7 @@ const PanelHomepage = () => {
                          userThreeCount={numStudent} userThreeImg={studentImg} userThreeType={"TOTAL STUDENT"}
             />    
             {console.log(numFaculty)}
-            <TodoList/>  
+            {panelInfo && <TodoList userType={panelInfo._id} username={panelInfo.usernamePanel}/>}
           </Col>
           <Col xs={4}>
             <div style={{marginTop: '2.5em', marginLeft: '3em'}}>

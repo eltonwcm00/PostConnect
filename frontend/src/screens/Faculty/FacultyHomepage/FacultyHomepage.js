@@ -57,7 +57,7 @@ const FacultyHomepage = () => {
                          userThreeCount={numStudent} userThreeImg={studentImg} userThreeType={"TOTAL STUDENT"}
             />
             
-              <TodoList/>
+              {facultyInfo && <TodoList userType={facultyInfo._id} username={facultyInfo.userNameFac}/>}
             
           </Col>
           <Col xs={4}>

@@ -59,7 +59,7 @@ const StudentHomepage = () => {
             <Col xs={5}>
               <div style={{ marginTop: '1em', marginLeft: '3em' }}>
                 <h4 className="mb-3 toast-title">To-Do List</h4>
-                <TodoList />
+                {studentInfo && <TodoList userType={studentInfo._id} username={studentInfo.usernameStud}/>}
               </div>
             </Col>
             <Col xs={4}>
