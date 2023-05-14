@@ -12,7 +12,7 @@ import {
    facultyInitDataStudent, facultyFetchDataStudent, facultyFetchDataStudentByID, 
    facultyFetchPastRPDDataStudentByID, facultyFetchPastWCDDataStudentByID, facultyFetchPastPRDataStudentByID, facultyProfileCountFaculty
 } from "../controllers/FacultyController.js";
-import { protectFaculty,} from "../middleware/authMiddleware.js";
+import { protectFaculty, protectSupervisor } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 //router.use(protectFaculty);
@@ -53,8 +53,10 @@ router.route("/facultyReadMonitorStudent/:id").get(facultyReadChooseStudentByID)
 router.route("/facultyReadMonitorStudent2/:id").get(facultyReadChooseStudentByID)
                                                .put(protectFaculty, facultyActiveStudent); 
 router.route("/facultyInitDataStudent").post(facultyInitDataStudent);
-router.route("/facultyFetchDataStudent").get(protectFaculty, facultyFetchDataStudent);
-router.route("/facultyFetchDataStudent/:id").get(facultyFetchDataStudentByID);
+router.route("/facultyFetchDataStudent").get(protectFaculty, protectSupervisor, facultyFetchDataStudent);
+
+router.route("/facultyFetchDataStudent/:id").get(protectFaculty, protectSupervisor, facultyFetchDataStudentByID);
+
 router.route("/facultyFetchPastRPDDataStudent/:id").get(facultyFetchPastRPDDataStudentByID);
 router.route("/facultyFetchPastWCDDataStudent/:id").get(facultyFetchPastWCDDataStudentByID);
 router.route("/facultyFetchPastPRDataStudent/:id").get(facultyFetchPastPRDataStudentByID);

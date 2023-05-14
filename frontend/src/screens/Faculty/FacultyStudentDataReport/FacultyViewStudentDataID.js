@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector } from "react-redux";
 import moment from 'moment';
 import { Table, Tab, Tabs } from "react-bootstrap";
 import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import FacultyTemplate from "../../../components/FacultyTemplate";
+import SupervisorTemplate from "../../../components/SupervisorTemplate";
 
 // Shared among 'Faculty' & 'Supervisor' type of users.
 
 const FacultyViewStudentDataID = () => {
 
+    const facultyLoginState = useSelector((state) => state.facultyLogin);
+    const { facultyInfo } = facultyLoginState;
+    const supervisorLoginState = useSelector((state) => state.supervisorLogin);
+    const { supervisorInfo } = supervisorLoginState;
+
     let navigate = useNavigate();
+    const dispatch = useDispatch();
+
     let msgDateJoin, msgStatus, years;
 
     const [pastCurrentDataRPD, setPastCurrentDataRPD] = useState([]);
@@ -36,89 +44,100 @@ const FacultyViewStudentDataID = () => {
     const [isPassedPR, setIsPassedPR] = useState(false);
 
     const { id } = useParams();
-
+    const { token } = useSelector((state) => state.supervisorLogin.supervisorInfo 
+                                             || state.facultyLogin.facultyInfo 
+                                             || {}
+                                 );
     useEffect(() => {
         const fetching = async () => {
-        
-            const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyFetchDataStudent/${id}`);
-
-            setUserNameStud(data.studID.usernameStud);
-            setSupervisor(data.supID ? data.supID.usernameSup : 'Not yet been assigned to any supervisor' )
-            setDateJoin(data.studID.dateJoin);
-            setDegreeLvl(data.studID.degreeLvl);
-            setAcademicStatus(data.studID.academicStatus);
-            setRpdRetry(data.studID.retryRPDAttempt);
-            setPRRetry(data.studID.retryPRAttempt);
-            setWcdRetry(data.studID.retryWCDAttempt);
-
-            if (data.studID.isStudent) {
-                setStudentStatus("Active");
-            } else {
-                setStudentStatus("Terminated");
-            }
             
-            if (data.studID.retryRPDAttempt >= 3) {
-                setRpdStatus("The student has recieved fail grade for 3 consecutive times. Thus, he/she has been terminated.");
-            }
-            else if (data.rpdID === null) {
-                setRpdStatus("The student either has not apply for RPD or has not re-apply RPD after receiving fail grade.");
-             
-            } else if (data.rpdID.status === undefined) {
-                setRpdStatus("The student's RPD application OR re-application was approved. However, the result is not yet evaluate by the authorities.");
-             
-            } else {
-                setRpdStatus(data.rpdID.status ?
-                    "The student has passed the RPD."
-                        :
-                    "The student has failed the RPD."
-                );
+            if (token) {
+               const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+               }; 
 
-                if (data.rpdID.status === true) {
-                    setIsPassedRPD(true)
-                } 
-            }
-            
-            if (data.studID.retryWCDAttempt >= 3) {
-                setWcdStatus("The student has recieved fail grade for 3 consecutive times. Thus, he/she has been terminated.");
-            }
-            else if (data.wcdID === null) {
-                setWcdStatus("The student either has not apply for WCD or has not re-apply WCD after receiving fail grade.");
-            } else if (data.wcdID.status === undefined) {
-                setWcdStatus("The student's WCD application OR re-application was approved. Howvever, the result is not yet evaluate by the authorities.");
-            } else {
-                setWcdStatus(data.wcdID.status ?
-                    "The student has passed the WCD."
-                        :
-                    "The student has failed the WCD."
-                );
+               const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyFetchDataStudent/${id}`, config);
 
-                if (data.wcdID.status === true) {
-                    setIsPassedWCD(true)
-                } 
+               setUserNameStud(data.studID.usernameStud);
+               setSupervisor(data.supID ? data.supID.usernameSup : 'Not yet been assigned to any supervisor' )
+               setDateJoin(data.studID.dateJoin);
+               setDegreeLvl(data.studID.degreeLvl);
+               setAcademicStatus(data.studID.academicStatus);
+               setRpdRetry(data.studID.retryRPDAttempt);
+               setPRRetry(data.studID.retryPRAttempt);
+               setWcdRetry(data.studID.retryWCDAttempt);
+    
+               if (data.studID.isStudent) {
+                   setStudentStatus("Active");
+               } else {
+                   setStudentStatus("Terminated");
+               }
+               
+               if (data.studID.retryRPDAttempt >= 3) {
+                   setRpdStatus("The student has recieved fail grade for 3 consecutive times. Thus, he/she has been terminated.");
+               }
+               else if (data.rpdID === null) {
+                   setRpdStatus("The student either has not apply for RPD or has not re-apply RPD after receiving fail grade.");
+                
+               } else if (data.rpdID.status === undefined) {
+                   setRpdStatus("The student's RPD application OR re-application was approved. However, the result is not yet evaluate by the authorities.");
+                
+               } else {
+                   setRpdStatus(data.rpdID.status ?
+                       "The student has passed the RPD."
+                           :
+                       "The student has failed the RPD."
+                   );
+    
+                   if (data.rpdID.status === true) {
+                       setIsPassedRPD(true)
+                   } 
+               }
+               
+               if (data.studID.retryWCDAttempt >= 3) {
+                   setWcdStatus("The student has recieved fail grade for 3 consecutive times. Thus, he/she has been terminated.");
+               }
+               else if (data.wcdID === null) {
+                   setWcdStatus("The student either has not apply for WCD or has not re-apply WCD after receiving fail grade.");
+               } else if (data.wcdID.status === undefined) {
+                   setWcdStatus("The student's WCD application OR re-application was approved. Howvever, the result is not yet evaluate by the authorities.");
+               } else {
+                   setWcdStatus(data.wcdID.status ?
+                       "The student has passed the WCD."
+                           :
+                       "The student has failed the WCD."
+                   );
+    
+                   if (data.wcdID.status === true) {
+                       setIsPassedWCD(true)
+                   } 
+               }
+    
+               if (data.studID.retryPRAttempt >= 3) {
+                   setPRStatus("The student has recieved fail grade for 3 consecutive times. Thus, he/she has been terminated.");
+               }
+               else if (data.reportProgressID === null) {
+                   setPRStatus(`The student either has not submit the report OR has not re-submit the report after receiving fail grade.`);
+               } else if (data.reportProgressID.status === undefined) {
+                   setPRStatus("The student has submitted the report, but the result is not yet evaluate by the authorities.");
+               } else {
+                   setPRStatus(data.reportProgressID.status ?
+                       "The student has passed the PR."
+                           :
+                       "The student has failed the PR."
+                   );
+    
+                   if (data.reportProgressID.status === true) {
+                       setIsPassedPR(true)
+                   } 
+               }
+               console.log(data);
             }
-
-            if (data.studID.retryPRAttempt >= 3) {
-                setPRStatus("The student has recieved fail grade for 3 consecutive times. Thus, he/she has been terminated.");
-            }
-            else if (data.reportProgressID === null) {
-                setPRStatus(`The student either has not submit the report OR has not re-submit the report after receiving fail grade.`);
-            } else if (data.reportProgressID.status === undefined) {
-                setPRStatus("The student has submitted the report, but the result is not yet evaluate by the authorities.");
-            } else {
-                setPRStatus(data.reportProgressID.status ?
-                    "The student has passed the PR."
-                        :
-                    "The student has failed the PR."
-                );
-
-                if (data.reportProgressID.status === true) {
-                    setIsPassedPR(true)
-                } 
-            }
-            console.log(data);
         };
         fetching();
-    }, [id]);
+    }, [id, dispatch, token]);
 
     useEffect(() => {
        fetchData('RPD', setPastCurrentDataRPD);
@@ -200,9 +219,9 @@ const FacultyViewStudentDataID = () => {
             Active. Student is active in the program.</>
     }
 
-    return (
-        <FacultyTemplate>
-            <div className="form-title-desc-container">Details of The Student</div>
+    const studentDetails = (
+            <>
+                <div className="form-title-desc-container">Details of The Student</div>
                 <div className="row" style={{marginTop: '40px'}}>
                     <div className="col-5 instruction-box" style={{borderRadius: '5px'}}>
                         <div className="row" style={{marginTop: '20px'}}>
@@ -379,7 +398,22 @@ const FacultyViewStudentDataID = () => {
                         </div>
                     </div>
                 </div>
-        </FacultyTemplate>
+            </>
+            )
+
+    return (
+        <>
+            {
+                facultyInfo ? 
+                    <FacultyTemplate>
+                        {studentDetails}
+                    </FacultyTemplate> 
+                    : 
+                    <SupervisorTemplate>
+                        {studentDetails}
+                    </SupervisorTemplate>
+            }
+        </>
     )
 }
 
