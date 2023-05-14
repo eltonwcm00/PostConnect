@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import FacultyTemplate from "../../../components/FacultyTemplate";
-import UserCounter from "../../../components/UserCounter";
+import { UserCounter } from "../../../components/UserCounter";
 import TodoList from "../../../components/ToDoList";
 import Calendar from "react-calendar";
 

@@ -29,6 +29,15 @@ const supervisorLogin = asyncHandler(async (req, res) => {
   }
 });
 
+const supervisorProfileCountSupervisingStudent = asyncHandler(async (req, res) => {
+  
+  const fetchStudentCount = await Student.find({supervisorUser: req.userSupervisor})
+                                         .countDocuments();
+  if (fetchStudentCount) {
+    res.status(201).json(fetchStudentCount);
+  }
+});
+
 /*************************************************** PROFILE ***************************************************/
 
 const supervisorProfileList = asyncHandler(async (req, res) => {
@@ -312,7 +321,7 @@ const supervisorFetchDataStudent = asyncHandler(async (req, res) => {
 /*************************************************** END VIEW STUDENT DATA REPORT ***************************************************/
 
 
-export { supervisorLogin, supervisorProfileList, supervisorProfileListByID, 
+export { supervisorLogin, supervisorProfileCountSupervisingStudent, supervisorProfileList, supervisorProfileListByID, 
          supervisorViewOwnProfile, supervisorViewCurrentSupervisingStudent, supervisorUpdatedProfile,
          supervisorReadMeetingLog, supervisorReadMeetingLogByID,
          supervisorReadRPDResult, supervisorReadWCDResult, 

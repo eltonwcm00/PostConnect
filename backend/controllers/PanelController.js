@@ -86,7 +86,9 @@ const panelUpdatedProfile = asyncHandler(async (req, res) => {
 });
 
 const panelCountEvaluatedRPD = asyncHandler(async (req, res) => {
-  const fetchEvalutedRPDCount = await RPD.find({}).or([{status:{$eq: false}}, {status:{$eq: true}}]).countDocuments(); 
+  const fetchEvalutedRPDCount = await RPD.find({})
+                                         .or([{status:{$eq: false}}, {status:{$eq: true}}])
+                                         .countDocuments(); 
 
   if (fetchEvalutedRPDCount) {
     res.status(201).json(fetchEvalutedRPDCount);
@@ -94,7 +96,9 @@ const panelCountEvaluatedRPD = asyncHandler(async (req, res) => {
 });
 
 const panelCountEvaluatedWCD = asyncHandler(async (req, res) => {
-  const fetchEvalutedWCDCount = await WCD.find({}).or([{status:{$eq: false}}, {status:{$eq: true}}]).countDocuments(); 
+  const fetchEvalutedWCDCount = await WCD.find({})
+                                         .or([{status:{$eq: false}}, {status:{$eq: true}}])
+                                         .countDocuments(); 
 
   if (fetchEvalutedWCDCount) {
     res.status(201).json(fetchEvalutedWCDCount);
@@ -102,7 +106,9 @@ const panelCountEvaluatedWCD = asyncHandler(async (req, res) => {
 });
 
 const panelCountEvaluatedPR = asyncHandler(async (req, res) => {
-  const fetchEvalutedPRCount = await ProgressReport.find({}).or([{status:{$eq: false}}, {status:{$eq: true}}]).countDocuments(); 
+  const fetchEvalutedPRCount = await ProgressReport.find({})
+                                                   .or([{status:{$eq: false}}, {status:{$eq: true}}])
+                                                   .countDocuments(); 
 
   if (fetchEvalutedPRCount) {
     res.status(201).json(fetchEvalutedPRCount);

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import moment from 'moment';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux"
 import { Container, Row, Col } from "react-bootstrap";
 import PanelTemplate from "../../../components/PanelTemplate";
-import UserCounter from "../../../components/UserCounter";
+import { UserCounter } from "../../../components/UserCounter";
 import TodoList from "../../../components/ToDoList";
 import Calendar from "react-calendar";
 
@@ -56,7 +56,6 @@ const PanelHomepage = () => {
                          userTwoCount={numSupervisor} userTwoImg={supervisorImg} userTwoType={"TOTAL SUPERVISOR"}
                          userThreeCount={numStudent} userThreeImg={studentImg} userThreeType={"TOTAL STUDENT"}
             />    
-            {console.log(numFaculty)}
             {panelInfo && <TodoList userType={panelInfo._id} username={panelInfo.usernamePanel}/>}
           </Col>
           <Col xs={4}>

@@ -47,7 +47,7 @@ const PanelEvaluatePR = () => {
                         fetchApplicationList && fetchApplicationList.filter(x =>(!x.panelUser)).map((list) => (
                                 <tr className='table-desc' key={list._id}>
                                 <td> {moment(list.dateSubmitPR).format('MMMM Do YYYY')} </td>
-                                <td> {list.studentUser.usernameStud} </td>
+                                <td> {list.studentUser && list.studentUser.usernameStud} </td>
                                 <td><Button className='table-details-button' href={`http://localhost:3000/panelEvaluatePR/${list._id}`}>Evaluate</Button></td>
                                 </tr>
                             )
