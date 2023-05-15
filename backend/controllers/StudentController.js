@@ -688,4 +688,5 @@ export { studentLogin, studentViewOwnProfile, studentProfileList, studentProfile
          studentUpdatedProfile, systemVerifyStudentStatus, systemReadVerifyStudentStatus, 
          studentViewDataRequestRPD, studentRequestRPD, studentViewRPDApplication, 
          studentSubmitMeetingLog, studentViewMeetingLog, studentRequestWCD, studentViewWCDApplication, 
-         studentRegisterPR, studentRegisterPRLandingPage, studentSubmitPR, studentViewPR };
+         studentRegisterPR, studentRegisterPRLandingPage, studentSubmitPR, studentViewPR
+       };

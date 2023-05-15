@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import moment from 'moment';
+import axios from "axios";
 import { Toast, ToastContainer, Tab, Tabs } from 'react-bootstrap';
 import { CDBContainer, CDBTable, CDBTableBody } from 'cdbreact';
 import 'react-calendar/dist/Calendar.css';
@@ -11,6 +12,9 @@ import "./Notification.css"
 const Notification = () => {
   
   let navigate = useNavigate();
+  let monthReminder = 0;
+
+  const [degreeLvl, setDegreeLvl] = useState();
 
   const [rpdToastPosition, setRPDToastPosition] = useState('top-start');
   const [showToast, setShowToast] = useState(true);
@@ -40,39 +44,84 @@ const Notification = () => {
   const studentMeetingLogStatusState = useSelector((state) => state.studentMeetingLogStatus);
   const {  meetingLogStatusMsg, currentMeetingInfo } = studentMeetingLogStatusState;
 
+  const { token } = useSelector((state) => state.studentLogin.studentInfo || {});
+
   useEffect(() => {
     dispatch(studentApplicationStatus());
-    if (!studentInfo) {
-      navigate("/");
-    }
-  }, [dispatch, navigate, studentInfo]);
-
-  useEffect(() => {
     dispatch(studentApplicationStatus2());
-    if (!studentInfo) {
-      navigate("/");
-    }
-  }, [dispatch, navigate, studentInfo]);
-
-  useEffect(() => {
     dispatch(studentApplicationStatus3());
-
+    dispatch(studentMeetingLogStatus());
+  
     if (!studentInfo) {
       navigate("/");
     }
   }, [dispatch, navigate, studentInfo]);
 
   useEffect(() => {
-    dispatch(studentMeetingLogStatus());
-    if (!studentInfo) {
-      navigate("/");
-    }
-  }, [dispatch, navigate, studentInfo])
+    const fetching = async () => {
+            
+      if (token) {
+         const config = {
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
+         }; 
+         const { data } = await axios.get('http://localhost:5000/api/student/studentViewOwnProfile', config);
+         setDegreeLvl(data.degreeLvl);
+      }
+    };
+    fetching();
+  }, [token])
 
-    return (
-      <>
-        <h4 className="mb-3 toast-title">Notifications</h4>
-        <Tabs defaultActiveKey="ResearchProposalDefence" id="fill-tab-example" className="mb-3 tab mt-4" justify transition={false}>
+  switch(degreeLvl) {
+    case 'Master Degree (Part-Time)':
+        monthReminder = 33; //max = 36months - 3 months (prior reminder for candidature extension)
+        break;
+    case 'Master Degree (Full-Time)':
+        monthReminder = 57; //60
+        break;
+    case 'Doctoral Degree (Part-Time)':
+        monthReminder = 57; //60
+        break;
+    case 'Doctoral Degree (Full-Time)':
+        monthReminder = 81; //84
+        break;
+    default:
+        monthReminder = null;
+        break;
+  }
+  var limitDate = moment(studentInfo.dateJoined).add(monthReminder , 'months');
+  console.log(limitDate);
+
+  return (
+    <>
+      <h4 className="mb-3 toast-title">Notifications</h4>
+      <Tabs defaultActiveKey="ResearchProposalDefence" id="fill-tab-example" className="mb-3 tab mt-4" justify transition={false}>
+        { 
+        (moment() > limitDate) &&
+          <Tab eventKey="Duration of Study" title="Duration of Study">
+            <CDBContainer style={{padding: '20px 0', textAlign: "center"}}>
+              <CDBTable borderless>
+                <CDBTableBody>
+                  <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
+                    <Toast className="toast" onClose={toggleShowA} show={showToast} animation={true}>
+                      <Toast.Header>
+                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                        {studentInfo && <strong className="me-auto">{`Hi, ${studentInfo.usernameStud}`}</strong>}
+                        <small>{moment().fromNow()}</small>
+                      </Toast.Header>
+                      <Toast.Body>
+                        {`Please be advised that you are approaching the maximum duration of study permitted for your program. 
+                          You have a remaining period of 3 months before your student status is set to expire. 
+                          We kindly request that you contact the faculty to initiate the process of extending your candidature duration.` }
+                      </Toast.Body>
+                    </Toast>
+                  </ToastContainer>
+                </CDBTableBody>
+              </CDBTable>
+            </CDBContainer>
+          </Tab>
+        }
         <Tab eventKey="ResearchProposalDefence" title="Research Proposal Defence">
           <CDBContainer style={{padding: '20px 0', textAlign: "center"}}>
             <CDBTable borderless>
@@ -242,8 +291,8 @@ const Notification = () => {
           </CDBContainer>
         </Tab>
       </Tabs>
-      </>    
-    )
+    </>    
+  )
 }
 
 export default Notification
