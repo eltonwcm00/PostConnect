@@ -234,7 +234,7 @@ const FacultyMonitorStudID = () => {
                             <Row>
                                 <Col sm={3}>
                                    <Button className="table-details-button mt-5" variant="primary" onClick={() => activateStudent()}>
-                                       Activate
+                                       Re-activate
                                    </Button> 
                                 </Col>
                                 <Col>

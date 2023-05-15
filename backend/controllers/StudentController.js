@@ -143,7 +143,7 @@ const systemVerifyStudentStatus = asyncHandler(async (req, res) => {
   if (currentTerminateExceedStudyStudInfo) {
     res.status(201).json({
       terminateMsg: `You have been terminated from studies due to the fact that you have 
-                     exceed the maximum amount of study duration. Pleae refer this case your supervisor`});
+                     exceed the maximum amount of study duration. Pleae contact the faculty.`});
   }
   else {
     if (!currentStudInfo) {
@@ -167,8 +167,8 @@ const systemVerifyStudentStatus = asyncHandler(async (req, res) => {
           if (terminateStudStatus) {
               res.status(201).json({studentStatus: terminateStudStatus.isStudent, 
                                     terminateMsg: `You have been terminated from studies due to the fact that you have 
-                                                  received 'Unsatisfactory (US)' grade for ${terminationCause}. 
-                                                  Please refer this case to your supervisor`});
+                                                  received 3 consecutives time of 'Unsatisfactory (US)' grade for ${terminationCause}. 
+                                                  Please contact the faculty.`});
           }
     }
   }
@@ -184,7 +184,7 @@ const studentViewDataRequestRPD = asyncHandler(async (req, res) => {
 
   const currentStudent = req.userStudent;
   
-  currentStudInfo = await Student.find({ _id: currentStudent}) //findByID(req.params.id)
+  currentStudInfo = await Student.find({ _id: currentStudent}); //findByID(req.params.id)
   // currentStudInfo = await Student.find({ _id: currentStudent})
 
   if (currentStudInfo) {
@@ -208,8 +208,12 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
   //const isRPDFailed = await RPD.findOne({fullname:currentStudent.usernameStud, status: false});
 
   const hasSupervisor = req.userStudent.supervisorUser;
+  const allowRequest = moment(currentStudent.dateJoin).add(30, 'days');
 
-  if (!hasSupervisor) {
+  if (moment() < allowRequest) {
+    res.status(401).json({message: "Access denied! you could only request for the application, after 30 days relative to your registration date"});
+  }
+  else if (!hasSupervisor) {
     res.status(401).json({message: "Access denied! you have not been assigned to any supervisor, please refer to faculty"});
   }
   else if (hasApplied && (!isReApplyAllow)) { 
@@ -401,8 +405,12 @@ const studentRequestWCD = asyncHandler(async (req, res) => {
                                                 retryWCDAttempt: {$gte: 1}});
 
   const hasSupervisor = req.userStudent.supervisorUser;
+  const allowRequest = moment(currentStudent.dateJoin).add(30, 'days');
 
-  if (!hasSupervisor) {
+  if (moment() < allowRequest) {
+    res.status(401).json({message: "Access denied! you could only request for the application, after 30 days relative to your registration date"});
+  }
+  else if (!hasSupervisor) {
     res.status(401).json({message: "Access denied! you have not been assigned to any supervisor, please refer to faculty"});
   }
   else if (hasApplied && (!isReApplyAllow)) { 
@@ -539,8 +547,12 @@ const studentRegisterPR = asyncHandler(async (req, res) => {
   const fetchPRDate = await ProgressReport.findOne({dateSetPR:{$exists: true}});
 
   const hasSupervisor = req.userStudent.supervisorUser;
+  const allowRequest = moment(currentStudent.dateJoin).add(30, 'days');
 
-  if (!hasSupervisor) {
+  if (todayDate < allowRequest) {
+    res.status(401).json({message: "Access denied! you could only register for the submission, after 30 days relative to your registration date"});
+  }
+  else if (!hasSupervisor) {
     res.status(401).json({message: "Access denied! you have not been assigned to any supervisor, please refer to faculty"});
   }
 
