@@ -261,11 +261,10 @@ const studentViewRPDApplication = asyncHandler(async (req, res) => {
   const appliedForRPD = await RPDApplication.findOne({ studentUser: currentStudent}); 
   const applicationFalseStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: false});
   const applicationTrueStatus = await RPDApplication.findOne({ studentUser: currentStudent, applicationStatus: true});
-  const rpdPassed = await RPD.findOne({fullname:currentStudent.usernameStud, status: true});
-  const rpdFailed = await RPD.findOne({fullname:currentStudent.usernameStud, status: false});
-  // const rpdReapplied = await Student.findOne({fullname:currentStudent.usernameStud, retryRPDAttempt: {$gte: 1}});
-
-
+  const rpdPassed = await RPD.findOne({fullname:currentStudent.usernameStud, status: true}).sort({updatedAt: -1});
+  const rpdFailed = await RPD.findOne({fullname:currentStudent.usernameStud, status: false}).sort({updatedAt: -1});
+  
+  
   if (appliedForRPD) { 
     
     if (applicationFalseStatus) {
@@ -278,8 +277,15 @@ const studentViewRPDApplication = asyncHandler(async (req, res) => {
                             updatedAt: rpdPassed.updatedAt});
     }
     else if (rpdFailed) {
+
+      const previousRecord = await RPD.find({ studentUser: currentStudent, updatedAt: { $lt: rpdFailed.updatedAt }})
+                                          .sort({updatedAt: -1})
+                                          .limit(1);
       res.status(201).json({applicationStatusMsg: "Sorry, You have received a 'Unsatisfactory (US)' grade and failed your RPD, please re-apply the RPD",
-                            updatedAt: rpdFailed.updatedAt});
+                              _id: rpdFailed._id,
+                              updatedAt: rpdFailed.updatedAt,
+                              updatedAt2: previousRecord.length ? previousRecord[0].updatedAt : null
+                            });
     }
     else if (applicationTrueStatus) {
       res.status(201).json({applicationStatusMsg: `Congratulation! Your RPD application on ${moment(appliedForRPD.dateApplyRPD).format('MMMM Do YYYY')} 
@@ -448,10 +454,8 @@ const studentViewWCDApplication = asyncHandler(async (req, res) => {
   const appliedForWCD = await WCDApplication.findOne({ studentUser: currentStudent}); 
   const applicationFalseStatus = await WCDApplication.findOne({ studentUser: currentStudent, applicationStatus: false});
   const applicationTrueStatus = await WCDApplication.findOne({ studentUser: currentStudent, applicationStatus: true});
-  const wcdPassed = await WCD.findOne({fullname:currentStudent.usernameStud, status: true});
-  const wcdFailed = await WCD.findOne({fullname:currentStudent.usernameStud, status: false});
-  // const rpdReapplied = await Student.findOne({fullname:currentStudent.usernameStud, retryRPDAttempt: {$gte: 1}});
-
+  const wcdPassed = await WCD.findOne({fullname:currentStudent.usernameStud, status: true}).sort({updatedAt: -1});
+  const wcdFailed = await WCD.findOne({fullname:currentStudent.usernameStud, status: false}).sort({updatedAt: -1});
 
   if (appliedForWCD) { 
     
@@ -465,8 +469,13 @@ const studentViewWCDApplication = asyncHandler(async (req, res) => {
                             updatedAt: wcdPassed.updatedAt});
     }
     else if (wcdFailed) {
+      const previousRecord = await RPD.find({ studentUser: currentStudent, updatedAt: { $lt: wcdFailed.updatedAt }})
+                                          .sort({updatedAt: -1})
+                                          .limit(1);
       res.status(201).json({applicationStatusMsg: "Sorry, You have received a 'Unsatisfactory (US)' grade and failed your WCD please re-apply the WCD",
-                            updatedAt: wcdFailed.updatedAt});
+                            updatedAt: wcdFailed.updatedAt,
+                            updatedAt2: previousRecord.length ? previousRecord[0].updatedAt : null
+                          });
     }
     else if (applicationTrueStatus) {
       res.status(201).json({applicationStatusMsg: `Congratulation! Your WCD application on ${moment(appliedForWCD.dateApplyWCD).format('MMMM Do YYYY')} 
@@ -626,21 +635,28 @@ const studentViewPR = asyncHandler(async (req, res) => {
   const prInfo = await ProgressReport.findOne({}); 
   const registeredForPR = await ProgressReport.findOne({ studentUser: currentStudent}); 
   const currentStud = await Student.findOne({_id: currentStudent});
-  const currentStudGrade = await ProgressReport.findOne({ studentUser: currentStudent}).sort({createdAt: -1}); // find latest result
+  const currentStudGrade = await ProgressReport.findOne({ studentUser: currentStudent}).sort({updatedAt: -1}); // find latest result
 
   if (!registeredForPR) {
     res.status(201).json({applicationStatusMsg: `You have not yet register for the progress report submission, the due date of the registration and submission is on,
                                                  ${moment(prInfo.dateSetPR).format('MMMM Do YYYY')}`});
   }
-  else if (registeredForPR.dateSubmitPR && registeredForPR.grade > 0 && currentStud.retryPRAttempt == 0) {
+  else if (registeredForPR.dateSubmitPR && (registeredForPR.panelUser && registeredForPR.supervisorUser) &&
+           registeredForPR.grade > 0 && currentStud.retryPRAttempt == 0) {
     res.status(201).json({applicationStatusMsg: `Your progress report has been evaluated. Congratulation! you have been given grade ${currentStudGrade.grade} 
                                                  for your progress report and received grade 'Satisfactory' (S).`,
                           updatedAt: registeredForPR.updatedAt});
   }
-  else if (registeredForPR.dateSubmitPR && registeredForPR.grade > 0 && currentStud.retryPRAttempt > 0) {
-    res.status(201).json({applicationStatusMsg: `Your progress report has been evaluated. Sorry, you have been given grade ${currentStudGrade.grade} 
-                                                 for your progress report and received grade 'Unsatisfactory' (US).`,
-                          updatedAt: registeredForPR.updatedAt});
+  else if (registeredForPR.dateSubmitPR && (registeredForPR.panelUser && registeredForPR.supervisorUser) && 
+           registeredForPR.grade > 0 && currentStud.retryPRAttempt > 0) {
+    
+    const previousRecord = await ProgressReport.find({ studentUser: currentStudent, updatedAt: { $lt: currentStudGrade.updatedAt }})
+                                          .sort({updatedAt: -1})
+                                          .limit(1);
+    res.status(201).json({applicationStatusMsg: `Your progress report has been evaluated. Sorry, you have received grade 'Unsatisfactory' (US).`,
+                          updatedAt: currentStudGrade.updatedAt,
+                          updatedAt2: previousRecord.length ? previousRecord[0].updatedAt : null
+                        });
   }
   else if (registeredForPR && registeredForPR.dateSubmitPR) { 
     res.status(201).json({applicationStatusMsg: `You have submit the progress report on ${moment(registeredForPR.dateSubmitPR).format('MMMM Do YYYY')}. Kindly wait

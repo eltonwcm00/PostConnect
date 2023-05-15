@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import moment from 'moment';
-import { Toast, ToastContainer, Tab, Tabs, Row, Col } from 'react-bootstrap';
+import { Toast, ToastContainer, Tab, Tabs } from 'react-bootstrap';
 import { CDBContainer, CDBTable, CDBTableBody } from 'cdbreact';
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import {useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { studentApplicationStatus, studentApplicationStatus2, studentApplicationStatus3, studentMeetingLogStatus } from "../actions/studentAction";
 import "./Notification.css"
-import Clock from "./Clock";
 
 const Notification = () => {
   
@@ -58,6 +56,7 @@ const Notification = () => {
 
   useEffect(() => {
     dispatch(studentApplicationStatus3());
+
     if (!studentInfo) {
       navigate("/");
     }
@@ -75,21 +74,37 @@ const Notification = () => {
         <h4 className="mb-3 toast-title">Notifications</h4>
         <Tabs defaultActiveKey="ResearchProposalDefence" id="fill-tab-example" className="mb-3 tab mt-4" justify transition={false}>
         <Tab eventKey="ResearchProposalDefence" title="Research Proposal Defence">
-          <CDBContainer style={{padding: '20px 0', textAlign: "center"}} className="list-container">
+          <CDBContainer style={{padding: '20px 0', textAlign: "center"}}>
             <CDBTable borderless>
               <CDBTableBody>
               <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
                 <Toast className="toast" onClose={toggleShowA} show={showToast} animation={true}>
                   <Toast.Header>
                     <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                    <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                    <small>{applicationStatusMsg && moment(currentApplicationInfo.updatedAt).format('MMMM Do YYYY')}</small>
+                    {studentInfo && <strong className="me-auto">{`Hi, ${studentInfo.usernameStud}`}</strong>}
+                    {
+                    studentInfo && studentInfo.retryRPDAttempt == 2 ? 
+                      <small>{applicationStatusMsg && moment(currentApplicationInfo.updatedAt2).format('MMMM Do YYYY')}</small>
+                      : 
+                      <small>{applicationStatusMsg && moment(currentApplicationInfo.updatedAt).format('MMMM Do YYYY')}</small>
+                    }
                   </Toast.Header>
                   <Toast.Body>{applicationStatusMsg && <>{currentApplicationInfo.applicationStatusMsg}</>}</Toast.Body>
                 </Toast>
                 {/* Remind student he/she about to be terminated from study if fail RPD more than 3 consecutive times */}
                 {          
                   (studentInfo && studentInfo.retryRPDAttempt == 2) && 
+                    <>
+                    <Toast className="toast" onClose={toggleShowC} show={showToastC} animation={true}>
+                      <Toast.Header>
+                      <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                        <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                        <small>{ applicationStatusMsg && moment(currentApplicationInfo.updatedAt).format('MMMM Do YYYY')}</small>
+                      </Toast.Header>
+                      <Toast.Body>
+                        {"Sorry, You have received a 'Unsatisfactory (US)' grade and failed your RPD, please re-apply the RPD"}
+                      </Toast.Body>
+                    </Toast>
                     <Toast className="toast" onClose={toggleShowC} show={showToastC} animation={true}>
                       <Toast.Header>
                       <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
@@ -100,6 +115,7 @@ const Notification = () => {
                         {"Warning!, you have failed your RPD for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
                       </Toast.Body>
                     </Toast>
+                  </>
                 }
               </ToastContainer>
               </CDBTableBody>
@@ -107,21 +123,37 @@ const Notification = () => {
           </CDBContainer>
         </Tab>
         <Tab eventKey="WorkCompletionDefence" title="Work Completion Defence">
-          <CDBContainer style={{padding: '10px 0', textAlign: "center"}} className="list-container">
+          <CDBContainer style={{padding: '10px 0', textAlign: "center"}}>
             <CDBTable borderless>
               <CDBTableBody>
               <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
                 <Toast className="toast" onClose={toggleShowD} show={showToastD} animation={true}>
                   <Toast.Header className="toast-header">
                     <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                    <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                    <small>{applicationStatusMsg2 && moment(currentApplicationInfo2.updatedAt).format('MMMM Do YYYY')}</small>
+                    {studentInfo && <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>}
+                    {
+                      studentInfo && studentInfo.retryWCDAttempt == 2 ? 
+                        <small>{applicationStatusMsg2 && moment(currentApplicationInfo2.updatedAt2).format('MMMM Do YYYY')}</small>
+                        :
+                        <small>{applicationStatusMsg2 && moment(currentApplicationInfo2.updatedAt).format('MMMM Do YYYY')}</small>
+                    }
                   </Toast.Header>
                   <Toast.Body>{applicationStatusMsg2 && <>{currentApplicationInfo2.applicationStatusMsg}</>}</Toast.Body>
                 </Toast>
                   {/* Remind student he/she about to be terminated from study if fail WCD more than 3 consecutive times */}
                   {
                     (studentInfo && studentInfo.retryWCDAttempt == 2) && 
+                    <>
+                      <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
+                        <Toast.Header>
+                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                          <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                          <small>{ applicationStatusMsg2 && moment(currentApplicationInfo2.updatedAt).format('MMMM Do YYYY')}</small>
+                        </Toast.Header>
+                        <Toast.Body>
+                          {"Sorry, You have received a 'Unsatisfactory (US)' grade and failed your WCD, please re-apply the RPD"}
+                        </Toast.Body>
+                      </Toast>
                       <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
                         <Toast.Header className="toast-header">
                         <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
@@ -132,6 +164,7 @@ const Notification = () => {
                           {"Warning!, you have failed your WCD for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
                         </Toast.Body>
                       </Toast>
+                    </>
                   }
               </ToastContainer>
               </CDBTableBody>
@@ -139,21 +172,40 @@ const Notification = () => {
           </CDBContainer>
         </Tab>
         <Tab eventKey="ProgressReport" title="Progress Report">
-          <CDBContainer style={{padding: '10px 0px', textAlign: "center"}} className="list-container">
+          <CDBContainer style={{padding: '10px 0px', textAlign: "center"}}>
             <CDBTable borderless>
               <CDBTableBody>
               <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
                 <Toast className="toast" onClose={toggleShowF} show={showToastF} animation={true}>
                   <Toast.Header className="toast-header">
                     <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                    <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                    <small>{applicationStatusMsg3 && moment(currentApplicationInfo3.updatedAt).format('MMMM Do YYYY')}</small>
+                    {studentInfo && <strong className="me-auto">{`Hi, ${studentInfo.usernameStud}`}</strong>}
+                    {
+                    studentInfo && studentInfo.retryPRAttempt == 2 ? 
+                      <><small>{applicationStatusMsg3 && moment(currentApplicationInfo3.updatedAt2).format('MMMM Do YYYY')}</small>
+                      <small className="ml-2" style={{fontWeight: 'bold', fontStyle: 'italic'}}>(Cycle#1)</small></>
+                      : 
+                      <><small>{applicationStatusMsg3 && moment(currentApplicationInfo3.updatedAt).format('MMMM Do YYYY')}</small>
+                      <small className="ml-2" style={{fontWeight: 'bold', fontStyle: 'italic'}}>(Cycle#1)</small></>
+                    }
                   </Toast.Header>
                   <Toast.Body>{applicationStatusMsg3 && <>{currentApplicationInfo3.applicationStatusMsg}</>}</Toast.Body>
                 </Toast>
-                {/* Remind student he/she about to be terminated from study if fail WCD more than 3 consecutive times */}
+                {/* Remind student he/she about to be terminated from study if fail PR more than 3 consecutive times */}
                 {
                     (studentInfo && studentInfo.retryPRAttempt == 2) && 
+                    <>
+                      <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
+                        <Toast.Header>
+                          <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                          <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                          <small>{applicationStatusMsg3 && moment(currentApplicationInfo3.updatedAt).format('MMMM Do YYYY')}</small>
+                          <small className="ml-2" style={{fontWeight: 'bold', fontStyle: 'italic'}}>(Cycle#2)</small>
+                        </Toast.Header>
+                        <Toast.Body>
+                          {`Your progress report has been evaluated. Sorry, you received grade 'Unsatisfactory' (US).`}
+                        </Toast.Body>
+                      </Toast>
                       <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
                         <Toast.Header className="toast-header">
                         <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
@@ -164,6 +216,7 @@ const Notification = () => {
                           {"Warning!, you have failed your PR for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
                         </Toast.Body>
                       </Toast>
+                    </>
                   }
               </ToastContainer>
               </CDBTableBody>
@@ -171,7 +224,7 @@ const Notification = () => {
           </CDBContainer>
         </Tab>
         <Tab eventKey="MeetingLog" title="Meeting Log">
-          <CDBContainer style={{padding: '10px 0px', textAlign: "center"}} className="list-container">
+          <CDBContainer style={{padding: '10px 0px', textAlign: "center"}}>
             <CDBTable borderless>
               <CDBTableBody>
               <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
