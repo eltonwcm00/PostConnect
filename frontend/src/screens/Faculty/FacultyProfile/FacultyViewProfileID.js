@@ -40,7 +40,7 @@ const FacultyViewProfileID = () => {
     const [fullnameSup, setFullNameSup] = useState();
     const [fullnamePanel, setFullNamePanel] = useState();
 
-    const [dateJoined, setDateJoined] = useState();
+    const [dateJoined, setDateJoined] = useState(null);
     const [degreeLvl, setDegreeLvl] = useState();
     const [academicPos, setAcademicPos] = useState();
 
@@ -88,7 +88,7 @@ const FacultyViewProfileID = () => {
             } else if (isSuper) {
                 dispatch(facultyUpdateSupervisorProfile(id, password, cfrmPassword, academicPos));
             } else {
-                dispatch(facultyUpdateStudentProfile(id, password, cfrmPassword, degreeLvl));
+                dispatch(facultyUpdateStudentProfile(id, password, cfrmPassword, degreeLvl, dateJoined));
             }
         }
     }
@@ -149,6 +149,7 @@ const FacultyViewProfileID = () => {
                                         value={dateJoined}
                                         onChange={setDateJoined}
                                         dateFormat="MMMM d, yyyy"
+                                        disabled
                                     />
                                 </Col>
                             </Form.Group>

@@ -21,7 +21,9 @@ import { supervisorLogout } from '../actions/supervisorAction';
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-      dispatch(supervisorLogout());
+      if (window.confirm("Are you sure?")) { 
+        dispatch(supervisorLogout()); 
+      }
     }
 
     return (

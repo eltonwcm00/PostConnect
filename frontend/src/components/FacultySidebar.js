@@ -21,7 +21,9 @@ import { facultyLogout } from '../actions/facultyAction';
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-      dispatch(facultyLogout());
+      if (window.confirm("Are you sure?")) {
+        dispatch(facultyLogout());
+      }
     }
 
     return (

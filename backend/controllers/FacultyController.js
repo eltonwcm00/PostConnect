@@ -678,7 +678,7 @@ const facultySetDatePR = asyncHandler(async (req, res) => {
     let todayDate = moment();
     
     if(dateSet < todayDate) {
-      res.status(401).json({message: "Invalid, set date for progress report submission is greater than today's date"});
+      res.status(401).json({message: "Invalid, set date for progress report submission is earlier than today's date"});
     }
     else {
       const fetchPRDate = await ProgressReport.findOne({dateSetPR:{$exists: true}});

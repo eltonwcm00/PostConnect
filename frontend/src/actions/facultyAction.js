@@ -46,7 +46,7 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
   
       const { data } = await axios.post(
         "http://localhost:5000/api/faculty/facultyLogin",
-        { userNameFac, password},
+        { userNameFac, password },
         config
       );
 
@@ -132,7 +132,7 @@ export const facultyUpdateSupervisorProfile = (id, password, cfrmPassword, acade
   }
 }
 
-export const facultyUpdateStudentProfile = (id, password, cfrmPassword, degreeLvl) => async (dispatch) => {
+export const facultyUpdateStudentProfile = (id, password, cfrmPassword, degreeLvl, dateJoined) => async (dispatch) => {
   try {
     dispatch({
       type: FACULTY_UPDATE_APPLICATION_REQUEST,
@@ -145,7 +145,7 @@ export const facultyUpdateStudentProfile = (id, password, cfrmPassword, degreeLv
     };
 
     const { data } = await axios.put(`http://localhost:5000/api/student/studentProfileList/${id}`, 
-                                      {password, cfrmPassword, degreeLvl}, config);
+                                      {password, cfrmPassword, degreeLvl, dateJoined}, config);
 
     dispatch({
       type: FACULTY_APPROVE_APPLICATION_SUCCESS,

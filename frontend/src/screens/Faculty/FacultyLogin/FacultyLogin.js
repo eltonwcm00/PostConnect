@@ -44,7 +44,7 @@ const FacultyLogin = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(facultyLogin(userNameFac, password));
-      };
+    };
 
     return (
          <div style={{ display: "flex", height: "100vh", backgroundColor: '#071B63'}}>

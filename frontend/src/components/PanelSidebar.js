@@ -21,7 +21,9 @@ import { panelLogout } from '../actions/panelAction';
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-      dispatch(panelLogout());
+      if (window.confirm("Are you sure?")) {
+        dispatch(panelLogout()); 
+      } 
     }
 
     return (

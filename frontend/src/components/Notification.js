@@ -90,8 +90,10 @@ const Notification = () => {
         monthReminder = null;
         break;
   }
-  var limitDate = moment(studentInfo.dateJoined).add(monthReminder , 'months');
-  console.log(limitDate);
+  if (studentInfo) {
+    var limitDate = moment(studentInfo.dateJoined).add(monthReminder , 'months');
+    console.log(limitDate);
+  }
 
   return (
     <>

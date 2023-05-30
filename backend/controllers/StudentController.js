@@ -76,7 +76,7 @@ const studentProfileListByID = asyncHandler(async (req, res) => {
 
 const studentUpdatedProfile = asyncHandler(async (req, res) => {
   
-  const { degreeLvl, password, cfrmPassword } = req.body
+  const { degreeLvl, password, cfrmPassword, dateJoined } = req.body
 
   const studentProfileID = await Student.findById(req.params.id);
 
@@ -203,8 +203,7 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
   let appliedRPD;
 
   const hasApplied = await RPDApplication.findOne({ studentUser: currentStudent });
-  const isReApplyAllow = await Student.findOne({studentUser: currentStudent, 
-                                              retryRPDAttempt: {$gte: 1}});
+  const isReApplyAllow = await Student.findOne({_id: currentStudent, retryRPDAttempt: {$gte: 1}});
   //const isRPDFailed = await RPD.findOne({fullname:currentStudent.usernameStud, status: false});
 
   const hasSupervisor = req.userStudent.supervisorUser;
@@ -401,7 +400,7 @@ const studentRequestWCD = asyncHandler(async (req, res) => {
   let appliedRPD;
 
   const hasApplied = await WCDApplication.findOne({ studentUser: currentStudent });
-  const isReApplyAllow = await Student.findOne({studentUser: currentStudent, 
+  const isReApplyAllow = await Student.findOne({_id: currentStudent, 
                                                 retryWCDAttempt: {$gte: 1}});
 
   const hasSupervisor = req.userStudent.supervisorUser;

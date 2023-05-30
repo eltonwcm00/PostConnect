@@ -62,8 +62,9 @@ const StudentSubmitPR = () => {
     useEffect(() => {
       if (successMsg) {
         const timer = setTimeout(() => {
-          navigate("/studentHomepage");
-        }, 5000);
+          // navigate("/studentSubmitPR");
+          window.location.reload();
+        }, 2000);
         return () => clearTimeout(timer);
       }
     }, [navigate, successMsg])
