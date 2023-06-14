@@ -55,7 +55,7 @@ const PanelEvaluateWCD = () => {
                                 <td><Button className='table-details-button' href={`http://localhost:3000/panelEvaluateWCD/${list._id}`}>Evaluate</Button></td>
                                 </tr>
                             )
-                        )
+                        ) 
                     }
                     </CDBTableBody>
                 </CDBTable>

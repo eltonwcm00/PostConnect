@@ -40,9 +40,18 @@ const studentViewOwnProfile = asyncHandler(async (req, res) => {
   
   const fetchCurrentStudent = await Student.findOne({_id: req.userStudent._id})
                                            .populate('supervisorUser');
+                                           
+  const fetchCurrentStudentRPD = await RPD.findOne({studentRef: req.userStudent._id});
+  const fetchCurrentStudentWCD = await WCD.findOne({studentRef: req.userStudent._id});
+  const fetchCurrentStudentPR = await ProgressReport.findOne({studentUser: req.userStudent._id});
 
   if(fetchCurrentStudent) {
-    res.status(201).json(fetchCurrentStudent);
+    res.status(201).json({
+      fetchCurrentStudent,
+      fetchCurrentStudentRPD,
+      fetchCurrentStudentWCD,
+      fetchCurrentStudentPR
+    });
   } 
   else {
     res.status(500);

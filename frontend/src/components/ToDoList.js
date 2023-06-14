@@ -66,7 +66,7 @@ function TodoList({ userType, username }) {
                     <span>Add A Task</span>
                 </Col>
                 <Col xs={3} className="justify-content-end">
-                    <h6 style={{fontWeight: 'bold', color: '#C4C4C4'}}>Today</h6>
+                    <h6 style={{fontWeight: 'bold', color: 'white'}}>Today</h6>
                     <span style={{fontWeight: 'bold', color: '#4c4c4c'}}>{moment().format(' Do MMMM ')}</span>
                 </Col>
             </Row>

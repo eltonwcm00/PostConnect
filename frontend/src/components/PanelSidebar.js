@@ -60,7 +60,7 @@ import { panelLogout } from '../actions/panelAction';
                 {panelInfo && <CDBBtn onClick={handleLogout} color="primary" style={{backgroundColor: 'transparent', 
                   fontWeight: 'normal',
                   marginLeft: -10,
-                  color: '#c4c4c4',
+                  color: 'white',
                   boxShadow: 'none'
                 }}>
                   Logout

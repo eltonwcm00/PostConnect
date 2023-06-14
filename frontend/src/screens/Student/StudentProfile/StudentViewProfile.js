@@ -27,6 +27,12 @@ const StudentViewProfile = () => {
   const [degreeLvl, setDegreeLvl] = useState();
   const [supervisor, setSupervisor] = useState();
 
+  const [passSubjectA, setPassSubjectA] = useState();
+  const [passSubjectB, setPassSubjectB] = useState();
+  const [passRPD, setPassRPD] = useState();
+  const [passWCD, setPassWCD] = useState();
+  const [passPR, setPassPR] = useState();
+
   useEffect(() => {
     const fetching = async () => {
       if (token) {
@@ -40,16 +46,31 @@ const StudentViewProfile = () => {
           config
         );
 
-        setName(data.usernameStud);
-        setDateJoined(data.dateJoin);
-        setDegreeLvl(data.degreeLvl);
+        setName(data.fetchCurrentStudent.usernameStud);
+        setDateJoined(data.fetchCurrentStudent.dateJoin);
+        setDegreeLvl(data.fetchCurrentStudent.degreeLvl);
         
-        if (data.supervisorUser && data.supervisorUser.usernameSup) {
-          setSupervisor(data.supervisorUser.usernameSup);
+        if (data.fetchCurrentStudent.supervisorUser && data.fetchCurrentStudent.supervisorUser.usernameSup) {
+          setSupervisor(data.fetchCurrentStudent.supervisorUser.usernameSup);
         } else {
           setSupervisor(undefined);
         }
-        console.log(name);
+
+        setPassSubjectA(!data.fetchCurrentStudent.subjectA ? "-" : "Passed");
+        setPassSubjectB(!data.fetchCurrentStudent.subjectB ? "-" : "Passed");
+       
+        function getStatusValue(status) {
+          if (status === undefined || status === null) {
+            return "-";
+          } else {
+            return status ? "Passed" : "Failed";
+          }
+        }
+        
+        setPassRPD(getStatusValue(data.fetchCurrentStudentRPD && data.fetchCurrentStudentRPD.status));
+        setPassWCD(getStatusValue(data.fetchCurrentStudentWCD && data.fetchCurrentStudentWCD.status));
+        setPassPR(getStatusValue(data.fetchCurrentStudentPR && data.fetchCurrentStudentPR.status));        
+        
       }
     };
     fetching();
@@ -109,6 +130,26 @@ const StudentViewProfile = () => {
                 <span className="profileText">
                   <span style={dataDesc}>Degree Lvl:</span>
                   <span style={dataColor}>{degreeLvl}</span>
+                </span>
+                <span className="profileText">
+                  <span style={dataDesc}>Subject A:</span>
+                  <span style={dataColor}>{passSubjectA}</span>
+                </span>
+                <span className="profileText">
+                  <span style={dataDesc}>Subject B:</span>
+                  <span style={dataColor}>{passSubjectB}</span>
+                </span>
+                <span className="profileText">
+                  <span style={dataDesc}>Research Proposal Defence:</span>
+                  <span style={dataColor}>{passRPD}</span>
+                </span>
+                <span className="profileText">
+                  <span style={dataDesc}>Work Completion Defence:</span>
+                  <span style={dataColor}>{passWCD}</span>
+                </span>
+                <span className="profileText">
+                  <span style={dataDesc}>Progress Report:</span>
+                  <span style={dataColor}>{passPR}</span>
                 </span>
                 <span className="profileText">
                   <span style={dataDesc}>Academic Status:</span>

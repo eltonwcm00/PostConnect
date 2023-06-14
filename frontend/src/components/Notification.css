@@ -25,3 +25,36 @@
     background-color: #f3f9fb;
     color: black;
 }
+
+.toast {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  @media (min-width: 576px) {
+    .toast {
+      max-width: 540px;
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .toast {
+      max-width: 720px;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .toast {
+      max-width: 960px;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .toast {
+      max-width: 1140px;
+    }
+  }
+  

@@ -95,6 +95,12 @@ const Notification = () => {
     console.log(limitDate);
   }
 
+  const maxWidthNotif = {
+    width: '75vw', 
+    left: '50%', 
+    backgroundColor: 'white' 
+  }
+
   return (
     <>
       <h4 className="mb-3 toast-title">Notifications</h4>
@@ -106,7 +112,7 @@ const Notification = () => {
               <CDBTable borderless>
                 <CDBTableBody>
                   <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
-                    <Toast className="toast" onClose={toggleShowA} show={showToast} animation={true}>
+                    <Toast className="toast" onClose={toggleShowA} show={showToast} animation={true} style={maxWidthNotif}>
                       <Toast.Header>
                         <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
                         {studentInfo && <strong className="me-auto">{`Hi, ${studentInfo.usernameStud}`}</strong>}
@@ -129,7 +135,33 @@ const Notification = () => {
             <CDBTable borderless>
               <CDBTableBody>
               <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
-                <Toast className="toast" onClose={toggleShowA} show={showToast} animation={true}>
+                {/* Remind student he/she about to be terminated from study if fail RPD more than 3 consecutive times */}
+                {          
+                  (studentInfo && studentInfo.retryRPDAttempt == 2) && 
+                  <>
+                    <Toast className="toast" onClose={toggleShowC} show={showToastC} animation={true} style={maxWidthNotif}>
+                      <Toast.Header>
+                      <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                        <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                        <small>{moment().fromNow()}</small>
+                      </Toast.Header>
+                      <Toast.Body>
+                        {"Warning!, you have failed your RPD for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
+                      </Toast.Body>
+                    </Toast>
+                    <Toast className="toast" onClose={toggleShowC} show={showToastC} animation={true} style={{ width: '75vw', left: '50%', backgroundColor: 'white' }}>
+                      <Toast.Header>
+                      <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                        <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                        <small>{ applicationStatusMsg && moment(currentApplicationInfo.updatedAt).format('MMMM Do YYYY')}</small>
+                      </Toast.Header>
+                      <Toast.Body>
+                        {"Sorry, You have received a 'Unsatisfactory (US)' grade and failed your RPD, please re-apply the RPD"}
+                      </Toast.Body>
+                    </Toast>
+                  </>
+                }
+                <Toast className="toast" onClose={toggleShowA} show={showToast} animation={true} style={maxWidthNotif}>
                   <Toast.Header>
                     <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
                     {studentInfo && <strong className="me-auto">{`Hi, ${studentInfo.usernameStud}`}</strong>}
@@ -142,32 +174,6 @@ const Notification = () => {
                   </Toast.Header>
                   <Toast.Body>{applicationStatusMsg && <>{currentApplicationInfo.applicationStatusMsg}</>}</Toast.Body>
                 </Toast>
-                {/* Remind student he/she about to be terminated from study if fail RPD more than 3 consecutive times */}
-                {          
-                  (studentInfo && studentInfo.retryRPDAttempt == 2) && 
-                    <>
-                    <Toast className="toast" onClose={toggleShowC} show={showToastC} animation={true}>
-                      <Toast.Header>
-                      <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                        <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                        <small>{ applicationStatusMsg && moment(currentApplicationInfo.updatedAt).format('MMMM Do YYYY')}</small>
-                      </Toast.Header>
-                      <Toast.Body>
-                        {"Sorry, You have received a 'Unsatisfactory (US)' grade and failed your RPD, please re-apply the RPD"}
-                      </Toast.Body>
-                    </Toast>
-                    <Toast className="toast" onClose={toggleShowC} show={showToastC} animation={true}>
-                      <Toast.Header>
-                      <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                        <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                        <small>{moment().fromNow()}</small>
-                      </Toast.Header>
-                      <Toast.Body>
-                        {"Warning!, you have failed your RPD for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
-                      </Toast.Body>
-                    </Toast>
-                  </>
-                }
               </ToastContainer>
               </CDBTableBody>
             </CDBTable>
@@ -178,7 +184,33 @@ const Notification = () => {
             <CDBTable borderless>
               <CDBTableBody>
               <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
-                <Toast className="toast" onClose={toggleShowD} show={showToastD} animation={true}>
+                 {/* Remind student he/she about to be terminated from study if fail WCD more than 3 consecutive times */}
+                 {
+                    (studentInfo && studentInfo.retryWCDAttempt == 2) && 
+                    <>
+                      <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true} style={maxWidthNotif}>
+                        <Toast.Header className="toast-header">
+                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                          <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                          <small>{moment().fromNow()}</small>
+                        </Toast.Header>
+                        <Toast.Body>
+                          {"Warning!, you have failed your WCD for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
+                        </Toast.Body>
+                      </Toast>
+                      <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true} style={maxWidthNotif}>
+                        <Toast.Header>
+                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                          <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                          <small>{ applicationStatusMsg2 && moment(currentApplicationInfo2.updatedAt).format('MMMM Do YYYY')}</small>
+                        </Toast.Header>
+                        <Toast.Body>
+                          {"Sorry, You have received a 'Unsatisfactory (US)' grade and failed your WCD, please re-apply the RPD"}
+                        </Toast.Body>
+                      </Toast>
+                    </>
+                  }
+                <Toast className="toast" onClose={toggleShowD} show={showToastD} animation={true} style={maxWidthNotif}>
                   <Toast.Header className="toast-header">
                     <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
                     {studentInfo && <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>}
@@ -191,32 +223,6 @@ const Notification = () => {
                   </Toast.Header>
                   <Toast.Body>{applicationStatusMsg2 && <>{currentApplicationInfo2.applicationStatusMsg}</>}</Toast.Body>
                 </Toast>
-                  {/* Remind student he/she about to be terminated from study if fail WCD more than 3 consecutive times */}
-                  {
-                    (studentInfo && studentInfo.retryWCDAttempt == 2) && 
-                    <>
-                      <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
-                        <Toast.Header>
-                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                          <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                          <small>{ applicationStatusMsg2 && moment(currentApplicationInfo2.updatedAt).format('MMMM Do YYYY')}</small>
-                        </Toast.Header>
-                        <Toast.Body>
-                          {"Sorry, You have received a 'Unsatisfactory (US)' grade and failed your WCD, please re-apply the RPD"}
-                        </Toast.Body>
-                      </Toast>
-                      <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
-                        <Toast.Header className="toast-header">
-                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                          <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                          <small>{moment().fromNow()}</small>
-                        </Toast.Header>
-                        <Toast.Body>
-                          {"Warning!, you have failed your WCD for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
-                        </Toast.Body>
-                      </Toast>
-                    </>
-                  }
               </ToastContainer>
               </CDBTableBody>
             </CDBTable>
@@ -227,7 +233,34 @@ const Notification = () => {
             <CDBTable borderless>
               <CDBTableBody>
               <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
-                <Toast className="toast" onClose={toggleShowF} show={showToastF} animation={true}>
+                {/* Remind student he/she about to be terminated from study if fail PR more than 3 consecutive times */}
+                {
+                  (studentInfo && studentInfo.retryPRAttempt == 2) && 
+                  <>
+                    <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true} style={maxWidthNotif}>
+                      <Toast.Header className="toast-header">
+                      <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                        <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                        <small>{moment().fromNow()}</small>
+                      </Toast.Header>
+                      <Toast.Body>
+                        {"Warning!, you have failed your PR for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
+                      </Toast.Body>
+                    </Toast>
+                    <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true} style={maxWidthNotif}>
+                      <Toast.Header>
+                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
+                        <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
+                        <small>{applicationStatusMsg3 && moment(currentApplicationInfo3.updatedAt).format('MMMM Do YYYY')}</small>
+                        <small className="ml-2" style={{fontWeight: 'bold', fontStyle: 'italic'}}>(Cycle#2)</small>
+                      </Toast.Header>
+                      <Toast.Body>
+                        {`Your progress report has been evaluated. Sorry, you received grade 'Unsatisfactory' (US).`}
+                      </Toast.Body>
+                    </Toast>
+                  </>
+                  }
+                <Toast className="toast" onClose={toggleShowF} show={showToastF} animation={true} style={maxWidthNotif}>
                   <Toast.Header className="toast-header">
                     <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
                     {studentInfo && <strong className="me-auto">{`Hi, ${studentInfo.usernameStud}`}</strong>}
@@ -242,33 +275,6 @@ const Notification = () => {
                   </Toast.Header>
                   <Toast.Body>{applicationStatusMsg3 && <>{currentApplicationInfo3.applicationStatusMsg}</>}</Toast.Body>
                 </Toast>
-                {/* Remind student he/she about to be terminated from study if fail PR more than 3 consecutive times */}
-                {
-                    (studentInfo && studentInfo.retryPRAttempt == 2) && 
-                    <>
-                      <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
-                        <Toast.Header>
-                          <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                          <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                          <small>{applicationStatusMsg3 && moment(currentApplicationInfo3.updatedAt).format('MMMM Do YYYY')}</small>
-                          <small className="ml-2" style={{fontWeight: 'bold', fontStyle: 'italic'}}>(Cycle#2)</small>
-                        </Toast.Header>
-                        <Toast.Body>
-                          {`Your progress report has been evaluated. Sorry, you received grade 'Unsatisfactory' (US).`}
-                        </Toast.Body>
-                      </Toast>
-                      <Toast className="toast" onClose={toggleShowE} show={showToastE} animation={true}>
-                        <Toast.Header className="toast-header">
-                        <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
-                          <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
-                          <small>{moment().fromNow()}</small>
-                        </Toast.Header>
-                        <Toast.Body>
-                          {"Warning!, you have failed your PR for 2 consecutive times, fail for the 3rd consective times will result in student status's termination"}
-                        </Toast.Body>
-                      </Toast>
-                    </>
-                  }
               </ToastContainer>
               </CDBTableBody>
             </CDBTable>
@@ -279,7 +285,7 @@ const Notification = () => {
             <CDBTable borderless>
               <CDBTableBody>
               <ToastContainer className="p-5 toast-container notification" position={rpdToastPosition}>
-                <Toast className="toast" onClose={toggleShowB} show={showToastB} animation={true}>
+                <Toast className="toast" onClose={toggleShowB} show={showToastB} animation={true} style={maxWidthNotif}>
                   <Toast.Header>
                   <img src="/image/student.png" className="rounded me-2" alt="null" style={{height: 20}} />
                     <strong className="me-auto">{studentInfo && `Hi, ${studentInfo.usernameStud}`}</strong>
