@@ -212,7 +212,12 @@ const studentViewDataRequestRPD = asyncHandler(async (req, res) => {
 
 const studentRequestRPD = asyncHandler(async (req, res) => {
 
-  const { fullName, miniThesisTitle, supervisorName, miniThesisPDF } = req.body;
+  const { fullName, miniThesisTitle, supervisorName } = req.body;
+
+  // Use the `path` property to access the file path
+  console.log(req.file);
+
+  const miniThesisPDF = req.file ? req.file.path : "";
   const currentStudent = req.userStudent;
 
   let appliedRPD;
@@ -238,7 +243,7 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
     // if(fullName.trim().length === 0) { res.status(401).json({message: "Please fill in your full name"});}
     if(miniThesisTitle.trim().length === 0) {res.status(401).json({message: "Please fill in your mini thesis title"});}
     // else if(supervisorName.trim().length === 0) { res.status(401).json({message: "Please fill your supervisor name"});}
-    else if (miniThesisPDF.trim().length === 0) { res.status(401).json({message: "Please upload your mini thesis .pdf file"});}
+    // else if (miniThesisPDF.trim().length === 0) { res.status(401).json({message: "Please upload your mini thesis .pdf file"});}
 
     appliedRPD = await RPDApplication.create({
       //fullName,
@@ -246,7 +251,7 @@ const studentRequestRPD = asyncHandler(async (req, res) => {
       miniThesisTitle,
       // supervisorName,
       supervisorName: hasSupervisor,
-      miniThesisPDF, // miniThesisPDF: req.file, //req.file.filename
+      miniThesisPDF: req.file.path, // miniThesisPDF: req.file, //req.file.filename
       dateApplyRPD: moment(),
       studentUser: currentStudent,
     });

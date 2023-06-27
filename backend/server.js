@@ -4,6 +4,7 @@ import connectDB from "./db.js";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from 'url';
+import { upload } from "./middleware/multer.js";
 
 import facultyRoutes from "./routes/facultyRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
@@ -28,11 +29,12 @@ const corsOptions ={
 }
 
 app.use(cors(corsOptions))
+app.use(upload.single("myFile"));
 
 app.get('/', (req, res) => res.send('The server is working '));
 
 app.use("/api/faculty", facultyRoutes);
-app.use("/api/student", studentRoutes);
+app.use("/api/student", upload.single("myFile"), studentRoutes);
 app.use("/api/supervisor", supervisorRoutes);
 app.use("/api/panel", panelRoutes);
 

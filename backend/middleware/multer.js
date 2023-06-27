@@ -1,28 +1,20 @@
-import multer from 'multer';
- 
-//Configuration for Multer
-const multerStorage = multer.diskStorage({
-   destination: (req, file, cb) => {
-     cb(null, "./public");
-   },
-   filename: (req, file, cb) => {
-    cb(null, Date.now()+file.originalname) // file name setting
-   },
- });
+import multer from 'multer'
 
-//Upload Setting
-let upload = multer({
- storage: multerStorage,
- fileFilter:(req, file, cb)=>{
-  if(file.mimetype.split("/")[1] === "pdf"){
-      cb(null, true)
+// Configure the storage and file name for multer
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // Specify the destination folder for uploaded files
+    cb(null, 'public/files');
+  },
+  filename: function (req, file, cb) {
+    // Generate a unique file name for the uploaded file
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.originalname); // Use the original filename
   }
-  else{
-      cb(null, false);
-      cb(new Error('"Not a PDF File!!'))
-  }
- }
-})
+});
 
-export { upload };
+// Create the multer upload instance
+const upload = multer({ storage: storage });
+
+export { upload }
 

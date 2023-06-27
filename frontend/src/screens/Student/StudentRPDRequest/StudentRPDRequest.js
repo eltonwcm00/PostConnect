@@ -16,7 +16,7 @@ const StudentRPDRequest = () => {
     const [fullName, setfullName] = useState();
     const [miniThesisTitle, setminiThesisTitle] = useState("");
     const [supervisorName, setsupervisorName] = useState();
-    const [miniThesisPDF, setminiThesisPDF] = useState("");
+    const [miniThesisPDF, setminiThesisPDF] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -52,7 +52,21 @@ const StudentRPDRequest = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(studentRPDRequest(fullName, miniThesisTitle, supervisorName, miniThesisPDF));
+        if (!miniThesisPDF) {
+            // Display an error message or perform any other necessary action
+            console.log("Please upload your mini thesis .pdf file");
+            return;
+        }
+        // Create a new FormData object
+        const formData = new FormData();
+        // Append the form data
+        formData.append("fullName", fullName);
+        formData.append("miniThesisTitle", miniThesisTitle);
+        formData.append("supervisorName", supervisorName);
+        formData.append("myFile", miniThesisPDF); // Append the uploaded file
+        // dispatch(studentRPDRequest(fullName, miniThesisTitle, supervisorName, miniThesisPDF));
+        // Dispatch the action with the formData
+        dispatch(studentRPDRequest(formData));
         console.log(miniThesisPDF)
     };
 
@@ -114,8 +128,6 @@ const StudentRPDRequest = () => {
                         placeholder="Your mini thesis title"
                         onChange={(e) => setminiThesisTitle(e.target.value)}
                         className="py-4 input-request"
-                        id="myFile" 
-                        name="myFile"
                     />
                     </Col>
                 </Form.Group>
@@ -125,10 +137,11 @@ const StudentRPDRequest = () => {
                     <Col sm={10}>
                     <Form.Control
                         type="file"
-                        value={miniThesisPDF}
+                        // defaultValue={miniThesisPDF}
                         name="myFile"
                         placeholder="Your mini thesis file"
-                        onChange={(e) => setminiThesisPDF(e.target.value)}
+                        // onChange={(e) => setminiThesisPDF(e.target.value)}
+                        onChange={(e) => setminiThesisPDF(e.target.files[0])}
                         className="py-4 input-request"
                     />
                     </Col>

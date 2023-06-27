@@ -155,6 +155,12 @@ export const studentRPDRequest = (fullName, miniThesisTitle, supervisorName, min
     const {
       studentLogin: { studentInfo },
     } = getState();
+
+    const formData = new FormData();
+    formData.append('fullName', fullName);
+    formData.append('miniThesisTitle', miniThesisTitle);
+    formData.append('supervisorName', supervisorName);
+    formData.append('myFile', miniThesisPDF);
     
     const config = {
       headers: {
@@ -165,7 +171,7 @@ export const studentRPDRequest = (fullName, miniThesisTitle, supervisorName, min
 
     const { data } = await axios.post(
       "http://localhost:5000/api/student/studentRequestRPD",
-      { fullName, miniThesisTitle, supervisorName, miniThesisPDF},
+      formData,
       config
     );
 
