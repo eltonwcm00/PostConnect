@@ -17,20 +17,26 @@ const facultyLogin = asyncHandler(async (req, res) => {
   
     // username: faculty; password: 123
     const { userNameFac, password } = req.body;
-  
     const userFaculty = await Faculty.findOne({ userNameFac });
-    const validPass = await bcrypt.compare(password, userFaculty.password);
-  
-    if (userFaculty && validPass) {
-      res.status(201).json({
-        _id: userFaculty._id,
-        userNameFac: userFaculty.userNameFac, 
-        password,
-        isFaculty: true,
-        token: generateToken(userFaculty._id),
-        successMessage: "Logged in successfully!"
-      });
-    } 
+
+    if (userFaculty) {
+
+      const validPass = await bcrypt.compare(password, userFaculty.password);
+
+      if (validPass) {
+        res.status(201).json({
+          _id: userFaculty._id,
+          userNameFac: userFaculty.userNameFac, 
+          password,
+          isFaculty: true,
+          token: generateToken(userFaculty._id),
+          successMessage: "Logged in successfully!"
+        });
+      } 
+      else {
+        res.status(401).json({message: "Username or Password is incorrect!"});
+      }
+    }
     else {
       res.status(401).json({message: "Username or Password is incorrect!"});
     }

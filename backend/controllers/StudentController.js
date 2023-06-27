@@ -11,24 +11,30 @@ import WCD from "../models/WCD.js";
 import ProgressReport from "../models/ProgressReport.js";
 
 const studentLogin = asyncHandler(async (req, res) => {
+    
     const { usernameStud, password } = req.body;
-  
     const userStudent = await Student.findOne({ usernameStud });
-    const validPass = await bcrypt.compare(password, userStudent.password);
+
+    if (userStudent) {
+      const validPass = await bcrypt.compare(password, userStudent.password);
   
-    if (userStudent && validPass) {
-      res.status(201).json({
-        _id: userStudent._id,
-        usernameStud: userStudent.usernameStud,       
-        dateJoined: userStudent.dateJoin,
-        isStudent: userStudent.isStudent,
-        retryRPDAttempt: userStudent.retryRPDAttempt,
-        retryWCDAttempt: userStudent.retryWCDAttempt,
-        retryPRAttempt: userStudent.retryPRAttempt,
-        token: generateToken(userStudent._id),
-        successMessage: "Logged in successfully!"
-      });
-    } 
+      if (userStudent && validPass) {
+        res.status(201).json({
+          _id: userStudent._id,
+          usernameStud: userStudent.usernameStud,       
+          dateJoined: userStudent.dateJoin,
+          isStudent: userStudent.isStudent,
+          retryRPDAttempt: userStudent.retryRPDAttempt,
+          retryWCDAttempt: userStudent.retryWCDAttempt,
+          retryPRAttempt: userStudent.retryPRAttempt,
+          token: generateToken(userStudent._id),
+          successMessage: "Logged in successfully!"
+        });
+      } 
+      else {
+        res.status(401).json({message: "Username or Password is incorrect!"});
+      }
+    }
     else {
       res.status(401).json({message: "Username or Password is incorrect!"});
     }
