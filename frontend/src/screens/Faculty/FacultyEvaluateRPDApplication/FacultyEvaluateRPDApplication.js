@@ -5,6 +5,7 @@ import { Button, Tab, Tabs } from "react-bootstrap";
 import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import { useDispatch, useSelector } from "react-redux";
 import { facultyReadEvaluateRPDApplication } from "../../../actions/facultyAction";
+import { BASE_URL } from "../../../urlPath";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import FacultyTemplate from "../../../components/FacultyTemplate";
@@ -55,7 +56,7 @@ const FacultyEvaluateRPDApplication = () => {
                           <td> {list.fullName} </td>
                           <td> {list.miniThesisTitle} </td>
                           {/* <td> {!list.applicationStatus ? "Pending" : "Processed" } </td> */}
-                          <td><Button className='table-details-button' href={`http://localhost:3000/facultyEvaluateRPDApplication/${list._id}`}>Details</Button></td>
+                          <td><Button className='table-details-button' href={`${BASE_URL}facultyEvaluateRPDApplication/${list._id}`}>Details</Button></td>
                         </tr>
                       )
                     )
@@ -86,7 +87,7 @@ const FacultyEvaluateRPDApplication = () => {
                           <td> {list.miniThesisTitle} </td>
                           {/* <td> {"Processed"} </td> */}
                           <td> {list.applicationStatus ? "Approved" : "Rejected"} </td>
-                          <td><Button className='table-details-button' href={`http://localhost:3000/facultyEvaluateRPDApplication/${list._id}`}>Details</Button></td>
+                          <td><Button className='table-details-button' href={`${BASE_URL}facultyEvaluateRPDApplication/${list._id}`}>Details</Button></td>
                         </tr>
                       )
                     )

@@ -101,7 +101,7 @@ const facultyPanelRegistration = asyncHandler(async (req, res) => {
   const userExists = await Panel.findOne({ usernamePanel });
 
   if (userExists) {
-    res.status(401).json({message: "Username is existed!"});
+    res.status(401).json({message: "Username exists"});
   }
 
   if (cfrmPassword == password) {
@@ -115,7 +115,7 @@ const facultyPanelRegistration = asyncHandler(async (req, res) => {
     });
   }
   else {
-    res.status(401).json({message: "Repeat password and password is not match"});
+    res.status(401).json({message: "Repeat password and password does not match"});
   }
 
   if (userPanel) {

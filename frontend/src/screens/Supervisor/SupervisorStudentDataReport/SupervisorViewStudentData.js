@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import moment from 'moment';
 import { useDispatch, useSelector } from "react-redux";
 import { supervisorViewStudentData  } from "../../../actions/supervisorAction";
+import { BASE_URL } from "../../../urlPath";
 import { Button } from "react-bootstrap";
 import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
 import PaginationBar from "../../../components/PaginationBar";
@@ -66,7 +67,7 @@ const SupervisorViewStudentData = () => {
                       <td> {list.studID.degreeLvl} </td>
                       <td> {list.supID ? list.supID.usernameSup : '-' } </td>
                       <td> {list.studID.isStudent ? "Active" : "Terminated"} </td>
-                      <td className='table-details-button'><Button href={`http://localhost:3000/facultyViewStudentData/${list._id}`}>Details</Button></td>
+                      <td className='table-details-button'><Button href={`${BASE_URL}facultyViewStudentData/${list._id}`}>Details</Button></td>
                     </tr>           
                 )   
                ) 

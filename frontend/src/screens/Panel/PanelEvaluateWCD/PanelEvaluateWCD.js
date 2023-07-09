@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import { useDispatch, useSelector } from "react-redux";
 import { panelReadWCD } from "../../../actions/panelAction";
+import { BASE_URL } from "../../../urlPath";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import PanelTemplate from "../../../components/PanelTemplate";
@@ -52,7 +53,7 @@ const PanelEvaluateWCD = () => {
                                 <td> {moment(list.dateScheduleWCD).format('MMMM Do YYYY')} </td>
                                 <td> {list.fullname} </td>
                                 <td> {list.thesisTitle} </td>
-                                <td><Button className='table-details-button' href={`http://localhost:3000/panelEvaluateWCD/${list._id}`}>Evaluate</Button></td>
+                                <td><Button className='table-details-button' href={`${BASE_URL}panelEvaluateWCD/${list._id}`}>Evaluate</Button></td>
                                 </tr>
                             )
                         ) 

@@ -6,6 +6,7 @@ import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import { useDispatch, useSelector } from "react-redux";
 import { supervisorReadMeetingLog } from "../../../actions/supervisorAction";
 import { excerpt } from"../../../components/Excerpt";
+import { BASE_URL } from '../../../urlPath';
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SupervisorTemplate from "../../../components/SupervisorTemplate";
@@ -52,7 +53,7 @@ const SupervisorViewMeetingLog = () => {
                           <td> {list.studentUser.usernameStud} </td>
                           {console.log(list.studentUser.usernameStud)}
                           <td> {excerpt(list.contentLog, 80, " ", "...")} </td>
-                          <td><Button className='table-details-button' href={`http://localhost:3000/supervisorViewMeetingLog/${list._id}`}>Details</Button></td>
+                          <td><Button className='table-details-button' href={`${BASE_URL}supervisorViewMeetingLog/${list._id}`}>Details</Button></td>
                         </tr>
                       )
                     )

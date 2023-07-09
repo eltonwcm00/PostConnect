@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
 import { useDispatch, useSelector } from "react-redux";
 import { facultyReadSubjectStudent } from "../../../actions/facultyAction";
+import { BASE_URL } from "../../../urlPath";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import FacultyTemplate from "../../../components/FacultyTemplate";
@@ -56,7 +57,7 @@ const FacultySubjectRegistration = () => {
                       <td> {list.usernameStud} </td>
                       <td> {list.subjectA ? "Data Structure and Algorithm" : <b>-</b>} </td>
                       <td> {list.subjectB ? "Web App Development with MERN Stack" : <b>-</b>} </td>
-                      <td className='table-details-button'><Button href={`http://localhost:3000/miscellaneous/${list._id}`}>Assign</Button></td>
+                      <td className='table-details-button'><Button href={`${BASE_URL}miscellaneous/${list._id}`}>Assign</Button></td>
                       {(list.subjectA || list.subjectB) && <td><i className="fa-sharp fa-solid fa-check"></i></td>}
                     </tr>           
                 )   

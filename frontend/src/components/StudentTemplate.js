@@ -1,28 +1,28 @@
 import React from 'react'
 import MainScreen from './MainScreen'
 import StudentSidebar from './StudentSidebar'
+import { BASE_URL } from '../urlPath'
 
 const StudentTemplate = ({ children }) => {
 
-  let pageURL = 'http://localhost:3000/'
   let pageTitle;
 
-  if (window.location.href === pageURL+'studentHomepage'){
+  if (window.location.href === BASE_URL+'studentHomepage'){
     pageTitle = "Student's Homepage";
   }
-  else if (window.location.href === pageURL+'studentRequestRPD'){
+  else if (window.location.href === BASE_URL+'studentRequestRPD'){
     pageTitle = "Request For Research Proposal Defence";
   }
-  else if (window.location.href === pageURL+'studentSubmitMeetingLog'){
+  else if (window.location.href === BASE_URL+'studentSubmitMeetingLog'){
     pageTitle = "Meeting Log Submission";
   } 
-  else if (window.location.href === pageURL+'studentRequestWCD') {
+  else if (window.location.href === BASE_URL+'studentRequestWCD') {
     pageTitle = "Request For Work Completion Defence";
   }
-  else if (window.location.href === pageURL+'studentSubmitPR') {
+  else if (window.location.href === BASE_URL+'studentSubmitPR') {
     pageTitle = "Progress Report";
   }
-  else if (window.location.href === pageURL+'studentViewProfile') {
+  else if (window.location.href === BASE_URL+'studentViewProfile') {
     pageTitle = "Student's Profile";
   }
   else {

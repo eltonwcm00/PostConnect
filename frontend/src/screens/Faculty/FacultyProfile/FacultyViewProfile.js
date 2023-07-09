@@ -9,6 +9,7 @@ import { facultyViewOwnProfile } from "../../../actions/facultyAction";
 import { panelProfile } from "../../../actions/panelAction";
 import { supervisorProfile } from "../../../actions/supervisorAction";
 import { studentProfile } from "../../../actions/studentAction";
+import { BASE_URL } from "../../../urlPath";
 import FacultyTemplate from "../../../components/FacultyTemplate";
 import PaginationBar from "../../../components/PaginationBar";
 import "./FacultyProfile.css"
@@ -200,7 +201,7 @@ const FacultyViewProfile = () => {
                               <td> {moment(list.dateJoin).format("DD/MM/YYYY")} </td>
                               <td> {list.degreeLvl} </td>
                               <td className="table-details-button">
-                                <Button href={`http://localhost:3000/studentProfileList/${list._id}`}>Edit</Button>
+                                <Button href={`${BASE_URL}studentProfileList/${list._id}`}>Edit</Button>
                               </td>
                             </tr>
                           ))
@@ -240,7 +241,7 @@ const FacultyViewProfile = () => {
                             <td> {list.usernameSup} </td>
                             <td> {list.academicPos} </td>
                             <td className="table-details-button">
-                              <Button href={`http://localhost:3000/supervisorProfileList/${list._id}`}>Edit</Button>
+                              <Button href={`${BASE_URL}supervisorProfileList/${list._id}`}>Edit</Button>
                             </td>
                           </tr>
                         ))
@@ -267,7 +268,7 @@ const FacultyViewProfile = () => {
                             <td> {indexPanel++} </td>
                             <td> {list.usernamePanel} </td>
                             <td className="table-details-button">
-                              <Button href={`http://localhost:3000/panelProfileList/${list._id}`}>Edit</Button>
+                              <Button href={`${BASE_URL}panelProfileList/${list._id}`}>Edit</Button>
                             </td>
                           </tr>
                         ))

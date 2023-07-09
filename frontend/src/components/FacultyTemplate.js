@@ -1,56 +1,56 @@
 import React from 'react'
 import MainScreen from './MainScreen'
 import FacultySidebar from './FacultySidebar'
+import { BASE_URL } from '../urlPath';
 import { useParams } from 'react-router-dom';
 
 const FacultyTemplate = ({ children }) => {
 
-  let pageURL = 'http://localhost:3000/'
   let pageTitle;
 
   const { id } = useParams();
 
-  if (window.location.href === pageURL+'facultyHomepage'){
+  if (window.location.href === BASE_URL+'facultyHomepage'){
     pageTitle = "Faculty's Homepage";
   }
-  else if (window.location.href === pageURL+'facultyLogin'){
+  else if (window.location.href === BASE_URL+'facultyLogin'){
     pageTitle = "Faculty Login";
   }
-  else if (window.location.href === pageURL+'facultyViewProfile'){
+  else if (window.location.href === BASE_URL+'facultyViewProfile'){
     pageTitle = "User Profile";
   }
-  else if (window.location.href === pageURL+'facultyStudentRegistration'){
+  else if (window.location.href === BASE_URL+'facultyStudentRegistration'){
     pageTitle = "Student Registration";
   } 
-  else if (window.location.href === pageURL+'facultyPanelRegistration') {
+  else if (window.location.href === BASE_URL+'facultyPanelRegistration') {
     pageTitle = "Panel Registration";
   }
-  else if (window.location.href === pageURL+'facultySupervisorRegistration') {
+  else if (window.location.href === BASE_URL+'facultySupervisorRegistration') {
     pageTitle = "Supervisor Registration";
   }
-  else if (window.location.href === pageURL+'facultyAssignNumSupervisor' || window.location.href === pageURL+`facultyAssignNumSupervisor/${id}`) {
+  else if (window.location.href === BASE_URL+'facultyAssignNumSupervisor' || window.location.href === BASE_URL+`facultyAssignNumSupervisor/${id}`) {
     pageTitle = "Assign Number of Supervision";
   }
-  else if (window.location.href === pageURL+'facultyReadChooseStudent' || window.location.href === pageURL+`facultyReadChooseStudent/${id}`) {
+  else if (window.location.href === BASE_URL+'facultyReadChooseStudent' || window.location.href === BASE_URL+`facultyReadChooseStudent/${id}`) {
     pageTitle = "Choose Student to Supervise";
   }
-  else if (window.location.href === pageURL+'facultyEvaluateRPDApplication' || window.location.href === pageURL+`facultyEvaluateRPDApplication/${id}`) {
+  else if (window.location.href === BASE_URL+'facultyEvaluateRPDApplication' || window.location.href === BASE_URL+`facultyEvaluateRPDApplication/${id}`) {
     pageTitle = "Research Proposal Defence Request Application";
   }
-  else if (window.location.href === pageURL+'miscellaneous' || window.location.href === pageURL+`miscellaneous/${id}`) {
+  else if (window.location.href === BASE_URL+'miscellaneous' || window.location.href === BASE_URL+`miscellaneous/${id}`) {
     pageTitle = "Miscellaneous";
   }
-  else if (window.location.href === pageURL+'facultyEvaluateWCDApplication' || window.location.href === pageURL+`facultyEvaluateWCDApplication/${id}`) {
+  else if (window.location.href === BASE_URL+'facultyEvaluateWCDApplication' || window.location.href === BASE_URL+`facultyEvaluateWCDApplication/${id}`) {
     pageTitle = "Work Completion Defence Request Application";
   }
-  else if (window.location.href === pageURL+'facultyMonitorStudent' || window.location.href === pageURL+`facultyMonitorStudent/${id}`) {
+  else if (window.location.href === BASE_URL+'facultyMonitorStudent' || window.location.href === BASE_URL+`facultyMonitorStudent/${id}`) {
     pageTitle = "Candidature Monitoring";
   }
-  else if (window.location.href === pageURL+`panelProfileList/${id}` || window.location.href === pageURL+`supervisorProfileList/${id}` 
-           || window.location.href === pageURL+`studentProfileList/${id}`) {
+  else if (window.location.href === BASE_URL+`panelProfileList/${id}` || window.location.href === BASE_URL+`supervisorProfileList/${id}` 
+           || window.location.href === BASE_URL+`studentProfileList/${id}`) {
     pageTitle = "Edit User Profile";
   }
-  else if (window.location.href === pageURL+'facultyViewStudentData' || window.location.href === pageURL+`facultyViewStudentData/${id}`) {
+  else if (window.location.href === BASE_URL+'facultyViewStudentData' || window.location.href === BASE_URL+`facultyViewStudentData/${id}`) {
     pageTitle = "Student Data Report";
   }
   else {

@@ -2,36 +2,36 @@ import React from 'react'
 import MainScreen from './MainScreen'
 import SupervisorSidebar from './SupervisorSidebar'
 import {useParams } from 'react-router-dom';
+import { BASE_URL } from '../urlPath';
 
 const SupervisorTemplate = ({ children }) => {
 
-  let pageURL = 'http://localhost:3000/'
   let pageTitle;
 
   const { id } = useParams();
 
-  if (window.location.href === pageURL+'supervisorHomepage'){
+  if (window.location.href === BASE_URL+'supervisorHomepage'){
     pageTitle = "Supervisor's Homepage";
   }
-  else if (window.location.href === pageURL+'supervisorViewMeetingLog'|| window.location.href === pageURL+`supervisorViewMeetingLog/${id}`){
+  else if (window.location.href === BASE_URL+'supervisorViewMeetingLog'|| window.location.href === BASE_URL+`supervisorViewMeetingLog/${id}`){
     pageTitle = "Student's Meeting Log";
   } 
-  else if (window.location.href === pageURL+'supervisorViewRPD') {
+  else if (window.location.href === BASE_URL+'supervisorViewRPD') {
     pageTitle = "View Research Proposal Defence Result";
   }
-  else if (window.location.href === pageURL+'supervisorViewWCD') {
+  else if (window.location.href === BASE_URL+'supervisorViewWCD') {
     pageTitle = "View Work Completion Defence Result";
   }
-  else if (window.location.href === pageURL+'supervisorEvaluatePR' || window.location.href === pageURL+`supervisorEvaluatePR/${id}`) {
+  else if (window.location.href === BASE_URL+'supervisorEvaluatePR' || window.location.href === BASE_URL+`supervisorEvaluatePR/${id}`) {
     pageTitle = "Progress Report Evaluation";
   }
-  else if (window.location.href === pageURL+'supervisorViewPR') {
+  else if (window.location.href === BASE_URL+'supervisorViewPR') {
     pageTitle = "View Progress Report Result";
   }
-  else if (window.location.href === pageURL+'supervisorViewProfile') {
+  else if (window.location.href === BASE_URL+'supervisorViewProfile') {
     pageTitle = "Supervisor's Profile";
   }
-  else if (window.location.href === pageURL+'supervisorViewStudentData') {
+  else if (window.location.href === BASE_URL+'supervisorViewStudentData') {
     pageTitle = "Student Data Report";
   }
   else {

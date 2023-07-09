@@ -87,7 +87,7 @@ const StudentWCDRequest = () => {
                             </Form.Group>
 
                             <Form.Group as={Row} className="mb-5" controlId="formBasicPassword">
-                                <Form.Label column sm={2}>Supervisor Name*</Form.Label>
+                                <Form.Label column sm={2}>Supervisor ID*</Form.Label>
                                 <Col sm={10}>
                                 <Form.Control
                                     type="text"

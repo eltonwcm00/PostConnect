@@ -5,6 +5,7 @@ import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
 import moment from 'moment';
 import { useDispatch, useSelector } from "react-redux";
 import { facultyReadSubjectStudent } from "../../../actions/facultyAction";
+import { BASE_URL } from "../../../urlPath";
 import PaginationBar from "../../../components/PaginationBar";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
@@ -62,7 +63,7 @@ const FacultyMonitorStud = () => {
                       <td> {moment(list.dateJoin).format("DD/MM/YYYY")} </td>
                       <td> {list.isStudent ? "Active" : "Terminated"} </td>
                       <td className="table-details-button">
-                        <Button href={`http://localhost:3000/facultyMonitorStudent/${list._id}`}>Details</Button>
+                        <Button href={`${BASE_URL}facultyMonitorStudent/${list._id}`}>Details</Button>
                       </td>
                     </tr>
                   ))}

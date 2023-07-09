@@ -613,7 +613,7 @@ const studentSubmitPR = asyncHandler(async (req, res) => {
   if (currentStudent) {
     
     if (contentPR.trim().length === 0) { 
-      res.status(401).json({message: "Please upload your progress report .pdf file"});
+      res.status(401).json({message: "Please upload your progress report .pdf format"});
     }
     else {
       if(submitPR.prMoreThanOnce) {

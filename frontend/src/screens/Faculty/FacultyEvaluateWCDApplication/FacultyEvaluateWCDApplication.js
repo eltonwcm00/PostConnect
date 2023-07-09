@@ -5,6 +5,7 @@ import { Button, Tab, Tabs } from "react-bootstrap";
 import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import { useDispatch, useSelector } from "react-redux";
 import { facultyReadEvaluateWCDApplication } from "../../../actions/facultyAction";
+import { BASE_URL } from "../../../urlPath";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import FacultyTemplate from "../../../components/FacultyTemplate";
@@ -53,7 +54,7 @@ const FacultyEvaluateWCDApplication = () => {
                           <td> {moment(list.dateApplyRPD).format('l')} </td>
                           <td> {list.fullName} </td>
                           <td> {list.thesisTitle} </td>
-                          <td><Button className='table-details-button' href={`http://localhost:3000/facultyEvaluateWCDApplication/${list._id}`}>Details</Button></td>
+                          <td><Button className='table-details-button' href={`${BASE_URL}facultyEvaluateWCDApplication/${list._id}`}>Details</Button></td>
                         </tr>
                       )
                     )
@@ -82,7 +83,7 @@ const FacultyEvaluateWCDApplication = () => {
                           <td> {list.fullName} </td>
                           <td> {list.thesisTitle} </td>
                           <td> {list.applicationStatus ? "Approved" : "Rejected"} </td>
-                          <td><Button className='table-details-button' href={`http://localhost:3000/facultyEvaluateWCDApplication/${list._id}`}>Details</Button></td>
+                          <td><Button className='table-details-button' href={`${BASE_URL}facultyEvaluateWCDApplication/${list._id}`}>Details</Button></td>
                         </tr>
                       )
                     )

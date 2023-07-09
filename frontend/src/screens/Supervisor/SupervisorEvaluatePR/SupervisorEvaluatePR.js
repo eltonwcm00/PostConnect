@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import { useDispatch, useSelector } from "react-redux";
 import { supervisorReadPR } from "../../../actions/supervisorAction";
+import { BASE_URL } from "../../../urlPath";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import SupervisorTemplate from "../../../components/SupervisorTemplate";
@@ -48,7 +49,7 @@ const SupervisorEvaluatePR = () => {
                                 <tr className='table-desc' key={list._id}>
                                 <td> {moment(list.dateSubmitPR).format('MMMM Do YYYY')} </td>
                                 <td> {list.studentUser.usernameStud} </td>
-                                <td><Button className='table-details-button' href={`http://localhost:3000/supervisorEvaluatePR/${list._id}`}>Evaluate</Button></td>
+                                <td><Button className='table-details-button' href={`${BASE_URL}supervisorEvaluatePR/${list._id}`}>Evaluate</Button></td>
                                 </tr>
                             )
                         )

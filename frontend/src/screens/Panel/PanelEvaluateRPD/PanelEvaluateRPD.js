@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import { useDispatch, useSelector } from "react-redux";
 import { panelReadRPD } from "../../../actions/panelAction";
+import { BASE_URL } from "../../../urlPath";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import PanelTemplate from "../../../components/PanelTemplate";
@@ -52,7 +53,7 @@ const PanelEvaluateRPD = () => {
                                 <td> {moment(list.dateScheduleRPD).format('MMMM Do YYYY')} </td>
                                 <td> {list.fullname} </td>
                                 <td> {list.miniThesisTitle} </td>
-                                <td><Button className='table-details-button' href={`http://localhost:3000/panelEvaluateRPD/${list._id}`}>Evaluate</Button></td>
+                                <td><Button className='table-details-button' href={`${BASE_URL}panelEvaluateRPD/${list._id}`}>Evaluate</Button></td>
                                 </tr>
                             )
                         )

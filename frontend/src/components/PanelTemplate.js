@@ -1,28 +1,28 @@
 import React from 'react'
 import MainScreen from './MainScreen'
-import PanelSidebar from './PanelSidebar'
+import PanelSidebar from './PanelSidebar';
+import { BASE_URL } from '../urlPath';
 import { useParams } from 'react-router-dom';
 
 const PanelTemplate = ({ children }) => {
 
-  let pageURL = 'http://localhost:3000/'
   let pageTitle;
 
   const { id } = useParams();
 
-  if (window.location.href === pageURL+'panelHomepage'){
+  if (window.location.href === BASE_URL+'panelHomepage'){
     pageTitle = "Panel's Homepage";
   }
-  else if (window.location.href === pageURL+'panelEvaluateRPD' || window.location.href === pageURL+`panelEvaluateRPD/${id}`){
+  else if (window.location.href === BASE_URL+'panelEvaluateRPD' || window.location.href === BASE_URL+`panelEvaluateRPD/${id}`){
     pageTitle = "Research Proposal Defence Evaluation";
   }
-  else if (window.location.href === pageURL+'panelEvaluateWCD' || window.location.href === pageURL+`panelEvaluateWCD/${id}`){
+  else if (window.location.href === BASE_URL+'panelEvaluateWCD' || window.location.href === BASE_URL+`panelEvaluateWCD/${id}`){
     pageTitle = "Work Completion Defence Evaluation";
   } 
-  else if (window.location.href === pageURL+'panelEvaluatePR' || window.location.href === pageURL+`panelEvaluatePR/${id}`) {
+  else if (window.location.href === BASE_URL+'panelEvaluatePR' || window.location.href === BASE_URL+`panelEvaluatePR/${id}`) {
     pageTitle = "Progress Report Evaluation";
   }
-  else if (window.location.href === pageURL+'panelViewProfile') {
+  else if (window.location.href === BASE_URL+'panelViewProfile') {
     pageTitle = "Panel's Profile";
   }
   else {

@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
 import { useDispatch, useSelector } from "react-redux";
 import { facultyReadAssignSupervision } from "../../../actions/facultyAction";
+import { BASE_URL } from "../../../urlPath";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 import FacultyTemplate from "../../../components/FacultyTemplate";
@@ -54,7 +55,7 @@ const FacultyAssignNumSupervisor = () => {
                       <td> {list.usernameSup} </td>
                       <td> {list.academicPos} </td>
                       <td> {list.numSupervision} </td>
-                      <td><Button className='table-details-button' href={`http://localhost:3000/facultyAssignNumSupervisor/${list._id}`}>Details</Button></td>
+                      <td><Button className='table-details-button' href={`${BASE_URL}facultyAssignNumSupervisor/${list._id}`}>Details</Button></td>
                     </tr>
                   )
                 )
