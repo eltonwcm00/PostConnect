@@ -33,7 +33,7 @@ const FacultyAssignNumSupervisor = () => {
   return (
     <>
       <FacultyTemplate>
-        <div className="form-title-desc-container">List of The Supervisors</div>
+        <div className="form-title-desc-container">List of The Supervisor</div>
         {console.log(fetchSupervisorList)}
         {loading && <Loading />}
           <CDBContainer style={{padding: '0px', textAlign: "center", marginTop: "15px"}} className="list-container">
