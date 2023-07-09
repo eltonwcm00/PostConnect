@@ -16,6 +16,7 @@ import {
 } from "../constants/panelConstants";
 
 import axios from "axios";
+import { BASE_URL_2 } from "../urlPath";
 
 export const panelLogin = (usernamePanel, password) => async (dispatch) => {
     try {
@@ -28,7 +29,7 @@ export const panelLogin = (usernamePanel, password) => async (dispatch) => {
       };
   
       const { data } = await axios.post(
-        "http://localhost:5000/api/panel/panelLogin",
+        `${BASE_URL_2}api/panel/panelLogin`,
         { usernamePanel, password},
         config
       );
@@ -63,7 +64,7 @@ export const panelProfile = () => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/panel/panelProfileList",
+      `${BASE_URL_2}api/panel/panelProfileList`,
       config
     );
 
@@ -96,7 +97,7 @@ export const panelReadRPD = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("http://localhost:5000/api/panel/panelReadRPD", config);
+    const { data } = await axios.get(`ttp://localhost:5000/api/panel/panelReadRPD`, config);
 
     dispatch({
       type: PANEL_APPLICATION_LIST_SUCCESS,
@@ -130,7 +131,7 @@ export const panelEvaluatePassRPD = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/panel/panelEvaluateRPD/${id}`, {}, config);
+    const { data } = await axios.put(`${BASE_URL_2}api/panel/panelEvaluateRPD/${id}`, {}, config);
 
     dispatch({
       type: PANEL_APPROVE_APPLICATION_SUCCESS,
@@ -164,7 +165,7 @@ export const panelEvaluateFailRPD = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/panel/panelEvaluateRPD2/${id}`, {}, config);
+    const { data } = await axios.put(`${BASE_URL_2}api/panel/panelEvaluateRPD2/${id}`, {}, config);
 
     dispatch({
       type: PANEL_REJECT_APPLICATION_SUCCESS,
@@ -198,7 +199,7 @@ export const panelReadWCD = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("http://localhost:5000/api/panel/panelReadWCD", config);
+    const { data } = await axios.get(`${BASE_URL_2}api/panel/panelReadWCD`, config);
 
     dispatch({
       type: PANEL_APPLICATION_LIST_SUCCESS,
@@ -232,7 +233,7 @@ export const panelEvaluatePassWCD = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/panel/panelEvaluateWCD/${id}`, {}, config);
+    const { data } = await axios.put(`${BASE_URL_2}api/panel/panelEvaluateWCD/${id}`, {}, config);
 
     dispatch({
       type: PANEL_APPROVE_APPLICATION_SUCCESS,
@@ -266,7 +267,7 @@ export const panelEvaluateFailWCD = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/panel/panelEvaluateWCD2/${id}`, {}, config);
+    const { data } = await axios.put(`${BASE_URL_2}api/panel/panelEvaluateWCD2/${id}`, {}, config);
 
     dispatch({
       type: PANEL_REJECT_APPLICATION_SUCCESS,
@@ -300,7 +301,7 @@ export const panelReadPR = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("http://localhost:5000/api/panel/panelReadPR", config);
+    const { data } = await axios.get(`${BASE_URL_2}api/panel/panelReadPR`, config);
 
     dispatch({
       type: PANEL_APPLICATION_LIST_SUCCESS,
@@ -334,7 +335,7 @@ export const panelEvaluatePR = (id, grade) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/panel/panelEvaluatePR/${id}`, {grade}, config);
+    const { data } = await axios.put(`${BASE_URL_2}api/panel/panelEvaluatePR/${id}`, {grade}, config);
 
     dispatch({
       type: PANEL_APPROVE_APPLICATION_SUCCESS,

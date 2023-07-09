@@ -21,6 +21,7 @@ import {
   FACULTY_STUDENT_LIST_FAIL
 } from "../constants/facultyConstants"
 
+import { BASE_URL_2 } from "../urlPath";
 import axios from "axios";
 
 export const supervisorLogin = (usernameSup, password) => async (dispatch) => {
@@ -34,7 +35,7 @@ export const supervisorLogin = (usernameSup, password) => async (dispatch) => {
       };
   
       const { data } = await axios.post(
-        "http://localhost:5000/api/supervisor/supervisorLogin",
+        `${BASE_URL_2}api/supervisor/supervisorLogin`,
         { usernameSup, password},
         config
       );
@@ -64,7 +65,7 @@ export const supervisorProfile = () => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/supervisor/supervisorProfileList",
+      `${BASE_URL_2}api/supervisor/supervisorProfileList`,
       config
     );
 
@@ -96,7 +97,7 @@ export const supervisorSupervisingStudList = () => async (dispatch, getState) =>
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/supervisor/supervisorViewSupervisingStudent",
+      `${BASE_URL_2}api/supervisor/supervisorViewSupervisingStudent`,
       config
     );
 
@@ -134,7 +135,7 @@ export const supervisorReadMeetingLog = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/supervisor/supervisorReadMeetingLog", config
+      `${BASE_URL_2}api/supervisor/supervisorReadMeetingLog`, config
     );
 
     dispatch({ type: SUPERVISOR_CW_SUCCESS, payload: data });
@@ -166,7 +167,7 @@ export const supervisorReadRPDResult = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/supervisor/supervisorReadRPDResult", config
+      `${BASE_URL_2}api/supervisor/supervisorReadRPDResult`, config
     );
 
     dispatch({ type: SUPERVISOR_CW_SUCCESS, payload: data });
@@ -198,7 +199,7 @@ export const supervisorReadWCDResult = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/supervisor/supervisorReadWCDResult", config
+      `${BASE_URL_2}api/supervisor/supervisorReadWCDResult`, config
     );
 
     dispatch({ type: SUPERVISOR_CW_SUCCESS, payload: data });
@@ -230,7 +231,7 @@ export const supervisorReadPR = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("http://localhost:5000/api/supervisor/supervisorReadPR", config);
+    const { data } = await axios.get(`${BASE_URL_2}api/supervisor/supervisorReadPR`, config);
 
     dispatch({
       type: SUPERVISOR_CW_SUCCESS,
@@ -264,7 +265,7 @@ export const supervisorEvaluatePR = (id, grade) => async (dispatch, getState) =>
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/supervisor/supervisorEvaluatePR/${id}`, {grade}, config);
+    const { data } = await axios.put(`${BASE_URL_2}api/supervisor/supervisorEvaluatePR/${id}`, {grade}, config);
 
     dispatch({
       type: SUPERVISOR_APPROVE_APPLICATION_SUCCESS,
@@ -298,7 +299,7 @@ export const supervisorReadPRResult = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/supervisor/supervisorReadPRResult", config
+      `${BASE_URL_2}api/supervisor/supervisorReadPRResult`, config
     );
 
     dispatch({ type: SUPERVISOR_CW_SUCCESS, payload: data });
@@ -330,7 +331,7 @@ export const supervisorViewStudentData = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("http://localhost:5000/api/supervisor/supervisorFetchDataStudent", config);
+    const { data } = await axios.get(`${BASE_URL_2}api/supervisor/supervisorFetchDataStudent`, config);
 
     dispatch({
       type: FACULTY_STUDENT_LIST_SUCCESS,

@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import { BASE_URL_2 } from "../../urlPath";
 import {Button, Container, Row, Col } from 'react-bootstrap';
 import './LandingPage.css';
 
@@ -12,7 +13,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     const fetching = async () => {
-        await axios.post('http://localhost:5000/api/faculty/facultyInitDataStudent');
+        await axios.post(`${BASE_URL_2}api/faculty/facultyInitDataStudent`);
     };
     fetching();
   }, []);

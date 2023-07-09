@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useDispatch, useSelector } from "react-redux";
 import {useParams, useNavigate } from 'react-router-dom';
 import { panelEvaluatePassRPD, panelEvaluateFailRPD } from "../../../actions/panelAction";
+import { BASE_URL_2 } from "../../../urlPath";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
@@ -38,7 +39,7 @@ const PanelEvaluateRPDID = () => {
     useEffect(() => {
         const fetching = async () => {
         
-            const { data } = await axios.get(`http://localhost:5000/api/panel/panelEvaluateRPD/${id}`);
+            const { data } = await axios.get(`${BASE_URL_2}api/panel/panelEvaluateRPD/${id}`);
 
             setFullName(data.fullname);
             setMiniThesisTitle(data.miniThesisTitle);

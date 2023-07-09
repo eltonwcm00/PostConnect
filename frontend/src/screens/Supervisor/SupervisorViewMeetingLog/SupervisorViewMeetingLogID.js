@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import moment from 'moment';
+import { BASE_URL_2 } from "../../../urlPath";
 import {useParams } from 'react-router-dom';
 import SupervisorTemplate from "../../../components/SupervisorTemplate";
 
@@ -15,7 +16,7 @@ const SupervisorViewMeetingLogID = () => {
     useEffect(() => {
         const fetching = async () => {
         
-            const { data } = await axios.get(`http://localhost:5000/api/supervisor/supervisorReadMeetingLog/${id}`);
+            const { data } = await axios.get(`${BASE_URL_2}api/supervisor/supervisorReadMeetingLog/${id}`);
 
             setMeetingDate(data.dateLog);
             setMeetingContent(data.contentLog); 

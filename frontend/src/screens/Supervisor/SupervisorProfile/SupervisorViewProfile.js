@@ -4,6 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { supervisorSupervisingStudList } from "../../../actions/supervisorAction";
 import axios from "axios";
+import { BASE_URL_2 } from "../../../urlPath";
 import SupervisorTemplate from "../../../components/SupervisorTemplate";
 
 const SupervisorViewProfile = () => {
@@ -38,7 +39,7 @@ const SupervisorViewProfile = () => {
           },
         };
         const { data } = await axios.get(
-          `http://localhost:5000/api/supervisor/supervisorViewOwnProfile`,
+          `${BASE_URL_2}api/supervisor/supervisorViewOwnProfile`,
           config
         );
 

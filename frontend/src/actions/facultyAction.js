@@ -33,6 +33,7 @@ import {
 } from "../constants/facultyConstants";
 
 import axios from "axios";
+import { BASE_URL_2 } from "../urlPath";
 
 export const facultyLogin = (userNameFac, password) => async (dispatch) => {
     try {
@@ -45,7 +46,7 @@ export const facultyLogin = (userNameFac, password) => async (dispatch) => {
       };
   
       const { data } = await axios.post(
-        "http://localhost:5000/api/faculty/facultyLogin",
+        `${BASE_URL_2}api/faculty/facultyLogin`,
         { userNameFac, password },
         config
       );
@@ -85,7 +86,7 @@ export const facultyViewOwnProfile = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/faculty/facultyViewOwnProfile", config
+      `${BASE_URL_2}api/faculty/facultyViewOwnProfile`, config
     );
 
     dispatch({ type: FACULTY_PROFILE_SUCCESS, payload: data });
@@ -113,7 +114,7 @@ export const facultyUpdateSupervisorProfile = (id, password, cfrmPassword, acade
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/supervisor/supervisorProfileList/${id}`, 
+    const { data } = await axios.put(`${BASE_URL_2}api/supervisor/supervisorProfileList/${id}`, 
                                       {password, cfrmPassword, academicPos}, config);
 
     dispatch({
@@ -144,7 +145,7 @@ export const facultyUpdateStudentProfile = (id, password, cfrmPassword, degreeLv
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/student/studentProfileList/${id}`, 
+    const { data } = await axios.put(`${BASE_URL_2}api/student/studentProfileList/${id}`, 
                                       {password, cfrmPassword, degreeLvl, dateJoined}, config);
 
     dispatch({
@@ -175,7 +176,7 @@ export const facultyUpdatePanelProfile = (id, password, cfrmPassword) => async (
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/panel/panelProfileList/${id}`, 
+    const { data } = await axios.put(`${BASE_URL_2}api/panel/panelProfileList/${id}`, 
                                       {password, cfrmPassword}, config);
 
     dispatch({
@@ -210,7 +211,7 @@ export const facultyPanelRegistration = (usernamePanel, password, cfrmPassword) 
     };
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/faculty/facultyPanelRegistration",
+      `${BASE_URL_2}api/faculty/facultyPanelRegistration`,
       { usernamePanel, password, cfrmPassword },
       config
     );
@@ -247,7 +248,7 @@ export const facultySupervisorRegistration = (usernameSup, password, cfrmPasswor
     };
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/faculty/facultySupervisorRegistration",
+      `${BASE_URL_2}api/faculty/facultySupervisorRegistration`,
       { usernameSup, password, cfrmPassword, numSupervision, academicPos },
       config
     );
@@ -284,7 +285,7 @@ export const facultyStudentRegistration = (usernameStud, password, cfrmPassword,
     };
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/faculty/facultyStudentRegistration",
+      `${BASE_URL_2}api/faculty/facultyStudentRegistration`,
       { usernameStud, password, cfrmPassword, dateJoin, degreeLvl },
       config
     );
@@ -321,7 +322,7 @@ export const facultyReadAssignSupervision = () => async (dispatch, getState) => 
       },
     };
 
-    const { data } = await axios.get("http://localhost:5000/api/faculty/facultyReadAssignSupervision", config);
+    const { data } = await axios.get(`${BASE_URL_2}api/faculty/facultyReadAssignSupervision`, config);
 
     dispatch({
       type: FACULTY_SUPERVISOR_LIST_SUCCESS,
@@ -356,7 +357,7 @@ export const facultyUpdateAssignSupervision = (id, numSupervision, academicPos) 
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadAssignSupervision/${id}`,
+    const { data } = await axios.put(`${BASE_URL_2}api/faculty/facultyReadAssignSupervision/${id}`,
                                       {numSupervision, academicPos}, config);
 
     dispatch({
@@ -391,7 +392,7 @@ export const facultyReadChooseStudent = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("http://localhost:5000/api/faculty/facultyReadChooseStudent", config);
+    const { data } = await axios.get(`${BASE_URL_2}api/faculty/facultyReadChooseStudent`, config);
 
     dispatch({
       type: FACULTY_STUDENT_LIST_SUCCESS,
@@ -425,7 +426,7 @@ export const facultyUpdateChooseStudent = (id, numAssignedSupervision, superviso
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadChooseStudent/${id}`,{id, numAssignedSupervision, supervisorList},config);
+    const { data } = await axios.put(`${BASE_URL_2}api/faculty/facultyReadChooseStudent/${id}`,{id, numAssignedSupervision, supervisorList},config);
 
     dispatch({
       type: FACULTY_CHOOSE_STUDENT_SUCCESS,
@@ -459,7 +460,7 @@ export const facultyReadEvaluateRPDApplication = () => async (dispatch, getState
       },
     };
 
-    const { data } = await axios.get("http://localhost:5000/api/faculty/facultyReadEvaluateRPDApplication", config);
+    const { data } = await axios.get(`${BASE_URL_2}api/faculty/facultyReadEvaluateRPDApplication`, config);
 
     dispatch({
       type: FACULTY_APPLICATION_LIST_SUCCESS,
@@ -494,7 +495,7 @@ export const facultyUpdateApplication = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadEvaluateRPDApplication/${id}`, {}, config);
+    const { data } = await axios.put(`${BASE_URL_2}api/faculty/facultyReadEvaluateRPDApplication/${id}`, {}, config);
 
     dispatch({
       type: FACULTY_UPDATE_APPLICATION_SUCCESS,
@@ -529,7 +530,7 @@ export const facultyApproveApplication = (id, dateScheduleRPD) => async (dispatc
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadEvaluateRPDApplication2/${id}`, {dateScheduleRPD}, config);
+    const { data } = await axios.put(`${BASE_URL_2}api/faculty/facultyReadEvaluateRPDApplication2/${id}`, {dateScheduleRPD}, config);
 
     dispatch({
       type: FACULTY_APPROVE_APPLICATION_SUCCESS,
@@ -563,7 +564,7 @@ export const facultyReadSubjectStudent = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("http://localhost:5000/api/faculty/facultyReadSubjectStudent", config);
+    const { data } = await axios.get(`${BASE_URL_2}api/faculty/facultyReadSubjectStudent`, config);
 
     dispatch({
       type: FACULTY_STUDENT_LIST_SUCCESS,
@@ -597,7 +598,7 @@ export const facultyUpdateSubjectStudent = (id, subjectA, subjectB) => async (di
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadSubjectStudent/${id}`,{id, subjectA, subjectB},config);
+    const { data } = await axios.put(`${BASE_URL_2}api/faculty/facultyReadSubjectStudent/${id}`,{id, subjectA, subjectB},config);
 
     dispatch({
       type: FACULTY_CHOOSE_STUDENT_SUCCESS,
@@ -631,7 +632,7 @@ export const facultyReadEvaluateWCDApplication = () => async (dispatch, getState
       },
     };
 
-    const { data } = await axios.get("http://localhost:5000/api/faculty/facultyReadEvaluateWCDApplication", config);
+    const { data } = await axios.get(`${BASE_URL_2}api/faculty/facultyReadEvaluateWCDApplication`, config);
 
     dispatch({
       type: FACULTY_APPLICATION_LIST_SUCCESS,
@@ -666,7 +667,7 @@ export const facultyRejectWCDApplication = (id) => async (dispatch, getState) =>
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadEvaluateWCDApplication/${id}`, {}, config);
+    const { data } = await axios.put(`${BASE_URL_2}api/faculty/facultyReadEvaluateWCDApplication/${id}`, {}, config);
 
     dispatch({
       type: FACULTY_UPDATE_APPLICATION_SUCCESS,
@@ -701,7 +702,7 @@ export const facultyApproveWCDApplication = (id, dateScheduleWCD) => async (disp
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadEvaluateWCDApplication2/${id}`, {dateScheduleWCD}, config);
+    const { data } = await axios.put(`${BASE_URL_2}api/faculty/facultyReadEvaluateWCDApplication2/${id}`, {dateScheduleWCD}, config);
 
     dispatch({
       type: FACULTY_APPROVE_APPLICATION_SUCCESS,
@@ -732,7 +733,7 @@ export const facultySetPRDate = (dateSetPR) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put('http://localhost:5000/api/faculty/facultySetDatePR',{dateSetPR},config);
+    const { data } = await axios.put(`${BASE_URL_2}api/faculty/facultySetDatePR`,{dateSetPR},config);
 
     dispatch({
       type: FACULTY_PROGRESS_REPORT_SUCCESS,
@@ -767,7 +768,7 @@ export const facultyTerminateStudent = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadMonitorStudent/${id}`, {}, config);
+    const { data } = await axios.put(`${BASE_URL_2}api/faculty/facultyReadMonitorStudent/${id}`, {}, config);
 
     dispatch({
       type: FACULTY_UPDATE_APPLICATION_SUCCESS,
@@ -802,7 +803,7 @@ export const facultyActiveStudent = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/faculty/facultyReadMonitorStudent2/${id}`, {}, config);
+    const { data } = await axios.put(`${BASE_URL_2}api/faculty/facultyReadMonitorStudent2/${id}`, {}, config);
 
     dispatch({
       type: FACULTY_APPROVE_APPLICATION_SUCCESS,
@@ -836,7 +837,7 @@ export const facultyViewStudentData = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("http://localhost:5000/api/faculty/facultyFetchDataStudent", config);
+    const { data } = await axios.get(`${BASE_URL_2}api/faculty/facultyFetchDataStudent`, config);
 
     dispatch({
       type: FACULTY_STUDENT_LIST_SUCCESS,

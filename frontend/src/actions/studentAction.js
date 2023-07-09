@@ -30,6 +30,7 @@ import {
 } from "../constants/studentConstants";
 
 import axios from "axios";
+import { BASE_URL_2 } from "../urlPath";
 
 export const studentLogin = (usernameStud, password) => async (dispatch) => {
    try {
@@ -42,7 +43,7 @@ export const studentLogin = (usernameStud, password) => async (dispatch) => {
      };
  
      const { data } = await axios.post(
-       "http://localhost:5000/api/student/studentLogin",
+       `${BASE_URL_2}api/student/studentLogin`,
        { usernameStud, password},
        config
      );
@@ -76,7 +77,7 @@ export const studentStatus = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      "http://localhost:5000/api/student/systemVerifyStudentStatus", {}, config 
+      `${BASE_URL_2}api/student/systemVerifyStudentStatus`, {}, config 
     );
     dispatch({ type: STUDENT_STATUS_VALIDATOR, payload: data });
   } catch (error) {
@@ -101,7 +102,7 @@ export const studentProfile = () => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/student/studentProfileList",
+      `${BASE_URL_2}api/student/studentProfileList`,
       config
     );
 
@@ -134,7 +135,7 @@ export const studentRPDReadRequest = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/student/studentViewDataRequestRPD", config
+      `${BASE_URL_2}api/student/studentViewDataRequestRPD`, config
     );
     dispatch({ type: STUDENT_CW_READ_SUCCESS, payload: data });
   } catch (error) {
@@ -164,7 +165,7 @@ export const studentRPDRequest = (fullName, miniThesisTitle, supervisorName, min
     };
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/student/studentRequestRPD",
+      `${BASE_URL_2}api/student/studentRequestRPD`,
       { fullName, miniThesisTitle, supervisorName, miniThesisPDF},
       config
     );
@@ -196,7 +197,7 @@ export const studentApplicationStatus = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/student/studentRPDApplicationStatus", config
+      `${BASE_URL_2}api/student/studentRPDApplicationStatus`, config
     );
     dispatch({ type: STUDENT_APPLICATION, payload: data });
   } catch (error) {
@@ -220,7 +221,7 @@ export const studentSubmitMeetingLog = (dateMeetingLog, contentLog) => async (di
     };
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/student/studentSubmitMeetingLog",
+      `${BASE_URL_2}api/student/studentSubmitMeetingLog`,
       { dateMeetingLog, contentLog },
       config
     );
@@ -252,7 +253,7 @@ export const studentMeetingLogStatus = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/student/studentMeetingLogStatus", config
+      `${BASE_URL_2}api/student/studentMeetingLogStatus`, config
     );
     dispatch({ type: STUDENT_MEETING_LOG, payload: data });
   } catch (error) {
@@ -276,7 +277,7 @@ export const studentWCDRequest = (fullName, thesisTitle, supervisorName, thesisP
     };
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/student/studentRequestWCD",
+      `${BASE_URL_2}api/student/studentRequestWCD`,
       { fullName, thesisTitle, supervisorName, thesisPDF},
       config
     );
@@ -308,7 +309,7 @@ export const studentApplicationStatus2 = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/student/studentWCDApplicationStatus", config
+      `${BASE_URL_2}api/student/studentWCDApplicationStatus`, config
     );
     dispatch({ type: STUDENT_APPLICATION_2, payload: data });
   } catch (error) {
@@ -330,7 +331,7 @@ export const studentPRLandingPage = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/student/studentRegisterPRLandingPage", config
+      `${BASE_URL_2}api/student/studentRegisterPRLandingPage`, config
     );
     dispatch({ type: PR_READ_REQUEST, payload: data });
   } catch (error) {
@@ -352,7 +353,7 @@ export const studentPRRegister = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/student/studentRegisterPR", {}, config
+      `${BASE_URL_2}api/student/studentRegisterPR`, {}, config
     );
     dispatch({ type: STUDENT_CW_SUCCESS, payload: data });
   }  catch (error) {
@@ -382,7 +383,7 @@ export const studentPRSubmit = (contentPR) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      "http://localhost:5000/api/student/studentSubmitPR",
+      `${BASE_URL_2}api/student/studentSubmitPR`,
       { contentPR },
       config
     );
@@ -414,7 +415,7 @@ export const studentApplicationStatus3 = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:5000/api/student/studentViewPRStatus", config
+      `${BASE_URL_2}api/student/studentViewPRStatus`, config
     );
     dispatch({ type: STUDENT_APPLICATION_3, payload: data });
   } catch (error) {

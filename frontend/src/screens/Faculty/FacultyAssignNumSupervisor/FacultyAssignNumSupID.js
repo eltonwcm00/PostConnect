@@ -4,6 +4,7 @@ import NumericInput from 'react-numeric-input';
 import {useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { facultyUpdateAssignSupervision } from "../../../actions/facultyAction";
+import { BASE_URL_2 } from "../../../urlPath";
 import { Form, Table, Button } from "react-bootstrap";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
@@ -36,7 +37,7 @@ const FacultyAssignNumSupID = () => {
     useEffect(() => {
         const fetching = async () => {
         
-            const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyReadAssignSupervision/${id}`);
+            const { data } = await axios.get(`${BASE_URL_2}api/faculty/facultyReadAssignSupervision/${id}`);
 
             setUserNameSup(data.usernameSup);
             setAcademicPos(data.academicPos);

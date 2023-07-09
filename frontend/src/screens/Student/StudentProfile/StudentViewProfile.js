@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { BASE_URL_2 } from "../../../urlPath";
 import axios from "axios";
 import moment from 'moment';
 import StudentTemplate from "../../../components/StudentTemplate";
@@ -42,7 +43,7 @@ const StudentViewProfile = () => {
           },
         };
         const { data } = await axios.get(
-          `http://localhost:5000/api/student/studentViewOwnProfile`,
+          `${BASE_URL_2}api/student/studentViewOwnProfile`,
           config
         );
 

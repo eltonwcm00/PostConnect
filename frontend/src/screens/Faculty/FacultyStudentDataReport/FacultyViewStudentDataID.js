@@ -3,6 +3,7 @@ import axios from "axios";
 import {useParams, useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector } from "react-redux";
 import moment from 'moment';
+import { BASE_URL_2 } from "../../../urlPath";
 import { Table, Tab, Tabs } from "react-bootstrap";
 import { CDBContainer, CDBTable, CDBTableHeader, CDBTableBody } from 'cdbreact';
 import FacultyTemplate from "../../../components/FacultyTemplate";
@@ -58,7 +59,7 @@ const FacultyViewStudentDataID = () => {
                 },
                }; 
 
-               const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyFetchDataStudent/${id}`, config);
+               const { data } = await axios.get(`${BASE_URL_2}api/faculty/facultyFetchDataStudent/${id}`, config);
 
                setUserNameStud(data.studID.usernameStud);
                setSupervisor(data.supID ? data.supID.usernameSup : 'Not yet been assigned to any supervisor' )
@@ -147,7 +148,7 @@ const FacultyViewStudentDataID = () => {
     
     const fetchData = async (type, setState) => {
        try {
-         const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyFetchPast${type}DataStudent/${id}`);
+         const { data } = await axios.get(`${BASE_URL_2}api/faculty/facultyFetchPast${type}DataStudent/${id}`);
          setState(data);
        } catch (error) {
          console.error(error);

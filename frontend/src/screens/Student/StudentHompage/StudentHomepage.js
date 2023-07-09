@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios'
+import { BASE_URL_2 } from "../../../urlPath";
 import { studentStatus } from "../../../actions/studentAction";
 import { Row, Col } from 'react-bootstrap';
 import StudentTemplate from "../../../components/StudentTemplate";
@@ -40,7 +41,7 @@ const StudentHomepage = () => {
           },
         };
         const { data } = await axios.get(
-          `http://localhost:5000/api/student/systemReadVerifyStudentStatus`,
+          `${BASE_URL_2}api/student/systemReadVerifyStudentStatus`,
           config
         );
 

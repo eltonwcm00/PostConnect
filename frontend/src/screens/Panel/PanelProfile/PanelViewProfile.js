@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import axios from 'axios';
+import { BASE_URL_2 } from "../../../urlPath";
 import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { panelProfile } from "../../../actions/panelAction";
@@ -32,7 +33,7 @@ const PanelViewProfile = () => {
 
   useEffect(() => {
     const fetching = async () => {
-        const { data } = await axios.get('http://localhost:5000/api/panel/panelCountEvaluatedRPD');
+        const { data } = await axios.get(`${BASE_URL_2}api/panel/panelCountEvaluatedRPD`);
         setNumRPD(data);
     };
     fetching();
@@ -40,7 +41,7 @@ const PanelViewProfile = () => {
 
   useEffect(() => {
     const fetching = async () => {
-        const { data } = await axios.get('http://localhost:5000/api/panel/panelCountEvaluatedWCD');
+        const { data } = await axios.get(`${BASE_URL_2}api/panel/panelCountEvaluatedWCD`);
         setNumWCD(data);
     };
     fetching();
@@ -48,7 +49,7 @@ const PanelViewProfile = () => {
 
   useEffect(() => {
     const fetching = async () => {
-        const { data } = await axios.get('http://localhost:5000/api/panel/panelCountEvaluatedPR');
+        const { data } = await axios.get(`${BASE_URL_2}api/panel/panelCountEvaluatedPR`);
         setNumPR(data);
     };
     fetching();

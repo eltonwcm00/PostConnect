@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
 import { facultyUpdateSupervisorProfile, facultyUpdateStudentProfile,
          facultyUpdatePanelProfile } from '../../../actions/facultyAction';
+import { BASE_URL_2 } from "../../../urlPath";
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Form, Row, Col, Button } from "react-bootstrap";
 import FacultyTemplate from '../../../components/FacultyTemplate';
@@ -46,15 +47,15 @@ const FacultyViewProfileID = () => {
 
     switch (url) {
         case "/panelProfileList": 
-            executeURL = `http://localhost:5000/api/panel/panelProfileList/${id}`;
+            executeURL = `${BASE_URL_2}api/panel/panelProfileList/${id}`;
             isPanel = true;
             break;
         case "/supervisorProfileList": 
-            executeURL = `http://localhost:5000/api/supervisor/supervisorProfileList/${id}`;
+            executeURL = `${BASE_URL_2}api/supervisor/supervisorProfileList/${id}`;
             isSuper = true;
             break;
         case "/studentProfileList": 
-            executeURL = `http://localhost:5000/api/student/studentProfileList/${id}`; 
+            executeURL = `${BASE_URL_2}api/student/studentProfileList/${id}`; 
             isStud = true;
             break;
         default:

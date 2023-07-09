@@ -4,6 +4,7 @@ import moment from 'moment';
 import {useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { facultyUpdateApplication, facultyApproveApplication } from "../../../actions/facultyAction";
+import { BASE_URL_2 } from "../../../urlPath";
 import { Form, Table, Button, Row, Col, Modal } from "react-bootstrap";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -61,7 +62,7 @@ const FacultyEvaluateRPDApplicationID = () => {
     useEffect(() => {
         const fetching = async () => {
         
-            const { data } = await axios.get(`http://localhost:5000/api/faculty/facultyReadEvaluateRPDApplication/${id}`);
+            const { data } = await axios.get(`${BASE_URL_2}api/faculty/facultyReadEvaluateRPDApplication/${id}`);
 
             setFullName(data.fullName);
             setSupervisorName(data.studentUser.supervisorUser); 

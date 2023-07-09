@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useDispatch, useSelector } from "react-redux";
 import {useParams, useNavigate } from 'react-router-dom';
 import { supervisorEvaluatePR } from "../../../actions/supervisorAction";
+import { BASE_URL_2 } from "../../../urlPath";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
@@ -37,7 +38,7 @@ const SupervisorEvaluatePRID = () => {
     useEffect(() => {
         const initFetching = async () => {            
             
-            const { data } = await axios.get(`http://localhost:5000/api/panel/panelReadPRSetDate`);
+            const { data } = await axios.get(`${BASE_URL_2}api/panel/panelReadPRSetDate`);
             
             setDateSetPR(moment(data.dateSetPR).format('l'));
 
@@ -49,7 +50,7 @@ const SupervisorEvaluatePRID = () => {
     useEffect(() => {
         const fetching = async () => {
         
-            const { data } = await axios.get(`http://localhost:5000/api/supervisor/supervisorEvaluatePR/${id}`);
+            const { data } = await axios.get(`${BASE_URL_2}api/supervisor/supervisorEvaluatePR/${id}`);
 
             setFullName(data.studentUser.usernameStud);
             setDateSchedulePR(moment(data.dateSubmitPR).format('l'));

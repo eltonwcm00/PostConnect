@@ -9,7 +9,7 @@ import { facultyViewOwnProfile } from "../../../actions/facultyAction";
 import { panelProfile } from "../../../actions/panelAction";
 import { supervisorProfile } from "../../../actions/supervisorAction";
 import { studentProfile } from "../../../actions/studentAction";
-import { BASE_URL } from "../../../urlPath";
+import { BASE_URL, BASE_URL_2 } from "../../../urlPath";
 import FacultyTemplate from "../../../components/FacultyTemplate";
 import PaginationBar from "../../../components/PaginationBar";
 import "./FacultyProfile.css"
@@ -61,7 +61,7 @@ const FacultyViewProfile = () => {
 
     function fetchData(apiEndpoint, setData) {
       return async () => {
-        const { data } = await axios.get(`http://localhost:5000/api/faculty/${apiEndpoint}`);
+        const { data } = await axios.get(`${BASE_URL_2}api/faculty/${apiEndpoint}`);
         setData(data);
       };
     }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import {useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux";
+import { BASE_URL_2 } from "../../../urlPath";
 import { Container, Row, Col } from "react-bootstrap";
 import FacultyTemplate from "../../../components/FacultyTemplate";
 import { UserCounter } from "../../../components/UserCounter";
@@ -31,7 +32,7 @@ const FacultyHomepage = () => {
 
   function fetchData(apiEndpoint, setData) {
     return async () => {
-      const { data } = await axios.get(`http://localhost:5000/api/faculty/${apiEndpoint}`);
+      const { data } = await axios.get(`${BASE_URL_2}api/faculty/${apiEndpoint}`);
       setData(data);
     };
   }

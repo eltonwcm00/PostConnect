@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import {useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"
+import { BASE_URL_2 } from "../../../urlPath";
 import { Container, Row, Col } from "react-bootstrap";
 import SupervisorTemplate from "../../../components/SupervisorTemplate";
 import { StudentCounter } from "../../../components/UserCounter";
@@ -37,7 +38,7 @@ const SupervisorHomepage = () => {
             Authorization: `Bearer ${token}`,
           },
         };
-        const { data } = await axios.get("http://localhost:5000/api/supervisor/supervisorProfileCountSupervisingStudent",
+        const { data } = await axios.get(`${BASE_URL_2}api/supervisor/supervisorProfileCountSupervisingStudent`,
                                           config);
         setNumStudent(data);
       }

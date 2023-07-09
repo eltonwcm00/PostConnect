@@ -6,6 +6,7 @@ import { CDBContainer, CDBTable, CDBTableBody } from 'cdbreact';
 import 'react-calendar/dist/Calendar.css';
 import {useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { BASE_URL_2 } from "../urlPath";
 import { studentApplicationStatus, studentApplicationStatus2, studentApplicationStatus3, studentMeetingLogStatus } from "../actions/studentAction";
 import "./Notification.css"
 
@@ -66,7 +67,7 @@ const Notification = () => {
               Authorization: `Bearer ${token}`,
           },
          }; 
-         const { data } = await axios.get('http://localhost:5000/api/student/studentViewOwnProfile', config);
+         const { data } = await axios.get(`${BASE_URL_2}api/student/studentViewOwnProfile`, config);
          setDegreeLvl(data.degreeLvl);
       }
     };
