@@ -2,7 +2,7 @@
 <br/>
 A Postgraduate Student Tracking and Management System that build with MERN stack and incorporating Redux as the chosen state management library.
 
-### <h2 align="center"> ⚡️⚡️⚡️ &nbsp; [Live Demo](https://post-connect-ucwb.onrender.com/) ⚡️⚡️⚡️ </h2>
+### <h2 align="center"> ⚡️⚡️⚡️ &nbsp; [Live Site](https://post-connect-ucwb.onrender.com/) ⚡️⚡️⚡️ </h2>
 
 ## 💹 &nbsp; Technologies
 
