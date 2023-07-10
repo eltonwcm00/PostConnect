@@ -530,7 +530,7 @@ pre code {
   .container-md,
   .container-sm,
   .container-xl {
-    max-width: 1140px;
+    max-width: 1311px;
   }
 }
 .row {
@@ -712,7 +712,7 @@ pre code {
   -ms-flex: 0 0 75%;
   flex: 0 0 75%;
   /* max-width: 75%; */
-  max-width: 90%;
+  max-width: 87%;
 }
 .col-10 {
   -ms-flex: 0 0 83.333333%;
