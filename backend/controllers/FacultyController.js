@@ -267,7 +267,7 @@ const facultyReadAssignSupervisionByID = asyncHandler(async (req, res) => {
 
 const facultyUpdateAssignSupervisionByID = asyncHandler(async (req, res) => {
 
-    const exceedWarning = "Exceed the allowed number of max. supervision: ";
+    const exceedWarning = "Exceed the allowed number of max. supervision.";
     
     const { numSupervision, academicPos } = req.body;
 
