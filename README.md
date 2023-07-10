@@ -2,9 +2,15 @@
 <br/>
 A Postgraduate Student Tracking and Management System that build with MERN stack and incorporating Redux as the chosen state management library.
 
+### <h2 align="center"> ⚡️⚡️⚡️ &nbsp; [Live Demo](https://post-connect-ucwb.onrender.com/) ⚡️⚡️⚡️ </h2>
+
 ## 💹 &nbsp; Technologies
 
 > Project is created with:
+
+#### Deployment
+
+- Render
 
 #### Backend
 
@@ -37,9 +43,9 @@ $ npm start (run the frontend)
 ```
 ## &nbsp; Environments
 ```
-Note: Created a .env file inside the root folder of 'backend'
+Note: Created a .env file inside the root folder of 'backend, and configure the following: 
 ```
-- MONGO_URI =
+- MONGO_URI = XXX
 - BASE_URL_2 = 'http://localhost:5000/'
-- JWT_SECRET =
+- JWT_SECRET = 'XXX'
 - PORT = 5000
