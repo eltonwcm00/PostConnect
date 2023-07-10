@@ -33,7 +33,7 @@ import {
 } from "../constants/facultyConstants";
 
 import axios from "axios";
-import { BASE_URL_2 } from "../urlPath";
+import { BASE_URL_2 } from "../urlPath"; 
 // const BASE_URL_2 = process.env.BASE_URL_2;
 
 export const facultyLogin = (userNameFac, password) => async (dispatch) => {
