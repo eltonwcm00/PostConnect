@@ -9681,7 +9681,8 @@ a.text-dark:hover {
 .nav-tabs .nav-link.disabled,
 .nav-tabs .nav-link.disabled:focus,
 .nav-tabs .nav-link.disabled:hover {
-  margin-top: 6px;
+  /* margin-top: 6px; */
+  padding: 12px 0;
   border-color: #f0f0f0;
   transition: padding-bottom 0.2s ease-in-out, margin-top 0.2s ease-in-out,
     border-bottom 0.2s ease-in-out;
