@@ -17,9 +17,9 @@ connectDB();
 const app = express();
 app.use(express.json());
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-app.use(express.static(`${__dirname}/public`));
+// const __filename = fileURLToPath(import.meta.url);
+// // const __dirname = path.dirname(__filename);
+// // app.use(express.static(`${__dirname}/public`));
 
 const corsOptions ={
     origin:'*', 
@@ -29,12 +29,23 @@ const corsOptions ={
 
 app.use(cors(corsOptions))
 
-app.get('/', (req, res) => res.send('The server is working '));
-
 app.use("/api/faculty", facultyRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/supervisor", supervisorRoutes);
 app.use("/api/panel", panelRoutes);
+
+// ----------- Deployment -----------
+const __dirname = path.resolve();
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '/frontend/build')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+    })
+} else {
+    app.get('/', (req, res) => res.send('The server is working '));
+}
+// ----------- Deployment -----------
 
 const port = process.env.PORT || 8082;
 
