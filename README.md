@@ -31,9 +31,10 @@ A Postgraduate Student Tracking and Management System that build with MERN stack
 
 ## 💻 &nbsp; Setup
 
-To run this project, install it locally using npm:
-
+To run this project, and follow the following steps:
 ```
+Step #1: Install the dependency locally on the machine using npm (https://nodejs.org/en/download)
+
 $ cd backend
 $ npm install (install backend dependencies)
 $ nodemon server (run the servcer)
@@ -41,11 +42,23 @@ $ cd frontend
 $ npm install (install frontend dependencies)
 $ npm start (run the frontend)
 ```
-## &nbsp; Environments
 ```
-Note: Created a .env file inside the root folder of 'backend, and configure the following: 
-```
+Step #2: Define the environments
+
+Note⚠️: Created a .env file inside the root folder of 'backend, and configure the following and replace it with your keys:
+
 - MONGO_URI = XXX
 - BASE_URL_2 = 'http://localhost:5000/'
 - JWT_SECRET = 'XXX'
 - PORT = 5000
+```
+```
+Step #3: Create an account for the 'Faculty' user
+
+- Visit http://localhost:3000/facultyRegistration
+- Register an account.
+- Visit http://localhost:3000/, and log in as 'Faculty' user.
+```
+```
+Step #4: Enjoy!
+```
