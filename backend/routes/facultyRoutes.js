@@ -1,6 +1,6 @@
 import express from "express";
 import {
-   facultyLogin, facultyViewOwnProfile, facultyProfileCountPanel, facultyProfileCountSupervisor, facultyProfileCountStudent,
+   facultySelfRegistration, facultyLogin, facultyViewOwnProfile, facultyProfileCountPanel, facultyProfileCountSupervisor, facultyProfileCountStudent,
    facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
    facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,
    facultyReadEvaluateRPDApplication, facultyReadEvaluateRPDApplicationByID, facultyRejectEvaluateRPDApplicationByID,
@@ -17,6 +17,7 @@ import { protectFaculty, protectSupervisor } from "../middleware/authMiddleware.
 const router = express.Router();
 //router.use(protectFaculty);
 
+router.post("/facultyRegistration", facultySelfRegistration);
 router.post("/facultyLogin", facultyLogin);
 router.route("/facultyViewOwnProfile").get(protectFaculty, facultyViewOwnProfile);
 router.route("/facultyProfileCountFaculty").get(facultyProfileCountFaculty);

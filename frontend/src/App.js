@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from './screens/LandingPage/LandingPage';
 import Error404 from './screens/Error404/Error404';
 
+import FacultySelfRegistration from './screens/Faculty/FacultySelfRegistration/FacultySelfRegistration';
 import FacultyLogin from './screens/Faculty/FacultyLogin/FacultyLogin';
 import FacultyHomepage from './screens/Faculty/FacultyHomepage/FacultyHomepage';
 import FacultyViewOwnProfile from './screens/Faculty/FacultyProfile/FacultyViewProfile';
@@ -62,6 +63,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} exact></Route>
+        <Route exact path="/facultyRegistration" element={<FacultySelfRegistration />}/>
         <Route exact path="/facultyLogin" element={<FacultyLogin />}/>
         <Route exact path="/studentLogin" element={<StudentLogin />}/>
         <Route exact path="/supervisorLogin" element={<SupervisorLogin />}/>

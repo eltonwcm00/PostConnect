@@ -13,6 +13,41 @@ import WCD from "../models/WCD.js";
 import ProgressReport from "../models/ProgressReport.js";
 import AcademicReport from "../models/AcademicReport.js";
 
+//  ****** backdoor operation ****** //
+const facultySelfRegistration = asyncHandler(async (req, res) => {
+
+  let hashedPassword, userFaculty;
+
+  const { userNameFac, password } = req.body;
+  const userExists = await Faculty.findOne({ userNameFac });
+
+  if (userExists) {
+    res.status(401).json({message: "Username exists"});
+  }
+  else {
+    const salt = await bcrypt.genSalt(10);
+    hashedPassword = await bcrypt.hash(password, salt);
+    userFaculty = await Faculty.create({
+      userNameFac,
+      password: hashedPassword,
+      isFaculty: true,
+    });
+  }
+
+  if (userFaculty) {
+    res.status(201).json({
+      _id: userFaculty._id,
+      usernameFaculty: userFaculty.userNameFac,
+      token: generateToken(userFaculty._id),
+      successMessage: "Register successfully!"
+    });
+  } else {
+      res.status(500);
+      throw new Error("Internal server error");
+  }
+});
+// ****** backdoor operation ****** //
+
 const facultyLogin = asyncHandler(async (req, res) => {
   
     // username: faculty; password: 123
@@ -907,7 +942,7 @@ const facultyFetchPastPRDataStudentByID = asyncHandler(async (req, res) => {
 /*************************************************** END VIEW STUDENT DATA REPORT  ***************************************************/
 
 export { 
-         facultyLogin, facultyViewOwnProfile, 
+         facultySelfRegistration,  facultyLogin, facultyViewOwnProfile, 
          facultyProfileCountFaculty, facultyProfileCountPanel, facultyProfileCountSupervisor, facultyProfileCountStudent,
          facultyPanelRegistration, facultySupervisorRegistration, facultyStudentRegistration, 
          facultyReadAssignSupervision, facultyReadAssignSupervisionByID, facultyUpdateAssignSupervisionByID,

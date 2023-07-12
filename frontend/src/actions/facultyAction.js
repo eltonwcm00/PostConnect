@@ -196,6 +196,35 @@ export const facultyUpdatePanelProfile = (id, password, cfrmPassword) => async (
   }
 }
 
+export const facultySelfRegistration = (userNameFac, password) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: FACULTY_REGISTER_REQUEST });
+
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+  
+      const { data } = await axios.post(
+        `${BASE_URL_2}api/faculty/facultyRegistration`,
+        { userNameFac, password },
+        config
+      );
+
+    dispatch({ type: FACULTY_REGISTER_SUCCESS, payload: data });
+    
+  } catch (error) {
+    dispatch({
+      type: FACULTY_REGISTER_FAIL,
+      payload:
+        error.response 
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
 export const facultyPanelRegistration = (usernamePanel, password, cfrmPassword) => async (dispatch, getState) => {
   try {
     dispatch({ type: FACULTY_REGISTER_REQUEST });
