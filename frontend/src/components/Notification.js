@@ -68,7 +68,7 @@ const Notification = () => {
           },
          }; 
          const { data } = await axios.get(`${BASE_URL_2}api/student/studentViewOwnProfile`, config);
-         setDegreeLvl(data.degreeLvl);
+         setDegreeLvl(data.fetchCurrentStudent.degreeLvl);
       }
     };
     fetching();
@@ -92,7 +92,7 @@ const Notification = () => {
         break;
   }
   if (studentInfo) {
-    var limitDate = moment(studentInfo.dateJoined).add(monthReminder , 'months');
+    var limitDate = moment(studentInfo.dateJoined).add(monthReminder, 'months');
     console.log(limitDate);
   }
 

@@ -97,7 +97,7 @@ export const panelReadRPD = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`ttp://localhost:5000/api/panel/panelReadRPD`, config);
+    const { data } = await axios.get(`${BASE_URL_2}api/panel/panelReadRPD`, config);
 
     dispatch({
       type: PANEL_APPLICATION_LIST_SUCCESS,
