@@ -59,16 +59,16 @@ const FacultyMonitorStudID = () => {
     }, [id]);
 
     switch(degreeLvl) {
-        case 'Master Degree (Part-Time)':
+        case 'Master Degree (Full-Time)':
             years = 3;
             break;
-        case 'Master Degree (Full-Time)':
-            years = 5;
-            break;
-        case 'Doctoral Degree (Part-Time)':
+        case 'Master Degree (Part-Time)':
             years = 5;
             break;
         case 'Doctoral Degree (Full-Time)':
+            years = 5;
+            break;
+        case 'Doctoral Degree (Part-Time)':
             years = 7;
             break;
         default:
