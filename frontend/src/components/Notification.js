@@ -75,16 +75,16 @@ const Notification = () => {
   }, [token])
 
   switch(degreeLvl) {
-    case 'Master Degree (Part-Time)':
+    case 'Master Degree (Full-Time)':
         monthReminder = 33; //max = 36months - 3 months (prior reminder for candidature extension)
         break;
-    case 'Master Degree (Full-Time)':
-        monthReminder = 57; //60
-        break;
-    case 'Doctoral Degree (Part-Time)':
+    case 'Master Degree (Part-Time)':
         monthReminder = 57; //60
         break;
     case 'Doctoral Degree (Full-Time)':
+        monthReminder = 57; //60
+        break;
+    case 'Doctoral Degree (Part-Time)':
         monthReminder = 81; //84
         break;
     default:
